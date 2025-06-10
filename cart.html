@@ -208,7 +208,7 @@
         }
 
         .item-price {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--highlight-color);
         }
@@ -221,18 +221,17 @@
         }
 
         .quantity-btn {
-            width: 35px;
-            height: 35px;
-            border: none;
             background: var(--accent-color);
             color: var(--text-color);
+            border: none;
+            width: 35px;
+            height: 35px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
         }
 
         .quantity-btn:hover {
@@ -241,18 +240,19 @@
         }
 
         .quantity-display {
-            min-width: 40px;
-            text-align: center;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-color);
+            min-width: 30px;
+            text-align: center;
         }
 
         .remove-btn {
             background: var(--danger-color);
-            color: white;
+            color: var(--text-color);
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -266,7 +266,7 @@
             transform: scale(1.1);
         }
 
-        /* Order Summary Section */
+        /* Order Summary */
         .order-summary {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -274,7 +274,7 @@
             padding: 2rem;
             backdrop-filter: blur(10px);
             position: sticky;
-            top: 120px;
+            top: 100px;
             height: fit-content;
         }
 
@@ -291,23 +291,20 @@
             font-weight: 700;
             font-size: 1.2rem;
             color: var(--highlight-color);
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 2px solid var(--border-color);
         }
 
         .summary-label {
-            color: var(--text-color);
+            color: var(--text-secondary);
         }
 
         .summary-value {
-            color: var(--highlight-color);
+            color: var(--text-color);
             font-weight: 600;
         }
 
-        /* Customer Info Form */
+        /* Customer Information */
         .customer-info {
-            margin-top: 2rem;
+            margin: 2rem 0;
         }
 
         .form-group {
@@ -316,18 +313,18 @@
 
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
             color: var(--text-color);
             font-weight: 500;
+            margin-bottom: 0.5rem;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 1rem;
             border: 1px solid var(--border-color);
-            background: var(--secondary-color);
-            color: var(--text-color);
             border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
             font-size: 1rem;
             transition: all 0.3s ease;
         }
@@ -335,7 +332,7 @@
         .form-input:focus {
             outline: none;
             border-color: var(--highlight-color);
-            box-shadow: 0 0 0 3px rgba(26, 254, 73, 0.1);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .form-input::placeholder {
@@ -344,7 +341,39 @@
 
         /* Store Selection */
         .store-selection {
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .store-search-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .store-search-input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .store-search-btn {
+            background: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .store-search-btn:hover {
+            background: var(--highlight-color);
+            transform: translateY(-2px);
         }
 
         .store-buttons {
@@ -355,10 +384,10 @@
         }
 
         .store-btn {
-            padding: 1rem;
-            border: 2px solid var(--border-color);
             background: var(--accent-color);
             color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -369,14 +398,20 @@
             font-weight: 500;
         }
 
-        .store-btn:hover,
-        .store-btn.selected {
+        .store-btn:hover {
+            background: var(--highlight-color);
             border-color: var(--highlight-color);
-            background: rgba(26, 254, 73, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .store-btn.selected {
+            background: var(--highlight-color);
+            border-color: var(--highlight-color);
+            color: var(--primary-color);
         }
 
         .selected-store {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 1rem;
@@ -389,18 +424,68 @@
         }
 
         .store-info {
-            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .store-name {
             font-weight: 600;
-            color: var(--highlight-color);
-            margin-bottom: 0.5rem;
+            color: var(--text-color);
         }
 
         .store-address {
             font-size: 0.9rem;
             color: var(--text-secondary);
+        }
+
+        /* Verification Code */
+        .verification-section {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+        }
+
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .captcha-display {
+            background: var(--text-color);
+            color: var(--primary-color);
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+            user-select: none;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .captcha-refresh {
+            background: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .captcha-refresh:hover {
+            background: var(--highlight-color);
+            transform: rotate(180deg);
         }
 
         /* Action Buttons */
@@ -496,6 +581,15 @@
             .store-buttons {
                 grid-template-columns: 1fr;
             }
+
+            .store-search-container {
+                flex-direction: column;
+            }
+
+            .captcha-container {
+                flex-direction: column;
+                text-align: center;
+            }
         }
 
         /* Loading and Modal Styles */
@@ -518,9 +612,11 @@
             padding: 2rem;
             border-radius: 30px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             text-align: center;
             backdrop-filter: blur(10px);
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .modal h3 {
@@ -537,6 +633,7 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .modal-btn {
@@ -561,6 +658,60 @@
         .modal-btn:hover {
             transform: translateY(-2px);
         }
+
+        /* Store Search Results */
+        .store-results {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .store-result-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .store-result-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--highlight-color);
+        }
+
+        .store-result-name {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .store-result-address {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .store-result-id {
+            font-size: 0.8rem;
+            color: var(--tech-cyan);
+            margin-top: 0.5rem;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--highlight-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -568,7 +719,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logo1.png" alt="Logo">
+                <img src="logoai.gif" alt="Logo">
             </div>
             <div class="header-actions">
                 <a href="index.html" class="back-button">
@@ -642,15 +793,25 @@
 
                 <!-- Store Selection -->
                 <div class="store-selection">
-                    <label class="form-label">選擇取貨門市 *</label>
+                    <label class="form-label">查詢取貨門市 *</label>
+                    
+                    <!-- Store Type Selection -->
                     <div class="store-buttons">
-                        <button class="store-btn" onclick="selectStore('711')">
+                        <button class="store-btn" onclick="selectStoreType('711')">
                             <i class="fas fa-store"></i>
                             7-11
                         </button>
-                        <button class="store-btn" onclick="selectStore('family')">
+                        <button class="store-btn" onclick="selectStoreType('family')">
                             <i class="fas fa-store"></i>
                             全家
+                        </button>
+                    </div>
+
+                    <!-- Store Search -->
+                    <div class="store-search-container" id="storeSearchContainer" style="display: none;">
+                        <input type="text" id="storeSearchInput" class="store-search-input" placeholder="請輸入店名或店號">
+                        <button class="store-search-btn" onclick="searchStores()">
+                            <i class="fas fa-search"></i> 查詢
                         </button>
                     </div>
                     
@@ -658,7 +819,22 @@
                         <div class="store-info">
                             <div class="store-name" id="storeName">請選擇門市</div>
                             <div class="store-address" id="storeAddress"></div>
+                            <div class="store-result-id" id="storeId"></div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Verification Code -->
+                <div class="verification-section">
+                    <label class="form-label">驗證碼 *</label>
+                    <div class="captcha-container">
+                        <div class="captcha-display" id="captchaDisplay"></div>
+                        <button class="captcha-refresh" onclick="generateCaptcha()" title="重新產生驗證碼">
+                            <i class="fas fa-refresh"></i>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="captchaInput" class="form-input" placeholder="請輸入驗證碼" maxlength="4">
                     </div>
                 </div>
             </div>
@@ -675,14 +851,15 @@
         </div>
     </div>
 
-    <!-- Store Selection Modal -->
-    <div id="storeModal" class="modal">
+    <!-- Store Search Modal -->
+    <div id="storeSearchModal" class="modal">
         <div class="modal-content">
             <h3>選擇取貨門市</h3>
-            <p>請選擇您方便取貨的門市</p>
+            <div class="store-results" id="storeResults">
+                <!-- Search results will be populated here -->
+            </div>
             <div class="modal-buttons">
-                <button class="modal-btn confirm" onclick="openStoreSelection()">選擇門市</button>
-                <button class="modal-btn cancel" onclick="closeStoreModal()">取消</button>
+                <button class="modal-btn cancel" onclick="closeStoreSearchModal()">關閉</button>
             </div>
         </div>
     </div>
@@ -703,6 +880,11 @@
         let cart = [];
         let selectedStoreType = '';
         let selectedStoreInfo = null;
+        let currentCaptcha = '';
+
+        // Telegram Bot Configuration
+        const TELEGRAM_BOT_TOKEN = '7890123456:AAHdqTcvbXorQeRtWrNVUfB-rJn4X8xjYQw'; // 請替換為實際的 Bot Token
+        const TELEGRAM_CHAT_ID = '-1001234567890'; // 請替換為實際的群組 Chat ID
 
         // Load cart from localStorage
         function loadCart() {
@@ -780,8 +962,8 @@
             document.getElementById('total').textContent = `NT$ ${total}`;
         }
 
-        // Store selection
-        function selectStore(storeType) {
+        // Store type selection
+        function selectStoreType(storeType) {
             selectedStoreType = storeType;
             
             // Update button states
@@ -790,55 +972,186 @@
             });
             event.target.classList.add('selected');
             
-            // Show store selection modal
-            document.getElementById('storeModal').style.display = 'block';
-        }
-
-        function openStoreSelection() {
-            closeStoreModal();
+            // Show search container
+            document.getElementById('storeSearchContainer').style.display = 'flex';
             
-            if (selectedStoreType === '711') {
-                // Open 7-11 store selection
-                const url = 'https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&servicetype=1&url=' + 
-                           encodeURIComponent(window.location.origin + '/cvs_callback.html');
-                window.open(url, 'storeSelection', 'width=800,height=600');
-            } else if (selectedStoreType === 'family') {
-                // For now, show a placeholder for Family Mart
-                alert('全家便利商店選擇功能開發中，請先選擇 7-11');
-            }
+            // Reset selected store
+            selectedStoreInfo = null;
+            document.getElementById('selectedStore').classList.remove('show');
+            document.getElementById('storeName').textContent = '請選擇門市';
+            document.getElementById('storeAddress').textContent = '';
+            document.getElementById('storeId').textContent = '';
+            
+            validateForm();
         }
 
-        function closeStoreModal() {
-            document.getElementById('storeModal').style.display = 'none';
+        // Search stores
+        function searchStores() {
+            const searchTerm = document.getElementById('storeSearchInput').value.trim();
+            if (!searchTerm) {
+                alert('請輸入店名或店號');
+                return;
+            }
+
+            if (!selectedStoreType) {
+                alert('請先選擇便利商店類型');
+                return;
+            }
+
+            // Show loading
+            const searchBtn = document.querySelector('.store-search-btn');
+            const originalText = searchBtn.innerHTML;
+            searchBtn.innerHTML = '<span class="loading-spinner"></span> 查詢中...';
+            searchBtn.disabled = true;
+
+            // Simulate store search (replace with actual API call)
+            setTimeout(() => {
+                const mockStores = generateMockStores(selectedStoreType, searchTerm);
+                displayStoreResults(mockStores);
+                
+                // Reset button
+                searchBtn.innerHTML = originalText;
+                searchBtn.disabled = false;
+            }, 1500);
         }
 
-        // Handle store selection callback
-        window.addEventListener('message', function(event) {
-            if (event.data && event.data.type === 'storeSelected') {
-                selectedStoreInfo = event.data.store;
-                
-                document.getElementById('storeName').textContent = selectedStoreInfo.name;
-                document.getElementById('storeAddress').textContent = selectedStoreInfo.address;
-                document.getElementById('selectedStore').classList.add('show');
-                
-                validateForm();
+        // Generate mock store data
+        function generateMockStores(storeType, searchTerm) {
+            const storePrefix = storeType === '711' ? '7-ELEVEN' : 'FamilyMart';
+            const stores = [];
+            
+            for (let i = 1; i <= 5; i++) {
+                stores.push({
+                    id: `${storeType.toUpperCase()}${String(Math.floor(Math.random() * 9000) + 1000)}`,
+                    name: `${storePrefix} ${searchTerm}${i}店`,
+                    address: `台北市信義區信義路${i}段${Math.floor(Math.random() * 100) + 1}號`,
+                    type: storeType
+                });
             }
-        });
+            
+            return stores;
+        }
+
+        // Display store search results
+        function displayStoreResults(stores) {
+            const resultsContainer = document.getElementById('storeResults');
+            
+            if (stores.length === 0) {
+                resultsContainer.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">找不到相關門市</p>';
+            } else {
+                resultsContainer.innerHTML = stores.map(store => `
+                    <div class="store-result-item" onclick="selectStore('${store.id}', '${store.name}', '${store.address}')">
+                        <div class="store-result-name">${store.name}</div>
+                        <div class="store-result-address">${store.address}</div>
+                        <div class="store-result-id">店號: ${store.id}</div>
+                    </div>
+                `).join('');
+            }
+            
+            document.getElementById('storeSearchModal').style.display = 'block';
+        }
+
+        // Select store
+        function selectStore(storeId, storeName, storeAddress) {
+            selectedStoreInfo = {
+                id: storeId,
+                name: storeName,
+                address: storeAddress,
+                type: selectedStoreType
+            };
+            
+            document.getElementById('storeName').textContent = storeName;
+            document.getElementById('storeAddress').textContent = storeAddress;
+            document.getElementById('storeId').textContent = `店號: ${storeId}`;
+            document.getElementById('selectedStore').classList.add('show');
+            
+            closeStoreSearchModal();
+            validateForm();
+        }
+
+        function closeStoreSearchModal() {
+            document.getElementById('storeSearchModal').style.display = 'none';
+        }
+
+        // Generate captcha
+        function generateCaptcha() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            currentCaptcha = '';
+            for (let i = 0; i < 4; i++) {
+                currentCaptcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('captchaDisplay').textContent = currentCaptcha;
+        }
 
         // Form validation
         function validateForm() {
             const name = document.getElementById('customerName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
+            const captchaInput = document.getElementById('captchaInput').value.trim();
             const hasStore = selectedStoreInfo !== null;
             const hasItems = cart.length > 0;
+            const captchaValid = captchaInput.toUpperCase() === currentCaptcha;
             
-            const isValid = name && phone && hasStore && hasItems;
+            const isValid = name && phone && hasStore && hasItems && captchaValid;
             document.getElementById('checkoutBtn').disabled = !isValid;
         }
 
         // Add event listeners for form validation
         document.getElementById('customerName').addEventListener('input', validateForm);
         document.getElementById('customerPhone').addEventListener('input', validateForm);
+        document.getElementById('captchaInput').addEventListener('input', validateForm);
+
+        // Send Telegram notification
+        async function sendTelegramNotification(orderData) {
+            const message = `
+🛒 **新訂單通知**
+
+📋 **訂單編號**: ${orderData.orderId}
+📅 **訂單時間**: ${new Date(orderData.orderDate).toLocaleString('zh-TW')}
+
+👤 **客戶資訊**:
+• 姓名: ${orderData.customer.name}
+• 電話: ${orderData.customer.phone}
+
+🏪 **取貨門市**:
+• ${orderData.store.name}
+• ${orderData.store.address}
+• 店號: ${orderData.store.id}
+
+🛍️ **訂購商品**:
+${orderData.items.map(item => 
+    `• ${item.name} x${item.quantity} - NT$ ${item.price * item.quantity}
+${item.flavor ? `  口味: ${item.flavor}` : ''}${item.color ? `  顏色: ${item.color}` : ''}`
+).join('\n')}
+
+💰 **金額明細**:
+• 商品小計: NT$ ${orderData.subtotal}
+• 運費: NT$ ${orderData.shipping}
+• **總計: NT$ ${orderData.total}**
+
+請盡快處理此訂單！
+            `;
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                if (!response.ok) {
+                    console.error('Telegram notification failed:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error sending Telegram notification:', error);
+            }
+        }
 
         // Checkout process
         function checkout() {
@@ -847,10 +1160,17 @@
                 return;
             }
             
+            if (document.getElementById('captchaInput').value.trim().toUpperCase() !== currentCaptcha) {
+                alert('驗證碼錯誤，請重新輸入！');
+                generateCaptcha();
+                document.getElementById('captchaInput').value = '';
+                return;
+            }
+            
             document.getElementById('checkoutModal').style.display = 'block';
         }
 
-        function confirmCheckout() {
+        async function confirmCheckout() {
             const orderData = {
                 items: cart,
                 customer: {
@@ -865,14 +1185,32 @@
                 orderId: 'ORD' + Date.now()
             };
             
-            // Save order to localStorage
-            localStorage.setItem('currentOrder', JSON.stringify(orderData));
-            
-            // Clear cart
-            localStorage.removeItem('cart');
-            
-            // Redirect to confirmation page
-            window.location.href = 'order_confirmation.html';
+            // Show loading
+            const confirmBtn = document.querySelector('#checkoutModal .modal-btn.confirm');
+            const originalText = confirmBtn.textContent;
+            confirmBtn.innerHTML = '<span class="loading-spinner"></span> 處理中...';
+            confirmBtn.disabled = true;
+
+            try {
+                // Send Telegram notification
+                await sendTelegramNotification(orderData);
+                
+                // Save order to localStorage
+                localStorage.setItem('currentOrder', JSON.stringify(orderData));
+                
+                // Clear cart
+                localStorage.removeItem('cart');
+                
+                // Redirect to confirmation page
+                window.location.href = 'order_confirmation.html';
+            } catch (error) {
+                console.error('Order processing error:', error);
+                alert('訂單處理失敗，請稍後再試！');
+                
+                // Reset button
+                confirmBtn.textContent = originalText;
+                confirmBtn.disabled = false;
+            }
         }
 
         function closeCheckoutModal() {
@@ -882,6 +1220,7 @@
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             loadCart();
+            generateCaptcha();
         });
     </script>
 </body>

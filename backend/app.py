@@ -487,7 +487,8 @@ def health_check():
     """健康檢查端點"""
     try:
         # 檢查數據庫連接
-        db.session.execute('SELECT 1')
+        from sqlalchemy import text
+        db.session.execute(text('SELECT 1'))
         return jsonify({
             'status': 'healthy',
             'timestamp': datetime.utcnow().isoformat(),
@@ -503,35 +504,36 @@ def health_check():
 # 初始化數據庫
 def init_db():
     """初始化數據庫"""
-    db.create_all()
-    
-    # 創建默認管理員帳號
-    admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
-    admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
-    
-    admin = Admin.query.filter_by(username=admin_username).first()
-    if not admin:
-        admin = Admin(
-            username=admin_username,
-            password_hash=generate_password_hash(admin_password)
-        )
-        db.session.add(admin)
-        print(f"已創建默認管理員帳號: {admin_username}")
-    
-    # 創建默認分類
-    if not Category.query.first():
-        categories = [
-            {'name': '主機系列', 'slug': 'hosts', 'description': '頂級品質，極致體驗'},
-            {'name': '煙彈系列', 'slug': 'pods', 'description': '多種口味，滿足不同需求'},
-            {'name': '拋棄式系列', 'slug': 'disposable', 'description': '便攜方便，即開即用'}
-        ]
+    with app.app_context():
+        db.create_all()
         
-        for cat_data in categories:
-            category = Category(**cat_data)
-            db.session.add(category)
-        print("已創建默認產品分類")
-    
-    db.session.commit()
+        # 創建默認管理員帳號
+        admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+        admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+        
+        admin = Admin.query.filter_by(username=admin_username).first()
+        if not admin:
+            admin = Admin(
+                username=admin_username,
+                password_hash=generate_password_hash(admin_password)
+            )
+            db.session.add(admin)
+            print(f"已創建默認管理員帳號: {admin_username}")
+        
+        # 創建默認分類
+        if not Category.query.first():
+            categories = [
+                {'name': '主機系列', 'slug': 'hosts', 'description': '頂級品質，極致體驗'},
+                {'name': '煙彈系列', 'slug': 'pods', 'description': '多種口味，滿足不同需求'},
+                {'name': '拋棄式系列', 'slug': 'disposable', 'description': '便攜方便，即開即用'}
+            ]
+            
+            for cat_data in categories:
+                category = Category(**cat_data)
+                db.session.add(category)
+            print("已創建默認產品分類")
+        
+        db.session.commit()
 
 if __name__ == '__main__':
     init_db()
