@@ -790,6 +790,243 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Footer 上方設計區域 */
+        .footer-design-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-design-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .design-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .design-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .design-left {
+            color: white;
+        }
+
+        .design-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .design-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .design-features {
+            margin-bottom: 2.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-item i {
+            color: #00ff88;
+            font-size: 1.2rem;
+            width: 20px;
+        }
+
+        .design-cta-btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .design-cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+        }
+
+        .design-right {
+            position: relative;
+            height: 400px;
+        }
+
+        .design-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .element-1 {
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .element-2 {
+            top: 60%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .element-3 {
+            bottom: 20%;
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .design-graphic {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .graphic-circle {
+            position: absolute;
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            border: 3px solid rgba(0, 255, 136, 0.3);
+            top: 0;
+            left: 0;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            top: 50px;
+            left: 50px;
+            animation-direction: reverse;
+            animation-duration: 8s;
+        }
+
+        .circle-3 {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.2));
+            top: 100px;
+            left: 100px;
+            animation-duration: 6s;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer 設計響應式 */
+        @media (max-width: 768px) {
+            .footer-design-section {
+                padding: 60px 0;
+            }
+
+            .design-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .design-title {
+                font-size: 2rem;
+            }
+
+            .design-subtitle {
+                font-size: 1rem;
+            }
+
+            .design-right {
+                height: 300px;
+            }
+
+            .design-graphic {
+                width: 250px;
+                height: 250px;
+            }
+
+            .circle-1 {
+                width: 250px;
+                height: 250px;
+            }
+
+            .circle-2 {
+                width: 170px;
+                height: 170px;
+                top: 40px;
+                left: 40px;
+            }
+
+            .circle-3 {
+                width: 90px;
+                height: 90px;
+                top: 80px;
+                left: 80px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1295,7 +1532,60 @@ ${orderData.items.map(item =>
             loadCart();
             generateCaptcha();
         });
+        // 顯示聯絡方式
+        function showContact() {
+            window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
+        }
     </script>
+
+    <!-- Footer 上方設計區域 -->
+    <section class="footer-design-section">
+        <div class="design-container">
+            <div class="design-content">
+                <div class="design-left">
+                    <h2 class="design-title">加入 DeepVape 會員</h2>
+                    <p class="design-subtitle">享受專屬優惠與最新產品資訊</p>
+                    <div class="design-features">
+                        <div class="feature-item">
+                            <i class="fas fa-gift"></i>
+                            <span>新會員專屬優惠</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-bell"></i>
+                            <span>新品搶先通知</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>免運費優惠</span>
+                        </div>
+                    </div>
+                    <button class="design-cta-btn" onclick="showContact()">
+                        <i class="fab fa-line"></i>
+                        立即加入會員
+                    </button>
+                </div>
+                <div class="design-right">
+                    <div class="design-image">
+                        <div class="floating-elements">
+                            <div class="floating-element element-1">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="floating-element element-2">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="floating-element element-3">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                        </div>
+                        <div class="design-graphic">
+                            <div class="graphic-circle circle-1"></div>
+                            <div class="graphic-circle circle-2"></div>
+                            <div class="graphic-circle circle-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
-</html> 
 </html> 
