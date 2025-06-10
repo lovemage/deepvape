@@ -342,7 +342,7 @@
 
         .pulse-button {
             flex: 1;
-            background: linear-gradient(45deg, var(--accent-color), #e67e22);
+            background: linear-gradient(45deg, var(--highlight-color), #8e44ad);
             color: var(--white);
             border: none;
             padding: 1rem 2rem;
@@ -409,7 +409,7 @@
 
         /* Warning Notice */
         .warning-notice {
-            background: linear-gradient(45deg, #f39c12, #e67e22);
+            background: linear-gradient(45deg, var(--highlight-color), #8e44ad);
             color: var(--white);
             padding: 1.5rem;
             border-radius: var(--border-radius);
@@ -487,8 +487,9 @@
                         <div class="product-price">NT$ 280</div>
                         
                         <div class="product-description">
-                            LANA 煙彈以其創新口味和順滑口感聞名，採用先進的霧化技術，
-                            為您帶來純正的口味體驗。每一口都經過精心調製，確保最佳的使用感受。
+                            LANA 煙彈採用頂級陶瓷芯霧化技術，精選天然香料調配，
+                            帶來純淨濃郁的口感體驗。2ML大容量設計，每包2顆裝，
+                            讓您享受持久且順滑的使用感受。
                         </div>
 
                         <!-- Specifications -->
@@ -529,7 +530,7 @@
                         <div class="flavor-options">
                             <h3 class="flavor-title">
                                 <i class="fas fa-palette"></i>
-                                口味選擇 <span class="tech-badge">8種口味</span>
+                                口味選擇 <span class="tech-badge">12種口味</span>
                             </h3>
                             <div class="flavor-grid" id="flavorGrid">
                                 <!-- 口味選項將由 JavaScript 生成 -->
@@ -609,10 +610,11 @@
     </main>
 
     <script>
-        // 8種口味列表
+        // 12種口味列表
         const flavors = [
             '經典煙草', '薄荷涼感', '水果混合', '香草奶昔',
-            '藍莓爆珠', '檸檬汽水', '草莓奶茶', '咖啡拿鐵'
+            '藍莓爆珠', '檸檬汽水', '草莓奶茶', '咖啡拿鐵',
+            '芒果冰沙', '蜜桃烏龍', '荔枝蜂蜜', '黑加侖子'
         ];
 
         let selectedFlavor = '';
