@@ -698,6 +698,27 @@
             margin-top: 0.5rem;
         }
 
+        .store-result-services,
+        .store-result-hours {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .store-result-services {
+            background: linear-gradient(135deg, #e8f5e8, #d4e7d4);
+            border: 1px solid #c3e6c3;
+        }
+
+        .store-result-hours {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b3);
+            border: 1px solid #ffcc80;
+        }
+
         /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
@@ -986,7 +1007,7 @@
         }
 
         // Search stores
-        function searchStores() {
+        async function searchStores() {
             const searchTerm = document.getElementById('storeSearchInput').value.trim();
             if (!searchTerm) {
                 alert('請輸入店名或店號');
@@ -1004,18 +1025,102 @@
             searchBtn.innerHTML = '<span class="loading-spinner"></span> 查詢中...';
             searchBtn.disabled = true;
 
-            // Simulate store search (replace with actual API call)
-            setTimeout(() => {
-                const mockStores = generateMockStores(selectedStoreType, searchTerm);
-                displayStoreResults(mockStores);
+            try {
+                let stores = [];
                 
+                if (selectedStoreType === '711') {
+                    // Load 7-ELEVEN stores from JSON file
+                    stores = await load711Stores(searchTerm);
+                } else if (selectedStoreType === 'family') {
+                    // Load Family Mart stores from JSON file
+                    stores = await loadFamilyStores(searchTerm);
+                } else {
+                    // Generate mock data for other store types
+                    stores = generateMockStores(selectedStoreType, searchTerm);
+                }
+                
+                displayStoreResults(stores);
+            } catch (error) {
+                console.error('門市搜尋錯誤:', error);
+                alert('搜尋門市時發生錯誤，請稍後再試');
+                displayStoreResults([]);
+            } finally {
                 // Reset button
                 searchBtn.innerHTML = originalText;
                 searchBtn.disabled = false;
-            }, 1500);
+            }
         }
 
-        // Generate mock store data
+        // Load 7-ELEVEN stores from JSON file
+        async function load711Stores(searchTerm) {
+            try {
+                console.log('🔍 搜尋 7-ELEVEN 門市:', searchTerm);
+                
+                // Fetch the JSON file with 7-ELEVEN stores
+                const response = await fetch('./cart_stores_711.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const allStores = await response.json();
+                console.log(`📊 載入 ${allStores.length} 筆 7-ELEVEN 門市資料`);
+                
+                // Filter stores based on search term
+                const filteredStores = allStores.filter(store => 
+                    store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.district.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                
+                console.log(`🎯 搜尋結果: ${filteredStores.length} 筆符合的門市`);
+                
+                // Limit to 20 results for better performance
+                return filteredStores.slice(0, 20);
+                
+            } catch (error) {
+                console.error('❌ 載入 7-ELEVEN 門市資料失敗:', error);
+                throw error;
+            }
+        }
+
+        // Load Family Mart stores from JSON file
+        async function loadFamilyStores(searchTerm) {
+            try {
+                console.log('🔍 搜尋全家便利商店:', searchTerm);
+                
+                // Fetch the JSON file with Family Mart stores
+                const response = await fetch('./cart_stores_family.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const allStores = await response.json();
+                console.log(`📊 載入 ${allStores.length} 筆全家門市資料`);
+                
+                // Filter stores based on search term
+                const filteredStores = allStores.filter(store => 
+                    store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.district.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    (store.services && store.services.toLowerCase().includes(searchTerm.toLowerCase()))
+                );
+                
+                console.log(`🎯 搜尋結果: ${filteredStores.length} 筆符合的門市`);
+                
+                // Limit to 20 results for better performance
+                return filteredStores.slice(0, 20);
+                
+            } catch (error) {
+                console.error('❌ 載入全家門市資料失敗:', error);
+                throw error;
+            }
+        }
+
+        // Generate mock store data (for Family Mart)
         function generateMockStores(storeType, searchTerm) {
             const storePrefix = storeType === '711' ? '7-ELEVEN' : 'FamilyMart';
             const stores = [];
@@ -1039,25 +1144,40 @@
             if (stores.length === 0) {
                 resultsContainer.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">找不到相關門市</p>';
             } else {
-                resultsContainer.innerHTML = stores.map(store => `
-                    <div class="store-result-item" onclick="selectStore('${store.id}', '${store.name}', '${store.address}')">
-                        <div class="store-result-name">${store.name}</div>
-                        <div class="store-result-address">${store.address}</div>
-                        <div class="store-result-id">店號: ${store.id}</div>
-                    </div>
-                `).join('');
+                resultsContainer.innerHTML = stores.map(store => {
+                    let extraInfo = '';
+                    
+                    // Add extra info for Family Mart stores
+                    if (store.type === 'family') {
+                        if (store.services) {
+                            extraInfo += `<div class="store-result-services">🛍️ 服務: ${store.services}</div>`;
+                        }
+                        if (store.hours) {
+                            extraInfo += `<div class="store-result-hours">🕒 營業時間: ${store.hours}</div>`;
+                        }
+                    }
+                    
+                    return `
+                        <div class="store-result-item" onclick="selectStore('${store.id}', '${store.name}', '${store.address}', '${store.type || selectedStoreType}')">
+                            <div class="store-result-name">${store.name}</div>
+                            <div class="store-result-address">${store.address}</div>
+                            <div class="store-result-id">店號: ${store.id}</div>
+                            ${extraInfo}
+                        </div>
+                    `;
+                }).join('');
             }
             
             document.getElementById('storeSearchModal').style.display = 'block';
         }
 
         // Select store
-        function selectStore(storeId, storeName, storeAddress) {
+        function selectStore(storeId, storeName, storeAddress, storeType = null) {
             selectedStoreInfo = {
                 id: storeId,
                 name: storeName,
                 address: storeAddress,
-                type: selectedStoreType
+                type: storeType || selectedStoreType
             };
             
             document.getElementById('storeName').textContent = storeName;

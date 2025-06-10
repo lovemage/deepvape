@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-ELEVEN 門市搜尋測試</title>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .search-section {
+            margin-bottom: 30px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .search-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .results-section {
+            margin-top: 30px;
+        }
+        
+        .result-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .result-item:hover {
+            background: #e3f2fd;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .store-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .store-address {
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .store-id {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+        
+        .stats {
+            background: #e8f5e8;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏪 7-ELEVEN 門市搜尋測試</h1>
+        
+        <div class="search-section">
+            <input type="text" id="searchInput" class="search-input" placeholder="請輸入店名、店號、城市或地址關鍵字">
+            <button id="searchBtn" class="search-btn" onclick="searchStores()">🔍 搜尋門市</button>
+        </div>
+        
+        <div class="results-section">
+            <div id="stats" class="stats" style="display: none;"></div>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        let allStores = [];
+        
+        // Load stores data on page load
+        async function loadStoresData() {
+            try {
+                console.log('📥 載入 7-ELEVEN 門市資料...');
+                const response = await fetch('./cart_stores_711.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                allStores = await response.json();
+                console.log(`✅ 成功載入 ${allStores.length} 筆門市資料`);
+                
+                document.getElementById('stats').innerHTML = `📊 資料庫包含 ${allStores.length.toLocaleString()} 家 7-ELEVEN 門市`;
+                document.getElementById('stats').style.display = 'block';
+                
+            } catch (error) {
+                console.error('❌ 載入門市資料失敗:', error);
+                document.getElementById('results').innerHTML = `
+                    <div class="no-results">
+                        ❌ 載入門市資料失敗<br>
+                        錯誤: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // Search stores
+        async function searchStores() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (!searchTerm) {
+                alert('請輸入搜尋關鍵字');
+                return;
+            }
+            
+            const searchBtn = document.getElementById('searchBtn');
+            const resultsDiv = document.getElementById('results');
+            
+            // Show loading
+            searchBtn.disabled = true;
+            searchBtn.textContent = '🔄 搜尋中...';
+            resultsDiv.innerHTML = '<div class="loading">🔍 正在搜尋門市...</div>';
+            
+            try {
+                // Filter stores
+                const startTime = performance.now();
+                const filteredStores = allStores.filter(store => 
+                    store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    store.district.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                const endTime = performance.now();
+                
+                console.log(`🎯 搜尋 "${searchTerm}" 結果: ${filteredStores.length} 筆 (耗時 ${(endTime - startTime).toFixed(1)}ms)`);
+                
+                // Display results
+                displayResults(filteredStores, searchTerm, endTime - startTime);
+                
+            } catch (error) {
+                console.error('❌ 搜尋錯誤:', error);
+                resultsDiv.innerHTML = `
+                    <div class="no-results">
+                        ❌ 搜尋時發生錯誤<br>
+                        ${error.message}
+                    </div>
+                `;
+            } finally {
+                // Reset button
+                searchBtn.disabled = false;
+                searchBtn.textContent = '🔍 搜尋門市';
+            }
+        }
+        
+        // Display search results
+        function displayResults(stores, searchTerm, searchTime) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (stores.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="no-results">
+                        😔 找不到包含 "${searchTerm}" 的門市<br>
+                        請嘗試其他關鍵字
+                    </div>
+                `;
+                return;
+            }
+            
+            // Limit to 50 results for performance
+            const displayStores = stores.slice(0, 50);
+            
+            let html = `
+                <div class="stats">
+                    🎯 找到 ${stores.length.toLocaleString()} 家門市 (顯示前 ${displayStores.length} 家)<br>
+                    ⚡ 搜尋耗時: ${searchTime.toFixed(1)}ms
+                </div>
+            `;
+            
+            html += displayStores.map(store => `
+                <div class="result-item" onclick="selectStore('${store.id}', '${store.name}', '${store.address}')">
+                    <div class="store-name">${highlightSearchTerm(store.name, searchTerm)}</div>
+                    <div class="store-address">📍 ${highlightSearchTerm(store.address, searchTerm)}</div>
+                    <div class="store-id">🏷️ 店號: ${highlightSearchTerm(store.id, searchTerm)} | 🏙️ ${store.city} ${store.district}</div>
+                </div>
+            `).join('');
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        // Highlight search term in text
+        function highlightSearchTerm(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<mark style="background: #ffeb3b; padding: 1px 3px; border-radius: 3px;">$1</mark>');
+        }
+        
+        // Select store (for testing)
+        function selectStore(storeId, storeName, storeAddress) {
+            alert(`已選擇門市:\n\n店號: ${storeId}\n店名: ${storeName}\n地址: ${storeAddress}`);
+        }
+        
+        // Add enter key support
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchStores();
+            }
+        });
+        
+        // Load data when page loads
+        window.addEventListener('load', loadStoresData);
+    </script>
+</body>
+</html> 
