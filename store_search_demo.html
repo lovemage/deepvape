@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>門市查詢功能演示 | DeepVape</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #083e12;
+            --secondary-color: #041348;
+            --accent-color: #3d43b4;
+            --highlight-color: #1afe49;
+            --success-color: #1afe49;
+            --text-color: #ffffff;
+            --text-secondary: #a0f7b3;
+            --card-bg: rgba(4, 19, 72, 0.8);
+            --border-color: rgba(26, 254, 73, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--highlight-color);
+            margin-bottom: 2rem;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .instruction {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(26, 254, 73, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            line-height: 1.5;
+        }
+
+        .store-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .store-btn {
+            background: linear-gradient(45deg, var(--accent-color), #8386f5);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .store-btn:hover {
+            background: linear-gradient(45deg, var(--highlight-color), #8386f5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 254, 73, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 0 3px rgba(26, 254, 73, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(45deg, var(--success-color), #00d4aa);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .confirm-btn:hover {
+            background: linear-gradient(45deg, #00d4aa, var(--success-color));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 254, 73, 0.3);
+        }
+
+        .result-display {
+            background: rgba(26, 254, 73, 0.1);
+            border: 1px solid var(--highlight-color);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .result-display.show {
+            display: block;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: var(--highlight-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            background: var(--accent-color);
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-list li::before {
+            content: "✅";
+            color: var(--highlight-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">
+            <i class="fas fa-store"></i>
+            門市查詢功能演示
+        </h1>
+
+        <!-- 功能說明 -->
+        <div class="demo-section">
+            <h2 class="section-title">
+                <i class="fas fa-info-circle"></i>
+                新功能特色
+            </h2>
+            <ul class="feature-list">
+                <li>直接連結官方門市查詢網站</li>
+                <li>確保門市資料的準確性和即時性</li>
+                <li>支援 7-ELEVEN 和全家便利商店</li>
+                <li>用戶手動填入門市資訊，避免資料錯誤</li>
+                <li>無需維護大量門市資料庫</li>
+            </ul>
+        </div>
+
+        <!-- 門市查詢演示 -->
+        <div class="demo-section">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i>
+                門市查詢演示
+            </h2>
+            
+            <p class="instruction">
+                請點擊下方按鈕前往官方網站查詢門市，查詢完成後請手動填入門市資訊
+            </p>
+            
+            <!-- 官方查詢按鈕 -->
+            <div class="store-buttons">
+                <button class="store-btn" onclick="openOfficialStoreSearch('711')">
+                    <i class="fas fa-external-link-alt"></i>
+                    查詢 7-ELEVEN 門市
+                </button>
+                <button class="store-btn" onclick="openOfficialStoreSearch('family')">
+                    <i class="fas fa-external-link-alt"></i>
+                    查詢 全家便利商店 門市
+                </button>
+            </div>
+
+            <!-- 手動輸入表單 -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">門市類型 *</label>
+                    <select id="storeTypeSelect" class="form-input" required>
+                        <option value="">請選擇門市類型</option>
+                        <option value="711">7-ELEVEN</option>
+                        <option value="family">全家便利商店</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">門市店號 *</label>
+                    <input type="text" id="storeIdInput" class="form-input" placeholder="例如：250094" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">門市名稱 *</label>
+                <input type="text" id="storeNameInput" class="form-input" placeholder="例如：京達門市" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">門市地址 *</label>
+                <input type="text" id="storeAddressInput" class="form-input" placeholder="例如：台中市豐原區中正路805號" required>
+            </div>
+            
+            <button class="confirm-btn" onclick="confirmStoreSelection()">
+                <i class="fas fa-check"></i> 確認門市選擇
+            </button>
+
+            <!-- 結果顯示 -->
+            <div class="result-display" id="resultDisplay">
+                <div class="result-title" id="resultTitle">門市選擇完成！</div>
+                <div class="result-info" id="resultInfo"></div>
+            </div>
+        </div>
+
+        <!-- 返回按鈕 -->
+        <div style="text-align: center;">
+            <a href="cart.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                返回購物車
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 開啟官方門市查詢
+        function openOfficialStoreSearch(storeType) {
+            let url = '';
+            let storeName = '';
+            
+            if (storeType === '711') {
+                url = 'https://emap.pcsc.com.tw/ecmap/default.aspx';
+                storeName = '7-ELEVEN';
+            } else if (storeType === 'family') {
+                url = 'https://www.family.com.tw/Marketing/inquiry.aspx';
+                storeName = '全家便利商店';
+            }
+            
+            // 在新視窗中開啟官方門市查詢網站
+            const newWindow = window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+            
+            if (newWindow) {
+                // 顯示提示訊息
+                alert(`已開啟 ${storeName} 官方門市查詢網站\n\n請在新視窗中查詢您要的門市，然後回到此頁面手動填入門市資訊。\n\n門市資訊通常包含：\n• 門市店號\n• 門市名稱\n• 門市地址`);
+            } else {
+                alert('無法開啟新視窗，請檢查瀏覽器設定或手動前往官方網站查詢門市。');
+            }
+        }
+
+        // 確認門市選擇
+        function confirmStoreSelection() {
+            const storeType = document.getElementById('storeTypeSelect').value;
+            const storeId = document.getElementById('storeIdInput').value.trim();
+            const storeName = document.getElementById('storeNameInput').value.trim();
+            const storeAddress = document.getElementById('storeAddressInput').value.trim();
+            
+            // 驗證必填欄位
+            if (!storeType || !storeId || !storeName || !storeAddress) {
+                alert('請填寫所有必填欄位');
+                return;
+            }
+            
+            // 顯示結果
+            const storeTypeText = storeType === '711' ? '7-ELEVEN' : '全家便利商店';
+            const resultInfo = `
+                <strong>門市類型：</strong>${storeTypeText}<br>
+                <strong>門市店號：</strong>${storeId}<br>
+                <strong>門市名稱：</strong>${storeName}<br>
+                <strong>門市地址：</strong>${storeAddress}
+            `;
+            
+            document.getElementById('resultInfo').innerHTML = resultInfo;
+            document.getElementById('resultDisplay').classList.add('show');
+            
+            // 滾動到結果區域
+            document.getElementById('resultDisplay').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+            
+            alert('門市選擇完成！在實際購物車中，這些資訊將用於訂單處理。');
+        }
+    </script>
+</body>
+</html> 
