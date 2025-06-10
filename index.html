@@ -27,7 +27,7 @@
         }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: var(--text-color);
             min-height: 100vh;
@@ -112,6 +112,7 @@
             width: 80px;
             height: 80px;
             object-fit: contain;
+            border-radius: 15px;
         }
 
         @keyframes pulse {
@@ -162,6 +163,7 @@
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
+            border-radius: 30px;
         }
 
         .age-modal h2 {
@@ -177,48 +179,38 @@
             margin-top: 2rem;
         }
 
-        /* Header */
-        header {
-            background: var(--secondary-color);
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
 
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo img {
-            height: 40px;
-            width: 40px;
-            object-fit: contain;
-        }
-
-        .logo h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            color: var(--highlight-color);
-            font-weight: 700;
-        }
 
         /* Navigation */
         nav {
-            background: var(--accent-color);
+            background: #000000;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            border: 2px solid transparent;
+            animation: navBorderMove 3s infinite linear;
+        }
+
+        @keyframes navBorderMove {
+            0% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+            25% {
+                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
+            }
+            50% {
+                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
+            }
+            75% {
+                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
+            }
+            100% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
         }
 
         .nav-container {
@@ -229,6 +221,25 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 1px solid rgba(26, 254, 73, 0.3);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
         }
 
         .nav-menu {
@@ -347,6 +358,21 @@
 
             .dropdown a {
                 padding-left: 3rem;
+            }
+
+            .header-container {
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: space-between;
+            }
+
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+
+            .header-actions .pulse-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -711,10 +737,30 @@
 
         /* Footer */
         footer {
-            background: var(--primary-color);
+            background: #000000;
             padding: 3rem 0 1rem;
             margin-top: 4rem;
             border-top: 1px solid var(--border-color);
+            border: 2px solid transparent;
+            animation: footerBorderMove 3s infinite linear;
+        }
+
+        @keyframes footerBorderMove {
+            0% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+            25% {
+                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
+            }
+            50% {
+                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
+            }
+            75% {
+                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
+            }
+            100% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
         }
 
         .footer-content {
@@ -796,6 +842,7 @@
             padding: 6rem 0 4rem;
             position: relative;
             overflow: hidden;
+            margin-top: 80px;
         }
 
         .hero-container {
@@ -939,8 +986,9 @@
         /* Responsive */
         @media (max-width: 768px) {
             .header-container {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 1rem;
+                justify-content: space-between;
             }
 
             .hero {
@@ -995,7 +1043,7 @@
     <!-- Video Background -->
     <div class="video-background">
         <video autoplay muted loop playsinline>
-            <source src="background.mp4" type="video/mp4">
+                            <source src="background1.mp4" type="video/mp4">
             您的瀏覽器不支援視頻播放。
         </video>
     </div>
@@ -1026,24 +1074,12 @@
         </div>
     </div>
 
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="logo.png" alt="Deepvape Logo" onerror="this.style.display='none'">
-                <h1>Deepvape</h1>
-            </div>
-            <div class="header-actions">
-                <button class="pulse-button pulsing" onclick="showContact()">
-                    <i class="fas fa-phone"></i> 聯絡客服
-                </button>
-            </div>
-        </div>
-    </header>
-
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
+            <div class="logo">
+                <img src="logo1.png" alt="Logo" onerror="this.style.display='none'">
+            </div>
             <button class="hamburger" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </button>
@@ -1079,6 +1115,11 @@
                     </div>
                 </li>
             </ul>
+            <div class="header-actions">
+                <button class="pulse-button pulsing" onclick="showContact()">
+                    <i class="fas fa-phone"></i> 聯絡客服
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -1109,7 +1150,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="hero.png" alt="Deepvape Hero" class="hero-main-image">
+                    <img src="hero1.png" alt="Deepvape Hero" class="hero-main-image">
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
+            font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
             line-height: 1.6;
             color: #ffffff;
             background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
@@ -23,7 +23,7 @@
 
         /* 導航欄 */
         .navbar {
-            background: rgba(4, 19, 72, 0.95);
+            background: #000000;
             backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: fixed;
@@ -31,6 +31,26 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+            animation: navBorderMove 3s infinite linear;
+        }
+
+        @keyframes navBorderMove {
+            0% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+            25% {
+                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
+            }
+            50% {
+                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
+            }
+            75% {
+                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
+            }
+            100% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
         }
 
         .nav-container {
@@ -43,8 +63,16 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
             height: 50px;
             width: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 1px solid rgba(26, 254, 73, 0.3);
         }
 
         .nav-links {
@@ -63,6 +91,53 @@
 
         .nav-links a:hover {
             color: #1afe49;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(4, 19, 72, 0.95);
+                flex-direction: column;
+                padding: 2rem 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1001;
+                overflow-y: auto;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
+
+            .nav-links a {
+                padding: 1rem 2rem;
+                display: block;
+                font-size: 1.2rem;
+            }
         }
 
         /* 主要內容 */
@@ -324,8 +399,11 @@
     <!-- 導航欄 -->
     <nav class="navbar">
         <div class="nav-container">
-            <img src="logoai.gif" alt="Image Vape Logo" class="logo">
-            <ul class="nav-links">
+            <img src="logo1.png" alt="Logo" class="logo">
+            <button class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">首頁</a></li>
                 <li><a href="shopping_guide.html">購物說明</a></li>
                 <li><a href="cart.html">購物車</a></li>
@@ -435,5 +513,35 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // 漢堡選單功能
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger i');
+            
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                hamburger.classList.remove('fa-bars');
+                hamburger.classList.add('fa-times');
+            } else {
+                hamburger.classList.remove('fa-times');
+                hamburger.classList.add('fa-bars');
+            }
+        }
+
+        // 點擊外部關閉選單
+        document.addEventListener('click', function(e) {
+            const navLinks = document.getElementById('navLinks');
+            const navContainer = document.querySelector('.nav-container');
+            
+            if (!navContainer.contains(e.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                document.querySelector('.hamburger i').classList.remove('fa-times');
+                document.querySelector('.hamburger i').classList.add('fa-bars');
+            }
+        });
+    </script>
 </body>
 </html> 

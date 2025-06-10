@@ -28,7 +28,7 @@
         }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: var(--text-color);
             min-height: 100vh;
@@ -37,12 +37,34 @@
 
         /* Header */
         header {
-            background: var(--secondary-color);
+            background: #000000;
+            backdrop-filter: blur(10px);
             padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            position: sticky;
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+            animation: headerBorderMove 3s infinite linear;
+        }
+
+        @keyframes headerBorderMove {
+            0% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+            25% {
+                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
+            }
+            50% {
+                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
+            }
+            75% {
+                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
+            }
+            100% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
         }
 
         .header-container {
@@ -57,20 +79,14 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
         }
 
         .logo img {
-            height: 40px;
-            width: 40px;
+            height: 50px;
+            width: auto;
             object-fit: contain;
-        }
-
-        .logo h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            color: var(--highlight-color);
-            font-weight: 700;
+            border-radius: 10px;
+            border: 1px solid rgba(26, 254, 73, 0.3);
         }
 
         .header-actions {
@@ -79,42 +95,37 @@
             align-items: center;
         }
 
-        .back-button {
+        .back-button, .cart-button {
             background: var(--accent-color);
             color: var(--text-color);
-            padding: 0.8rem 1.5rem;
+            width: 50px;
+            height: 50px;
             border: none;
-            border-radius: 30px;
+            border-radius: 15px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--border-color);
         }
 
         .back-button:hover {
             background: var(--highlight-color);
             transform: translateY(-2px);
+            border-color: var(--highlight-color);
         }
 
         .cart-button {
             background: var(--highlight-color);
-            color: var(--text-color);
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .cart-button:hover {
             background: var(--accent-color);
             transform: translateY(-2px);
+            border-color: var(--accent-color);
         }
 
         /* Product Detail Container */
@@ -530,15 +541,14 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logo.png" alt="Deepvape Logo">
-                <h1>Deepvape</h1>
+                <img src="logo1.png" alt="Logo">
             </div>
             <div class="header-actions">
                 <a href="cart.html" class="cart-button">
-                    <i class="fas fa-shopping-cart"></i> 購物車
+                    <i class="fas fa-shopping-cart"></i>
                 </a>
                 <a href="index.html" class="back-button">
-                    <i class="fas fa-arrow-left"></i> 返回首頁
+                    <i class="fas fa-home"></i>
                 </a>
             </div>
         </div>
