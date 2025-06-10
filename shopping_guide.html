@@ -12,23 +12,25 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
             line-height: 1.6;
             color: #ffffff;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* 導航欄 */
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(4, 19, 72, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
         }
 
         .nav-container {
@@ -56,10 +58,11 @@
             color: #ffffff;
             font-weight: 500;
             transition: color 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .nav-links a:hover {
-            color: #667eea;
+            color: #1afe49;
         }
 
         /* 主要內容 */
@@ -71,10 +74,12 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(4, 19, 72, 0.9);
+            border: 1px solid rgba(26, 254, 73, 0.2);
             border-radius: 30px;
             padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         /* 頁面標題 */
@@ -90,12 +95,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
+            text-shadow: none;
         }
 
         .page-subtitle {
             font-size: 1.2rem;
-            color: #666;
+            color: #ffffff;
             margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         /* 主圖 */
@@ -105,7 +112,7 @@
             object-fit: cover;
             border-radius: 30px;
             margin-bottom: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         /* 步驟區域 */
@@ -116,18 +123,20 @@
         }
 
         .step-card {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             padding: 2.5rem;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            border-left: 5px solid #667eea;
+            border-left: 5px solid #1afe49;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .step-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
         .step-card::before {
@@ -137,7 +146,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+            background: linear-gradient(45deg, transparent, rgba(26, 254, 73, 0.05), transparent);
             transform: translateX(-100%);
             transition: transform 0.6s;
         }
@@ -164,13 +173,14 @@
             font-size: 1.5rem;
             font-weight: bold;
             margin-right: 1.5rem;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
         }
 
         .step-title {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #ffffff;
+            color: #2c3e50;
+            text-shadow: none;
         }
 
         .step-content {
@@ -184,12 +194,12 @@
             top: 2rem;
             right: 2rem;
             font-size: 3rem;
-            color: rgba(102, 126, 234, 0.2);
+            color: rgba(26, 254, 73, 0.2);
         }
 
         /* 重要提醒區域 */
         .important-notice {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             border-radius: 30px;
             padding: 2rem;
@@ -197,6 +207,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
         }
 
         .important-notice::before {
@@ -206,8 +217,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
-            opacity: 0.3;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .important-notice:hover::before {
+            transform: translateX(100%);
         }
 
         .notice-title {
@@ -225,49 +241,30 @@
             line-height: 1.6;
         }
 
-        /* 返回按鈕 */
-        .back-button {
-            background: linear-gradient(135deg, #1afe49, #8386f5);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .back-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-
         /* Footer */
         .footer {
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 3rem 0 1rem;
+            background: rgba(4, 19, 72, 0.9);
+            border-top: 1px solid rgba(26, 254, 73, 0.2);
+            border-radius: 30px 30px 0 0;
+            padding: 3rem 0;
             margin-top: 4rem;
+            backdrop-filter: blur(10px);
         }
 
-        .footer-content {
+        .footer-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            padding: 0 2rem;
         }
 
         .footer-section h3 {
-            color: #667eea;
+            color: #1afe49;
             margin-bottom: 1rem;
             font-size: 1.2rem;
+            font-weight: bold;
         }
 
         .footer-section ul {
@@ -279,31 +276,28 @@
         }
 
         .footer-section ul li a {
-            color: #ccc;
+            color: #ffffff;
             text-decoration: none;
             transition: color 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .footer-section ul li a:hover {
-            color: #667eea;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid #333;
-            color: #999;
+            color: #1afe49;
         }
 
         /* 響應式設計 */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .container {
+                padding: 2rem 1rem;
             }
             
             .page-title {
                 font-size: 2rem;
+            }
+            
+            .step-card {
+                padding: 2rem 1.5rem;
             }
             
             .step-header {
@@ -319,6 +313,10 @@
             .step-icon {
                 display: none;
             }
+            
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -326,12 +324,11 @@
     <!-- 導航欄 -->
     <nav class="navbar">
         <div class="nav-container">
-            <img src="logo.png" alt="Image Vape Logo" class="logo">
+            <img src="logoai.gif" alt="Image Vape Logo" class="logo">
             <ul class="nav-links">
                 <li><a href="index.html">首頁</a></li>
-                <li><a href="#products">產品</a></li>
-                <li><a href="#about">關於我們</a></li>
-                <li><a href="#contact">聯絡我們</a></li>
+                <li><a href="shopping_guide.html">購物說明</a></li>
+                <li><a href="cart.html">購物車</a></li>
             </ul>
         </div>
     </nav>
@@ -343,124 +340,100 @@
             <div class="page-header">
                 <h1 class="page-title">購物流程說明</h1>
                 <p class="page-subtitle">簡單三步驟，輕鬆完成購物</p>
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=300&q=80" alt="購物流程" class="hero-image">
             </div>
-
-            <!-- 主圖 -->
-            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=300&fit=crop" alt="購物流程" class="hero-image">
 
             <!-- 購物步驟 -->
             <div class="steps-container">
-                <!-- 步驟 1 -->
+                <!-- 步驟一 -->
                 <div class="step-card">
-                    <i class="fas fa-shopping-cart step-icon"></i>
                     <div class="step-header">
                         <div class="step-number">1</div>
                         <h2 class="step-title">挑選商品</h2>
                     </div>
                     <div class="step-content">
-                        找到你喜歡的商品，點擊【加入購物車】按鈕，輕鬆放進去就對了！<br>
-                        瀏覽我們豐富的產品系列，包含主機、煙彈、拋棄式等各種選擇，每個商品都有詳細的規格說明和圖片展示，讓您能夠充分了解產品特色後再做決定。
+                        <p>瀏覽我們的產品頁面，選擇您喜歡的電子煙主機或煙彈。每個產品都有詳細的規格說明和多種口味選擇。找到心儀的商品後，選擇數量和口味，點擊【加入購物車】按鈕即可。</p>
                     </div>
+                    <i class="fas fa-shopping-bag step-icon"></i>
                 </div>
 
-                <!-- 步驟 2 -->
+                <!-- 步驟二 -->
                 <div class="step-card">
-                    <i class="fas fa-edit step-icon"></i>
                     <div class="step-header">
                         <div class="step-number">2</div>
                         <h2 class="step-title">結帳與填寫資料</h2>
                     </div>
                     <div class="step-content">
-                        填寫時記得輸入取件人姓名、電話，以及想取貨的門市，這些資訊缺一不可，不然無法出貨喔！<br>
-                        請務必確認所有資料的正確性，特別是聯絡電話和取貨門市，這將直接影響到您的取貨體驗。我們支援 7-11 和全家便利商店取貨。
+                        <p>進入購物車頁面確認商品無誤後，填寫取件人姓名、聯絡電話等必要資訊。選擇取貨的便利商店（7-11或全家），並填寫正確的門市名稱和門市號碼。確認所有資訊正確後，點擊【建立訂單】。</p>
                     </div>
+                    <i class="fas fa-credit-card step-icon"></i>
                 </div>
 
-                <!-- 步驟 3 -->
+                <!-- 步驟三 -->
                 <div class="step-card">
-                    <i class="fas fa-truck step-icon"></i>
                     <div class="step-header">
                         <div class="step-number">3</div>
                         <h2 class="step-title">官方網站寄送超商</h2>
                     </div>
                     <div class="step-content">
-                        我們的網站有超強的保護系統，確保你的資料安全！<br>
-                        下單後不會直接給你物流編號，商品會在4到5天左右送到指定超商。<br>
-                        請記得幫我們取貨，謝謝你的配合！<br><br>
-                        <strong>取貨注意事項：</strong><br>
-                        • 商品到店後會收到簡訊通知<br>
-                        • 請攜帶身分證件前往取貨<br>
-                        • 超商保管期限為7天，逾期將退回
+                        <p>訂單確認後，我們會在4-5個工作天內將商品寄送到您指定的便利商店。您會收到取貨通知，請攜帶身分證件到門市取貨。取貨時請確認商品無誤再完成取貨程序。</p>
                     </div>
+                    <i class="fas fa-truck step-icon"></i>
                 </div>
             </div>
 
             <!-- 重要提醒 -->
             <div class="important-notice">
-                <div class="notice-title">
+                <h3 class="notice-title">
                     <i class="fas fa-exclamation-triangle"></i>
                     重要提醒
-                </div>
+                </h3>
                 <div class="notice-content">
-                    為確保順利取貨，請務必填寫正確的聯絡資訊！<br>
-                    如有任何問題，歡迎隨時聯絡我們的客服團隊。
+                    <p>• 請確保填寫的個人資料正確無誤，以免影響取貨</p>
+                    <p>• 門市資訊請務必填寫完整，包含正確的門市名稱和號碼</p>
+                    <p>• 商品寄達門市後請盡快取貨，避免超過保管期限</p>
+                    <p>• 取貨時請攜帶身分證件以供核對身份</p>
                 </div>
             </div>
-
-            <!-- 返回按鈕 -->
-            <a href="index.html" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                返回首頁
-            </a>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
+        <div class="footer-container">
             <div class="footer-section">
-                <h3>關於 Image Vape</h3>
+                <h3>主機系列</h3>
                 <ul>
-                    <li><a href="#">品牌故事</a></li>
-                    <li><a href="#">門市據點</a></li>
-                    <li><a href="#">最新消息</a></li>
-                    <li><a href="#">會員專區</a></li>
+                    <li><a href="sp2_product.html">SP2 一代主機</a></li>
+                    <li><a href="ilia_1_product.html">ILIA 一代主機</a></li>
+                    <li><a href="ilia_leather_product.html">ILIA 皮革主機</a></li>
+                    <li><a href="ilia_fabric_product.html">ILIA 布紋主機</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>客戶服務</h3>
+                <h3>煙彈系列</h3>
+                <ul>
+                    <li><a href="sp2_pods_product.html">SP2 煙彈</a></li>
+                    <li><a href="ilia_pods_product.html">ILIA 發光煙彈</a></li>
+                    <li><a href="hta_pods_product.html">HTA 煙彈</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>拋棄式系列</h3>
+                <ul>
+                    <li><a href="ilia_disposable_product.html">ILIA 拋棄式四代</a></li>
+                    <li><a href="hta_vape_product.html">HTA 拋棄式</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>服務資訊</h3>
                 <ul>
                     <li><a href="shopping_guide.html">購物說明</a></li>
-                    <li><a href="#">運送方式</a></li>
-                    <li><a href="#">退換貨政策</a></li>
-                    <li><a href="#">常見問題</a></li>
+                    <li><a href="cart.html">購物車</a></li>
+                    <li><a href="index.html">返回首頁</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
-                <h3>產品系列</h3>
-                <ul>
-                    <li><a href="#hosts">主機系列</a></li>
-                    <li><a href="#pods">煙彈系列</a></li>
-                    <li><a href="#disposable">拋棄式系列</a></li>
-                    <li><a href="#htx">HTX 黑桃系列</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>聯絡我們</h3>
-                <ul>
-                    <li><a href="#">客服專線</a></li>
-                    <li><a href="#">線上客服</a></li>
-                    <li><a href="#">電子郵件</a></li>
-                    <li><a href="#">社群媒體</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Image Vape. All rights reserved. | 本網站僅供成年人使用</p>
         </div>
     </footer>
-
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 </body>
 </html> 

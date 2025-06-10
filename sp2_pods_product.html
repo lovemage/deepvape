@@ -13,16 +13,18 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
             line-height: 1.6;
             color: #ffffff;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Header */
         header {
-            background: rgba(22, 33, 62, 0.95);
+            background: rgba(4, 19, 72, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: fixed;
@@ -48,15 +50,14 @@
         }
 
         .logo img {
-            height: 40px;
-            width: 40px;
-            object-fit: contain;
+            height: 50px;
+            width: auto;
         }
 
         .logo h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.8rem;
-            color: #e94560;
+            color: #1afe49;
             font-weight: 700;
         }
 
@@ -67,7 +68,7 @@
         }
 
         .back-button {
-            background: #0f3460;
+            background: linear-gradient(135deg, #1afe49, #8386f5);
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
@@ -81,12 +82,12 @@
         }
 
         .back-button:hover {
-            background: #e94560;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
         }
 
         .cart-button {
-            background: #e94560;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
@@ -100,8 +101,8 @@
         }
 
         .cart-button:hover {
-            background: #0f3460;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
         }
 
         /* 主要內容 */
@@ -113,10 +114,12 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(4, 19, 72, 0.9);
+            border: 1px solid rgba(26, 254, 73, 0.2);
             border-radius: 30px;
             padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .product-header {
@@ -131,12 +134,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
+            text-shadow: none;
         }
 
         .product-subtitle {
             font-size: 1.2rem;
-            color: #666;
+            color: #ffffff;
             margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .price {
@@ -162,7 +167,7 @@
             max-width: 100%;
             height: auto;
             border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .product-info {
@@ -178,14 +183,15 @@
 
         .feature-list li {
             padding: 0.8rem 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(26, 254, 73, 0.2);
             display: flex;
             align-items: center;
+            color: #ffffff;
         }
 
         .feature-list li:before {
             content: "✓";
-            color: #27ae60;
+            color: #1afe49;
             font-weight: bold;
             margin-right: 1rem;
             font-size: 1.2rem;
@@ -202,6 +208,7 @@
             color: #ffffff;
             margin-bottom: 2rem;
             text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .flavor-grid {
@@ -212,41 +219,46 @@
         }
 
         .flavor-option {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(26, 254, 73, 0.3);
             border-radius: 30px;
             padding: 1rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .flavor-option:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: #1afe49;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 254, 73, 0.2);
         }
 
         .flavor-option.selected {
-            border-color: #667eea;
+            border-color: #1afe49;
             background: linear-gradient(135deg, #1afe49, #8386f5);
             color: white;
         }
 
-        .flavor-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+        .flavor-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
         }
 
-        .flavor-option:hover::before {
-            left: 100%;
+        .flavor-option.selected .flavor-name {
+            color: white;
+        }
+
+        .flavor-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .flavor-option.selected .flavor-description {
+            color: rgba(255, 255, 255, 0.9);
         }
 
         /* 規格表 */
@@ -255,19 +267,24 @@
         }
 
         .specs-table {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .specs-table table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .specs-table th,
         .specs-table td {
             padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(26, 254, 73, 0.2);
+            color: #2c3e50;
         }
 
         .specs-table th {
@@ -276,16 +293,18 @@
             font-weight: bold;
         }
 
-        .specs-table tr:hover {
-            background-color: #f8f9fa;
+        .specs-table tr:last-child td {
+            border-bottom: none;
         }
 
         /* 購買區域 */
         .purchase-section {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             padding: 2rem;
             text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .quantity-control {
@@ -293,36 +312,43 @@
             justify-content: center;
             align-items: center;
             gap: 1rem;
-            margin: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-label {
+            font-weight: bold;
+            color: #2c3e50;
         }
 
         .quantity-btn {
-            background: #667eea;
+            background: linear-gradient(135deg, #1afe49, #8386f5);
             color: white;
             border: none;
             width: 40px;
             height: 40px;
             border-radius: 30px;
-            font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: bold;
         }
 
         .quantity-btn:hover {
-            background: #764ba2;
-            transform: scale(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
         }
 
         .quantity-input {
             width: 80px;
             height: 40px;
             text-align: center;
-            border: 2px solid #ddd;
+            border: 2px solid rgba(26, 254, 73, 0.3);
             border-radius: 30px;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2c3e50;
         }
 
-        .add-to-cart {
+        .add-to-cart-btn {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
             border: none;
@@ -331,290 +357,364 @@
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 1rem;
+            font-weight: bold;
         }
 
-        .add-to-cart:hover {
+        .add-to-cart-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
         }
 
-        .buy-now {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            border: none;
-            padding: 1rem 3rem;
-            font-size: 1.2rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 1rem;
-        }
-
-        .buy-now:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+        .add-to-cart-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         /* 響應式設計 */
         @media (max-width: 768px) {
-            .product-showcase {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 2rem 1rem;
             }
             
-            .nav-links {
-                display: none;
+            .product-showcase {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .flavor-grid {
+                grid-template-columns: 1fr;
             }
             
             .product-title {
                 font-size: 2rem;
             }
             
-            .flavor-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            .header-actions {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logo.png" alt="Deepvape Logo">
-                <h1>Deepvape</h1>
+                <img src="logoai.gif" alt="Image Vape">
+                <h1>Image Vape</h1>
             </div>
             <div class="header-actions">
-                <a href="cart.html" class="cart-button">
-                    <i class="fas fa-shopping-cart"></i> 購物車
-                </a>
                 <a href="index.html" class="back-button">
-                    <i class="fas fa-arrow-left"></i> 返回首頁
+                    <i class="fas fa-arrow-left"></i>
+                    返回首頁
+                </a>
+                <a href="cart.html" class="cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                    購物車
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- 主要內容 -->
     <main class="main-content">
         <div class="container">
-            <!-- 產品標題 -->
             <div class="product-header">
                 <h1 class="product-title">思博瑞 SP2 煙彈</h1>
-                <p class="product-subtitle">32種豐富口味 | 2.0ML容量 | 3%尼古丁含量</p>
+                <p class="product-subtitle">32種口味選擇 • 2.0ML大容量 • 3%尼古丁含量</p>
                 <div class="price">NT$ 350</div>
             </div>
 
-            <!-- 產品展示 -->
             <div class="product-showcase">
                 <div class="product-image">
                     <img src="sp2_d/S__24518868.jpg" alt="SP2 煙彈">
                 </div>
                 <div class="product-info">
                     <ul class="feature-list">
-                        <li>豐富口味選擇 - 32種不同口味</li>
-                        <li>大容量設計 - 2.0ML煙油容量</li>
-                        <li>適中尼古丁 - 3%尼古丁含量</li>
-                        <li>一盒三入 - 經濟實惠包裝</li>
-                        <li>頂級煙油 - 純正口感體驗</li>
-                        <li>安全認證 - 品質保證</li>
+                        <li>32種豐富口味選擇</li>
+                        <li>2.0ML大容量設計</li>
+                        <li>3%尼古丁含量</li>
+                        <li>一盒三入裝</li>
+                        <li>優質霧化體驗</li>
+                        <li>食品級材質安全</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- 口味選擇 -->
-            <div class="flavor-section">
-                <h2 class="section-title">選擇您喜愛的口味</h2>
-                <div class="flavor-grid" id="flavorGrid">
-                    <!-- 32種口味選項 -->
+            <section class="flavor-section">
+                <h2 class="section-title">選擇口味</h2>
+                <div class="flavor-grid">
+                    <div class="flavor-option" data-flavor="薄荷">
+                        <div class="flavor-name">薄荷</div>
+                        <div class="flavor-description">清涼薄荷</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="草莓">
+                        <div class="flavor-name">草莓</div>
+                        <div class="flavor-description">香甜草莓</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="藍莓">
+                        <div class="flavor-name">藍莓</div>
+                        <div class="flavor-description">酸甜藍莓</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="芒果">
+                        <div class="flavor-name">芒果</div>
+                        <div class="flavor-description">熱帶芒果</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="西瓜">
+                        <div class="flavor-name">西瓜</div>
+                        <div class="flavor-description">清甜西瓜</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="葡萄">
+                        <div class="flavor-name">葡萄</div>
+                        <div class="flavor-description">紫葡萄香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="蘋果">
+                        <div class="flavor-name">蘋果</div>
+                        <div class="flavor-description">青蘋果酸</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="檸檬">
+                        <div class="flavor-name">檸檬</div>
+                        <div class="flavor-description">檸檬清香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="可樂">
+                        <div class="flavor-name">可樂</div>
+                        <div class="flavor-description">經典可樂</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="雪碧">
+                        <div class="flavor-name">雪碧</div>
+                        <div class="flavor-description">檸檬汽水</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="奶茶">
+                        <div class="flavor-name">奶茶</div>
+                        <div class="flavor-description">香濃奶茶</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="咖啡">
+                        <div class="flavor-name">咖啡</div>
+                        <div class="flavor-description">濃郁咖啡</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="香草">
+                        <div class="flavor-name">香草</div>
+                        <div class="flavor-description">香草奶昔</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="巧克力">
+                        <div class="flavor-name">巧克力</div>
+                        <div class="flavor-description">濃郁巧克力</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="椰子">
+                        <div class="flavor-name">椰子</div>
+                        <div class="flavor-description">椰香清甜</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="荔枝">
+                        <div class="flavor-name">荔枝</div>
+                        <div class="flavor-description">荔枝蜜香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="水蜜桃">
+                        <div class="flavor-name">水蜜桃</div>
+                        <div class="flavor-description">水蜜桃甜</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="鳳梨">
+                        <div class="flavor-name">鳳梨</div>
+                        <div class="flavor-description">熱帶鳳梨</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="櫻桃">
+                        <div class="flavor-name">櫻桃</div>
+                        <div class="flavor-description">櫻桃甜香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="柳橙">
+                        <div class="flavor-name">柳橙</div>
+                        <div class="flavor-description">柳橙清香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="奇異果">
+                        <div class="flavor-name">奇異果</div>
+                        <div class="flavor-description">奇異果酸甜</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="百香果">
+                        <div class="flavor-name">百香果</div>
+                        <div class="flavor-description">百香果香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="蜂蜜">
+                        <div class="flavor-name">蜂蜜</div>
+                        <div class="flavor-description">天然蜂蜜</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="薰衣草">
+                        <div class="flavor-name">薰衣草</div>
+                        <div class="flavor-description">薰衣草香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="玫瑰">
+                        <div class="flavor-name">玫瑰</div>
+                        <div class="flavor-description">玫瑰花香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="茉莉">
+                        <div class="flavor-name">茉莉</div>
+                        <div class="flavor-description">茉莉清香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="綠茶">
+                        <div class="flavor-name">綠茶</div>
+                        <div class="flavor-description">清淡綠茶</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="烏龍茶">
+                        <div class="flavor-name">烏龍茶</div>
+                        <div class="flavor-description">烏龍茶香</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="紅茶">
+                        <div class="flavor-name">紅茶</div>
+                        <div class="flavor-description">濃郁紅茶</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="檸檬茶">
+                        <div class="flavor-name">檸檬茶</div>
+                        <div class="flavor-description">檸檬紅茶</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="蜜桃烏龍">
+                        <div class="flavor-name">蜜桃烏龍</div>
+                        <div class="flavor-description">蜜桃烏龍茶</div>
+                    </div>
+                    <div class="flavor-option" data-flavor="茉莉綠茶">
+                        <div class="flavor-name">茉莉綠茶</div>
+                        <div class="flavor-description">茉莉綠茶香</div>
+                    </div>
                 </div>
-                <p style="text-align: center; color: #666; margin-top: 1rem;">
-                    * 點擊選擇您想要的口味
-                </p>
-            </div>
+            </section>
 
-            <!-- 產品規格 -->
-            <div class="specs-section">
+            <section class="specs-section">
                 <h2 class="section-title">產品規格</h2>
-                <table class="specs-table">
-                    <tr>
-                        <th>規格項目</th>
-                        <th>詳細說明</th>
-                    </tr>
-                    <tr>
-                        <td>產品名稱</td>
-                        <td>思博瑞 SP2 煙彈</td>
-                    </tr>
-                    <tr>
-                        <td>容量</td>
-                        <td>2.0ML</td>
-                    </tr>
-                    <tr>
-                        <td>尼古丁含量</td>
-                        <td>3%</td>
-                    </tr>
-                    <tr>
-                        <td>包裝規格</td>
-                        <td>一盒三入</td>
-                    </tr>
-                    <tr>
-                        <td>口味數量</td>
-                        <td>32種豐富口味</td>
-                    </tr>
-                    <tr>
-                        <td>適用設備</td>
-                        <td>SP2 主機系列</td>
-                    </tr>
-                    <tr>
-                        <td>保存方式</td>
-                        <td>陰涼乾燥處，避免陽光直射</td>
-                    </tr>
-                </table>
-            </div>
+                <div class="specs-table">
+                    <table>
+                        <tr>
+                            <th>規格項目</th>
+                            <th>詳細說明</th>
+                        </tr>
+                        <tr>
+                            <td>容量</td>
+                            <td>2.0ML</td>
+                        </tr>
+                        <tr>
+                            <td>尼古丁含量</td>
+                            <td>3%</td>
+                        </tr>
+                        <tr>
+                            <td>包裝</td>
+                            <td>一盒三入</td>
+                        </tr>
+                        <tr>
+                            <td>口味選擇</td>
+                            <td>32種口味</td>
+                        </tr>
+                        <tr>
+                            <td>適用主機</td>
+                            <td>SP2 系列主機</td>
+                        </tr>
+                        <tr>
+                            <td>材質</td>
+                            <td>食品級材質</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
 
-            <!-- 購買區域 -->
-            <div class="purchase-section">
-                <h3>加入購物車</h3>
+            <section class="purchase-section">
                 <div class="quantity-control">
-                    <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                    <span class="quantity-label">數量：</span>
+                    <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
                     <input type="number" id="quantity" class="quantity-input" value="1" min="1">
-                    <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                    <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
                 </div>
-                <p>選擇的口味：<span id="selectedFlavor">請選擇口味</span></p>
-                <p>總價：NT$ <span id="totalPrice">350</span></p>
-                <div>
-                    <button class="add-to-cart" onclick="addToCart()">加入購物車</button>
-                    <button class="buy-now" onclick="buyNow()">加入購物車</button>
-                </div>
-            </div>
+                <button class="add-to-cart-btn" onclick="addToCart()" disabled>
+                    <i class="fas fa-shopping-cart"></i>
+                    請先選擇口味
+                </button>
+            </section>
         </div>
     </main>
 
     <script>
-        // 32種口味列表
-        const flavors = [
-            '冰涼薄荷', '冰釀藍莓', '香草奶昔', '可樂', '雪碧', '奇異果',
-            '綠蘋果檸檬', '芒果冰沙', '蜜桃烏龍茶', '綠茶檸檬', '紅茶拿鐵', '冰咖啡',
-            '香草拿鐵', '焦糖瑪奇朵', '白桃烏龍', '柚子蜂蜜茶', '草莓牛奶', '藍莓芝士蛋糕',
-            '檸檬塔', '抹茶拿鐵', '黑糖珍珠奶茶', '芋頭牛奶', '紅豆牛奶', '椰子牛奶',
-            '哈密瓜', '西瓜', '葡萄', '櫻桃', '鳳梨', '百香果',
-            '荔枝', '龍眼'
-        ];
-
         let selectedFlavor = '';
-        let currentPrice = 350;
+        let quantity = 1;
 
-        // 初始化口味選項
-        function initializeFlavors() {
-            const flavorGrid = document.getElementById('flavorGrid');
-            flavors.forEach(flavor => {
-                const flavorOption = document.createElement('div');
-                flavorOption.className = 'flavor-option';
-                flavorOption.textContent = flavor;
-                flavorOption.onclick = () => selectFlavor(flavor, flavorOption);
-                flavorGrid.appendChild(flavorOption);
+        // 口味選擇
+        document.querySelectorAll('.flavor-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // 移除其他選項的選中狀態
+                document.querySelectorAll('.flavor-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // 添加選中狀態
+                this.classList.add('selected');
+                selectedFlavor = this.dataset.flavor;
+                
+                // 更新按鈕狀態
+                updateAddToCartButton();
             });
-        }
-
-        // 選擇口味
-        function selectFlavor(flavor, element) {
-            // 移除其他選中狀態
-            document.querySelectorAll('.flavor-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            // 添加選中狀態
-            element.classList.add('selected');
-            selectedFlavor = flavor;
-            document.getElementById('selectedFlavor').textContent = flavor;
-        }
+        });
 
         // 數量控制
-        function increaseQuantity() {
-            const quantityInput = document.getElementById('quantity');
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-            updateTotalPrice();
+        function updateQuantity(change) {
+            quantity = Math.max(1, quantity + change);
+            document.getElementById('quantity').value = quantity;
         }
 
-        function decreaseQuantity() {
-            const quantityInput = document.getElementById('quantity');
-            if (parseInt(quantityInput.value) > 1) {
-                quantityInput.value = parseInt(quantityInput.value) - 1;
-                updateTotalPrice();
+        document.getElementById('quantity').addEventListener('change', function() {
+            quantity = Math.max(1, parseInt(this.value) || 1);
+            this.value = quantity;
+        });
+
+        // 更新加入購物車按鈕
+        function updateAddToCartButton() {
+            const button = document.querySelector('.add-to-cart-btn');
+            if (selectedFlavor) {
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-shopping-cart"></i> 加入購物車';
+            } else {
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-shopping-cart"></i> 請先選擇口味';
             }
-        }
-
-        // 更新總價
-        function updateTotalPrice() {
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const totalPrice = currentPrice * quantity;
-            document.getElementById('totalPrice').textContent = totalPrice;
         }
 
         // 加入購物車
         function addToCart() {
-            const selectedColor = document.querySelector('.color-option.selected')?.dataset.color || '預設';
-            const selectedFlavor = document.querySelector('.flavor-option.selected')?.dataset.flavor || '';
-            const quantity = document.getElementById('quantity').value;
-            
-            const productName = document.querySelector('.product-title').textContent;
-            const productPrice = document.querySelector('.product-price').textContent.match(/\d+/)[0];
-            const productImage = document.querySelector('.main-image').src;
-            
+            if (!selectedFlavor) {
+                alert('請先選擇口味');
+                return;
+            }
+
             const product = {
-                id: Date.now().toString(),
-                name: productName,
-                price: parseInt(productPrice),
-                color: selectedColor,
+                name: 'SP2 煙彈',
+                price: 350,
                 flavor: selectedFlavor,
-                quantity: parseInt(quantity),
-                image: productImage
+                quantity: quantity,
+                image: 'sp2_d/S__24518868.jpg'
             };
+
+            // 獲取現有購物車
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
             
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const existingIndex = cart.findIndex(item => 
-                item.name === product.name && item.color === product.color && item.flavor === product.flavor
+            // 檢查是否已有相同商品和口味
+            const existingItem = cart.find(item => 
+                item.name === product.name && item.flavor === product.flavor
             );
-            
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity += product.quantity;
+
+            if (existingItem) {
+                existingItem.quantity += product.quantity;
             } else {
                 cart.push(product);
             }
-            
+
+            // 儲存到 localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            let message = `已將 ${quantity} 個 ${productName}`;
-            if (selectedColor !== '預設') message += ` (${selectedColor})`;
-            if (selectedFlavor) message += ` (${selectedFlavor})`;
-            message += ' 加入購物車！';
-            
-            alert(message);
-        }
-            
-            const quantity = document.getElementById('quantity').value;
-            alert(`已將 ${quantity} 盒 ${selectedFlavor} 口味的 SP2 煙彈加入購物車！`);
-        }
 
-        // 加入購物車
-        function buyNow() {
-            if (!selectedFlavor) {
-                alert('請先選擇口味！');
-                return;
-            }
+            // 顯示成功訊息
+            alert(`已將 ${product.name} (${product.flavor}) x${product.quantity} 加入購物車！`);
             
-            const quantity = document.getElementById('quantity').value;
-            const totalPrice = document.getElementById('totalPrice').textContent;
-            alert(`即將購買 ${quantity} 盒 ${selectedFlavor} 口味的 SP2 煙彈，總價 NT$ ${totalPrice}`);
+            // 重置選擇
+            selectedFlavor = '';
+            quantity = 1;
+            document.getElementById('quantity').value = 1;
+            document.querySelectorAll('.flavor-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            updateAddToCartButton();
         }
-
-        // 監聽數量輸入變化
-        document.getElementById('quantity').addEventListener('input', updateTotalPrice);
-
-        // 頁面載入時初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeFlavors();
-        });
     </script>
 </body>
 </html> 
