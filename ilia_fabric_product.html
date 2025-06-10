@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILIA 哩亞布紋主機 - 時尚外觀設計 | Image Vape</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(4, 19, 72, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: #1afe49;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .back-button {
+            background: #0f3460;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 65px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background: #e94560;
+            transform: translateY(-2px);
+        }
+
+        .cart-button {
+            background: #e94560;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 65px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cart-button:hover {
+            background: #0f3460;
+            transform: translateY(-2px);
+        }
+
+        /* 主要內容 */
+        .main-content {
+            margin-top: 100px;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(4, 19, 72, 0.8);
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            border-radius: 65px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .product-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .product-title {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .product-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 2rem;
+        }
+
+        /* 產品展示區 */
+        .product-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-image {
+            text-align: center;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 65px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* 顏色選擇區 */
+        .color-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-option {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 3px solid transparent;
+            border-radius: 65px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .color-option.selected {
+            border-color: #8B4513;
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+        }
+
+        .color-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .color-option:hover::before {
+            left: 100%;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            border: 2px solid #ddd;
+        }
+
+        /* 規格表 */
+        .specs-section {
+            margin-bottom: 3rem;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 65px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .specs-table th {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            font-weight: bold;
+        }
+
+        .specs-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* 購買區域 */
+        .purchase-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 65px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .quantity-btn {
+            background: #8B4513;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #D2691E;
+            transform: scale(1.1);
+        }
+
+        .quantity-input {
+            width: 80px;
+            height: 40px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 65px;
+            font-size: 1.1rem;
+        }
+
+        .add-to-cart {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 65px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
+        }
+
+        .buy-now {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 65px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem;
+        }
+
+        .buy-now:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        /* 布紋特效 */
+        .fabric-texture {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fabric-texture::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(139, 69, 19, 0.1) 2px, rgba(139, 69, 19, 0.1) 4px),
+                repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(210, 105, 30, 0.1) 2px, rgba(210, 105, 30, 0.1) 4px);
+            pointer-events: none;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .product-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .product-title {
+                font-size: 2rem;
+            }
+            
+            .color-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logoai.gif" alt="Deepvape Logo">
+                <h1>Deepvape</h1>
+            </div>
+            <div class="header-actions">
+                <a href="cart.html" class="cart-button">
+                    <i class="fas fa-shopping-cart"></i> 購物車
+                </a>
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> 返回首頁
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要內容 -->
+    <main class="main-content">
+        <div class="container fabric-texture">
+            <!-- 產品標題 -->
+            <div class="product-header">
+                <h1 class="product-title">ILIA 哩亞布紋主機</h1>
+                <p class="product-subtitle">時尚布紋外觀 | 8W~10W功率調節 | 400mAh電池</p>
+                <div class="price">NT$ 750</div>
+            </div>
+
+            <!-- 產品展示 -->
+            <div class="product-showcase">
+                <div class="product-image">
+                    <img src="ilia_Bu/布紋款哩亞主機-ILIA電子煙主機-換彈式霧化桿.png" alt="ILIA 布紋主機">
+                </div>
+                <div class="product-info">
+                    <ul class="feature-list">
+                        <li>時尚布紋外觀 - 獨特質感設計</li>
+                        <li>8W~10W功率調節 - 滿足不同需求</li>
+                        <li>清晰顯示屏 - 即時了解使用狀態</li>
+                        <li>400mAh長效電池 - 持久續航</li>
+                        <li>時尚外觀與實用性完美結合</li>
+                        <li>適合日常使用和外出攜帶</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 顏色選擇 -->
+            <div class="color-section">
+                <h2 class="section-title">選擇您喜愛的顏色</h2>
+                <div class="color-grid" id="colorGrid">
+                    <!-- 8種顏色選項 -->
+                </div>
+                <p style="text-align: center; color: #666; margin-top: 1rem;">
+                    * 點擊選擇您想要的顏色
+                </p>
+            </div>
+
+            <!-- 產品規格 -->
+            <div class="specs-section">
+                <h2 class="section-title">產品規格</h2>
+                <table class="specs-table">
+                    <tr>
+                        <th>規格項目</th>
+                        <th>詳細說明</th>
+                    </tr>
+                    <tr>
+                        <td>產品名稱</td>
+                        <td>ILIA 哩亞布紋系列一代電子煙主機</td>
+                    </tr>
+                    <tr>
+                        <td>外觀設計</td>
+                        <td>獨特布紋質感外觀</td>
+                    </tr>
+                    <tr>
+                        <td>功率範圍</td>
+                        <td>8W ~ 10W 可調節</td>
+                    </tr>
+                    <tr>
+                        <td>電池容量</td>
+                        <td>400mAh 高效能電池</td>
+                    </tr>
+                    <tr>
+                        <td>顯示屏</td>
+                        <td>清晰顯示屏，即時顯示使用狀態</td>
+                    </tr>
+                    <tr>
+                        <td>顏色選擇</td>
+                        <td>8種時尚顏色可選</td>
+                    </tr>
+                    <tr>
+                        <td>充電方式</td>
+                        <td>TYPE-C 快速充電</td>
+                    </tr>
+                    <tr>
+                        <td>適用煙彈</td>
+                        <td>ILIA 系列煙彈</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 購買區域 -->
+            <div class="purchase-section">
+                <h3>立即購買</h3>
+                <div class="quantity-control">
+                    <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                    <input type="number" id="quantity" class="quantity-input" value="1" min="1">
+                    <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                </div>
+                <p>選擇的顏色：<span id="selectedColor">請選擇顏色</span></p>
+                <p>總價：NT$ <span id="totalPrice">750</span></p>
+                <div>
+                    <button class="add-to-cart" onclick="addToCart()">加入購物車</button>
+                    <button class="buy-now" onclick="buyNow()">立即購買</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 8種顏色選項
+        const colors = [
+            { name: '墨黑色', color: '#2C2C2C' },
+            { name: '墨藍色', color: '#1E3A8A' },
+            { name: '哩亞灰', color: '#6B7280' },
+            { name: '哩亞粉', color: '#EC4899' },
+            { name: '哩亞紅', color: '#DC2626' },
+            { name: '哩亞藍', color: '#2563EB' },
+            { name: '哩亞黃', color: '#F59E0B' },
+            { name: '布紋藍', color: '#1D4ED8' }
+        ];
+
+        let selectedColor = '';
+        let currentPrice = 750;
+
+        // 初始化顏色選項
+        function initializeColors() {
+            const colorGrid = document.getElementById('colorGrid');
+            colors.forEach(colorOption => {
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'color-option';
+                colorDiv.onclick = () => selectColor(colorOption.name, colorDiv);
+                
+                const colorPreview = document.createElement('div');
+                colorPreview.className = 'color-preview';
+                colorPreview.style.backgroundColor = colorOption.color;
+                
+                const colorName = document.createElement('div');
+                colorName.textContent = colorOption.name;
+                
+                colorDiv.appendChild(colorPreview);
+                colorDiv.appendChild(colorName);
+                colorGrid.appendChild(colorDiv);
+            });
+        }
+
+        // 選擇顏色
+        function selectColor(color, element) {
+            // 移除其他選中狀態
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 添加選中狀態
+            element.classList.add('selected');
+            selectedColor = color;
+            document.getElementById('selectedColor').textContent = color;
+        }
+
+        // 數量控制
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+            updateTotalPrice();
+        }
+
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+                updateTotalPrice();
+            }
+        }
+
+        // 更新總價
+        function updateTotalPrice() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const totalPrice = currentPrice * quantity;
+            document.getElementById('totalPrice').textContent = totalPrice;
+        }
+
+        // 加入購物車
+        function addToCart() {
+            if (!selectedColor) {
+                alert('請先選擇顏色！');
+                return;
+            }
+            
+            const quantity = document.getElementById('quantity').value;
+            alert(`已將 ${quantity} 台 ${selectedColor} 的 ILIA 布紋主機加入購物車！`);
+        }
+
+        // 立即購買
+        function buyNow() {
+            if (!selectedColor) {
+                alert('請先選擇顏色！');
+                return;
+            }
+            
+            const quantity = document.getElementById('quantity').value;
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            alert(`即將購買 ${quantity} 台 ${selectedColor} 的 ILIA 布紋主機，總價 NT$ ${totalPrice}`);
+        }
+
+        // 監聽數量輸入變化
+        document.getElementById('quantity').addEventListener('input', updateTotalPrice);
+
+        // 頁面載入時初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeColors();
+        });
+    </script>
+</body>
+</html> 

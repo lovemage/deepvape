@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>門市選擇測試 | Image Vape</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+        
+        .log {
+            background: #343a40;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>門市選擇功能測試</h1>
+        
+        <div>
+            <h3>測試按鈕</h3>
+            <button class="btn" onclick="testDirectCallback()">測試直接回調</button>
+            <button class="btn" onclick="test711API()">測試 ibon 門市查詢</button>
+            <button class="btn" onclick="testLocalCallback()">測試本地回調頁面</button>
+            <button class="btn" onclick="clearLog()">清除日誌</button>
+        </div>
+        
+        <div>
+            <h3>選擇結果</h3>
+            <div id="result" class="result">
+                等待選擇門市...
+            </div>
+        </div>
+        
+        <div>
+            <h3>操作日誌</h3>
+            <div id="log" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedStore = null;
+        
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function updateResult(store, success = true) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = `result ${success ? 'success' : 'error'}`;
+            
+            if (success && store) {
+                resultDiv.innerHTML = `
+                    <h4>✅ 門市選擇成功</h4>
+                    <p><strong>門市編號：</strong>${store.storeId}</p>
+                    <p><strong>門市名稱：</strong>${store.storeName}</p>
+                    <p><strong>門市地址：</strong>${store.storeAddress}</p>
+                    <p><strong>門市電話：</strong>${store.storePhone}</p>
+                `;
+            } else {
+                resultDiv.innerHTML = `<h4>❌ 門市選擇失敗</h4><p>${store || '未知錯誤'}</p>`;
+            }
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+            document.getElementById('result').innerHTML = '等待選擇門市...';
+            document.getElementById('result').className = 'result';
+        }
+        
+        // 監聽來自彈出視窗的訊息
+        window.addEventListener('message', function(event) {
+            log(`收到訊息: ${JSON.stringify(event.data)}`);
+            
+            if (event.data && (event.data.type === 'storeSelected' || event.data.storeInfo)) {
+                const storeData = event.data.storeInfo || event.data;
+                
+                if (storeData && (storeData.storeName || storeData.storeId)) {
+                    selectedStore = {
+                        storeId: storeData.storeId || 'N/A',
+                        storeName: storeData.storeName || '未知門市',
+                        storeAddress: storeData.storeAddress || '地址未提供',
+                        storePhone: storeData.storePhone || '電話未提供'
+                    };
+                    
+                    updateResult(selectedStore, true);
+                    log('✅ 門市選擇成功');
+                } else {
+                    updateResult('門市資料格式錯誤', false);
+                    log('❌ 門市資料格式錯誤');
+                }
+            }
+        });
+        
+        function testDirectCallback() {
+            log('開始測試直接回調...');
+            
+            // 模擬直接接收門市資料
+            const testStore = {
+                storeId: 'DIRECT001',
+                storeName: '直接測試門市',
+                storeAddress: '台北市測試區測試路123號',
+                storePhone: '02-1234-5678'
+            };
+            
+            window.postMessage({
+                type: 'storeSelected',
+                storeInfo: testStore
+            }, '*');
+        }
+        
+        function test711API() {
+            log('開始測試 ibon 門市查詢...');
+            
+            const ibonUrl = 'http://www.ibon.com.tw/retail_inquiry.aspx#gsc.tab=0';
+            
+            log(`ibon URL: ${ibonUrl}`);
+            
+            const popup = window.open(ibonUrl, 'storeMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+            
+            if (!popup || popup.closed) {
+                updateResult('彈出視窗被阻擋', false);
+                log('❌ 彈出視窗被阻擋');
+                return;
+            }
+            
+            log('✅ ibon 門市查詢頁面已開啟');
+            log('請在 ibon 頁面中查詢並記住門市資訊，然後關閉視窗');
+            
+            // 監聽彈出視窗關閉
+            const checkClosed = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(checkClosed);
+                    log('彈出視窗已關閉');
+                    
+                    // 模擬手動輸入門市資訊
+                    setTimeout(() => {
+                        const testStore = {
+                            storeId: 'IBON001',
+                            storeName: 'ibon 測試門市',
+                            storeAddress: '台北市信義區信義路五段7號',
+                            storePhone: '02-2345-6789'
+                        };
+                        
+                        selectedStore = testStore;
+                        updateResult(testStore, true);
+                        log('✅ 模擬門市選擇完成');
+                    }, 1000);
+                }
+            }, 1000);
+        }
+        
+        function testLocalCallback() {
+            log('開始測試本地回調頁面...');
+            
+            const callbackUrl = window.location.origin + '/cvs_callback.html';
+            log(`回調頁面 URL: ${callbackUrl}`);
+            
+            const popup = window.open(callbackUrl, 'testCallback', 'width=600,height=400,scrollbars=yes,resizable=yes');
+            
+            if (!popup || popup.closed) {
+                updateResult('彈出視窗被阻擋', false);
+                log('❌ 彈出視窗被阻擋');
+                return;
+            }
+            
+            log('✅ 回調頁面已開啟');
+        }
+        
+        // 頁面載入完成
+        document.addEventListener('DOMContentLoaded', function() {
+            log('測試頁面載入完成');
+            log('當前域名: ' + window.location.origin);
+        });
+    </script>
+</body>
+</html> 

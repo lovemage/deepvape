@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>門市選擇回調 | Image Vape</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .callback-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 65px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .loading-icon {
+            font-size: 3rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .store-info {
+            background: #f8f9fa;
+            border-radius: 65px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: left;
+            display: none;
+        }
+
+        .store-info h4 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .store-info div {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1e3c72, #667eea);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 65px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .error {
+            color: #e74c3c;
+            background: #ffeaea;
+            padding: 1rem;
+            border-radius: 65px;
+            margin: 1rem 0;
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="callback-container">
+        <div class="loading-icon">
+            <i class="fas fa-spinner"></i>
+        </div>
+        <h2 class="title">處理門市選擇</h2>
+        <p class="message">正在處理您選擇的門市資訊...</p>
+        
+        <div id="storeInfo" class="store-info">
+            <h4><i class="fas fa-store"></i> 已選擇門市</h4>
+            <div id="storeDetails"></div>
+        </div>
+        
+        <div id="errorMessage" class="error"></div>
+        
+        <button id="confirmBtn" class="btn" onclick="confirmSelection()" style="display: none;">
+            <i class="fas fa-check"></i> 確認選擇
+        </button>
+        
+        <button class="btn" onclick="testStoreSelection()" style="background: #ffc107;">
+            <i class="fas fa-flask"></i> 測試門市選擇
+        </button>
+        
+        <button class="btn" onclick="window.close()">
+            <i class="fas fa-times"></i> 關閉視窗
+        </button>
+    </div>
+
+    <script>
+        let selectedStoreData = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('CVS回調頁面載入完成');
+            console.log('當前URL:', window.location.href);
+            
+            // 解析 URL 參數
+            const urlParams = new URLSearchParams(window.location.search);
+            console.log('URL參數:', Object.fromEntries(urlParams));
+            
+            // 檢查 7-11 API 的標準參數
+            const storeData = {
+                storeId: urlParams.get('CVSStoreID') || urlParams.get('storeId') || urlParams.get('storeid'),
+                storeName: urlParams.get('CVSStoreName') || urlParams.get('storeName') || urlParams.get('storename'),
+                storeAddress: urlParams.get('CVSAddress') || urlParams.get('storeAddress') || urlParams.get('storeaddress'),
+                storePhone: urlParams.get('CVSTelephone') || urlParams.get('storePhone') || urlParams.get('storephone')
+            };
+            
+            console.log('解析的門市資料:', storeData);
+            
+            // 檢查是否有 POST 資料或 hash 資料
+            if (window.location.hash) {
+                try {
+                    const hashData = decodeURIComponent(window.location.hash.substring(1));
+                    console.log('Hash資料:', hashData);
+                    const params = new URLSearchParams(hashData);
+                    
+                    if (params.get('CVSStoreID') || params.get('storeId')) {
+                        const hashStoreData = {
+                            storeId: params.get('CVSStoreID') || params.get('storeId'),
+                            storeName: params.get('CVSStoreName') || params.get('storeName'),
+                            storeAddress: params.get('CVSAddress') || params.get('storeAddress'),
+                            storePhone: params.get('CVSTelephone') || params.get('storePhone')
+                        };
+                        processStoreSelection(hashStoreData);
+                        return;
+                    }
+                } catch (e) {
+                    console.error('解析 hash 參數失敗:', e);
+                }
+            }
+            
+            // 檢查 URL 參數
+            if (storeData.storeId || storeData.storeName) {
+                processStoreSelection(storeData);
+            } else {
+                // 等待一段時間看是否有其他方式傳入資料
+                setTimeout(() => {
+                    // 如果還是沒有資料，顯示測試門市（開發用）
+                    if (!selectedStoreData) {
+                        console.log('未收到門市資料，使用測試資料');
+                        processStoreSelection({
+                            storeId: '001',
+                            storeName: '統一超商信義門市',
+                            storeAddress: '台北市信義區信義路五段7號',
+                            storePhone: '02-2345-6789'
+                        });
+                    }
+                }, 3000);
+            }
+            
+            // 監聽來自父視窗的訊息
+            window.addEventListener('message', function(event) {
+                console.log('收到父視窗訊息:', event.data);
+                if (event.data && event.data.storeInfo) {
+                    processStoreSelection(event.data.storeInfo);
+                }
+            });
+            
+            // 檢查是否在 iframe 中
+            if (window.parent !== window) {
+                console.log('在iframe中運行');
+            }
+            
+            // 檢查是否有 opener
+            if (window.opener) {
+                console.log('有opener視窗');
+            }
+        });
+
+        function processStoreSelection(storeData) {
+            if (!storeData || (!storeData.storeId && !storeData.storeName)) {
+                showError('門市資訊不完整，請重新選擇');
+                return;
+            }
+
+            selectedStoreData = {
+                storeId: storeData.storeId || 'N/A',
+                storeName: storeData.storeName || '未知門市',
+                storeAddress: storeData.storeAddress || '地址未提供',
+                storePhone: storeData.storePhone || '電話未提供'
+            };
+
+            // 隱藏載入動畫
+            document.querySelector('.loading-icon').style.display = 'none';
+            
+            // 更新標題和訊息
+            document.querySelector('.title').textContent = '門市選擇成功';
+            document.querySelector('.message').textContent = '請確認以下門市資訊是否正確：';
+            
+            // 顯示門市資訊
+            const storeInfoDiv = document.getElementById('storeInfo');
+            const storeDetailsDiv = document.getElementById('storeDetails');
+            
+            storeDetailsDiv.innerHTML = `
+                <div><strong>門市編號：</strong>${selectedStoreData.storeId}</div>
+                <div><strong>門市名稱：</strong>${selectedStoreData.storeName}</div>
+                <div><strong>門市地址：</strong>${selectedStoreData.storeAddress}</div>
+                <div><strong>門市電話：</strong>${selectedStoreData.storePhone}</div>
+            `;
+            
+            storeInfoDiv.style.display = 'block';
+            document.getElementById('confirmBtn').style.display = 'inline-block';
+        }
+
+        function confirmSelection() {
+            if (!selectedStoreData) {
+                showError('沒有選擇的門市資訊');
+                return;
+            }
+
+            console.log('確認選擇門市:', selectedStoreData);
+
+            try {
+                const messageData = {
+                    type: 'storeSelected',
+                    storeInfo: selectedStoreData
+                };
+                
+                console.log('準備發送訊息:', messageData);
+                
+                // 向父視窗發送門市資訊
+                if (window.opener && !window.opener.closed) {
+                    console.log('向opener發送訊息');
+                    window.opener.postMessage(messageData, '*');
+                }
+                
+                // 也嘗試向父框架發送
+                if (window.parent && window.parent !== window) {
+                    console.log('向parent發送訊息');
+                    window.parent.postMessage(messageData, '*');
+                }
+                
+                // 嘗試向所有可能的目標發送
+                try {
+                    window.top.postMessage(messageData, '*');
+                } catch (e) {
+                    console.log('無法向top發送訊息:', e);
+                }
+                
+                // 更新顯示
+                document.querySelector('.title').textContent = '門市選擇完成';
+                document.querySelector('.message').textContent = '門市資訊已傳送，視窗將自動關閉...';
+                document.getElementById('confirmBtn').style.display = 'none';
+                
+                // 延長等待時間，確保訊息傳送成功
+                setTimeout(() => {
+                    console.log('準備關閉視窗');
+                    window.close();
+                }, 2000);
+                
+            } catch (error) {
+                console.error('傳送門市資訊失敗:', error);
+                showError('傳送門市資訊失敗，請手動關閉視窗並重新選擇');
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // 隱藏載入動畫
+            document.querySelector('.loading-icon').style.display = 'none';
+            
+            // 更新標題
+            document.querySelector('.title').textContent = '選擇失敗';
+            document.querySelector('.message').textContent = '請重新選擇門市或聯絡客服';
+        }
+
+        // 處理 7-11 API 的特殊回調格式
+        function handle711Callback() {
+            // 7-11 API 可能會在 URL 中包含特殊參數
+            const url = window.location.href;
+            
+            // 檢查是否包含 7-11 的回調參數
+            if (url.includes('CVSStoreID') || url.includes('CVSStoreName')) {
+                const params = new URLSearchParams(window.location.search);
+                
+                processStoreSelection({
+                    storeId: params.get('CVSStoreID') || params.get('storeId'),
+                    storeName: params.get('CVSStoreName') || params.get('storeName'),
+                    storeAddress: params.get('CVSAddress') || params.get('storeAddress'),
+                    storePhone: params.get('CVSTelephone') || params.get('storePhone')
+                });
+            }
+        }
+
+        // 檢查 7-11 回調
+        handle711Callback();
+        
+        // 測試門市選擇功能
+        function testStoreSelection() {
+            console.log('執行測試門市選擇');
+            processStoreSelection({
+                storeId: 'TEST001',
+                storeName: '統一超商測試門市',
+                storeAddress: '台北市信義區信義路五段7號1樓',
+                storePhone: '02-2345-6789'
+            });
+        }
+    </script>
+</body>
+</html> 

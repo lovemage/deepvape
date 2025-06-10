@@ -1,0 +1,538 @@
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
+import os
+import json
+import uuid
+from config import config
+
+# 創建應用工廠函數
+def create_app(config_name=None):
+    app = Flask(__name__)
+    
+    # 從環境變量獲取配置，默認為 development
+    if config_name is None:
+        config_name = os.environ.get('FLASK_ENV', 'development')
+    
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
+    
+    # 初始化擴展
+    db.init_app(app)
+    CORS(app, origins=app.config.get('CORS_ORIGINS', ['*']))
+    
+    return app
+
+# 初始化擴展
+db = SQLAlchemy()
+
+# 創建應用實例
+app = create_app()
+
+# 數據庫模型
+class Admin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(120), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Announcement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+    priority = db.Column(db.Integer, default=1)  # 1=低, 2=中, 3=高
+    start_date = db.Column(db.DateTime, default=datetime.utcnow)
+    end_date = db.Column(db.DateTime, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    slug = db.Column(db.String(100), unique=True, nullable=False)
+    description = db.Column(db.Text)
+    is_active = db.Column(db.Boolean, default=True)
+    sort_order = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Product(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text)
+    price = db.Column(db.Float, nullable=False)
+    original_price = db.Column(db.Float)  # 原價
+    stock_quantity = db.Column(db.Integer, default=0)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    category = db.relationship('Category', backref=db.backref('products', lazy=True))
+    
+    # 產品圖片
+    main_image = db.Column(db.String(255))
+    images = db.Column(db.Text)  # JSON 格式存儲多張圖片
+    
+    # 產品屬性
+    specifications = db.Column(db.Text)  # JSON 格式存儲規格
+    variants = db.Column(db.Text)  # JSON 格式存儲變體（顏色、口味等）
+    
+    # 狀態和標籤
+    is_active = db.Column(db.Boolean, default=True)
+    is_featured = db.Column(db.Boolean, default=False)
+    badge_type = db.Column(db.String(50))  # hot, new, safe, etc.
+    badge_text = db.Column(db.String(100))
+    
+    # SEO
+    meta_title = db.Column(db.String(200))
+    meta_description = db.Column(db.Text)
+    
+    # 時間戳
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'price': self.price,
+            'original_price': self.original_price,
+            'stock_quantity': self.stock_quantity,
+            'category': self.category.name if self.category else None,
+            'category_id': self.category_id,
+            'main_image': self.main_image,
+            'images': json.loads(self.images) if self.images else [],
+            'specifications': json.loads(self.specifications) if self.specifications else {},
+            'variants': json.loads(self.variants) if self.variants else [],
+            'is_active': self.is_active,
+            'is_featured': self.is_featured,
+            'badge_type': self.badge_type,
+            'badge_text': self.badge_text,
+            'meta_title': self.meta_title,
+            'meta_description': self.meta_description,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+        }
+
+# 登入檢查裝飾器
+def login_required(f):
+    def decorated_function(*args, **kwargs):
+        if 'admin_id' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    decorated_function.__name__ = f.__name__
+    return decorated_function
+
+# 路由
+@app.route('/')
+def index():
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        admin = Admin.query.filter_by(username=username).first()
+        if admin and check_password_hash(admin.password_hash, password):
+            session['admin_id'] = admin.id
+            session['admin_username'] = admin.username
+            flash('登入成功！', 'success')
+            return redirect(url_for('admin_dashboard'))
+        else:
+            flash('用戶名或密碼錯誤！', 'error')
+    
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('已成功登出！', 'info')
+    return redirect(url_for('login'))
+
+@app.route('/admin')
+@login_required
+def admin_dashboard():
+    # 統計數據
+    total_products = Product.query.count()
+    active_products = Product.query.filter_by(is_active=True).count()
+    total_categories = Category.query.count()
+    active_announcements = Announcement.query.filter_by(is_active=True).count()
+    
+    stats = {
+        'total_products': total_products,
+        'active_products': active_products,
+        'total_categories': total_categories,
+        'active_announcements': active_announcements
+    }
+    
+    return render_template('admin/dashboard.html', stats=stats)
+
+# 公告管理
+@app.route('/admin/announcements')
+@login_required
+def announcements():
+    announcements = Announcement.query.order_by(Announcement.priority.desc(), Announcement.created_at.desc()).all()
+    return render_template('admin/announcements.html', announcements=announcements)
+
+@app.route('/admin/announcements/create', methods=['GET', 'POST'])
+@login_required
+def create_announcement():
+    if request.method == 'POST':
+        announcement = Announcement(
+            title=request.form['title'],
+            content=request.form['content'],
+            priority=int(request.form['priority']),
+            is_active=bool(request.form.get('is_active')),
+            start_date=datetime.strptime(request.form['start_date'], '%Y-%m-%dT%H:%M') if request.form['start_date'] else datetime.utcnow(),
+            end_date=datetime.strptime(request.form['end_date'], '%Y-%m-%dT%H:%M') if request.form['end_date'] else None
+        )
+        db.session.add(announcement)
+        db.session.commit()
+        flash('公告創建成功！', 'success')
+        return redirect(url_for('announcements'))
+    
+    return render_template('admin/announcement_form.html')
+
+@app.route('/admin/announcements/<int:id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_announcement(id):
+    announcement = Announcement.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        announcement.title = request.form['title']
+        announcement.content = request.form['content']
+        announcement.priority = int(request.form['priority'])
+        announcement.is_active = bool(request.form.get('is_active'))
+        announcement.start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%dT%H:%M') if request.form['start_date'] else datetime.utcnow()
+        announcement.end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%dT%H:%M') if request.form['end_date'] else None
+        announcement.updated_at = datetime.utcnow()
+        
+        db.session.commit()
+        flash('公告更新成功！', 'success')
+        return redirect(url_for('announcements'))
+    
+    return render_template('admin/announcement_form.html', announcement=announcement)
+
+@app.route('/admin/announcements/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_announcement(id):
+    announcement = Announcement.query.get_or_404(id)
+    db.session.delete(announcement)
+    db.session.commit()
+    flash('公告刪除成功！', 'success')
+    return redirect(url_for('announcements'))
+
+# 產品管理
+@app.route('/admin/products')
+@login_required
+def products():
+    page = request.args.get('page', 1, type=int)
+    category_id = request.args.get('category_id', type=int)
+    search = request.args.get('search', '')
+    
+    query = Product.query
+    
+    if category_id:
+        query = query.filter_by(category_id=category_id)
+    
+    if search:
+        query = query.filter(Product.name.contains(search))
+    
+    products = query.order_by(Product.updated_at.desc()).paginate(
+        page=page, per_page=20, error_out=False
+    )
+    
+    categories = Category.query.filter_by(is_active=True).all()
+    
+    return render_template('admin/products.html', products=products, categories=categories, 
+                         current_category=category_id, search=search)
+
+@app.route('/admin/products/create', methods=['GET', 'POST'])
+@login_required
+def create_product():
+    if request.method == 'POST':
+        # 處理圖片上傳
+        main_image = None
+        if 'main_image' in request.files:
+            file = request.files['main_image']
+            if file and file.filename:
+                filename = secure_filename(f"{uuid.uuid4()}_{file.filename}")
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'products', filename))
+                main_image = f"products/{filename}"
+        
+        # 處理規格和變體
+        specifications = {}
+        variants = []
+        
+        # 從表單中提取規格
+        for key, value in request.form.items():
+            if key.startswith('spec_'):
+                spec_name = key.replace('spec_', '')
+                specifications[spec_name] = value
+        
+        # 從表單中提取變體
+        variant_names = request.form.getlist('variant_name[]')
+        variant_values = request.form.getlist('variant_value[]')
+        for name, value in zip(variant_names, variant_values):
+            if name and value:
+                variants.append({'name': name, 'value': value})
+        
+        product = Product(
+            name=request.form['name'],
+            description=request.form['description'],
+            price=float(request.form['price']),
+            original_price=float(request.form['original_price']) if request.form['original_price'] else None,
+            stock_quantity=int(request.form['stock_quantity']),
+            category_id=int(request.form['category_id']),
+            main_image=main_image,
+            specifications=json.dumps(specifications, ensure_ascii=False),
+            variants=json.dumps(variants, ensure_ascii=False),
+            is_active=bool(request.form.get('is_active')),
+            is_featured=bool(request.form.get('is_featured')),
+            badge_type=request.form['badge_type'] if request.form['badge_type'] else None,
+            badge_text=request.form['badge_text'] if request.form['badge_text'] else None,
+            meta_title=request.form['meta_title'],
+            meta_description=request.form['meta_description']
+        )
+        
+        db.session.add(product)
+        db.session.commit()
+        flash('產品創建成功！', 'success')
+        return redirect(url_for('products'))
+    
+    categories = Category.query.filter_by(is_active=True).all()
+    return render_template('admin/product_form.html', categories=categories)
+
+@app.route('/admin/products/<int:id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_product(id):
+    product = Product.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        # 處理圖片上傳
+        if 'main_image' in request.files:
+            file = request.files['main_image']
+            if file and file.filename:
+                filename = secure_filename(f"{uuid.uuid4()}_{file.filename}")
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'products', filename))
+                product.main_image = f"products/{filename}"
+        
+        # 處理規格和變體
+        specifications = {}
+        variants = []
+        
+        # 從表單中提取規格
+        for key, value in request.form.items():
+            if key.startswith('spec_'):
+                spec_name = key.replace('spec_', '')
+                specifications[spec_name] = value
+        
+        # 從表單中提取變體
+        variant_names = request.form.getlist('variant_name[]')
+        variant_values = request.form.getlist('variant_value[]')
+        for name, value in zip(variant_names, variant_values):
+            if name and value:
+                variants.append({'name': name, 'value': value})
+        
+        product.name = request.form['name']
+        product.description = request.form['description']
+        product.price = float(request.form['price'])
+        product.original_price = float(request.form['original_price']) if request.form['original_price'] else None
+        product.stock_quantity = int(request.form['stock_quantity'])
+        product.category_id = int(request.form['category_id'])
+        product.specifications = json.dumps(specifications, ensure_ascii=False)
+        product.variants = json.dumps(variants, ensure_ascii=False)
+        product.is_active = bool(request.form.get('is_active'))
+        product.is_featured = bool(request.form.get('is_featured'))
+        product.badge_type = request.form['badge_type'] if request.form['badge_type'] else None
+        product.badge_text = request.form['badge_text'] if request.form['badge_text'] else None
+        product.meta_title = request.form['meta_title']
+        product.meta_description = request.form['meta_description']
+        product.updated_at = datetime.utcnow()
+        
+        db.session.commit()
+        flash('產品更新成功！', 'success')
+        return redirect(url_for('products'))
+    
+    categories = Category.query.filter_by(is_active=True).all()
+    return render_template('admin/product_form.html', product=product, categories=categories)
+
+@app.route('/admin/products/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_product(id):
+    product = Product.query.get_or_404(id)
+    db.session.delete(product)
+    db.session.commit()
+    flash('產品刪除成功！', 'success')
+    return redirect(url_for('products'))
+
+# 批量操作
+@app.route('/admin/products/batch', methods=['POST'])
+@login_required
+def batch_products():
+    action = request.form['action']
+    product_ids = request.form.getlist('product_ids')
+    
+    if not product_ids:
+        flash('請選擇要操作的產品！', 'error')
+        return redirect(url_for('products'))
+    
+    products = Product.query.filter(Product.id.in_(product_ids)).all()
+    
+    if action == 'delete':
+        for product in products:
+            db.session.delete(product)
+        flash(f'成功刪除 {len(products)} 個產品！', 'success')
+    
+    elif action == 'activate':
+        for product in products:
+            product.is_active = True
+        flash(f'成功啟用 {len(products)} 個產品！', 'success')
+    
+    elif action == 'deactivate':
+        for product in products:
+            product.is_active = False
+        flash(f'成功停用 {len(products)} 個產品！', 'success')
+    
+    elif action == 'update_price':
+        price_change = float(request.form['price_change'])
+        change_type = request.form['change_type']
+        
+        for product in products:
+            if change_type == 'percentage':
+                product.price = product.price * (1 + price_change / 100)
+            else:  # fixed amount
+                product.price = product.price + price_change
+            
+            if product.price < 0:
+                product.price = 0
+        
+        flash(f'成功更新 {len(products)} 個產品的價格！', 'success')
+    
+    elif action == 'update_stock':
+        stock_change = int(request.form['stock_change'])
+        change_type = request.form['change_type']
+        
+        for product in products:
+            if change_type == 'set':
+                product.stock_quantity = stock_change
+            else:  # add
+                product.stock_quantity = product.stock_quantity + stock_change
+            
+            if product.stock_quantity < 0:
+                product.stock_quantity = 0
+        
+        flash(f'成功更新 {len(products)} 個產品的庫存！', 'success')
+    
+    elif action == 'update_badge':
+        badge_type = request.form['badge_type']
+        badge_text = request.form['badge_text']
+        
+        for product in products:
+            product.badge_type = badge_type if badge_type else None
+            product.badge_text = badge_text if badge_text else None
+        
+        flash(f'成功更新 {len(products)} 個產品的標籤！', 'success')
+    
+    db.session.commit()
+    return redirect(url_for('products'))
+
+# API 路由
+@app.route('/api/announcements')
+def api_announcements():
+    now = datetime.utcnow()
+    announcements = Announcement.query.filter(
+        Announcement.is_active == True,
+        Announcement.start_date <= now,
+        db.or_(Announcement.end_date.is_(None), Announcement.end_date >= now)
+    ).order_by(Announcement.priority.desc()).all()
+    
+    return jsonify([{
+        'id': a.id,
+        'title': a.title,
+        'content': a.content,
+        'priority': a.priority
+    } for a in announcements])
+
+@app.route('/api/products')
+def api_products():
+    category = request.args.get('category')
+    featured = request.args.get('featured', type=bool)
+    
+    query = Product.query.filter_by(is_active=True)
+    
+    if category:
+        category_obj = Category.query.filter_by(slug=category).first()
+        if category_obj:
+            query = query.filter_by(category_id=category_obj.id)
+    
+    if featured:
+        query = query.filter_by(is_featured=True)
+    
+    products = query.all()
+    
+    return jsonify([product.to_dict() for product in products])
+
+@app.route('/api/products/<int:id>')
+def api_product_detail(id):
+    product = Product.query.get_or_404(id)
+    return jsonify(product.to_dict())
+
+# 健康檢查路由
+@app.route('/health')
+def health_check():
+    """健康檢查端點"""
+    try:
+        # 檢查數據庫連接
+        db.session.execute('SELECT 1')
+        return jsonify({
+            'status': 'healthy',
+            'timestamp': datetime.utcnow().isoformat(),
+            'version': '1.0.0'
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }), 500
+
+# 初始化數據庫
+def init_db():
+    """初始化數據庫"""
+    db.create_all()
+    
+    # 創建默認管理員帳號
+    admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+    admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+    
+    admin = Admin.query.filter_by(username=admin_username).first()
+    if not admin:
+        admin = Admin(
+            username=admin_username,
+            password_hash=generate_password_hash(admin_password)
+        )
+        db.session.add(admin)
+        print(f"已創建默認管理員帳號: {admin_username}")
+    
+    # 創建默認分類
+    if not Category.query.first():
+        categories = [
+            {'name': '主機系列', 'slug': 'hosts', 'description': '頂級品質，極致體驗'},
+            {'name': '煙彈系列', 'slug': 'pods', 'description': '多種口味，滿足不同需求'},
+            {'name': '拋棄式系列', 'slug': 'disposable', 'description': '便攜方便，即開即用'}
+        ]
+        
+        for cat_data in categories:
+            category = Category(**cat_data)
+            db.session.add(category)
+        print("已創建默認產品分類")
+    
+    db.session.commit()
+
+if __name__ == '__main__':
+    init_db()
+    app.run(debug=True, port=5000) 

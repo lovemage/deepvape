@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車 | Image Vape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(4, 19, 72, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1afe49;
+        }
+
+        .main-content {
+            margin-top: 100px;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(4, 19, 72, 0.8);
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            border-radius: 65px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #1afe49, #8386f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cart-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1e3c72;
+        }
+
+        .cart-item {
+            background: #f8f9fa;
+            border-radius: 65px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 65px;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-details {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #667eea;
+        }
+
+        .quantity-input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 65px;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 65px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #ddd;
+        }
+
+        .customer-info {
+            background: #f8f9fa;
+            border-radius: 65px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 65px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+        .store-selection {
+            background: #f8f9fa;
+            border-radius: 65px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .store-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .store-btn {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 65px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .store-btn:hover {
+            border-color: #1e3c72;
+            transform: translateY(-2px);
+        }
+
+        .store-btn.selected {
+            border-color: #1e3c72;
+            background: linear-gradient(135deg, #1e3c72, #667eea);
+            color: white;
+        }
+
+        .store-btn i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .selected-store {
+            background: white;
+            border-radius: 65px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid #27ae60;
+        }
+
+        .select-store-btn {
+            background: linear-gradient(135deg, #1e3c72, #667eea);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 65px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .select-store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .order-summary {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 65px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            border-top: 2px solid #1e3c72;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .create-order-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            border-radius: 65px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .create-order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
+        }
+
+        .create-order-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem;
+            border-radius: 65px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            background: #27ae60;
+            color: white;
+            padding: 1rem;
+            border-radius: 65px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .manual-store-input {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 65px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .manual-store-input h4 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .manual-store-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .manual-store-buttons .select-store-btn {
+            flex: 1;
+        }
+
+        .store-input-guide {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .store-input-guide p {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+            font-weight: 500;
+        }
+
+        .store-input-guide ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #424242;
+        }
+
+        .store-input-guide li {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .or-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dee2e6;
+        }
+
+        .or-divider span {
+            background: #f8f9fa;
+            padding: 0 15px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .store-iframe-container {
+            border: 2px solid #007bff;
+            border-radius: 65px;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+        }
+
+        .iframe-header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 65px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .iframe-header h4 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .close-iframe-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 65px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .close-iframe-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .iframe-content {
+            height: 500px;
+            position: relative;
+        }
+
+        .iframe-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .iframe-footer {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 0 0 8px 8px;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .iframe-footer p {
+            margin: 0 0 15px 0;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .iframe-error {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 40px 20px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .error-icon {
+            font-size: 48px;
+            color: #ffc107;
+            margin-bottom: 20px;
+        }
+
+        .iframe-error h3 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .iframe-error p {
+            color: #6c757d;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .error-solutions h4 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .solution-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .solution-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 65px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .solution-btn:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .store-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .iframe-content {
+                height: 400px;
+            }
+            
+            .iframe-header {
+                padding: 12px 15px;
+            }
+            
+            .iframe-header h4 {
+                font-size: 14px;
+            }
+            
+            .iframe-footer {
+                padding: 12px 15px;
+            }
+            
+            .store-input-guide {
+                padding: 12px;
+            }
+            
+            .store-input-guide li {
+                font-size: 13px;
+            }
+            
+            .iframe-error {
+                padding: 20px 15px;
+            }
+            
+            .error-icon {
+                font-size: 36px;
+            }
+            
+            .iframe-error h3 {
+                font-size: 18px;
+            }
+            
+            .solution-buttons {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <img src="logoai.gif" alt="Image Vape Logo" class="logo">
+            <ul class="nav-links">
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="#products">產品</a></li>
+                <li><a href="#about">關於我們</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> 購物車</a></li>
+                <li><a href="#contact">聯絡我們</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">購物車</h1>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <div class="cart-section">
+                <h2 class="section-title">
+                    <i class="fas fa-shopping-cart"></i> 購物車商品
+                </h2>
+                <div id="cartItems">
+                </div>
+            </div>
+
+            <div class="cart-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i> 收件人資訊
+                </h2>
+                <div class="customer-info">
+                    <div class="form-group">
+                        <label class="form-label" for="customerName">收件人姓名 *</label>
+                        <input type="text" id="customerName" class="form-input" placeholder="請輸入收件人姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customerPhone">聯絡電話 *</label>
+                        <input type="tel" id="customerPhone" class="form-input" placeholder="請輸入聯絡電話" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-section">
+                <h2 class="section-title">
+                    <i class="fas fa-store"></i> 選擇取貨便利商店
+                </h2>
+                <div class="store-selection">
+                    <div class="store-buttons">
+                        <div class="store-btn" onclick="selectStoreType('711')">
+                            <i class="fas fa-store"></i>
+                            <div>7-11</div>
+                            <small>統一超商</small>
+                        </div>
+                        <div class="store-btn" onclick="selectStoreType('family')">
+                            <i class="fas fa-store-alt"></i>
+                            <div>全家</div>
+                            <small>FamilyMart</small>
+                        </div>
+                    </div>
+                    
+                    <div id="storeSelector" style="display: none;">
+                        <button class="select-store-btn" onclick="showStoreIframe()">
+                            <i class="fas fa-map-marker-alt"></i> 查詢門市
+                        </button>
+                    </div>
+                    
+                    <div id="storeIframeContainer" class="store-iframe-container" style="display: none;">
+                        <div class="iframe-header">
+                            <h4><i class="fas fa-search"></i> 統一超商門市查詢</h4>
+                            <button class="close-iframe-btn" onclick="hideStoreIframe()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="iframe-content">
+                            <iframe id="storeIframe" src="" frameborder="0"></iframe>
+                        </div>
+                        <div class="iframe-footer">
+                            <p><i class="fas fa-info-circle"></i> 請在上方統一超商門市查詢頁面找到門市，然後點擊下方「手動輸入門市」按鈕</p>
+                            <button class="select-store-btn" onclick="showManualInput()">
+                                <i class="fas fa-edit"></i> 手動輸入門市
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="selectedStore" class="selected-store" style="display: none;">
+                        <h4><i class="fas fa-check-circle"></i> 已選擇門市</h4>
+                        <div id="storeInfo"></div>
+                    </div>
+                    
+                    <div id="manualStoreInput" class="manual-store-input" style="display: none;">
+                        <h4><i class="fas fa-edit"></i> 手動輸入門市資訊</h4>
+                        <div class="store-input-guide">
+                            <p><i class="fas fa-info-circle"></i> <strong>使用說明：</strong></p>
+                            <ul>
+                                <li>請在統一超商門市查詢頁面找到您要的門市</li>
+                                <li>只需填寫「門市編號」或「門市名稱」其中一項即可</li>
+                                <li>門市編號通常是 6 位數字（例如：123456）</li>
+                                <li>門市名稱請填寫完整名稱（例如：統一超商信義門市）</li>
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="manualStoreId">門市編號</label>
+                            <input type="text" id="manualStoreId" class="form-input" placeholder="例如：123456（6位數字）">
+                        </div>
+                        <div class="or-divider">
+                            <span>或</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="manualStoreName">門市名稱</label>
+                            <input type="text" id="manualStoreName" class="form-input" placeholder="例如：統一超商信義門市">
+                        </div>
+                        <div class="manual-store-buttons">
+                            <button class="select-store-btn" onclick="confirmManualStore()">
+                                <i class="fas fa-check"></i> 確認門市
+                            </button>
+                            <button class="select-store-btn" onclick="cancelManualInput()" style="background: #6c757d;">
+                                <i class="fas fa-times"></i> 取消
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-section">
+                <h2 class="section-title">
+                    <i class="fas fa-receipt"></i> 訂單摘要
+                </h2>
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>商品小計</span>
+                        <span id="subtotal">NT$ 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>運費</span>
+                        <span>NT$ 60</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>訂單總計</span>
+                        <span id="totalAmount">NT$ 60</span>
+                    </div>
+                </div>
+
+                <button class="create-order-btn" id="createOrderBtn" onclick="createOrder()" disabled>
+                    <i class="fas fa-paper-plane"></i> 建立訂單
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let selectedStoreType = '';
+        let selectedStore = null;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 從後台 API 更新購物車中的產品信息
+            await updateCartWithLatestProductInfo();
+            
+            displayCartItems();
+            updateOrderSummary();
+            checkFormValidity();
+        });
+
+        // 從後台 API 更新購物車中的產品信息
+        async function updateCartWithLatestProductInfo() {
+            if (cart.length === 0) return;
+            
+            try {
+                const response = await fetch('http://127.0.0.1:5001/api/products');
+                if (response.ok) {
+                    const products = await response.json();
+                    
+                    // 更新購物車中每個商品的最新信息
+                    cart = cart.map(cartItem => {
+                        const latestProduct = products.find(p => p.name === cartItem.name);
+                        if (latestProduct) {
+                            return {
+                                ...cartItem,
+                                price: latestProduct.price,
+                                image: latestProduct.main_image,
+                                description: latestProduct.description,
+                                // 保留用戶選擇的數量和口味
+                                quantity: cartItem.quantity,
+                                flavor: cartItem.flavor
+                            };
+                        }
+                        return cartItem;
+                    });
+                    
+                    // 更新本地存儲
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    console.log('購物車產品信息已更新');
+                }
+            } catch (error) {
+                console.error('無法更新購物車產品信息:', error);
+                // 如果 API 失敗，繼續使用現有的購物車數據
+            }
+        }
+
+        function displayCartItems() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>購物車是空的</h3>
+                        <p>快去選購您喜愛的商品吧！</p>
+                        <button class="select-store-btn" onclick="window.location.href='index.html'">
+                            <i class="fas fa-shopping-bag"></i> 繼續購物
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <img src="${item.image || 'https://via.placeholder.com/80'}" alt="${item.name}" class="item-image">
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-details">口味: ${item.flavor || '未選擇'}</div>
+                        <div class="item-price">NT$ ${item.price}</div>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                        <input type="number" class="quantity-input" value="${item.quantity}" min="1" 
+                               onchange="updateQuantity(${index}, 0, this.value)">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem(${index})">
+                        <i class="fas fa-trash"></i> 移除
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function updateQuantity(index, change, newValue = null) {
+            if (newValue !== null) {
+                cart[index].quantity = Math.max(1, parseInt(newValue) || 1);
+            } else {
+                cart[index].quantity = Math.max(1, cart[index].quantity + change);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCartItems();
+            updateOrderSummary();
+        }
+
+        function removeItem(index) {
+            if (confirm('確定要移除此商品嗎？')) {
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCartItems();
+                updateOrderSummary();
+                checkFormValidity();
+            }
+        }
+
+        function selectStoreType(type) {
+            selectedStoreType = type;
+            selectedStore = null;
+            
+            document.querySelectorAll('.store-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.closest('.store-btn').classList.add('selected');
+            
+            // 重置所有狀態
+            document.getElementById('storeSelector').style.display = 'block';
+            document.getElementById('selectedStore').style.display = 'none';
+            document.getElementById('storeIframeContainer').style.display = 'none';
+            document.getElementById('manualStoreInput').style.display = 'none';
+            
+            // 重置 iframe 內容
+            const iframeContent = document.querySelector('.iframe-content');
+            if (iframeContent) {
+                iframeContent.innerHTML = '<iframe id="storeIframe" src="" frameborder="0"></iframe>';
+            }
+            
+            checkFormValidity();
+        }
+
+        function showStoreIframe() {
+            if (selectedStoreType === '711') {
+                // 顯示 iframe 容器
+                document.getElementById('storeIframeContainer').style.display = 'block';
+                
+                // 嘗試載入統一超商門市查詢頁面
+                const pcscUrl = 'https://emap.pcsc.com.tw/ecmap/default.aspx';
+                const iframe = document.getElementById('storeIframe');
+                
+                // 添加錯誤處理
+                iframe.onerror = function() {
+                    console.log('iframe 載入失敗，顯示備用方案');
+                    showIframeError();
+                };
+                
+                iframe.onload = function() {
+                    console.log('iframe 載入成功');
+                };
+                
+                iframe.src = pcscUrl;
+                
+                // 隱藏選擇按鈕
+                document.getElementById('storeSelector').style.display = 'none';
+                
+                showMessage('正在載入門市查詢頁面...', 'success');
+                
+                // 設定超時檢查
+                setTimeout(() => {
+                    checkIframeLoad();
+                }, 5000);
+                
+            } else if (selectedStoreType === 'family') {
+                showMessage('全家便利商店門市選擇功能開發中，請先選擇 7-11', 'error');
+            }
+        }
+
+        function checkIframeLoad() {
+            const iframe = document.getElementById('storeIframe');
+            try {
+                // 嘗試訪問 iframe 內容來檢查是否載入成功
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDoc || iframeDoc.location.href === 'about:blank') {
+                    showIframeError();
+                }
+            } catch (e) {
+                // 如果無法訪問 iframe 內容（跨域限制），這是正常的
+                console.log('iframe 載入中（跨域限制正常）');
+                showMessage('請在下方頁面查詢門市，找到後點擊「手動輸入門市」按鈕', 'success');
+            }
+        }
+
+        function showIframeError() {
+            const iframeContent = document.querySelector('.iframe-content');
+            iframeContent.innerHTML = `
+                <div class="iframe-error">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>無法載入門市查詢頁面</h3>
+                    <p>由於網站安全限制，無法直接嵌入統一超商門市查詢頁面</p>
+                    <div class="error-solutions">
+                        <h4>請選擇以下方式查詢門市：</h4>
+                        <div class="solution-buttons">
+                            <button class="solution-btn" onclick="openPcscInNewTab()">
+                                <i class="fas fa-external-link-alt"></i>
+                                在新分頁開啟統一超商查詢
+                            </button>
+                            <button class="solution-btn" onclick="showManualInput()">
+                                <i class="fas fa-edit"></i>
+                                直接手動輸入門市
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openPcscInNewTab() {
+            const pcscUrl = 'https://emap.pcsc.com.tw/ecmap/default.aspx';
+            window.open(pcscUrl, '_blank');
+            showMessage('已在新分頁開啟統一超商門市查詢，查詢完成後請回到此頁面手動輸入門市資訊', 'success');
+        }
+
+        function hideStoreIframe() {
+            document.getElementById('storeIframeContainer').style.display = 'none';
+            document.getElementById('storeSelector').style.display = 'block';
+            
+            // 重置 iframe 內容
+            const iframeContent = document.querySelector('.iframe-content');
+            iframeContent.innerHTML = '<iframe id="storeIframe" src="" frameborder="0"></iframe>';
+        }
+
+        function showManualInput() {
+            // 隱藏 iframe
+            hideStoreIframe();
+            
+            // 顯示手動輸入表單
+            showManualStoreInput();
+        }
+
+        function displaySelectedStore() {
+            if (!selectedStore) return;
+            
+            document.getElementById('selectedStore').style.display = 'block';
+            document.getElementById('storeInfo').innerHTML = `
+                <div><strong>門市名稱：</strong>${selectedStore.storeName || '測試門市'}</div>
+                <div><strong>門市地址：</strong>${selectedStore.storeAddress || '台北市信義區信義路五段7號'}</div>
+                <div><strong>門市電話：</strong>${selectedStore.storePhone || '02-2345-6789'}</div>
+            `;
+            
+            checkFormValidity();
+        }
+
+        function updateOrderSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = 60;
+            const total = subtotal + shipping;
+            
+            document.getElementById('subtotal').textContent = `NT$ ${subtotal}`;
+            document.getElementById('totalAmount').textContent = `NT$ ${total}`;
+        }
+
+        function checkFormValidity() {
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const hasItems = cart.length > 0;
+            const hasStore = selectedStore !== null;
+            
+            const isValid = name && phone && hasItems && hasStore;
+            document.getElementById('createOrderBtn').disabled = !isValid;
+        }
+
+        document.getElementById('customerName').addEventListener('input', checkFormValidity);
+        document.getElementById('customerPhone').addEventListener('input', checkFormValidity);
+
+        function createOrder() {
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            
+            if (!name || !phone) {
+                showMessage('請填寫完整的收件人資訊', 'error');
+                return;
+            }
+            
+            if (!selectedStore) {
+                showMessage('請選擇取貨門市', 'error');
+                return;
+            }
+            
+            if (cart.length === 0) {
+                showMessage('購物車是空的', 'error');
+                return;
+            }
+            
+            const orderData = {
+                orderId: 'ORDER' + Date.now(),
+                customerName: name,
+                customerPhone: phone,
+                storeType: selectedStoreType,
+                storeInfo: selectedStore,
+                items: cart,
+                subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                shipping: 60,
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 60,
+                orderDate: new Date().toISOString()
+            };
+            
+            localStorage.setItem('lastOrder', JSON.stringify(orderData));
+            
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            showMessage('訂單建立成功！訂單編號：' + orderData.orderId, 'success');
+            
+            setTimeout(() => {
+                window.location.href = 'order_confirmation.html';
+            }, 3000);
+        }
+
+        function showMessage(message, type) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            
+            if (type === 'error') {
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                successDiv.style.display = 'none';
+            } else {
+                successDiv.textContent = message;
+                successDiv.style.display = 'block';
+                errorDiv.style.display = 'none';
+            }
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+                successDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showManualStoreInput() {
+            document.getElementById('manualStoreInput').style.display = 'block';
+            showMessage('請填寫門市編號或門市名稱其中一項即可', 'success');
+        }
+
+        function cancelManualInput() {
+            document.getElementById('manualStoreInput').style.display = 'none';
+            
+            // 清空輸入欄位
+            document.getElementById('manualStoreId').value = '';
+            document.getElementById('manualStoreName').value = '';
+            
+            // 重新顯示 iframe 或選擇按鈕
+            if (selectedStoreType === '711') {
+                showStoreIframe();
+            } else {
+                document.getElementById('storeSelector').style.display = 'block';
+            }
+            
+            selectedStore = null;
+            checkFormValidity();
+        }
+
+        function confirmManualStore() {
+            const storeId = document.getElementById('manualStoreId').value.trim();
+            const storeName = document.getElementById('manualStoreName').value.trim();
+
+            // 檢查是否至少填寫了門市編號或門市名稱其中一項
+            if (!storeId && !storeName) {
+                showMessage('請填寫門市編號或門市名稱其中一項', 'error');
+                return;
+            }
+
+            // 如果填寫了門市編號，檢查格式
+            if (storeId && !/^\d{6}$/.test(storeId)) {
+                showMessage('門市編號格式錯誤，請輸入6位數字', 'error');
+                return;
+            }
+
+            // 建立門市資訊
+            selectedStore = {
+                storeId: storeId || 'N/A',
+                storeName: storeName || `門市編號：${storeId}`,
+                storeAddress: '地址將於取貨時確認',
+                storePhone: '電話將於取貨時確認'
+            };
+
+            displaySelectedStore();
+            document.getElementById('manualStoreInput').style.display = 'none';
+            
+            // 清空輸入欄位
+            document.getElementById('manualStoreId').value = '';
+            document.getElementById('manualStoreName').value = '';
+            
+            showMessage('門市資訊已確認！', 'success');
+        }
+
+        window.addToCart = function(product) {
+            const existingItem = cart.find(item => 
+                item.name === product.name && item.flavor === product.flavor
+            );
+            
+            if (existingItem) {
+                existingItem.quantity += product.quantity || 1;
+            } else {
+                cart.push({
+                    name: product.name,
+                    price: product.price,
+                    flavor: product.flavor || '',
+                    quantity: product.quantity || 1,
+                    image: product.image || ''
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            if (window.location.pathname.includes('cart.html')) {
+                displayCartItems();
+                updateOrderSummary();
+                checkFormValidity();
+            }
+        };
+    </script>
+</body>
+</html> 

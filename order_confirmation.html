@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂單確認 | Image Vape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(4, 19, 72, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .main-content {
+            margin-top: 100px;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(4, 19, 72, 0.8);
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            border-radius: 65px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .success-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #27ae60;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .success-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+
+        .success-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .order-info {
+            background: #f8f9fa;
+            border-radius: 65px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1e3c72;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .info-value {
+            color: #666;
+        }
+
+        .order-id {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .order-items {
+            background: white;
+            border-radius: 65px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .item-flavor {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .item-quantity {
+            color: #666;
+            margin: 0 1rem;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .order-summary {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 65px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            border-top: 2px solid #1e3c72;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .delivery-info {
+            background: #e8f5e8;
+            border-radius: 65px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #27ae60;
+        }
+
+        .delivery-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .next-steps {
+            background: #fff3cd;
+            border-radius: 65px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #ffc107;
+        }
+
+        .steps-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .steps-list li:before {
+            content: "✓";
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 65px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3c72, #667eea);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .item-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <img src="logoai.gif" alt="Image Vape Logo" class="logo">
+            <ul class="nav-links">
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="#products">產品</a></li>
+                <li><a href="#about">關於我們</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> 購物車</a></li>
+                <li><a href="#contact">聯絡我們</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="success-header">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1 class="success-title">訂單建立成功！</h1>
+                <p class="success-subtitle">感謝您的訂購，我們將盡快為您處理</p>
+            </div>
+
+            <div class="order-info">
+                <h2 class="section-title">
+                    <i class="fas fa-receipt"></i> 訂單資訊
+                </h2>
+                <div class="info-row">
+                    <span class="info-label">訂單編號</span>
+                    <span class="info-value order-id" id="orderId">載入中...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">訂單日期</span>
+                    <span class="info-value" id="orderDate">載入中...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">收件人姓名</span>
+                    <span class="info-value" id="customerName">載入中...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">聯絡電話</span>
+                    <span class="info-value" id="customerPhone">載入中...</span>
+                </div>
+            </div>
+
+            <div class="order-items">
+                <h2 class="section-title">
+                    <i class="fas fa-shopping-bag"></i> 訂購商品
+                </h2>
+                <div id="orderItemsList">
+                    載入中...
+                </div>
+            </div>
+
+            <div class="delivery-info">
+                <div class="delivery-title">
+                    <i class="fas fa-truck"></i>
+                    取貨門市資訊
+                </div>
+                <div id="storeInfo">載入中...</div>
+            </div>
+
+            <div class="order-summary">
+                <h2 class="section-title">
+                    <i class="fas fa-calculator"></i> 訂單金額
+                </h2>
+                <div class="summary-row">
+                    <span>商品小計</span>
+                    <span id="subtotal">載入中...</span>
+                </div>
+                <div class="summary-row">
+                    <span>運費</span>
+                    <span>NT$ 60</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>訂單總計</span>
+                    <span id="totalAmount">載入中...</span>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <div class="steps-title">
+                    <i class="fas fa-list-check"></i>
+                    接下來的步驟
+                </div>
+                <ul class="steps-list">
+                    <li>我們將在 1-2 個工作天內處理您的訂單</li>
+                    <li>商品將在 4-5 個工作天內送達指定便利商店</li>
+                    <li>到貨後您將收到取貨通知簡訊</li>
+                    <li>請攜帶身分證件至門市取貨</li>
+                    <li>如有任何問題，請聯絡客服專線</li>
+                </ul>
+            </div>
+
+            <div class="action-buttons">
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-home"></i> 回到首頁
+                </a>
+                <a href="javascript:void(0)" onclick="contactService()" class="btn btn-secondary">
+                    <i class="fas fa-headset"></i> 聯絡客服
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderData();
+        });
+
+        function loadOrderData() {
+            const orderData = JSON.parse(localStorage.getItem('lastOrder'));
+            
+            if (!orderData) {
+                alert('找不到訂單資訊');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // 顯示訂單基本資訊
+            document.getElementById('orderId').textContent = orderData.orderId;
+            document.getElementById('orderDate').textContent = new Date(orderData.orderDate).toLocaleString('zh-TW');
+            document.getElementById('customerName').textContent = orderData.customerName;
+            document.getElementById('customerPhone').textContent = orderData.customerPhone;
+
+            // 顯示訂購商品
+            const itemsList = document.getElementById('orderItemsList');
+            itemsList.innerHTML = orderData.items.map(item => `
+                <div class="item-row">
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-flavor">口味: ${item.flavor || '未選擇'}</div>
+                    </div>
+                    <div class="item-quantity">x${item.quantity}</div>
+                    <div class="item-price">NT$ ${item.price * item.quantity}</div>
+                </div>
+            `).join('');
+
+            // 顯示門市資訊
+            const storeInfo = document.getElementById('storeInfo');
+            if (orderData.storeInfo) {
+                storeInfo.innerHTML = `
+                    <div><strong>門市類型：</strong>${orderData.storeType === '711' ? '7-11 統一超商' : '全家便利商店'}</div>
+                    <div><strong>門市名稱：</strong>${orderData.storeInfo.storeName || '測試門市'}</div>
+                    <div><strong>門市地址：</strong>${orderData.storeInfo.storeAddress || '台北市信義區信義路五段7號'}</div>
+                    <div><strong>門市電話：</strong>${orderData.storeInfo.storePhone || '02-2345-6789'}</div>
+                `;
+            } else {
+                storeInfo.innerHTML = '<div>門市資訊載入失敗</div>';
+            }
+
+            // 顯示金額資訊
+            document.getElementById('subtotal').textContent = `NT$ ${orderData.subtotal}`;
+            document.getElementById('totalAmount').textContent = `NT$ ${orderData.total}`;
+        }
+
+        function contactService() {
+            const orderData = JSON.parse(localStorage.getItem('lastOrder'));
+            const message = `您好，我想詢問訂單 ${orderData ? orderData.orderId : ''} 的相關問題。`;
+            
+            // 這裡可以整合實際的客服系統
+            alert('客服功能開發中，如有問題請撥打客服專線：0800-XXX-XXX');
+            
+            // 或者可以開啟 LINE 客服
+            // window.open(`https://line.me/ti/p/@deepvape?message=${encodeURIComponent(message)}`);
+        }
+    </script>
+</body>
+</html> 
