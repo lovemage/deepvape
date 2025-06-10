@@ -445,8 +445,8 @@
 
         /* Footer 上方設計區域 */
         .footer-design-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 80px 0;
+            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
+            padding: 4rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -458,177 +458,75 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(26,254,73,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(131,134,245,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
             opacity: 0.3;
         }
 
         .design-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 2rem;
             position: relative;
             z-index: 2;
         }
 
-        .design-content {
+        .service-guarantees {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
             align-items: center;
         }
 
-        .design-left {
-            color: white;
-        }
-
-        .design-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .design-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        .design-features {
-            margin-bottom: 2.5rem;
-        }
-
-        .feature-item {
+        .guarantee-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .feature-item i {
-            color: #00ff88;
-            font-size: 1.2rem;
-            width: 20px;
-        }
-
-        .design-cta-btn {
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(26, 254, 73, 0.2);
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
         }
 
-        .design-cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+        .guarantee-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(26, 254, 73, 0.2);
+            border-color: rgba(26, 254, 73, 0.4);
         }
 
-        .design-right {
-            position: relative;
-            height: 400px;
-        }
-
-        .design-image {
-            position: relative;
-            width: 100%;
-            height: 100%;
+        .guarantee-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1afe49, #8386f5);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+        .guarantee-icon i {
+            font-size: 1.8rem;
+            color: white;
         }
 
-        .floating-element {
-            position: absolute;
+        .guarantee-content {
+            flex: 1;
+        }
+
+        .guarantee-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .guarantee-desc {
+            font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.8);
-            font-size: 2rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .element-1 {
-            top: 20%;
-            left: 20%;
-            animation-delay: 0s;
-        }
-
-        .element-2 {
-            top: 60%;
-            right: 20%;
-            animation-delay: 1s;
-        }
-
-        .element-3 {
-            bottom: 20%;
-            left: 50%;
-            animation-delay: 2s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .design-graphic {
-            position: relative;
-            width: 300px;
-            height: 300px;
-        }
-
-        .graphic-circle {
-            position: absolute;
-            border-radius: 50%;
-            animation: rotate 10s linear infinite;
-        }
-
-        .circle-1 {
-            width: 300px;
-            height: 300px;
-            border: 3px solid rgba(0, 255, 136, 0.3);
-            top: 0;
-            left: 0;
-        }
-
-        .circle-2 {
-            width: 200px;
-            height: 200px;
-            border: 2px solid rgba(0, 212, 255, 0.4);
-            top: 50px;
-            left: 50px;
-            animation-direction: reverse;
-            animation-duration: 8s;
-        }
-
-        .circle-3 {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.2));
-            top: 100px;
-            left: 100px;
-            animation-duration: 6s;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            margin: 0;
+            line-height: 1.4;
         }
 
         /* 頁腳 */
@@ -693,6 +591,37 @@
             .flavor-grid {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                 gap: 1rem;
+            }
+
+            .footer-design-section {
+                padding: 3rem 0;
+            }
+
+            .service-guarantees {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .guarantee-item {
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+
+            .guarantee-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .guarantee-icon i {
+                font-size: 1.5rem;
+            }
+
+            .guarantee-title {
+                font-size: 1.1rem;
+            }
+
+            .guarantee-desc {
+                font-size: 0.85rem;
             }
         }
 
@@ -996,47 +925,44 @@
     <!-- Footer 上方設計區域 -->
     <section class="footer-design-section">
         <div class="design-container">
-            <div class="design-content">
-                <div class="design-left">
-                    <h2 class="design-title">加入 DeepVape 會員</h2>
-                    <p class="design-subtitle">享受專屬優惠與最新產品資訊</p>
-                    <div class="design-features">
-                        <div class="feature-item">
-                            <i class="fas fa-gift"></i>
-                            <span>新會員專屬優惠</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-bell"></i>
-                            <span>新品搶先通知</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-shipping-fast"></i>
-                            <span>免運費優惠</span>
-                        </div>
+            <div class="service-guarantees">
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-shield-check"></i>
                     </div>
-                    <button class="design-cta-btn" onclick="showContact()">
-                        <i class="fab fa-line"></i>
-                        立即加入會員
-                    </button>
+                    <div class="guarantee-content">
+                        <h3 class="guarantee-title">正品保證</h3>
+                        <p class="guarantee-desc">所有VAPE產品均來自專櫃</p>
+                    </div>
                 </div>
-                <div class="design-right">
-                    <div class="design-image">
-                        <div class="floating-elements">
-                            <div class="floating-element element-1">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="floating-element element-2">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="floating-element element-3">
-                                <i class="fas fa-gem"></i>
-                            </div>
-                        </div>
-                        <div class="design-graphic">
-                            <div class="graphic-circle circle-1"></div>
-                            <div class="graphic-circle circle-2"></div>
-                            <div class="graphic-circle circle-3"></div>
-                        </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <div class="guarantee-content">
+                        <h3 class="guarantee-title">免費退貨和退換貨</h3>
+                        <p class="guarantee-desc">所有VAPE訂單均可免費退換貨</p>
+                    </div>
+                </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <div class="guarantee-content">
+                        <h3 class="guarantee-title">空運快速出貨</h3>
+                        <p class="guarantee-desc">所有VAPE訂單將於48小時內寄出</p>
+                    </div>
+                </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="guarantee-content">
+                        <h3 class="guarantee-title">VAPE顧問服務</h3>
+                        <p class="guarantee-desc">我們VAPE顧問隨時為您貼心服務</p>
                     </div>
                 </div>
             </div>
