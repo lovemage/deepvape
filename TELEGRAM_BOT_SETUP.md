@@ -14,16 +14,30 @@
 2. 將剛創建的 Bot 加入群組
 3. 給予 Bot 管理員權限（發送訊息）
 
-### 3. 獲取 Chat ID
-#### 方法一：使用 Bot API
-1. 在群組中發送任意訊息
-2. 訪問：`https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
-3. 在回應中找到 `chat.id`（負數表示群組）
+### 3. 獲取群組 Chat ID ⚠️ **重要：必須使用群組 ID**
+
+商家訂單通知應該發送到**群組**而不是個人聊天，這樣團隊成員都能看到訂單。
+
+#### 方法一：使用 Bot API（推薦）
+1. **在群組中發送任意訊息**（例如：`/start` 或 `Hello`）
+2. **查詢 Bot 更新**：
+   ```bash
+   curl "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates"
+   ```
+3. **找到群組 Chat ID**：
+   - 在 JSON 回應中尋找 `"type": "group"` 或 `"type": "supergroup"`
+   - 對應的 `chat.id` 就是群組 Chat ID
+   - **群組 Chat ID 特徵**：負數格式（如：`-1001234567890`）
 
 #### 方法二：使用 @userinfobot
 1. 將 `@userinfobot` 加入群組
 2. 發送 `/start` 命令
 3. Bot 會回覆群組的 Chat ID
+
+#### Chat ID 類型說明
+- **個人聊天 ID**：正數（如：`123456789`）❌ 不適用於商家通知
+- **群組 Chat ID**：負數（如：`-987654321`）✅ 適用於商家通知  
+- **超級群組 ID**：以 `-100` 開頭（如：`-1001234567890`）✅ 適用於商家通知
 
 ## 🔧 **配置購物車系統**
 
