@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ILIA 哩亞布紋主機 - Deepvape</title>
+    <title>LANA 煙彈 - Deepvape</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
     <style>
@@ -172,12 +172,6 @@
             margin-bottom: 0.5rem;
         }
 
-        .product-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
         .product-price {
             font-size: 2rem;
             font-weight: 700;
@@ -189,63 +183,6 @@
             font-size: 1.1rem;
             color: var(--text-secondary);
             line-height: 1.8;
-        }
-
-        /* Color Selection */
-        .color-selection {
-            margin-top: 1.5rem;
-        }
-
-        .color-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .color-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .color-option {
-            position: relative;
-            background: var(--background-light);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .color-option:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-light);
-        }
-
-        .color-option.selected {
-            border-color: var(--accent-color);
-            background: rgba(231, 76, 60, 0.1);
-        }
-
-        .color-option img {
-            width: 100%;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-        }
-
-        .color-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9rem;
         }
 
         /* Specifications */
@@ -290,6 +227,62 @@
         .spec-value {
             color: var(--text-secondary);
             font-weight: 500;
+        }
+
+        /* Flavor Selection */
+        .flavor-options {
+            margin-top: 1.5rem;
+        }
+
+        .flavor-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tech-badge {
+            background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .flavor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .flavor-option {
+            padding: 0.8rem;
+            background: var(--white);
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .flavor-option:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .flavor-option.selected {
+            background: var(--accent-color);
+            color: var(--white);
+            border-color: var(--accent-color);
         }
 
         /* Quantity Selector */
@@ -338,12 +331,6 @@
             text-align: center;
             font-size: 1.1rem;
             font-weight: 600;
-        }
-
-        .total-price {
-            color: var(--highlight-color);
-            font-weight: 600;
-            font-size: 1.2rem;
         }
 
         /* Action Buttons */
@@ -457,8 +444,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .color-options {
-                grid-template-columns: repeat(2, 1fr);
+            .flavor-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             }
         }
     </style>
@@ -484,52 +471,24 @@
                     <!-- Image Gallery -->
                     <div class="image-gallery">
                         <div class="main-image-container">
-                            <img src="ilia_Bu/ilia_布紋主機_黑色.webp" alt="ILIA 哩亞布紋主機" class="main-image" id="mainImage">
+                            <img src="lana_pods/LANA煙彈.webp" alt="LANA 煙彈" class="main-image" id="mainImage">
                         </div>
                         <div class="gallery-thumbnails">
-                            <img src="ilia_Bu/ilia_布紋主機_黑色.webp" alt="黑色" class="gallery-image active" onclick="changeMainImage(this)">
-                            <img src="ilia_Bu/ilia_布紋主機_白色.webp" alt="白色" class="gallery-image" onclick="changeMainImage(this)">
-                            <img src="ilia_Bu/ilia_布紋主機_紅色.webp" alt="紅色" class="gallery-image" onclick="changeMainImage(this)">
-                            <img src="ilia_Bu/ilia_布紋主機_藍色.webp" alt="藍色" class="gallery-image" onclick="changeMainImage(this)">
+                            <img src="lana_pods/LANA煙彈.webp" alt="LANA 煙彈 - 正面" class="gallery-image active" onclick="changeMainImage(this)">
+                            <img src="lana_pods/LANA煙彈-1.webp" alt="LANA 煙彈 - 側面" class="gallery-image" onclick="changeMainImage(this)">
+                            <img src="lana_pods/lanapods.jpg" alt="LANA 煙彈 - 包裝" class="gallery-image" onclick="changeMainImage(this)">
                         </div>
                     </div>
 
                     <!-- Product Info -->
                     <div class="product-info">
-                        <h1 class="product-title">ILIA 哩亞布紋主機</h1>
-                        <p class="product-subtitle">時尚布紋外觀 | 8W~10W功率調節 | 400mAh電池</p>
-                        <div class="product-price">NT$ 650</div>
+                        <h1 class="product-title">LANA 煙彈</h1>
+                        
+                        <div class="product-price">NT$ 280</div>
                         
                         <div class="product-description">
-                            ILIA 哩亞布紋主機採用獨特的布紋外觀設計，結合現代工藝與經典美學。
-                            8W-10W可調功率，400mAh大容量電池，為您帶來卓越的使用體驗。
-                            精緻的布紋質感，舒適的握感，是品味與性能的完美結合。
-                        </div>
-
-                        <!-- Color Selection -->
-                        <div class="color-selection">
-                            <h3 class="color-title">
-                                <i class="fas fa-palette"></i>
-                                顏色選擇
-                            </h3>
-                            <div class="color-options" id="colorOptions">
-                                <div class="color-option selected" data-color="黑色" data-image="ilia_Bu/ilia_布紋主機_黑色.webp">
-                                    <img src="ilia_Bu/ilia_布紋主機_黑色.webp" alt="黑色">
-                                    <div class="color-name">經典黑</div>
-                                </div>
-                                <div class="color-option" data-color="白色" data-image="ilia_Bu/ilia_布紋主機_白色.webp">
-                                    <img src="ilia_Bu/ilia_布紋主機_白色.webp" alt="白色">
-                                    <div class="color-name">純淨白</div>
-                                </div>
-                                <div class="color-option" data-color="紅色" data-image="ilia_Bu/ilia_布紋主機_紅色.webp">
-                                    <img src="ilia_Bu/ilia_布紋主機_紅色.webp" alt="紅色">
-                                    <div class="color-name">熱情紅</div>
-                                </div>
-                                <div class="color-option" data-color="藍色" data-image="ilia_Bu/ilia_布紋主機_藍色.webp">
-                                    <img src="ilia_Bu/ilia_布紋主機_藍色.webp" alt="藍色">
-                                    <div class="color-name">深海藍</div>
-                                </div>
-                            </div>
+                            LANA 煙彈以其創新口味和順滑口感聞名，採用先進的霧化技術，
+                            為您帶來純正的口味體驗。每一口都經過精心調製，確保最佳的使用感受。
                         </div>
 
                         <!-- Specifications -->
@@ -540,30 +499,41 @@
                             </h3>
                             <ul class="spec-list">
                                 <li>
-                                    <span class="spec-label">電池容量</span>
-                                    <span class="spec-value">400mAh</span>
+                                    <span class="spec-label">容量</span>
+                                    <span class="spec-value">2ML</span>
                                 </li>
                                 <li>
-                                    <span class="spec-label">功率範圍</span>
-                                    <span class="spec-value">8W~10W</span>
+                                    <span class="spec-label">霧化器</span>
+                                    <span class="spec-value">陶瓷芯霧化器</span>
                                 </li>
                                 <li>
-                                    <span class="spec-label">充電介面</span>
-                                    <span class="spec-value">TYPE-C</span>
+                                    <span class="spec-label">電阻</span>
+                                    <span class="spec-value">1.2Ω</span>
                                 </li>
                                 <li>
-                                    <span class="spec-label">外觀材質</span>
-                                    <span class="spec-value">高級布紋質感</span>
+                                    <span class="spec-label">尼古丁含量</span>
+                                    <span class="spec-value">3.5%</span>
                                 </li>
                                 <li>
-                                    <span class="spec-label">適配煙彈</span>
-                                    <span class="spec-value">ILIA 系列煙彈</span>
+                                    <span class="spec-label">適配主機</span>
+                                    <span class="spec-value">LANA 系列主機</span>
                                 </li>
                                 <li>
-                                    <span class="spec-label">保護功能</span>
-                                    <span class="spec-value">短路/過充/低壓保護</span>
+                                    <span class="spec-label">包裝規格</span>
+                                    <span class="spec-value">2顆裝</span>
                                 </li>
                             </ul>
+                        </div>
+
+                        <!-- Flavor Options -->
+                        <div class="flavor-options">
+                            <h3 class="flavor-title">
+                                <i class="fas fa-palette"></i>
+                                口味選擇 <span class="tech-badge">8種口味</span>
+                            </h3>
+                            <div class="flavor-grid" id="flavorGrid">
+                                <!-- 口味選項將由 JavaScript 生成 -->
+                            </div>
                         </div>
 
                         <!-- Quantity Selector -->
@@ -573,16 +543,16 @@
                                 <button class="quantity-btn" onclick="decreaseQuantity()">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="10">
+                                <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="50">
                                 <button class="quantity-btn" onclick="increaseQuantity()">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </div>
                             <p style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
-                                選擇的顏色：<span id="selectedColor">經典黑</span>
+                                選擇的口味：<span id="selectedFlavor">請選擇口味</span>
                             </p>
-                            <p class="total-price" style="margin-top: 0.5rem;">
-                                總價：NT$ <span id="totalPrice">650</span>
+                            <p style="color: var(--highlight-color); font-weight: 600; margin-top: 0.5rem;">
+                                總價：NT$ <span id="totalPrice">280</span>
                             </p>
                         </div>
 
@@ -601,28 +571,28 @@
                 <h3 class="features-title">產品特色</h3>
                 <ul class="features-list">
                     <li>
-                        <i class="fas fa-magic"></i>
-                        布紋質感 - 獨特的布紋外觀設計
+                        <i class="fas fa-leaf"></i>
+                        天然口味 - 精選天然香料調製
                     </li>
                     <li>
-                        <i class="fas fa-battery-three-quarters"></i>
-                        大容量電池 - 400mAh長效續航
-                    </li>
-                    <li>
-                        <i class="fas fa-sliders-h"></i>
-                        功率調節 - 8W-10W可調功率
-                    </li>
-                    <li>
-                        <i class="fas fa-plug"></i>
-                        快速充電 - TYPE-C快充介面
+                        <i class="fas fa-microscope"></i>
+                        陶瓷芯技術 - 純淨口感體驗
                     </li>
                     <li>
                         <i class="fas fa-shield-alt"></i>
-                        多重保護 - 全方位安全保護
+                        品質保證 - 嚴格品質檢測
                     </li>
                     <li>
-                        <i class="fas fa-hand-holding"></i>
-                        舒適握感 - 人體工學設計
+                        <i class="fas fa-recycle"></i>
+                        環保材質 - 可回收包裝設計
+                    </li>
+                    <li>
+                        <i class="fas fa-heart"></i>
+                        順滑口感 - 溫和不刺激
+                    </li>
+                    <li>
+                        <i class="fas fa-star"></i>
+                        精美包裝 - 高質感外觀設計
                     </li>
                 </ul>
             </div>
@@ -632,36 +602,45 @@
                 <i class="fas fa-exclamation-triangle"></i>
                 <div>
                     <strong>重要提醒：</strong>本產品僅供 18 歲以上成年人使用，請遵守當地相關法規。
-                    <br><strong>使用說明：</strong>初次使用前請充飽電，並詳閱使用說明書。
+                    <br><strong>使用說明：</strong>請確保煙彈正確安裝於主機中，避免乾燒。
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        let selectedColor = '經典黑';
-        let currentPrice = 650;
+        // 8種口味列表
+        const flavors = [
+            '經典煙草', '薄荷涼感', '水果混合', '香草奶昔',
+            '藍莓爆珠', '檸檬汽水', '草莓奶茶', '咖啡拿鐵'
+        ];
 
-        // 初始化顏色選項
-        function initializeColorOptions() {
-            const colorOptions = document.querySelectorAll('.color-option');
-            colorOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // 移除其他選中狀態
-                    colorOptions.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // 添加選中狀態
-                    this.classList.add('selected');
-                    
-                    // 更新選中的顏色
-                    selectedColor = this.querySelector('.color-name').textContent;
-                    document.getElementById('selectedColor').textContent = selectedColor;
-                    
-                    // 更新主圖片
-                    const mainImage = document.getElementById('mainImage');
-                    mainImage.src = this.dataset.image;
-                });
+        let selectedFlavor = '';
+        let currentPrice = 280;
+
+        // 初始化口味選項
+        function initializeFlavors() {
+            const flavorGrid = document.getElementById('flavorGrid');
+            flavors.forEach(flavor => {
+                const flavorOption = document.createElement('div');
+                flavorOption.className = 'flavor-option';
+                flavorOption.textContent = flavor;
+                flavorOption.onclick = () => selectFlavor(flavor, flavorOption);
+                flavorGrid.appendChild(flavorOption);
             });
+        }
+
+        // 選擇口味
+        function selectFlavor(flavor, element) {
+            // 移除其他選中狀態
+            document.querySelectorAll('.flavor-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 添加選中狀態
+            element.classList.add('selected');
+            selectedFlavor = flavor;
+            document.getElementById('selectedFlavor').textContent = flavor;
         }
 
         // Image Gallery
@@ -673,25 +652,13 @@
             
             galleryImages.forEach(image => image.classList.remove('active'));
             img.classList.add('active');
-            
-            // 同步顏色選擇
-            const colorName = img.alt;
-            const colorOptions = document.querySelectorAll('.color-option');
-            colorOptions.forEach(option => {
-                option.classList.remove('selected');
-                if (option.dataset.color === colorName) {
-                    option.classList.add('selected');
-                    selectedColor = option.querySelector('.color-name').textContent;
-                    document.getElementById('selectedColor').textContent = selectedColor;
-                }
-            });
         }
 
         // Quantity Controls
         function increaseQuantity() {
             const quantityInput = document.getElementById('quantity');
             const currentValue = parseInt(quantityInput.value);
-            if (currentValue < 10) {
+            if (currentValue < 50) {
                 quantityInput.value = currentValue + 1;
                 updateTotalPrice();
             }
@@ -715,23 +682,28 @@
 
         // 加入購物車
         function addToCart() {
+            if (!selectedFlavor) {
+                alert('請選擇口味！');
+                return;
+            }
+
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_fabric_host',
-                name: 'ILIA 哩亞布紋主機',
-                color: selectedColor,
-                price: 650,
+                id: 'lana_pods',
+                name: 'LANA 煙彈',
+                flavor: selectedFlavor,
+                price: 280,
                 quantity: quantity,
-                image: document.getElementById('mainImage').src
+                image: 'lana_pods/LANA煙彈.webp'
             };
 
             // 取得現有購物車
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             
-            // 檢查是否已存在相同產品和顏色
+            // 檢查是否已存在相同產品和口味
             const existingItemIndex = cart.findIndex(item => 
-                item.id === product.id && item.color === product.color
+                item.id === product.id && item.flavor === product.flavor
             );
 
             if (existingItemIndex > -1) {
@@ -746,7 +718,7 @@
             localStorage.setItem('cart', JSON.stringify(cart));
 
             // 顯示成功訊息
-            alert(`已將 ${product.name} (${product.color}) x${product.quantity} 加入購物車！`);
+            alert(`已將 ${product.name} (${product.flavor}) x${product.quantity} 加入購物車！`);
             
             // 可選：跳轉到購物車頁面
             // window.location.href = 'cart.html';
@@ -754,7 +726,7 @@
 
         // 初始化頁面
         document.addEventListener('DOMContentLoaded', function() {
-            initializeColorOptions();
+            initializeFlavors();
             updateTotalPrice();
         });
     </script>

@@ -1,216 +1,217 @@
-# Deepvape 電子菸銷售網站
+# DeepVape 電子煙購物網站
 
-![Deepvape Logo](logo.png)
+一個現代化的電子煙購物網站，具備完整的產品展示、購物車功能和後台管理系統。
 
-## 📋 專案簡介
-
-Deepvape 是一個現代化的電子菸線上銷售平台，提供優質的電子菸產品與完善的購物體驗。網站採用響應式設計，支援多種裝置瀏覽，並整合了 Telegram Bot 訂單通知系統與 LINE 客服功能。
-
-## 🚀 功能特色
+## 🌟 主要功能
 
 ### 前端功能
-- **年齡驗證系統**：符合法規要求的年齡確認機制
-- **卡片式商品展示**：清晰展示商品資訊與價格
-- **脈衝動畫按鈕**：酷炫的視覺效果增強使用體驗
-- **響應式設計**：支援手機、平板、桌面等多種裝置
-- **動態公告輪播**：即時顯示最新優惠資訊
-- **購物車功能**：完整的商品選購流程
+- **產品展示**: 主機、煙彈、拋棄式電子煙產品展示
+- **響應式設計**: 支援桌面和手機瀏覽
+- **購物車系統**: 本地儲存的購物車功能
+- **門市選擇**: 7-11、全家、萊爾富取貨點選擇
+- **訂單確認**: 完整的訂單確認流程
+- **客服整合**: LINE 客服連結和 QR Code
 
-### 商品分類
-- **主機系列**：SP2 一代、ilia 一代、皮革款、布紋款
-- **HTX 黑桃系列**：頂級限定版產品
-- **煙彈系列**：ilia、SP2、LANA 等多種選擇
-- **拋棄式系列**：ilia 四代、LANA 拋棄式
+### 後端功能
+- **Flask 後台**: 完整的後台管理系統
+- **產品管理**: 價格、庫存、狀態管理
+- **公告系統**: 重要公告發佈（最多3條）
+- **庫存狀態**: 自動庫存狀態顯示
+- **API 介面**: RESTful API 支援
 
-### 後端整合（開發中）
-- **Telegram Bot**：自動通知新訂單
-- **LINE 客服**：即時客戶服務
-- **管理系統**：批量管理商品價格與庫存
-- **MySQL 資料庫**：訂單與商品資料儲存
+### Telegram 機器人
+- **管理機器人**: 通過 Telegram 管理產品和公告
+- **價格管理**: 修改價格影響所有變體
+- **庫存管理**: 獨立變體庫存管理
+- **安全認證**: 管理員密碼保護
+
+## 📦 產品系列
+
+### 主機系列
+- **SP2 一代主機** - 智能溫控系統 (NT$ 650)
+- **ILIA 一代主機** - 經典設計，新手首選 (NT$ 650)
+- **ILIA 皮革主機** - 高級皮革外觀 (NT$ 650)
+- **ILIA 布紋主機** - 時尚布紋質感 (NT$ 650)
+- **HTA 黑桃主機** - 黑桃系列主機 (NT$ 450)
+
+### 煙彈系列
+- **SP2 煙彈** - 多種口味選擇 (NT$ 350)
+- **ILIA 煙彈** - 陶瓷芯霧化器 (NT$ 300)
+- **LANA 煙彈** - 創新口味，順滑口感 (NT$ 280)
+- **HTA 煙彈** - 黑桃系列煙彈 (NT$ 260)
+
+### 拋棄式系列
+- **ILIA 拋棄式四代** - 6500口大容量 (NT$ 320)
+- **LANA A8000 拋棄式** - 8000口超長續航 (NT$ 320)
 
 ## 🛠️ 技術架構
 
 ### 前端技術
-- **HTML5** - 網頁結構
-- **CSS3** - 樣式設計（含動畫效果）
-- **JavaScript** - 互動功能
-- **Font Awesome** - 圖標系統
-- **Google Fonts** - 中英文字體
+- **HTML5/CSS3**: 現代化網頁標準
+- **JavaScript**: 動態交互功能
+- **響應式設計**: 適配各種螢幕尺寸
+- **Font Awesome**: 圖標庫
+- **LocalStorage**: 本地資料儲存
 
-### 後端技術（規劃中）
-- **Python** - 後端開發語言
-- **Telegram Bot API** - 訂單通知系統
-- **MySQL** - 資料庫
-- **Railway** - 主機託管平台
+### 後端技術
+- **Flask**: Python Web 框架
+- **SQLite**: 輕量級資料庫
+- **SQLAlchemy**: ORM 資料庫操作
+- **RESTful API**: 標準 API 設計
 
-### 部署環境
-- **網域註冊**：xxxsilo
-- **DNS/CDN**：Cloudflare（免費版）
-- **SSL 憑證**：Cloudflare SSL
-- **圖片來源**：Unsplash API
+### Telegram 機器人
+- **python-telegram-bot**: Telegram Bot API
+- **Flask 整合**: 直接操作後台資料庫
+- **多用戶支援**: 獨立會話管理
 
-## 📁 檔案結構
+## 📁 專案結構
 
 ```
-deepvape/
-├── index.html          # 主網頁檔案
-├── logo.png           # 網站 Logo（需自行提供）
-├── README.md          # 專案說明文件
-└── backend/           # 後端程式（開發中）
-    ├── telegram_bot.py
-    ├── database.py
-    └── config.py
+DeepVape/
+├── index.html                 # 首頁
+├── cart.html                 # 購物車頁面
+├── order_confirmation.html   # 訂單確認頁面
+├── shopping_guide.html       # 購物說明
+├── store_search_demo.html    # 門市搜尋
+├── cvs_callback.html         # 取貨回調
+├── 
+├── 產品頁面/
+│   ├── sp2_product.html      # SP2 主機
+│   ├── ilia_1_product.html   # ILIA 一代主機
+│   ├── ilia_fabric_product.html # ILIA 布紋主機
+│   ├── ilia_leather_product.html # ILIA 皮革主機
+│   ├── hta_vape_product.html # HTA 主機
+│   ├── sp2_pods_product.html # SP2 煙彈
+│   ├── ilia_pods_product.html # ILIA 煙彈
+│   ├── lana_pods_product.html # LANA 煙彈
+│   ├── hta_pods_product.html # HTA 煙彈
+│   ├── ilia_disposable_product.html # ILIA 拋棄式
+│   └── lana_a8000_product.html # LANA A8000
+├── 
+├── backend/                   # 後台系統
+│   ├── app.py                # Flask 主應用
+│   ├── simple_bot.py         # 簡化版 Telegram 機器人
+│   ├── deepvape_dev.db       # SQLite 資料庫
+│   ├── requirements.txt      # Python 依賴
+│   └── templates/            # 網頁模板
+├── 
+├── 產品圖片/
+│   ├── sp2_d/               # SP2 主機圖片
+│   ├── ilia_1/              # ILIA 一代圖片
+│   ├── ilia_Bu/             # ILIA 布紋圖片
+│   ├── ilia_L/              # ILIA 皮革圖片
+│   ├── hta_vape/            # HTA 主機圖片
+│   ├── hta_pods/            # HTA 煙彈圖片
+│   ├── lana_pods/           # LANA 煙彈圖片
+│   ├── ilia_a_4/            # ILIA 拋棄式圖片
+│   └── lana_a8000/          # LANA A8000 圖片
+└── 
+└── 品牌資源/
+    ├── logo.png             # 主要 Logo
+    ├── nav_logo.png         # 導航 Logo
+    ├── hero1.png            # 首頁橫幅
+    └── S__16834578.jpg      # LINE 客服 QR Code
 ```
 
-## 🚦 快速開始
+## 🚀 部署說明
 
-### 前端部署
+### 1. 前端部署
+- 將所有 HTML、CSS、JS 檔案上傳到 Web 伺服器
+- 確保圖片資源路徑正確
+- 配置 HTTPS（建議）
 
-1. **下載專案檔案**
-   ```bash
-   git clone [專案網址]
-   cd deepvape
-   ```
-
-2. **準備 Logo 圖片**
-   - 將您的品牌 Logo 命名為 `logo.png`
-   - 放置於專案根目錄
-
-3. **本地測試**
-   - 直接開啟 `index.html` 即可預覽
-   - 或使用本地伺服器：
-   ```bash
-   python -m http.server 8000
-   ```
-
-4. **正式部署**
-   - 上傳檔案至您的網頁主機
-   - 設定網域指向
-   - 確認 SSL 憑證生效
-
-### 後端設定（待開發）
-
-1. **環境需求**
-   - Python 3.8+
-   - MySQL 5.7+
-   - Telegram Bot Token
-
-2. **安裝相依套件**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **設定環境變數**
-   ```bash
-   TELEGRAM_BOT_TOKEN=your_bot_token
-   DATABASE_URL=mysql://user:password@host/database
-   LINE_CHANNEL_ID=your_line_channel_id
-   ```
-
-## 💰 費用說明
-
-### 初期費用
-- **訂金**：NT$ 10,000
-  - 含網域費用：NT$ 1,500/年
-  - 含網站建置費用
-
-### 網站總額
-- **尾款**：NT$ 14,000
-- **包含服務**：SEO 代操作三個月及網站維護一年
-
-### 月費
-- **雲端主機 Pro**：NT$ 650/月
-- **SSL/CDN**：免費（Cloudflare）
-
-## 📱 使用說明
-
-### 顧客端操作流程
-
-1. **進入網站**
-   - 通過年齡驗證（18歲以上）
-
-2. **瀏覽商品**
-   - 查看各類別商品
-   - 點擊「立即選購」
-
-3. **選擇規格**
-   - 選擇顏色
-   - 設定數量
-   - 選擇配送方式（7-11/全家）
-   - *註：需串聯選擇便利店之 API（開發中）*
-
-4. **送出訂單**
-   - 確認訂單內容
-   - 系統自動通知客服
-   - 轉接 LINE 完成後續服務
-
-### 管理端功能（開發中）
-
-- 批量更新商品價格
-- 批量調整庫存數量
-- 修改網站公告內容
-- 查看訂單記錄
-
-## 🔧 自訂修改
-
-### 修改商品資訊
-在 `index.html` 中找到對應的商品區塊：
-```html
-<div class="product-info">
-    <h3 class="product-name">商品名稱</h3>
-    <p class="product-description">商品描述</p>
-    <div class="product-price">NT$ 價格</div>
-</div>
+### 2. 後台部署
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
 ```
 
-### 修改公告內容
-找到 JavaScript 中的公告陣列：
-```javascript
-const announcements = [
-    '🎉 新品上市！全館滿 $1500 免運費 🚚',
-    // 新增您的公告...
-];
+### 3. Telegram 機器人
+```bash
+cd backend
+export TELEGRAM_BOT_TOKEN="your_bot_token"
+python simple_bot.py
 ```
 
-### 修改配色主題
-在 CSS 中的 `:root` 變數：
-```css
-:root {
-    --primary-color: #1a1a2e;
-    --secondary-color: #16213e;
-    --accent-color: #0f3460;
-    --highlight-color: #e94560;
-    /* 修改顏色值... */
-}
-```
+## ⚙️ 配置說明
 
-## 🔒 安全注意事項
+### 環境變數
+- `TELEGRAM_BOT_TOKEN`: Telegram 機器人 Token
+- `ADMIN_PASSWORD`: 管理員密碼（預設：admin1122@@$$）
 
-1. **年齡驗證**：確保符合當地法規要求
-2. **資料保護**：客戶資料需加密儲存
-3. **定期更新**：保持系統與套件最新版本
-4. **備份機制**：定期備份資料庫與檔案
+### 資料庫配置
+- 使用 SQLite，檔案位於 `backend/deepvape_dev.db`
+- 首次運行會自動建立資料表和範例資料
 
-## 📄 授權說明
+### API 配置
+- 後台 API 預設運行在 `http://localhost:5000`
+- 可在前端 JavaScript 中修改 `API_BASE_URL`
 
-本專案為客製化開發，版權歸 Deepvape 所有。
+## 🛡️ 安全功能
 
-## 🔄 更新紀錄
+### Telegram 機器人安全
+- 管理員密碼保護
+- 獨立會話管理
+- 操作記錄追蹤
 
-### v1.0.0 (2025-01-XX)
-- 初版網站上線
-- 實現基本購物功能
-- 整合年齡驗證系統
-- 響應式設計完成
+### 資料驗證
+- 輸入資料檢驗
+- SQL 注入防護
+- XSS 攻擊防護
 
-### 待開發功能
-- [ ] Telegram Bot 整合
-- [ ] 後台管理系統
-- [ ] 會員系統
-- [ ] 優惠券功能
-- [ ] 商品評價系統
-- [ ] 多語言支援
+## 📊 庫存狀態系統
 
----
+### 庫存狀態定義
+- **現貨供應** (≥10件): 充足庫存
+- **庫存不足** (5-9件): 庫存偏低
+- **庫存緊張** (1-4件): 急需補貨
+- **產品缺貨** (0件): 暫時缺貨
 
-**注意**：本網站僅供 18 歲以上成年人使用。請遵守當地相關法規。
+### 自動狀態更新
+- 庫存變更時自動更新狀態
+- 網頁實時顯示庫存狀態
+- 低庫存警告提醒
+
+## 🔧 維護說明
+
+### 日常維護
+1. **價格更新**: 使用 Telegram 機器人或後台管理
+2. **庫存管理**: 定期檢查並補充庫存
+3. **公告管理**: 及時更新重要公告（最多3條）
+4. **圖片管理**: 定期檢查圖片連結是否正常
+
+### 故障排除
+1. **機器人無法啟動**: 檢查 Token 配置和網路連線
+2. **資料庫錯誤**: 檢查資料庫檔案權限
+3. **API 無法連線**: 確認後台服務運行狀態
+4. **圖片無法顯示**: 檢查圖片路徑和檔案存在性
+
+## 📞 聯絡方式
+
+- **LINE 客服**: https://line.me/ti/p/euNh8K-s3e
+- **客服專線**: 0800-XXX-XXX
+- **Email**: service@deepvape.com
+- **服務時間**: 週一至週五 09:00-18:00
+
+## 📄 重要提醒
+
+⚠️ **年齡限制**: 本網站及產品僅供 18 歲以上成年人使用
+⚠️ **健康警告**: 吸菸有害健康，請遵守當地相關法規
+⚠️ **使用說明**: 請詳閱產品使用說明書，正確使用產品
+
+## 🔄 更新日誌
+
+### v2.0 (2024-12)
+- ✅ 新增 LANA 煙彈產品頁面
+- ✅ 重新設計 ILIA 布紋主機頁面
+- ✅ 移除所有直接購買按鈕
+- ✅ 更新所有產品價格
+- ✅ 改善 logo 點擊連結
+- ✅ 整理專案檔案結構
+
+### v1.0 (2024-11)
+- 🎉 初始版本發佈
+- 🎉 完整的購物網站功能
+- 🎉 後台管理系統
+- 🎉 Telegram 機器人管理

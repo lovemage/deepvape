@@ -631,9 +631,7 @@
                         <h2 class="product-title">LANA A8000 一次性電子煙</h2>
                         
                         <div class="product-price">
-                            <span class="original-price">NT$ 899</span>
-                            <span class="current-price">NT$ 749</span>
-                            <span class="discount-badge">限時優惠</span>
+                            <span class="current-price">NT$ 320</span>
                         </div>
                         
                         <div class="stock-status in-stock" id="stock-status">
@@ -656,10 +654,6 @@
                             <button class="btn btn-primary-custom" onclick="addToCart('lana-a8000')">
                                 <i class="fas fa-shopping-cart me-2"></i>
                                 加入購物車
-                            </button>
-                            <button class="btn btn-secondary-custom" onclick="buyNow('lana-a8000')">
-                                <i class="fas fa-bolt me-2"></i>
-                                立即購買
                             </button>
                         </div>
                     </div>
@@ -889,8 +883,7 @@
         const productData = {
             id: 'lana-a8000',
             name: 'LANA A8000 一次性電子煙',
-            price: 749,
-            originalPrice: 899,
+            price: 320,
             image: 'lana_a8000.webp',
             description: '8000口超長續航，極致口感體驗'
         };
@@ -1038,16 +1031,7 @@
             }, 1000);
         }
 
-        // 立即購買
-        function buyNow(productId) {
-            // 先加入購物車
-            addToCart(productId);
-            
-            // 跳轉到購物車頁面
-            setTimeout(() => {
-                window.location.href = 'cart.html';
-            }, 1500);
-        }
+
 
         // Toggle mobile navigation
         function toggleNav() {
