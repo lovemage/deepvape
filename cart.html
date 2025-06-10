@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>購物車 | Image Vape</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #083e12;
+            --secondary-color: #041348;
+            --accent-color: #3d43b4;
+            --highlight-color: #1afe49;
+            --success-color: #1afe49;
+            --warning-color: #ffab00;
+            --danger-color: #e74c3c;
+            --tech-blue: #041348;
+            --tech-cyan: #8386f5;
+            --text-color: #ffffff;
+            --text-secondary: #a0f7b3;
+            --card-bg: rgba(4, 19, 72, 0.8);
+            --border-color: rgba(26, 254, 73, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,28 +31,25 @@
 
         body {
             font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #ffffff;
-            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-color);
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
         }
 
-        .navbar {
+        /* Header */
+        header {
             background: #000000;
-            backdrop-filter: blur(10px);
             padding: 1rem 0;
-            position: fixed;
-            width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
             border: 2px solid transparent;
-            animation: navBorderMove 3s infinite linear;
+            animation: headerBorderMove 3s infinite linear;
         }
 
-        @keyframes navBorderMove {
+        @keyframes headerBorderMove {
             0% {
                 border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
             }
@@ -52,139 +67,119 @@
             }
         }
 
-        .nav-container {
+        .header-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
             height: 50px;
             width: auto;
+            object-fit: contain;
             border-radius: 10px;
             border: 1px solid rgba(26, 254, 73, 0.3);
         }
 
-        .nav-links {
+        .header-actions {
             display: flex;
-            list-style: none;
-            gap: 2rem;
+            gap: 1rem;
+            align-items: center;
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #ffffff;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-links a:hover {
-            color: #1afe49;
-        }
-
-        .hamburger {
-            display: none;
-            background: none;
+        .back-button {
+            background: var(--accent-color);
+            color: var(--text-color);
+            width: 50px;
+            height: 50px;
             border: none;
-            font-size: 1.5rem;
-            color: #ffffff;
-            cursor: pointer;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--border-color);
         }
 
-        /* Mobile Navigation */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
-
-            .nav-links {
-                position: fixed;
-                left: 0;
-                top: 0;
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background: rgba(4, 19, 72, 0.95);
-                flex-direction: column;
-                padding: 2rem 0;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                z-index: 1001;
-                overflow-y: auto;
-                backdrop-filter: blur(10px);
-            }
-
-            .nav-links.active {
-                transform: translateX(0);
-            }
-
-            .nav-links li {
-                margin: 1rem 0;
-            }
-
-            .nav-links a {
-                padding: 1rem 2rem;
-                display: block;
-                font-size: 1.2rem;
-            }
+        .back-button:hover {
+            background: var(--highlight-color);
+            transform: translateY(-2px);
+            border-color: var(--highlight-color);
         }
 
+        /* Main Content */
         .main-content {
-            margin-top: 100px;
-            padding: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: start;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(4, 19, 72, 0.9);
-            border: 1px solid rgba(26, 254, 73, 0.2);
+        /* Cart Items Section */
+        .cart-items-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 30px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
             backdrop-filter: blur(10px);
         }
 
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #1afe49, #8386f5);
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .empty-cart {
             text-align: center;
-            margin-bottom: 3rem;
-            text-shadow: none;
+            padding: 3rem;
+            color: var(--text-secondary);
         }
 
-        .cart-section {
-            margin-bottom: 3rem;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(26, 254, 73, 0.3);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
         }
 
         .cart-item {
-            background: rgba(4, 19, 72, 0.9);
-            border: 1px solid rgba(26, 254, 73, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 1.5rem;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--highlight-color);
+            transform: translateY(-2px);
         }
 
         .item-image {
@@ -192,6 +187,7 @@
             height: 80px;
             object-fit: cover;
             border-radius: 30px;
+            border: 2px solid var(--border-color);
         }
 
         .item-info {
@@ -199,33 +195,60 @@
         }
 
         .item-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
             margin-bottom: 0.5rem;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .item-details {
-            color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
 
         .item-price {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #e74c3c;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--highlight-color);
         }
 
-        .quantity-control {
+        .quantity-controls {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            margin: 0 1rem;
         }
 
         .quantity-btn {
-            background: linear-gradient(135deg, #1afe49, #8386f5);
+            width: 35px;
+            height: 35px;
+            border: none;
+            background: var(--accent-color);
+            color: var(--text-color);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .quantity-btn:hover {
+            background: var(--highlight-color);
+            transform: scale(1.1);
+        }
+
+        .quantity-display {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .remove-btn {
+            background: var(--danger-color);
             color: white;
             border: none;
             width: 35px;
@@ -233,61 +256,58 @@
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .quantity-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
-        }
-
-        .quantity-input {
-            width: 60px;
-            height: 35px;
-            text-align: center;
-            border: 2px solid rgba(26, 254, 73, 0.3);
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #2c3e50;
-            font-weight: bold;
-        }
-
-        .remove-btn {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .remove-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            background: #c0392b;
+            transform: scale(1.1);
         }
 
-        .empty-cart {
-            text-align: center;
-            padding: 3rem;
-            color: #ffffff;
-        }
-
-        .empty-cart i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .customer-info {
-            background: rgba(4, 19, 72, 0.9);
-            border: 1px solid rgba(26, 254, 73, 0.3);
+        /* Order Summary Section */
+        .order-summary {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 2rem;
-            margin-bottom: 2rem;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--highlight-color);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .summary-label {
+            color: var(--text-color);
+        }
+
+        .summary-value {
+            color: var(--highlight-color);
+            font-weight: 600;
+        }
+
+        /* Customer Info Form */
+        .customer-info {
+            margin-top: 2rem;
         }
 
         .form-group {
@@ -296,565 +316,573 @@
 
         .form-label {
             display: block;
-            font-weight: bold;
-            color: #2c3e50;
             margin-bottom: 0.5rem;
-            text-shadow: none;
+            color: var(--text-color);
+            font-weight: 500;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid rgba(26, 254, 73, 0.3);
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--secondary-color);
+            color: var(--text-color);
             border-radius: 30px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-            color: #2c3e50;
+            transition: all 0.3s ease;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #1afe49;
-            box-shadow: 0 0 10px rgba(26, 254, 73, 0.2);
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 0 3px rgba(26, 254, 73, 0.1);
         }
 
+        .form-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Store Selection */
         .store-selection {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .store-input-guide {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border: 2px solid rgba(26, 254, 73, 0.3);
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .store-input-guide h4 {
-            color: #1976d2;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .store-input-guide p {
-            margin: 0 0 10px 0;
-            color: #1976d2;
-            line-height: 1.6;
-        }
-
-        .store-input-guide a {
-            color: #1976d2;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .store-input-guide a:hover {
-            text-decoration: underline;
+            margin-bottom: 1.5rem;
         }
 
         .store-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .store-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid rgba(26, 254, 73, 0.3);
-            border-radius: 30px;
             padding: 1rem;
+            border: 2px solid var(--border-color);
+            background: var(--accent-color);
+            color: var(--text-color);
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
-            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
         }
 
-        .store-btn:hover {
-            border-color: #1afe49;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.2);
-        }
-
+        .store-btn:hover,
         .store-btn.selected {
-            border-color: #1afe49;
-            background: linear-gradient(135deg, #1afe49, #8386f5);
-            color: white;
-        }
-
-        .store-btn i {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            display: block;
+            border-color: var(--highlight-color);
+            background: rgba(26, 254, 73, 0.2);
         }
 
         .selected-store {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 1rem;
             margin-top: 1rem;
-            border-left: 4px solid #27ae60;
-            color: #2c3e50;
+            display: none;
         }
 
-        .select-store-btn {
-            background: linear-gradient(135deg, #1afe49, #8386f5);
-            color: white;
+        .selected-store.show {
+            display: block;
+        }
+
+        .store-info {
+            color: var(--text-color);
+        }
+
+        .store-name {
+            font-weight: 600;
+            color: var(--highlight-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .store-address {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .pulse-button {
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan));
+            color: var(--primary-color);
             border: none;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2rem;
             border-radius: 30px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1rem;
-            font-weight: 500;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            font-size: 1.1rem;
         }
 
-        .select-store-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
-        }
-
-        .manual-store-input {
-            background: rgba(248, 249, 250, 0.9);
-            border: 2px dashed rgba(26, 254, 73, 0.3);
+        .pulse-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
             border-radius: 30px;
-            padding: 20px;
-            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        .manual-store-input h4 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-weight: bold;
+        .pulse-button:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
-        .manual-store-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
+        .pulse-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(26, 254, 73, 0.4);
         }
 
-        .manual-store-buttons .select-store-btn {
-            flex: 1;
-        }
-
-        .order-summary {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(26, 254, 73, 0.2);
-            color: #2c3e50;
-        }
-
-        .summary-row:last-child {
-            border-bottom: none;
-        }
-
-        .summary-total {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #e74c3c;
-            border-top: 2px solid rgba(26, 254, 73, 0.3);
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-
-        .create-order-btn {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-            color: white;
-            border: none;
-            padding: 1.2rem 3rem;
-            font-size: 1.3rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 1rem;
-            font-weight: bold;
-        }
-
-        .create-order-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
-        }
-
-        .create-order-btn:disabled {
-            background: #95a5a6;
+        .pulse-button:disabled {
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
-        .error-message {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 1rem;
-            border-radius: 30px;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 500;
+        .continue-shopping {
+            background: var(--accent-color);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
         }
 
-        .success-message {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-            color: white;
-            padding: 1rem;
-            border-radius: 30px;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 500;
+        .continue-shopping:hover {
+            background: var(--highlight-color);
+            border-color: var(--highlight-color);
         }
 
-        /* 響應式設計 */
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                padding: 2rem 1rem;
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
-            
+
+            .order-summary {
+                position: static;
+            }
+
             .cart-item {
                 flex-direction: column;
                 text-align: center;
+                gap: 1rem;
             }
-            
+
+            .item-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .quantity-controls {
+                margin: 0;
+            }
+
             .store-buttons {
                 grid-template-columns: 1fr;
             }
-            
-            .page-title {
-                font-size: 2rem;
-            }
+        }
+
+        /* Loading and Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal h3 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.confirm {
+            background: var(--highlight-color);
+            color: var(--primary-color);
+        }
+
+        .modal-btn.cancel {
+            background: var(--accent-color);
+            color: var(--text-color);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <img src="logo1.png" alt="Logo" class="logo">
-            <button class="hamburger" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html"><i class="fas fa-home"></i> 返回首頁</a></li>
-            </ul>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logo1.png" alt="Logo">
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <main class="main-content">
-        <div class="container">
-            <h1 class="page-title">購物車</h1>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Cart Items Section -->
+        <div class="cart-items-section">
+            <h2 class="section-title">
+                <i class="fas fa-shopping-cart"></i>
+                購物車
+            </h2>
+            
+            <div id="cartItems">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+            
+            <div class="empty-cart" id="emptyCart" style="display: none;">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>購物車是空的</h3>
+                <p>快去選購您喜愛的商品吧！</p>
+                <a href="index.html" class="pulse-button" style="display: inline-block; margin-top: 1rem;">
+                    <i class="fas fa-arrow-left"></i> 繼續購物
+                </a>
+            </div>
+        </div>
 
-            <div id="error-message" class="error-message"></div>
-            <div id="success-message" class="success-message"></div>
+        <!-- Order Summary Section -->
+        <div class="order-summary">
+            <h3 class="section-title">
+                <i class="fas fa-receipt"></i>
+                訂單摘要
+            </h3>
+            
+            <div class="summary-row">
+                <span class="summary-label">商品小計</span>
+                <span class="summary-value" id="subtotal">NT$ 0</span>
+            </div>
+            
+            <div class="summary-row">
+                <span class="summary-label">運費</span>
+                <span class="summary-value">NT$ 60</span>
+            </div>
+            
+            <div class="summary-row">
+                <span class="summary-label">總計</span>
+                <span class="summary-value" id="total">NT$ 60</span>
+            </div>
 
-            <!-- 購物車商品 -->
-            <section class="cart-section">
-                <h2 class="section-title">購物車商品</h2>
-                <div id="cart-items">
-                    <div class="empty-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <p>購物車是空的</p>
-                        <p>快去選購您喜歡的商品吧！</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 收件人資訊 -->
-            <section class="customer-info">
-                <h2 class="section-title">收件人資訊</h2>
-                <div class="form-group">
-                    <label class="form-label" for="customer-name">姓名 *</label>
-                    <input type="text" id="customer-name" class="form-input" placeholder="請輸入收件人姓名" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="customer-phone">電話 *</label>
-                    <input type="tel" id="customer-phone" class="form-input" placeholder="請輸入聯絡電話" required>
-                </div>
-            </section>
-
-            <!-- 便利商店選擇 -->
-            <section class="store-selection">
-                <h2 class="section-title">取貨門市選擇</h2>
+            <!-- Customer Information -->
+            <div class="customer-info">
+                <h4 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">
+                    <i class="fas fa-user"></i>
+                    收件人資訊
+                </h4>
                 
-                <div class="store-input-guide">
-                    <h4>📍 門市查詢說明</h4>
-                    <p><strong>7-11門市：</strong>請點擊下方「選擇7-11門市」按鈕進行查詢</p>
-                    <p><strong>全家門市：</strong>請先至 <a href="https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp" target="_blank">全家門市查詢</a> 查詢門市資訊</p>
-                    <p><strong>重要提醒：</strong>請務必填寫正確的門市名稱及門市號碼，以確保順利取貨</p>
+                <div class="form-group">
+                    <label class="form-label" for="customerName">姓名 *</label>
+                    <input type="text" id="customerName" class="form-input" placeholder="請輸入收件人姓名" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="customerPhone">電話 *</label>
+                    <input type="tel" id="customerPhone" class="form-input" placeholder="請輸入聯絡電話" required>
                 </div>
 
-                <div class="store-buttons">
-                    <div class="store-btn" data-store="711">
-                        <i class="fas fa-store"></i>
-                        <div>7-11</div>
+                <!-- Store Selection -->
+                <div class="store-selection">
+                    <label class="form-label">選擇取貨門市 *</label>
+                    <div class="store-buttons">
+                        <button class="store-btn" onclick="selectStore('711')">
+                            <i class="fas fa-store"></i>
+                            7-11
+                        </button>
+                        <button class="store-btn" onclick="selectStore('family')">
+                            <i class="fas fa-store"></i>
+                            全家
+                        </button>
                     </div>
-                    <div class="store-btn" data-store="family">
-                        <i class="fas fa-store-alt"></i>
-                        <div>全家</div>
+                    
+                    <div class="selected-store" id="selectedStore">
+                        <div class="store-info">
+                            <div class="store-name" id="storeName">請選擇門市</div>
+                            <div class="store-address" id="storeAddress"></div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="selected-store" class="selected-store" style="display: none;">
-                    <h4>已選擇門市：</h4>
-                    <div id="store-info"></div>
-                </div>
-
-                <div class="manual-store-input">
-                    <h4>手動輸入門市資訊</h4>
-                    <div class="form-group">
-                        <label class="form-label" for="store-name">門市名稱 *</label>
-                        <input type="text" id="store-name" class="form-input" placeholder="請輸入門市名稱（例：台北車站門市）" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="store-id">門市號碼 *</label>
-                        <input type="text" id="store-id" class="form-input" placeholder="請輸入門市號碼（例：001234）" required>
-                    </div>
-                    <div class="manual-store-buttons">
-                        <button class="select-store-btn" onclick="selectSevenEleven()">選擇7-11門市</button>
-                        <button class="select-store-btn" onclick="window.open('https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp', '_blank')">查詢全家門市</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 訂單摘要 -->
-            <section class="order-summary">
-                <h2 class="section-title">訂單摘要</h2>
-                <div class="summary-row">
-                    <span>商品小計：</span>
-                    <span id="subtotal">NT$ 0</span>
-                </div>
-                <div class="summary-row">
-                    <span>運費：</span>
-                    <span>NT$ 60</span>
-                </div>
-                <div class="summary-row summary-total">
-                    <span>總計：</span>
-                    <span id="total">NT$ 60</span>
-                </div>
-            </section>
-
-            <button class="create-order-btn" onclick="createOrder()" disabled>建立訂單</button>
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="pulse-button" id="checkoutBtn" onclick="checkout()" disabled>
+                    <i class="fas fa-credit-card"></i> 建立訂單
+                </button>
+                <a href="index.html" class="pulse-button continue-shopping">
+                    <i class="fas fa-arrow-left"></i> 繼續購物
+                </a>
+            </div>
         </div>
-    </main>
+    </div>
+
+    <!-- Store Selection Modal -->
+    <div id="storeModal" class="modal">
+        <div class="modal-content">
+            <h3>選擇取貨門市</h3>
+            <p>請選擇您方便取貨的門市</p>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" onclick="openStoreSelection()">選擇門市</button>
+                <button class="modal-btn cancel" onclick="closeStoreModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Confirmation Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <h3>確認訂單</h3>
+            <p>確定要建立此訂單嗎？</p>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" onclick="confirmCheckout()">確認</button>
+                <button class="modal-btn cancel" onclick="closeCheckoutModal()">取消</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // 漢堡選單功能
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const hamburger = document.querySelector('.hamburger i');
-            
-            navLinks.classList.toggle('active');
-            
-            if (navLinks.classList.contains('active')) {
-                hamburger.classList.remove('fa-bars');
-                hamburger.classList.add('fa-times');
-            } else {
-                hamburger.classList.remove('fa-times');
-                hamburger.classList.add('fa-bars');
-            }
+        let cart = [];
+        let selectedStoreType = '';
+        let selectedStoreInfo = null;
+
+        // Load cart from localStorage
+        function loadCart() {
+            cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            renderCart();
+            updateSummary();
+            validateForm();
         }
 
-        // 點擊外部關閉選單
-        document.addEventListener('click', function(e) {
-            const navLinks = document.getElementById('navLinks');
-            const navContainer = document.querySelector('.nav-container');
-            
-            if (!navContainer.contains(e.target) && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                document.querySelector('.hamburger i').classList.remove('fa-times');
-                document.querySelector('.hamburger i').classList.add('fa-bars');
-            }
-        });
-
-        // 購物車功能
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let selectedStore = null;
-
-        // 頁面載入時初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            displayCartItems();
-            updateOrderSummary();
-            setupStoreSelection();
-        });
-
-        // 顯示購物車商品
-        function displayCartItems() {
-            const cartItemsContainer = document.getElementById('cart-items');
+        // Render cart items
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const emptyCart = document.getElementById('emptyCart');
             
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div class="empty-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <p>購物車是空的</p>
-                        <p>快去選購您喜歡的商品吧！</p>
-                    </div>
-                `;
+                cartItemsContainer.style.display = 'none';
+                emptyCart.style.display = 'block';
                 return;
             }
-
+            
+            cartItemsContainer.style.display = 'block';
+            emptyCart.style.display = 'none';
+            
             cartItemsContainer.innerHTML = cart.map((item, index) => `
                 <div class="cart-item">
                     <img src="${item.image}" alt="${item.name}" class="item-image">
                     <div class="item-info">
                         <div class="item-name">${item.name}</div>
-                        <div class="item-details">${item.flavor ? `口味：${item.flavor}` : ''}</div>
+                        <div class="item-details">
+                            ${item.flavor ? `口味: ${item.flavor}` : ''}
+                            ${item.color ? `顏色: ${item.color}` : ''}
+                        </div>
                         <div class="item-price">NT$ ${item.price}</div>
                     </div>
-                    <div class="quantity-control">
-                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                        <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="setQuantity(${index}, this.value)">
-                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span class="quantity-display">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
-                    <button class="remove-btn" onclick="removeItem(${index})">移除</button>
+                    <button class="remove-btn" onclick="removeItem(${index})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             `).join('');
         }
 
-        // 更新商品數量
+        // Update item quantity
         function updateQuantity(index, change) {
-            cart[index].quantity = Math.max(1, cart[index].quantity + change);
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
             localStorage.setItem('cart', JSON.stringify(cart));
-            displayCartItems();
-            updateOrderSummary();
+            loadCart();
         }
 
-        // 設定商品數量
-        function setQuantity(index, quantity) {
-            cart[index].quantity = Math.max(1, parseInt(quantity) || 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            displayCartItems();
-            updateOrderSummary();
-        }
-
-        // 移除商品
+        // Remove item from cart
         function removeItem(index) {
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
-            displayCartItems();
-            updateOrderSummary();
+            loadCart();
         }
 
-        // 更新訂單摘要
-        function updateOrderSummary() {
+        // Update order summary
+        function updateSummary() {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const total = subtotal + 60; // 運費 60 元
+            const shipping = cart.length > 0 ? 60 : 0;
+            const total = subtotal + shipping;
             
             document.getElementById('subtotal').textContent = `NT$ ${subtotal}`;
             document.getElementById('total').textContent = `NT$ ${total}`;
-            
-            // 檢查是否可以建立訂單
-            checkOrderReady();
         }
 
-        // 設定門市選擇
-        function setupStoreSelection() {
-            const storeButtons = document.querySelectorAll('.store-btn');
-            storeButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    storeButtons.forEach(b => b.classList.remove('selected'));
-                    this.classList.add('selected');
-                    selectedStore = this.dataset.store;
-                    checkOrderReady();
-                });
+        // Store selection
+        function selectStore(storeType) {
+            selectedStoreType = storeType;
+            
+            // Update button states
+            document.querySelectorAll('.store-btn').forEach(btn => {
+                btn.classList.remove('selected');
             });
-        }
-
-        // 選擇7-11門市
-        function selectSevenEleven() {
-            const url = 'https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&servicetype=1&url=' + encodeURIComponent(window.location.origin + '/cvs_callback.html');
-            const popup = window.open(url, 'storeSelection', 'width=800,height=600,scrollbars=yes,resizable=yes');
+            event.target.classList.add('selected');
             
-            // 監聽來自彈跳視窗的訊息
-            window.addEventListener('message', function(event) {
-                if (event.data && event.data.storeName) {
-                    document.getElementById('store-name').value = event.data.storeName;
-                    document.getElementById('store-id').value = event.data.storeId || '';
-                    
-                    document.getElementById('store-info').innerHTML = `
-                        <p><strong>門市名稱：</strong>${event.data.storeName}</p>
-                        <p><strong>門市號碼：</strong>${event.data.storeId || '請手動填寫'}</p>
-                        <p><strong>地址：</strong>${event.data.address || '請手動填寫'}</p>
-                    `;
-                    document.getElementById('selected-store').style.display = 'block';
-                    
-                    popup.close();
-                    checkOrderReady();
-                }
-            });
+            // Show store selection modal
+            document.getElementById('storeModal').style.display = 'block';
         }
 
-        // 檢查訂單是否準備就緒
-        function checkOrderReady() {
-            const name = document.getElementById('customer-name').value.trim();
-            const phone = document.getElementById('customer-phone').value.trim();
-            const storeName = document.getElementById('store-name').value.trim();
-            const storeId = document.getElementById('store-id').value.trim();
+        function openStoreSelection() {
+            closeStoreModal();
             
-            const isReady = cart.length > 0 && name && phone && storeName && storeId;
-            document.querySelector('.create-order-btn').disabled = !isReady;
+            if (selectedStoreType === '711') {
+                // Open 7-11 store selection
+                const url = 'https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&servicetype=1&url=' + 
+                           encodeURIComponent(window.location.origin + '/cvs_callback.html');
+                window.open(url, 'storeSelection', 'width=800,height=600');
+            } else if (selectedStoreType === 'family') {
+                // For now, show a placeholder for Family Mart
+                alert('全家便利商店選擇功能開發中，請先選擇 7-11');
+            }
         }
 
-        // 監聽表單輸入
-        document.getElementById('customer-name').addEventListener('input', checkOrderReady);
-        document.getElementById('customer-phone').addEventListener('input', checkOrderReady);
-        document.getElementById('store-name').addEventListener('input', checkOrderReady);
-        document.getElementById('store-id').addEventListener('input', checkOrderReady);
+        function closeStoreModal() {
+            document.getElementById('storeModal').style.display = 'none';
+        }
 
-        // 建立訂單
-        function createOrder() {
+        // Handle store selection callback
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'storeSelected') {
+                selectedStoreInfo = event.data.store;
+                
+                document.getElementById('storeName').textContent = selectedStoreInfo.name;
+                document.getElementById('storeAddress').textContent = selectedStoreInfo.address;
+                document.getElementById('selectedStore').classList.add('show');
+                
+                validateForm();
+            }
+        });
+
+        // Form validation
+        function validateForm() {
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const hasStore = selectedStoreInfo !== null;
+            const hasItems = cart.length > 0;
+            
+            const isValid = name && phone && hasStore && hasItems;
+            document.getElementById('checkoutBtn').disabled = !isValid;
+        }
+
+        // Add event listeners for form validation
+        document.getElementById('customerName').addEventListener('input', validateForm);
+        document.getElementById('customerPhone').addEventListener('input', validateForm);
+
+        // Checkout process
+        function checkout() {
+            if (cart.length === 0) {
+                alert('購物車是空的！');
+                return;
+            }
+            
+            document.getElementById('checkoutModal').style.display = 'block';
+        }
+
+        function confirmCheckout() {
             const orderData = {
-                id: 'ORDER' + Date.now(),
-                date: new Date().toLocaleDateString('zh-TW'),
+                items: cart,
                 customer: {
-                    name: document.getElementById('customer-name').value.trim(),
-                    phone: document.getElementById('customer-phone').value.trim()
+                    name: document.getElementById('customerName').value,
+                    phone: document.getElementById('customerPhone').value
                 },
-                store: {
-                    type: selectedStore || 'manual',
-                    name: document.getElementById('store-name').value.trim(),
-                    id: document.getElementById('store-id').value.trim()
-                },
-                items: [...cart],
+                store: selectedStoreInfo,
                 subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
                 shipping: 60,
-                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 60
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 60,
+                orderDate: new Date().toISOString(),
+                orderId: 'ORD' + Date.now()
             };
-
-            // 儲存訂單
+            
+            // Save order to localStorage
             localStorage.setItem('currentOrder', JSON.stringify(orderData));
             
-            // 清空購物車
+            // Clear cart
             localStorage.removeItem('cart');
             
-            // 跳轉到訂單確認頁面
+            // Redirect to confirmation page
             window.location.href = 'order_confirmation.html';
         }
 
-        // 顯示訊息
-        function showMessage(message, type = 'error') {
-            const messageElement = document.getElementById(type + '-message');
-            messageElement.textContent = message;
-            messageElement.style.display = 'block';
-            
-            setTimeout(() => {
-                messageElement.style.display = 'none';
-            }, 5000);
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
         }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+        });
     </script>
 </body>
 </html> 
