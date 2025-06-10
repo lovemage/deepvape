@@ -152,6 +152,41 @@ def logout():
     flash('已成功登出！', 'info')
     return redirect(url_for('login'))
 
+@app.route('/admin/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    if request.method == 'POST':
+        current_password = request.form['current_password']
+        new_password = request.form['new_password']
+        confirm_password = request.form['confirm_password']
+        
+        # 獲取當前管理員
+        admin = Admin.query.get(session['admin_id'])
+        
+        # 驗證當前密碼
+        if not check_password_hash(admin.password_hash, current_password):
+            flash('當前密碼錯誤！', 'error')
+            return render_template('admin/change_password.html')
+        
+        # 驗證新密碼
+        if len(new_password) < 6:
+            flash('新密碼長度至少需要6個字符！', 'error')
+            return render_template('admin/change_password.html')
+        
+        if new_password != confirm_password:
+            flash('新密碼與確認密碼不一致！', 'error')
+            return render_template('admin/change_password.html')
+        
+        # 更新密碼
+        admin.password_hash = generate_password_hash(new_password)
+        db.session.commit()
+        
+        flash('密碼更改成功！請重新登入。', 'success')
+        session.clear()
+        return redirect(url_for('login'))
+    
+    return render_template('admin/change_password.html')
+
 @app.route('/admin')
 @login_required
 def admin_dashboard():
