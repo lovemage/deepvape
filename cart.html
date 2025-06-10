@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>購物車 | Image Vape</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="nav_logo.png">
+    <link rel="apple-touch-icon" href="nav_logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -345,9 +349,46 @@
         }
 
         .store-search-container {
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .location-selection {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .keyword-search {
             display: flex;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 1rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 3rem;
+        }
+
+        .form-select:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-select option {
+            background: var(--card-bg);
+            color: var(--text-color);
         }
 
         .store-search-input {
@@ -582,8 +623,13 @@
                 grid-template-columns: 1fr;
             }
 
-            .store-search-container {
+            .location-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .keyword-search {
                 flex-direction: column;
+                gap: 1rem;
             }
 
             .captcha-container {
@@ -830,10 +876,29 @@
 
                     <!-- Store Search -->
                     <div class="store-search-container" id="storeSearchContainer" style="display: none;">
-                        <input type="text" id="storeSearchInput" class="store-search-input" placeholder="請輸入店名或店號">
-                        <button class="store-search-btn" onclick="searchStores()">
-                            <i class="fas fa-search"></i> 查詢
-                        </button>
+                        <!-- Location Selection -->
+                        <div class="location-selection">
+                            <div class="form-group">
+                                <label class="form-label">選擇縣市 *</label>
+                                <select id="citySelect" class="form-select" onchange="onCityChange()">
+                                    <option value="">請選擇縣市</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">選擇區域 *</label>
+                                <select id="districtSelect" class="form-select" onchange="onDistrictChange()" disabled>
+                                    <option value="">請先選擇縣市</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Optional Store Search -->
+                        <div class="keyword-search">
+                            <input type="text" id="storeSearchInput" class="store-search-input" placeholder="輸入店名或店號縮小範圍（選填）">
+                            <button class="store-search-btn" onclick="searchStores()">
+                                <i class="fas fa-search"></i> 查詢門市
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="selected-store" id="selectedStore">
@@ -902,6 +967,9 @@
         let selectedStoreType = '';
         let selectedStoreInfo = null;
         let currentCaptcha = '';
+        let storeData = [];
+        let availableCities = [];
+        let availableDistricts = [];
 
         // Telegram Bot Configuration
         const TELEGRAM_BOT_TOKEN = '7449471878:AAH3ItIHYrNrJLT2xp9h_O85mdbjBuFvK48'; // 您的 Bot Token
@@ -994,7 +1062,10 @@
             event.target.classList.add('selected');
             
             // Show search container
-            document.getElementById('storeSearchContainer').style.display = 'flex';
+            document.getElementById('storeSearchContainer').style.display = 'block';
+            
+            // Load store data and populate city dropdown
+            loadStoreDataAndPopulateCities();
             
             // Reset selected store
             selectedStoreInfo = null;
@@ -1003,14 +1074,152 @@
             document.getElementById('storeAddress').textContent = '';
             document.getElementById('storeId').textContent = '';
             
+            // Reset dropdowns
+            resetLocationSelectors();
+            
             validateForm();
         }
 
-        // Search stores
+        // Load store data and populate city dropdown
+        async function loadStoreDataAndPopulateCities() {
+            try {
+                const fileName = selectedStoreType === '711' ? './cart_stores_711.json' : './cart_stores_family.json';
+                const response = await fetch(fileName);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                storeData = await response.json();
+                console.log(`📊 載入 ${storeData.length} 筆 ${selectedStoreType} 門市資料`);
+                
+                // Extract unique cities
+                availableCities = [...new Set(storeData.map(store => store.city))].sort();
+                
+                // Populate city dropdown
+                populateCityDropdown();
+                
+            } catch (error) {
+                console.error('❌ 載入門市資料失敗:', error);
+                alert('載入門市資料失敗，請稍後再試');
+            }
+        }
+
+        // Populate city dropdown
+        function populateCityDropdown() {
+            const citySelect = document.getElementById('citySelect');
+            citySelect.innerHTML = '<option value="">請選擇縣市</option>';
+            
+            availableCities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
+        }
+
+        // City selection change handler
+        function onCityChange() {
+            const citySelect = document.getElementById('citySelect');
+            const districtSelect = document.getElementById('districtSelect');
+            const selectedCity = citySelect.value;
+            
+            if (selectedCity) {
+                // Extract districts for selected city
+                availableDistricts = [...new Set(
+                    storeData
+                        .filter(store => store.city === selectedCity)
+                        .map(store => store.district)
+                )].sort();
+                
+                // Populate district dropdown
+                districtSelect.innerHTML = '<option value="">請選擇區域</option>';
+                availableDistricts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+                
+                districtSelect.disabled = false;
+            } else {
+                districtSelect.innerHTML = '<option value="">請先選擇縣市</option>';
+                districtSelect.disabled = true;
+            }
+            
+            // Reset selected store
+            resetSelectedStore();
+        }
+
+        // District selection change handler
+        function onDistrictChange() {
+            const districtSelect = document.getElementById('districtSelect');
+            const selectedDistrict = districtSelect.value;
+            
+            if (selectedDistrict) {
+                // Auto search stores in selected area
+                searchStoresByLocation();
+            } else {
+                // Reset selected store
+                resetSelectedStore();
+            }
+        }
+
+        // Reset location selectors
+        function resetLocationSelectors() {
+            const citySelect = document.getElementById('citySelect');
+            const districtSelect = document.getElementById('districtSelect');
+            
+            citySelect.innerHTML = '<option value="">請選擇縣市</option>';
+            districtSelect.innerHTML = '<option value="">請先選擇縣市</option>';
+            districtSelect.disabled = true;
+            
+            document.getElementById('storeSearchInput').value = '';
+        }
+
+        // Reset selected store
+        function resetSelectedStore() {
+            selectedStoreInfo = null;
+            document.getElementById('selectedStore').classList.remove('show');
+            document.getElementById('storeName').textContent = '請選擇門市';
+            document.getElementById('storeAddress').textContent = '';
+            document.getElementById('storeId').textContent = '';
+            validateForm();
+        }
+
+        // Search stores by location (auto-triggered when district is selected)
+        function searchStoresByLocation() {
+            const citySelect = document.getElementById('citySelect');
+            const districtSelect = document.getElementById('districtSelect');
+            const selectedCity = citySelect.value;
+            const selectedDistrict = districtSelect.value;
+            
+            if (!selectedCity || !selectedDistrict) {
+                return;
+            }
+            
+            // Filter stores by selected location
+            const filteredStores = storeData.filter(store => 
+                store.city === selectedCity && store.district === selectedDistrict
+            );
+            
+            console.log(`🎯 ${selectedCity}-${selectedDistrict} 找到 ${filteredStores.length} 家門市`);
+            
+            // Display results
+            displayStoreResults(filteredStores);
+        }
+
+        // Search stores (with optional keyword filtering)
         async function searchStores() {
-            const searchTerm = document.getElementById('storeSearchInput').value.trim();
-            if (!searchTerm) {
-                alert('請輸入店名或店號');
+            const citySelect = document.getElementById('citySelect');
+            const districtSelect = document.getElementById('districtSelect');
+            const searchInput = document.getElementById('storeSearchInput');
+            
+            const selectedCity = citySelect.value;
+            const selectedDistrict = districtSelect.value;
+            const searchTerm = searchInput.value.trim();
+
+            if (!selectedCity || !selectedDistrict) {
+                alert('請先選擇縣市和區域');
                 return;
             }
 
@@ -1026,20 +1235,24 @@
             searchBtn.disabled = true;
 
             try {
-                let stores = [];
+                // Filter stores by location
+                let stores = storeData.filter(store => 
+                    store.city === selectedCity && store.district === selectedDistrict
+                );
                 
-                if (selectedStoreType === '711') {
-                    // Load 7-ELEVEN stores from JSON file
-                    stores = await load711Stores(searchTerm);
-                } else if (selectedStoreType === 'family') {
-                    // Load Family Mart stores from JSON file
-                    stores = await loadFamilyStores(searchTerm);
-                } else {
-                    // Generate mock data for other store types
-                    stores = generateMockStores(selectedStoreType, searchTerm);
+                // Further filter by search term if provided
+                if (searchTerm) {
+                    stores = stores.filter(store => 
+                        store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        store.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        store.address.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                    console.log(`🔍 關鍵字 "${searchTerm}" 篩選後: ${stores.length} 家門市`);
                 }
                 
+                console.log(`🎯 最終搜尋結果: ${stores.length} 家門市`);
                 displayStoreResults(stores);
+                
             } catch (error) {
                 console.error('門市搜尋錯誤:', error);
                 alert('搜尋門市時發生錯誤，請稍後再試');
@@ -1051,104 +1264,39 @@
             }
         }
 
-        // Load 7-ELEVEN stores from JSON file
-        async function load711Stores(searchTerm) {
-            try {
-                console.log('🔍 搜尋 7-ELEVEN 門市:', searchTerm);
-                
-                // Fetch the JSON file with 7-ELEVEN stores
-                const response = await fetch('./cart_stores_711.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const allStores = await response.json();
-                console.log(`📊 載入 ${allStores.length} 筆 7-ELEVEN 門市資料`);
-                
-                // Filter stores based on search term
-                const filteredStores = allStores.filter(store => 
-                    store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.district.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-                
-                console.log(`🎯 搜尋結果: ${filteredStores.length} 筆符合的門市`);
-                
-                // Limit to 20 results for better performance
-                return filteredStores.slice(0, 20);
-                
-            } catch (error) {
-                console.error('❌ 載入 7-ELEVEN 門市資料失敗:', error);
-                throw error;
-            }
-        }
 
-        // Load Family Mart stores from JSON file
-        async function loadFamilyStores(searchTerm) {
-            try {
-                console.log('🔍 搜尋全家便利商店:', searchTerm);
-                
-                // Fetch the JSON file with Family Mart stores
-                const response = await fetch('./cart_stores_family.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const allStores = await response.json();
-                console.log(`📊 載入 ${allStores.length} 筆全家門市資料`);
-                
-                // Filter stores based on search term
-                const filteredStores = allStores.filter(store => 
-                    store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    store.district.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    (store.services && store.services.toLowerCase().includes(searchTerm.toLowerCase()))
-                );
-                
-                console.log(`🎯 搜尋結果: ${filteredStores.length} 筆符合的門市`);
-                
-                // Limit to 20 results for better performance
-                return filteredStores.slice(0, 20);
-                
-            } catch (error) {
-                console.error('❌ 載入全家門市資料失敗:', error);
-                throw error;
-            }
-        }
-
-        // Generate mock store data (for Family Mart)
-        function generateMockStores(storeType, searchTerm) {
-            const storePrefix = storeType === '711' ? '7-ELEVEN' : 'FamilyMart';
-            const stores = [];
-            
-            for (let i = 1; i <= 5; i++) {
-                stores.push({
-                    id: `${storeType.toUpperCase()}${String(Math.floor(Math.random() * 9000) + 1000)}`,
-                    name: `${storePrefix} ${searchTerm}${i}店`,
-                    address: `台北市信義區信義路${i}段${Math.floor(Math.random() * 100) + 1}號`,
-                    type: storeType
-                });
-            }
-            
-            return stores;
-        }
 
         // Display store search results
         function displayStoreResults(stores) {
             const resultsContainer = document.getElementById('storeResults');
+            const citySelect = document.getElementById('citySelect');
+            const districtSelect = document.getElementById('districtSelect');
+            const selectedCity = citySelect.value;
+            const selectedDistrict = districtSelect.value;
             
             if (stores.length === 0) {
-                resultsContainer.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">找不到相關門市</p>';
+                const locationText = selectedCity && selectedDistrict ? `${selectedCity}${selectedDistrict}` : '選定區域';
+                resultsContainer.innerHTML = `
+                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
+                        😔 在 ${locationText} 找不到相關門市<br>
+                        <small>請嘗試選擇其他區域或聯絡客服</small>
+                    </p>
+                `;
             } else {
-                resultsContainer.innerHTML = stores.map(store => {
+                // Add results summary
+                const locationText = selectedCity && selectedDistrict ? `${selectedCity}${selectedDistrict}` : '';
+                const summaryHtml = `
+                    <div style="background: rgba(26, 254, 73, 0.1); padding: 1rem; border-radius: 15px; margin-bottom: 1rem; text-align: center;">
+                        <strong>🎯 搜尋結果</strong><br>
+                        在 ${locationText} 找到 <span style="color: var(--highlight-color); font-weight: bold;">${stores.length}</span> 家門市
+                    </div>
+                `;
+                
+                const storesHtml = stores.map(store => {
                     let extraInfo = '';
                     
                     // Add extra info for Family Mart stores
-                    if (store.type === 'family') {
+                    if (store.type === 'family' || selectedStoreType === 'family') {
                         if (store.services) {
                             extraInfo += `<div class="store-result-services">🛍️ 服務: ${store.services}</div>`;
                         }
@@ -1160,12 +1308,14 @@
                     return `
                         <div class="store-result-item" onclick="selectStore('${store.id}', '${store.name}', '${store.address}', '${store.type || selectedStoreType}')">
                             <div class="store-result-name">${store.name}</div>
-                            <div class="store-result-address">${store.address}</div>
-                            <div class="store-result-id">店號: ${store.id}</div>
+                            <div class="store-result-address">📍 ${store.address}</div>
+                            <div class="store-result-id">🏷️ 店號: ${store.id}</div>
                             ${extraInfo}
                         </div>
                     `;
                 }).join('');
+                
+                resultsContainer.innerHTML = summaryHtml + storesHtml;
             }
             
             document.getElementById('storeSearchModal').style.display = 'block';
