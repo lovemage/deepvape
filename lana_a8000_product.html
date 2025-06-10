@@ -330,35 +330,61 @@
         }
 
         /* 口味選擇 */
-        .flavor-section {
-            padding: 5rem 0;
+        .flavor-selection-section {
+            margin: 2rem 0;
         }
-
-        .flavor-grid {
+        
+        .flavor-selection-section h4 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        #flavor-grid-main {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
         }
-
-        .flavor-card {
-            background: white;
+        
+        .flavor-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(26, 254, 73, 0.3);
             border-radius: 15px;
-            padding: 1.5rem;
+            padding: 0.8rem;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
             cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
-
-        .flavor-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        
+        .flavor-option:hover {
+            border-color: #1afe49;
+            background: rgba(26, 254, 73, 0.1);
+            transform: translateY(-2px);
         }
-
-        .flavor-card.selected {
-            background: var(--gradient-2);
+        
+        .flavor-option.selected {
+            border-color: #1afe49;
+            background: linear-gradient(135deg, #1afe49, #8386f5);
             color: white;
+        }
+        
+        .flavor-name {
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+        
+        .flavor-option.selected .flavor-name {
+            color: white;
+        }
+
+        .flavor-section {
+            background: rgba(4, 19, 72, 0.9);
+            padding: 4rem 0;
+            border-radius: 30px;
+            margin: 3rem 0;
         }
 
         /* 購買按鈕 */
@@ -838,10 +864,18 @@
                             </ul>
                         </div>
                         
+                        <!-- 口味選擇 -->
+                        <div class="flavor-selection-section">
+                            <h4>選擇口味</h4>
+                            <div class="flavor-grid" id="flavor-grid-main">
+                                <!-- 口味選項將通過 JavaScript 動態載入 -->
+                            </div>
+                        </div>
+                        
                         <div class="buy-buttons">
-                            <button class="btn btn-primary-custom" onclick="addToCart('lana-a8000')">
+                            <button class="btn btn-primary-custom" onclick="addToCart('lana-a8000')" id="addToCartBtn" disabled>
                                 <i class="fas fa-shopping-cart me-2"></i>
-                                加入購物車
+                                請先選擇口味
                             </button>
                         </div>
                     </div>
@@ -898,20 +932,6 @@
                         <p>輕巧便攜，隨時隨地享受</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 口味選擇 -->
-    <section class="flavor-section">
-        <div class="container">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="section-title">多種口味選擇</h2>
-                <p class="section-subtitle">找到您最愛的口味</p>
-            </div>
-            
-            <div class="flavor-grid" id="flavor-grid">
-                <!-- 口味選項將通過 JavaScript 動態載入 -->
             </div>
         </div>
     </section>
@@ -1122,42 +1142,95 @@
             id: 'lana-a8000',
             name: 'LANA A8000 一次性電子煙',
             price: 320,
-                                    image: 'lana_a8000/lana_a8000.webp',
+            image: 'lana_a8000/lana_a8000.webp',
             description: '8000口超長續航，極致口感體驗'
         };
 
+        // 全局變量
+        let selectedFlavor = null;
+        
         // 載入口味選項
         function loadFlavors() {
-            const flavorGrid = document.getElementById('flavor-grid');
+            const flavorGrid = document.getElementById('flavor-grid-main');
             flavorGrid.innerHTML = '';
             
             flavors.forEach(flavor => {
-                const flavorCard = document.createElement('div');
-                flavorCard.className = 'flavor-card';
-                flavorCard.innerHTML = `
-                    <div class="flavor-icon" style="width: 60px; height: 60px; background: ${flavor.color}; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-leaf" style="color: white; font-size: 1.5rem;"></i>
-                    </div>
-                    <h5>${flavor.name}</h5>
+                const flavorOption = document.createElement('div');
+                flavorOption.className = 'flavor-option';
+                flavorOption.dataset.flavor = flavor.name;
+                flavorOption.innerHTML = `
+                    <div class="flavor-name">${flavor.name}</div>
                 `;
                 
-                flavorCard.addEventListener('click', () => selectFlavor(flavor.id, flavorCard));
-                flavorGrid.appendChild(flavorCard);
+                flavorOption.addEventListener('click', function() {
+                    // 移除其他選項的選中狀態
+                    document.querySelectorAll('.flavor-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // 添加選中狀態
+                    this.classList.add('selected');
+                    selectedFlavor = flavor.name;
+                    
+                    // 更新按鈕狀態
+                    updateAddToCartButton();
+                });
+                
+                flavorGrid.appendChild(flavorOption);
             });
         }
+        
+        // 更新加入購物車按鈕
+        function updateAddToCartButton() {
+            const button = document.getElementById('addToCartBtn');
+            if (selectedFlavor) {
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>加入購物車';
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-primary-custom');
+            } else {
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>請先選擇口味';
+                button.classList.remove('btn-primary-custom');
+                button.classList.add('btn-secondary');
+            }
+        }
 
-        // 選擇口味
-        function selectFlavor(flavorId, element) {
-            // 移除其他選中狀態
-            document.querySelectorAll('.flavor-card').forEach(card => {
-                card.classList.remove('selected');
-            });
+        // 加入購物車
+        function addToCart(productId) {
+            if (!selectedFlavor) {
+                showNotification('請先選擇口味！', 'warning');
+                return;
+            }
+
+            // 模擬加入購物車
+            const product = {
+                id: productId,
+                name: 'LANA A8000',
+                flavor: selectedFlavor,
+                price: 450,
+                quantity: 1,
+                image: 'lana_a8000/lana_a8000.webp'
+            };
+
+            // 獲取現有購物車
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
             
-            // 添加選中狀態
-            element.classList.add('selected');
+            // 檢查是否已存在相同產品和口味
+            const existingIndex = cart.findIndex(item => 
+                item.id === product.id && item.flavor === product.flavor
+            );
             
-            // 保存選中的口味
-            selectedFlavor = flavorId;
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push(product);
+            }
+            
+            // 保存到 localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            showNotification('產品已加入購物車！', 'success');
         }
 
         // 載入公告
@@ -1218,65 +1291,6 @@
             }
         }
 
-        // 加入購物車
-        function addToCart(productId) {
-            // 檢查是否已選擇口味
-            if (!selectedFlavor) {
-                showNotification('請先選擇口味！', 'warning');
-                return;
-            }
-            
-            const button = event.target;
-            const originalText = button.innerHTML;
-            
-            // 顯示載入狀態
-            button.innerHTML = '<span class="loading-spinner"></span> 加入中...';
-            button.disabled = true;
-            
-            // 模擬加入購物車
-            setTimeout(() => {
-                // 獲取購物車
-                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-                
-                // 檢查是否已存在
-                const existingItem = cart.find(item => item.id === productId);
-                
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({
-                        id: productId,
-                        name: productData.name,
-                        price: productData.price,
-                        image: productData.image,
-                        flavor: selectedFlavor || 'mint',
-                        quantity: 1
-                    });
-                }
-                
-                // 保存購物車
-                localStorage.setItem('cart', JSON.stringify(cart));
-                
-                // 更新購物車數量
-                updateCartCount();
-                
-                // 恢復按鈕
-                button.innerHTML = '<i class="fas fa-check me-2"></i>已加入';
-                button.style.background = '#28a745';
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.background = '';
-                    button.disabled = false;
-                }, 2000);
-                
-                // 顯示成功提示
-                showNotification('產品已加入購物車！', 'success');
-            }, 1000);
-        }
-
-
-
         // Toggle mobile navigation
         function toggleNav() {
             const navLinks = document.getElementById('navLinks');
@@ -1291,38 +1305,49 @@
         }
 
         // 顯示通知
-        function showNotification(message, type = 'info') {
-            // 創建通知元素
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
-            notification.className = `alert alert-${type === 'success' ? 'success' : type === 'warning' ? 'warning' : 'info'} position-fixed`;
-            notification.style.cssText = `
-                top: 100px;
-                right: 20px;
-                z-index: 9999;
-                max-width: 300px;
-                opacity: 0;
-                transform: translateX(100%);
-                transition: all 0.3s ease;
-            `;
+            notification.className = `notification ${type}`;
             notification.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'} me-2"></i>
-                ${message}
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            // 添加樣式
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'linear-gradient(135deg, #28a745, #20c997)' : 
+                           type === 'warning' ? 'linear-gradient(135deg, #ffc107, #fd7e14)' : 
+                           'linear-gradient(135deg, #17a2b8, #6f42c1)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-weight: 500;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
             `;
             
             document.body.appendChild(notification);
             
-            // 顯示動畫
+            // 動畫進入
             setTimeout(() => {
-                notification.style.opacity = '1';
                 notification.style.transform = 'translateX(0)';
             }, 100);
             
             // 自動移除
             setTimeout(() => {
-                notification.style.opacity = '0';
                 notification.style.transform = 'translateX(100%)';
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
                 }, 300);
             }, 3000);
         }
@@ -1371,9 +1396,6 @@
         function showContact() {
             window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
         }
-
-        // 全局變量
-        let selectedFlavor = null; // 預設未選擇口味
     </script>
 </body>
 </html> 
