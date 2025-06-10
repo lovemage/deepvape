@@ -121,9 +121,9 @@ DeepVape/
 - 配置 HTTPS（建議）
 
 ### 2. 後台部署
-```bash
+   ```bash
 cd backend
-pip install -r requirements.txt
+   pip install -r requirements.txt
 python app.py
 ```
 
@@ -132,7 +132,7 @@ python app.py
 cd backend
 export TELEGRAM_BOT_TOKEN="your_bot_token"
 python simple_bot.py
-```
+   ```
 
 ## ⚙️ 配置說明
 

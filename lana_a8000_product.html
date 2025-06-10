@@ -333,7 +333,7 @@
         .flavor-selection-section {
             margin: 2rem 0;
         }
-        
+
         .flavor-selection-section h4 {
             color: #ffffff;
             margin-bottom: 1rem;
@@ -346,7 +346,7 @@
             gap: 0.8rem;
             margin-bottom: 1.5rem;
         }
-        
+
         .flavor-option {
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(26, 254, 73, 0.3);
@@ -357,13 +357,13 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
-        
+
         .flavor-option:hover {
             border-color: #1afe49;
             background: rgba(26, 254, 73, 0.1);
             transform: translateY(-2px);
         }
-        
+
         .flavor-option.selected {
             border-color: #1afe49;
             background: linear-gradient(135deg, #1afe49, #8386f5);
@@ -734,9 +734,9 @@
             </nav>
             <div class="header-actions">
                 <a href="cart.html" class="cart-button">
-                    <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-shopping-cart"></i>
                     <span id="cart-count">0</span>
-                </a>
+                        </a>
                 <button class="mobile-nav-toggle" onclick="toggleNav()">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -1088,7 +1088,7 @@
 
         // 全局變量
         let selectedFlavor = null;
-        
+
         // 載入口味選項
         function loadFlavors() {
             const flavorGrid = document.getElementById('flavor-grid-main');
@@ -1119,7 +1119,7 @@
                 flavorGrid.appendChild(flavorOption);
             });
         }
-        
+
         // 更新加入購物車按鈕
         function updateAddToCartButton() {
             const button = document.getElementById('addToCartBtn');

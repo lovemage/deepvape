@@ -1035,7 +1035,7 @@
 
             .guarantee-icon i {
                 font-size: 1.5rem;
-            }
+        }
 
             .guarantee-title {
                 font-size: 1.1rem;
@@ -1323,14 +1323,14 @@
                 url = 'https://www.family.com.tw/Marketing/inquiry.aspx';
                 storeName = '全家便利商店';
             }
-            
+
             // 在新視窗中開啟官方門市查詢網站
             const newWindow = window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
-            
+                
             if (newWindow) {
                 // 顯示提示訊息
                 alert(`已開啟 ${storeName} 官方門市查詢網站\n\n請在新視窗中查詢您要的門市，然後回到此頁面手動填入門市資訊。\n\n門市資訊通常包含：\n• 門市店號\n• 門市名稱\n• 門市地址`);
-            } else {
+                } else {
                 alert('無法開啟新視窗，請檢查瀏覽器設定或手動前往官方網站查詢門市。');
             }
         }
@@ -1341,13 +1341,13 @@
             const storeId = document.getElementById('storeIdInput').value.trim();
             const storeName = document.getElementById('storeNameInput').value.trim();
             const storeAddress = document.getElementById('storeAddressInput').value.trim();
-            
+                    
             // 驗證必填欄位
             if (!storeType || !storeId || !storeName || !storeAddress) {
                 alert('請填寫所有必填欄位');
                 return;
-            }
-            
+        }
+
             // 設定選擇的門市資訊
             selectedStoreType = storeType;
             selectedStoreInfo = {
