@@ -91,7 +91,42 @@ class Product(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
+    # 變體關係將在後面定義
+    
+    def get_stock_status(self):
+        """獲取庫存狀態"""
+        # 計算總庫存（主庫存 + 所有變體庫存）
+        total_stock = self.stock_quantity
+        if hasattr(self, 'product_variants'):
+            variant_stock = sum(v.stock_quantity for v in self.product_variants if v.is_active)
+            total_stock += variant_stock
+        
+        if total_stock == 0:
+            return {'status': 'out_of_stock', 'text': '產品缺貨', 'class': 'out-of-stock'}
+        elif total_stock < 5:
+            return {'status': 'critical_low', 'text': '庫存緊張', 'class': 'critical-low'}
+        elif total_stock < 10:
+            return {'status': 'low_stock', 'text': '庫存不足', 'class': 'low-stock'}
+        else:
+            return {'status': 'in_stock', 'text': '現貨供應', 'class': 'in-stock'}
+    
+    def get_total_stock(self):
+        """獲取總庫存數量"""
+        total_stock = self.stock_quantity
+        if hasattr(self, 'product_variants'):
+            variant_stock = sum(v.stock_quantity for v in self.product_variants if v.is_active)
+            total_stock += variant_stock
+        return total_stock
+
     def to_dict(self):
+        # 獲取變體信息
+        variants_data = []
+        if hasattr(self, 'product_variants'):
+            variants_data = [v.to_dict() for v in self.product_variants if v.is_active]
+        
+        stock_status = self.get_stock_status()
+        total_stock = self.get_total_stock()
+        
         return {
             'id': self.id,
             'name': self.name,
@@ -99,12 +134,15 @@ class Product(db.Model):
             'price': self.price,
             'original_price': self.original_price,
             'stock_quantity': self.stock_quantity,
+            'total_stock': total_stock,
+            'stock_status': stock_status,
             'category': self.category.name if self.category else None,
             'category_id': self.category_id,
             'main_image': self.main_image,
             'images': json.loads(self.images) if self.images else [],
             'specifications': json.loads(self.specifications) if self.specifications else {},
             'variants': json.loads(self.variants) if self.variants else [],
+            'product_variants': variants_data,
             'is_active': self.is_active,
             'is_featured': self.is_featured,
             'badge_type': self.badge_type,
@@ -113,6 +151,123 @@ class Product(db.Model):
             'meta_description': self.meta_description,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
+        }
+
+class ProductVariant(db.Model):
+    """產品變體模型 - 管理產品的不同口味、顏色等變體"""
+    __tablename__ = 'product_variants'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    
+    # 變體基本信息
+    variant_name = db.Column(db.String(100), nullable=False)  # 變體名稱：如"薄荷口味"、"黑色"
+    variant_type = db.Column(db.String(50), nullable=False)   # 變體類型：flavor, color, size
+    variant_value = db.Column(db.String(100), nullable=False) # 變體值：mint, black, large
+    
+    # 庫存和價格
+    stock_quantity = db.Column(db.Integer, default=0)         # 該變體的庫存
+    price_adjustment = db.Column(db.Float, default=0.0)       # 價格調整（相對主產品）
+    sku = db.Column(db.String(100), unique=True)              # 變體SKU
+    
+    # 變體屬性
+    is_active = db.Column(db.Boolean, default=True)
+    is_default = db.Column(db.Boolean, default=False)         # 是否為預設變體
+    sort_order = db.Column(db.Integer, default=0)             # 排序
+    
+    # 變體圖片和描述
+    image_url = db.Column(db.String(255))                     # 變體專屬圖片
+    description = db.Column(db.Text)                          # 變體描述
+    
+    # 時間戳
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # 關聯關係
+    product = db.relationship('Product', backref=db.backref('product_variants', lazy=True, cascade='all, delete-orphan'))
+    
+    def __repr__(self):
+        return f'<ProductVariant {self.variant_name}>'
+    
+    @property
+    def final_price(self):
+        """計算最終價格（基礎價格 + 調整）"""
+        base_price = self.product.price if self.product else 0
+        return base_price + self.price_adjustment
+    
+    @property
+    def is_low_stock(self, threshold=10):
+        """檢查是否低庫存"""
+        return self.stock_quantity <= threshold
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'product_id': self.product_id,
+            'variant_name': self.variant_name,
+            'variant_type': self.variant_type,
+            'variant_value': self.variant_value,
+            'stock_quantity': self.stock_quantity,
+            'price_adjustment': self.price_adjustment,
+            'final_price': self.final_price,
+            'sku': self.sku,
+            'is_active': self.is_active,
+            'is_default': self.is_default,
+            'sort_order': self.sort_order,
+            'image_url': self.image_url,
+            'description': self.description,
+            'is_low_stock': self.is_low_stock,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'product_name': self.product.name if self.product else None
+        }
+
+class VariantType(db.Model):
+    """變體類型管理"""
+    __tablename__ = 'variant_types'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)  # flavor, color, size
+    display_name = db.Column(db.String(100), nullable=False)      # 口味, 顏色, 尺寸
+    is_active = db.Column(db.Boolean, default=True)
+    sort_order = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'display_name': self.display_name,
+            'is_active': self.is_active,
+            'sort_order': self.sort_order
+        }
+
+class VariantValue(db.Model):
+    """變體值管理"""
+    __tablename__ = 'variant_values'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    variant_type_id = db.Column(db.Integer, db.ForeignKey('variant_types.id'), nullable=False)
+    value = db.Column(db.String(100), nullable=False)           # mint, black, large
+    display_name = db.Column(db.String(100), nullable=False)    # 薄荷, 黑色, 大號
+    color_code = db.Column(db.String(7))                        # 顏色代碼 #000000
+    is_active = db.Column(db.Boolean, default=True)
+    sort_order = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # 關聯關係
+    variant_type = db.relationship('VariantType', backref=db.backref('values', lazy=True))
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'variant_type_id': self.variant_type_id,
+            'value': self.value,
+            'display_name': self.display_name,
+            'color_code': self.color_code,
+            'is_active': self.is_active,
+            'sort_order': self.sort_order,
+            'variant_type_name': self.variant_type.display_name if self.variant_type else None
         }
 
 # 登入檢查裝飾器
@@ -216,6 +371,15 @@ def announcements():
 @login_required
 def create_announcement():
     if request.method == 'POST':
+        # 檢查公告數量，最多3條
+        announcement_count = Announcement.query.filter_by(is_active=True).count()
+        if announcement_count >= 3:
+            # 刪除最舊的公告
+            oldest_announcement = Announcement.query.filter_by(is_active=True).order_by(Announcement.created_at.asc()).first()
+            if oldest_announcement:
+                db.session.delete(oldest_announcement)
+                flash('已刪除最舊的公告以維持最多3條公告的限制。', 'info')
+        
         announcement = Announcement(
             title=request.form['title'],
             content=request.form['content'],
@@ -544,7 +708,7 @@ def init_db():
         
         # 創建默認管理員帳號
         admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
-        admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+        admin_password = os.environ.get('ADMIN_PASSWORD', 'admin1122@@$$')
         
         admin = Admin.query.filter_by(username=admin_username).first()
         if not admin:

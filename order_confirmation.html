@@ -296,6 +296,68 @@
             opacity: 0.9;
         }
 
+        /* LINE QR Code Section */
+        .line-qr-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .qr-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+            padding: 10px;
+        }
+
+        .qr-instruction {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .line-btn {
+            background: #00C300;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .line-btn:hover {
+            background: #00A000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 195, 0, 0.3);
+        }
+
         /* Order Information */
         .order-info {
             background: rgba(255, 255, 255, 0.05);
@@ -597,12 +659,12 @@
                 <p>如有任何問題，請使用您的訂單編號聯絡我們的客服團隊</p>
                 
                 <div class="contact-methods">
-                    <div class="contact-method">
+                    <div class="contact-method" onclick="window.open('https://line.me/ti/p/euNh8K-s3e', '_blank')" style="cursor: pointer;">
                         <div class="contact-icon">
                             <i class="fab fa-line"></i>
                         </div>
                         <div class="contact-label">LINE 客服</div>
-                        <div class="contact-value">@deepvape</div>
+                        <div class="contact-value">點擊立即聯絡</div>
                     </div>
                     <div class="contact-method">
                         <div class="contact-icon">
@@ -617,6 +679,22 @@
                         </div>
                         <div class="contact-label">電子郵件</div>
                         <div class="contact-value">service@deepvape.com</div>
+                    </div>
+                </div>
+
+                <!-- LINE QR Code Section -->
+                <div class="line-qr-section">
+                    <div class="qr-title">
+                        <i class="fab fa-line"></i>
+                        掃描 QR Code 加入 LINE 客服
+                    </div>
+                    <div class="qr-container">
+                        <img src="S__16834578.jpg" alt="LINE 客服 QR Code" class="qr-code">
+                        <p class="qr-instruction">掃描此 QR Code 加入官方客服</p>
+                        <button class="line-btn" onclick="window.open('https://line.me/ti/p/euNh8K-s3e', '_blank')">
+                            <i class="fab fa-line"></i>
+                            開啟 LINE 客服
+                        </button>
                     </div>
                 </div>
             </div>

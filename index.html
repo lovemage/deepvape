@@ -1154,7 +1154,7 @@
                     <a href="#disposable">拋棄式 <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown">
                         <a href="#ilia-gen4">ilia 四代</a>
-                        <a href="#lana-disposable">LANA 拋棄式</a>
+                        <a href="#lana-disposable">LANA A8000</a>
                     </div>
                 </li>
             </ul>
@@ -1397,17 +1397,17 @@
                 </div>
 
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&h=300&fit=crop" alt="LANA 拋棄式" class="product-image">
-                    <span class="product-badge badge-safe">
-                        <i class="fas fa-leaf"></i> 清新
+                    <img src="lana_a8000.webp" alt="LANA A8000 拋棄式" class="product-image clickable-image" onclick="window.location.href='lana_a8000_product.html'">
+                    <span class="product-badge badge-new">
+                        <i class="fas fa-star"></i> 新品
                     </span>
                     <div class="product-info">
-                        <h3 class="product-name">LANA 拋棄式</h3>
-                        <p class="product-description">輕巧便攜，多種清新口味</p>
+                        <h3 class="product-name">LANA A8000 拋棄式</h3>
+                        <p class="product-description">8000口超長續航，多種口味選擇</p>
                         <div class="product-price">
-                            NT$ 590
+                            NT$ 749
                         </div>
-                        <button class="pulse-button" onclick="openProductModal('LANA 拋棄式', 590)">
+                        <button class="pulse-button" onclick="window.location.href='lana_a8000_product.html'">
                             <i class="fas fa-shopping-cart"></i> 立即選購
                         </button>
                     </div>
@@ -1701,9 +1701,7 @@
 
         // Show Contact (LINE)
         function showContact() {
-            // In production, this would open LINE
-            alert('即將為您轉接 LINE 客服\nLINE ID: @deepvape');
-            // window.open('https://line.me/R/ti/p/@deepvape', '_blank');
+            window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
         }
 
         // Smooth scroll for anchor links
@@ -1925,7 +1923,9 @@
                 'HTA 黑桃主機': 'hta_vape_product.html',
                 'ILIA 發光煙彈': 'ilia_pods_product.html',
                 'SP2 煙彈': 'sp2_pods_product.html',
-                'ILIA 拋棄式四代': 'ilia_disposable_product.html'
+                'ILIA 拋棄式四代': 'ilia_disposable_product.html',
+                'LANA A8000': 'lana_a8000_product.html',
+                'LANA A8000 拋棄式': 'lana_a8000_product.html'
             };
             return urlMap[product.name] || '#';
         }
