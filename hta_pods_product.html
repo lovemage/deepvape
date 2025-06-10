@@ -86,7 +86,7 @@
             color: var(--text-color);
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -105,7 +105,7 @@
             color: var(--text-color);
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -140,7 +140,7 @@
             width: 100%;
             height: 500px;
             object-fit: cover;
-            border-radius: 20px;
+            border-radius: 30px;
             margin-bottom: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 3px solid var(--hta-pink);
@@ -150,7 +150,7 @@
         .product-info {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 30px;
             padding: 2rem;
             backdrop-filter: blur(10px);
         }
@@ -160,7 +160,7 @@
             padding: 0.5rem 1rem;
             background: linear-gradient(45deg, var(--hta-pink), #ff6b9d);
             color: white;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 1rem;
@@ -185,7 +185,10 @@
         }
 
         .product-description {
-            color: var(--text-secondary);
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 30px;
             margin-bottom: 2rem;
             line-height: 1.8;
         }
@@ -247,7 +250,7 @@
         .flavor-option {
             padding: 0.8rem;
             border: 2px solid var(--border-color);
-            border-radius: 15px;
+            border-radius: 30px;
             background: rgba(229, 119, 159, 0.1);
             color: var(--text-color);
             text-align: center;
@@ -291,7 +294,7 @@
             width: 40px;
             height: 40px;
             border: none;
-            border-radius: 50%;
+            border-radius: 30px;
             background: var(--hta-pink);
             color: white;
             font-size: 1.2rem;
@@ -311,7 +314,7 @@
             width: 80px;
             height: 40px;
             border: 2px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 30px;
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-color);
             text-align: center;
@@ -332,7 +335,7 @@
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 25px;
+            border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -344,24 +347,9 @@
             box-shadow: 0 5px 20px rgba(229, 119, 159, 0.4);
         }
 
-        .secondary-button {
-            flex: 1;
-            background: transparent;
-            color: var(--hta-pink);
-            border: 2px solid var(--hta-pink);
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
+        
 
-        .secondary-button:hover {
-            background: var(--hta-pink);
-            color: white;
-            transform: translateY(-2px);
-        }
+        
 
         /* Features */
         .features {
@@ -397,7 +385,7 @@
         .warning-notice {
             background: rgba(233, 69, 96, 0.1);
             border: 1px solid var(--highlight-color);
-            border-radius: 10px;
+            border-radius: 30px;
             padding: 1rem;
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -435,7 +423,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logoai.gif" alt="Deepvape Logo">
+                <img src="logo.png" alt="Deepvape Logo">
                 <h1>Deepvape</h1>
             </div>
             <div class="header-actions">
@@ -542,11 +530,9 @@
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <button class="pulse-button" onclick="addToCart()">
-                    <i class="fas fa-shopping-cart"></i> 立即購買
+                    <i class="fas fa-shopping-cart"></i> 加入購物車
                 </button>
-                <button class="secondary-button" onclick="addToWishlist()">
-                    <i class="fas fa-heart"></i> 加入收藏
-                </button>
+                
             </div>
 
             <!-- Features -->
@@ -652,10 +638,7 @@
             }
         }
 
-        // Add to Wishlist
-        function addToWishlist() {
-            alert('已加入收藏清單！');
-        }
+        
     </script>
 </body>
 </html> 

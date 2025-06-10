@@ -71,7 +71,7 @@
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -90,7 +90,7 @@
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -115,7 +115,7 @@
             margin: 0 auto;
             background: rgba(4, 19, 72, 0.8);
             border: 1px solid rgba(26, 254, 73, 0.2);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 3rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
@@ -169,7 +169,7 @@
         .product-image img {
             max-width: 100%;
             height: auto;
-            border-radius: 65px;
+            border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
@@ -207,7 +207,7 @@
         .section-title {
             font-size: 2rem;
             font-weight: bold;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -222,7 +222,7 @@
         .flavor-option {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border: 2px solid transparent;
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 1rem;
             text-align: center;
             cursor: pointer;
@@ -266,7 +266,7 @@
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 65px;
+            border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
@@ -302,7 +302,7 @@
 
         .highlight-card {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 2rem;
             text-align: center;
             transition: all 0.3s ease;
@@ -323,7 +323,7 @@
         .highlight-title {
             font-size: 1.3rem;
             font-weight: bold;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 0.5rem;
         }
 
@@ -335,7 +335,7 @@
         /* 購買區域 */
         .purchase-section {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 2rem;
             text-align: center;
         }
@@ -354,7 +354,7 @@
             border: none;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 30px;
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -370,7 +370,7 @@
             height: 40px;
             text-align: center;
             border: 2px solid #ddd;
-            border-radius: 65px;
+            border-radius: 30px;
             font-size: 1.1rem;
         }
 
@@ -380,7 +380,7 @@
             border: none;
             padding: 1rem 3rem;
             font-size: 1.2rem;
-            border-radius: 65px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 1rem;
@@ -397,7 +397,7 @@
             border: none;
             padding: 1rem 3rem;
             font-size: 1.2rem;
-            border-radius: 65px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 1rem;
@@ -437,7 +437,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logoai.gif" alt="Deepvape Logo">
+                <img src="logo.png" alt="Deepvape Logo">
                 <h1>Deepvape</h1>
             </div>
             <div class="header-actions">
@@ -568,7 +568,7 @@
 
             <!-- 購買區域 -->
             <div class="purchase-section">
-                <h3>立即購買</h3>
+                <h3>加入購物車</h3>
                 <div class="quantity-control">
                     <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
                     <input type="number" id="quantity" class="quantity-input" value="1" min="1">
@@ -578,7 +578,7 @@
                 <p>總價：NT$ <span id="totalPrice">280</span></p>
                 <div>
                     <button class="add-to-cart" onclick="addToCart()">加入購物車</button>
-                    <button class="buy-now" onclick="buyNow()">立即購買</button>
+                    <button class="buy-now" onclick="buyNow()">加入購物車</button>
                 </div>
             </div>
         </div>
@@ -692,7 +692,7 @@
             }
         }
 
-        // 立即購買
+        // 加入購物車
         function buyNow() {
             if (!selectedFlavor) {
                 alert('請先選擇口味！');

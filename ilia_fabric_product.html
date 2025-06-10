@@ -71,7 +71,7 @@
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -90,7 +90,7 @@
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -115,7 +115,7 @@
             margin: 0 auto;
             background: rgba(4, 19, 72, 0.8);
             border: 1px solid rgba(26, 254, 73, 0.2);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 3rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
@@ -163,7 +163,7 @@
         .product-image img {
             max-width: 100%;
             height: auto;
-            border-radius: 65px;
+            border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
@@ -201,7 +201,7 @@
         .section-title {
             font-size: 2rem;
             font-weight: bold;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -216,7 +216,7 @@
         .color-option {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border: 3px solid transparent;
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 1.5rem;
             text-align: center;
             cursor: pointer;
@@ -254,7 +254,7 @@
         .color-preview {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 30px;
             margin: 0 auto 0.5rem;
             border: 2px solid #ddd;
         }
@@ -268,7 +268,7 @@
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 65px;
+            border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
@@ -293,7 +293,7 @@
         /* 購買區域 */
         .purchase-section {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 2rem;
             text-align: center;
         }
@@ -312,7 +312,7 @@
             border: none;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 30px;
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -328,7 +328,7 @@
             height: 40px;
             text-align: center;
             border: 2px solid #ddd;
-            border-radius: 65px;
+            border-radius: 30px;
             font-size: 1.1rem;
         }
 
@@ -338,7 +338,7 @@
             border: none;
             padding: 1rem 3rem;
             font-size: 1.2rem;
-            border-radius: 65px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 1rem;
@@ -355,7 +355,7 @@
             border: none;
             padding: 1rem 3rem;
             font-size: 1.2rem;
-            border-radius: 65px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 1rem;
@@ -410,7 +410,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logoai.gif" alt="Deepvape Logo">
+                <img src="logo.png" alt="Deepvape Logo">
                 <h1>Deepvape</h1>
             </div>
             <div class="header-actions">
@@ -507,7 +507,7 @@
 
             <!-- 購買區域 -->
             <div class="purchase-section">
-                <h3>立即購買</h3>
+                <h3>加入購物車</h3>
                 <div class="quantity-control">
                     <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
                     <input type="number" id="quantity" class="quantity-input" value="1" min="1">
@@ -517,7 +517,7 @@
                 <p>總價：NT$ <span id="totalPrice">750</span></p>
                 <div>
                     <button class="add-to-cart" onclick="addToCart()">加入購物車</button>
-                    <button class="buy-now" onclick="buyNow()">立即購買</button>
+                    <button class="buy-now" onclick="buyNow()">加入購物車</button>
                 </div>
             </div>
         </div>
@@ -597,16 +597,50 @@
 
         // 加入購物車
         function addToCart() {
-            if (!selectedColor) {
-                alert('請先選擇顏色！');
-                return;
+            const selectedColor = document.querySelector('.color-option.selected')?.dataset.color || '預設';
+            const selectedFlavor = document.querySelector('.flavor-option.selected')?.dataset.flavor || '';
+            const quantity = document.getElementById('quantity').value;
+            
+            const productName = document.querySelector('.product-title').textContent;
+            const productPrice = document.querySelector('.product-price').textContent.match(/\d+/)[0];
+            const productImage = document.querySelector('.main-image').src;
+            
+            const product = {
+                id: Date.now().toString(),
+                name: productName,
+                price: parseInt(productPrice),
+                color: selectedColor,
+                flavor: selectedFlavor,
+                quantity: parseInt(quantity),
+                image: productImage
+            };
+            
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingIndex = cart.findIndex(item => 
+                item.name === product.name && item.color === product.color && item.flavor === product.flavor
+            );
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += product.quantity;
+            } else {
+                cart.push(product);
             }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            let message = `已將 ${quantity} 個 ${productName}`;
+            if (selectedColor !== '預設') message += ` (${selectedColor})`;
+            if (selectedFlavor) message += ` (${selectedFlavor})`;
+            message += ' 加入購物車！';
+            
+            alert(message);
+        }
             
             const quantity = document.getElementById('quantity').value;
             alert(`已將 ${quantity} 台 ${selectedColor} 的 ILIA 布紋主機加入購物車！`);
         }
 
-        // 立即購買
+        // 加入購物車
         function buyNow() {
             if (!selectedColor) {
                 alert('請先選擇顏色！');

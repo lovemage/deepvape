@@ -85,7 +85,7 @@
             color: var(--text-color);
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -104,7 +104,7 @@
             color: var(--text-color);
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -139,7 +139,7 @@
             width: 100%;
             height: 500px;
             object-fit: cover;
-            border-radius: 65px;
+            border-radius: 30px;
             margin-bottom: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
@@ -154,7 +154,7 @@
             width: 100%;
             height: 120px;
             object-fit: cover;
-            border-radius: 65px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
@@ -162,7 +162,7 @@
 
         .gallery-image:hover,
         .gallery-image.active {
-            border-color: var(--tech-blue);
+            border-color: var(--highlight-color);
             transform: scale(1.05);
         }
 
@@ -170,7 +170,7 @@
         .product-info {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 2rem;
             backdrop-filter: blur(10px);
         }
@@ -178,9 +178,9 @@
         .product-badge {
             display: inline-block;
             padding: 0.5rem 1rem;
-            background: linear-gradient(45deg, var(--tech-blue), var(--tech-cyan));
-            color: white;
-            border-radius: 65px;
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan));
+            color: var(--primary-color);
+            border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 1rem;
@@ -191,7 +191,7 @@
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-color);
-            background: linear-gradient(45deg, var(--tech-blue), var(--tech-cyan));
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -200,14 +200,17 @@
         .product-price {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--tech-blue);
+            color: var(--highlight-color);
             margin-bottom: 2rem;
         }
 
         .product-description {
-            color: var(--text-secondary);
+            color: var(--text-color);
             margin-bottom: 2rem;
             line-height: 1.8;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 30px;
         }
 
         /* Specifications */
@@ -219,7 +222,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--tech-blue);
+            color: var(--highlight-color);
         }
 
         .spec-list {
@@ -244,7 +247,7 @@
         }
 
         .spec-value {
-            color: var(--text-secondary);
+            color: var(--highlight-color);
         }
 
         /* Color Options */
@@ -269,17 +272,19 @@
             padding: 0.8rem;
             background: var(--accent-color);
             border: 2px solid transparent;
-            border-radius: 65px;
+            border-radius: 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.8rem;
+            color: var(--text-color);
         }
 
         .color-option:hover,
         .color-option.selected {
-            border-color: var(--tech-blue);
-            background: rgba(33, 150, 243, 0.2);
+            border-color: var(--highlight-color);
+            background: rgba(26, 254, 73, 0.2);
+            color: var(--text-color);
         }
 
         /* Smart Features */
@@ -304,19 +309,19 @@
             padding: 1rem;
             background: var(--accent-color);
             border: 1px solid var(--border-color);
-            border-radius: 65px;
+            border-radius: 30px;
             text-align: center;
             transition: all 0.3s ease;
         }
 
         .smart-feature-info:hover {
-            border-color: var(--tech-blue);
-            background: rgba(33, 150, 243, 0.1);
+            border-color: var(--highlight-color);
+            background: rgba(26, 254, 73, 0.1);
         }
 
         .smart-icon {
             font-size: 1.5rem;
-            color: var(--tech-blue);
+            color: var(--highlight-color);
             margin-bottom: 0.5rem;
         }
 
@@ -328,7 +333,7 @@
 
         .smart-desc {
             font-size: 0.7rem;
-            color: var(--text-secondary);
+            color: var(--text-color);
             margin-top: 0.3rem;
         }
 
@@ -356,7 +361,7 @@
             border: none;
             background: var(--accent-color);
             color: var(--text-color);
-            border-radius: 50%;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -365,7 +370,7 @@
         }
 
         .quantity-btn:hover {
-            background: var(--tech-blue);
+            background: var(--highlight-color);
         }
 
         .quantity-input {
@@ -375,7 +380,7 @@
             border: 1px solid var(--border-color);
             background: var(--secondary-color);
             color: var(--text-color);
-            border-radius: 65px;
+            border-radius: 30px;
             font-size: 1rem;
         }
 
@@ -387,11 +392,11 @@
         }
 
         .pulse-button {
-            background: linear-gradient(45deg, var(--tech-blue), var(--tech-cyan));
-            color: white;
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan));
+            color: var(--primary-color);
             border: none;
             padding: 1rem 2rem;
-            border-radius: 65px;
+            border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -410,7 +415,7 @@
             left: 50%;
             width: 0;
             height: 0;
-            border-radius: 50%;
+            border-radius: 30px;
             background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
@@ -423,25 +428,7 @@
 
         .pulse-button:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
-        }
-
-        .secondary-button {
-            background: transparent;
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
-            padding: 1rem 2rem;
-            border-radius: 65px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            text-align: center;
-        }
-
-        .secondary-button:hover {
-            border-color: var(--tech-blue);
-            color: var(--tech-blue);
+            box-shadow: 0 5px 20px rgba(26, 254, 73, 0.4);
         }
 
         /* Features Section */
@@ -453,7 +440,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--tech-blue);
+            color: var(--highlight-color);
         }
 
         .features-list {
@@ -466,19 +453,21 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
-        }
+            color: var(--text-color);
+        
+            color: var(--text-color);}
 
         .features-list li i {
-            color: var(--tech-blue);
+            color: var(--highlight-color);
             width: 20px;
         }
 
         /* Tech Badge */
         .tech-badge {
-            background: linear-gradient(45deg, var(--tech-blue), var(--tech-cyan));
-            color: white;
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan));
+            color: var(--primary-color);
             padding: 0.3rem 0.8rem;
-            border-radius: 65px;
+            border-radius: 30px;
             font-size: 0.7rem;
             font-weight: 600;
             margin-left: 0.5rem;
@@ -516,11 +505,13 @@
         .warning-notice {
             background: rgba(255, 171, 0, 0.1);
             border: 1px solid var(--warning-color);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 1rem;
             margin-top: 2rem;
             text-align: center;
-        }
+            color: var(--text-color);
+        
+            color: var(--text-color);}
 
         .warning-notice i {
             color: var(--warning-color);
@@ -533,7 +524,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logoai.gif" alt="Deepvape Logo">
+                <img src="logo.png" alt="Deepvape Logo">
                 <h1>Deepvape</h1>
             </div>
             <div class="header-actions">
@@ -672,10 +663,7 @@
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <button class="pulse-button" onclick="addToCart()">
-                    <i class="fas fa-shopping-cart"></i> 立即購買
-                </button>
-                <button class="secondary-button" onclick="addToWishlist()">
-                    <i class="fas fa-heart"></i> 加入收藏
+                    <i class="fas fa-shopping-cart"></i> 加入購物車
                 </button>
             </div>
 
@@ -750,8 +738,6 @@
             });
         });
 
-        // Smart Features are now informational only - no selection needed
-
         // Quantity Controls
         function increaseQuantity() {
             const quantityInput = document.getElementById('quantity');
@@ -781,15 +767,50 @@
             const selectedColor = document.querySelector('.color-option.selected').dataset.color;
             const quantity = document.getElementById('quantity').value;
             
-            alert(`已將 ${quantity} 個 SP2 一代主機 (${selectedColor}) 加入購物車！\n\n產品特色：智能溫控、7W~8W功率、400mAH電池\n\n即將轉接至 LINE 客服完成訂購流程。`);
+            // 獲取產品資訊
+            const product = {
+                id: 'sp2_host',
+                name: 'SP2 一代主機',
+                price: 600,
+                color: selectedColor,
+                quantity: parseInt(quantity),
+                image: 'sp2_v/SP2主機-SP2S主機圖.jpg',
+                category: 'host'
+            };
             
-            // 這裡可以整合實際的購物車功能或 LINE 客服系統
-            // window.open('https://line.me/ti/p/your-line-id', '_blank');
+            // 儲存到 localStorage
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            // 檢查是否已存在相同產品和顏色
+            const existingIndex = cart.findIndex(item => 
+                item.id === product.id && item.color === product.color
+            );
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += product.quantity;
+            } else {
+                cart.push(product);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // 顯示成功訊息
+            alert(`已將 ${quantity} 個 SP2 一代主機 (${selectedColor}) 加入購物車！`);
+            
+            // 更新購物車圖示（如果有的話）
+            updateCartCount();
         }
 
-        // Add to Wishlist
-        function addToWishlist() {
-            alert('已加入收藏清單！');
+        // 更新購物車數量顯示
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // 如果有購物車計數元素，更新它
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
         }
 
         // Smooth scroll and animations
@@ -814,6 +835,9 @@
                 productInfo.style.opacity = '1';
                 productInfo.style.transform = 'translateY(0)';
             }, 300);
+            
+            // 初始化購物車計數
+            updateCartCount();
         });
     </script>
 </body>

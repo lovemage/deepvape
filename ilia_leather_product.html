@@ -84,7 +84,7 @@
             color: var(--text-color);
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -103,7 +103,7 @@
             color: var(--text-color);
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 65px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -138,7 +138,7 @@
             width: 100%;
             height: 500px;
             object-fit: cover;
-            border-radius: 65px;
+            border-radius: 30px;
             margin-bottom: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
@@ -153,7 +153,7 @@
             width: 100%;
             height: 120px;
             object-fit: cover;
-            border-radius: 65px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
@@ -169,7 +169,7 @@
         .product-info {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 2rem;
             backdrop-filter: blur(10px);
         }
@@ -179,7 +179,7 @@
             padding: 0.5rem 1rem;
             background: linear-gradient(45deg, var(--luxury-gold), #ffd700);
             color: #000;
-            border-radius: 65px;
+            border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 1rem;
@@ -204,7 +204,10 @@
         }
 
         .product-description {
-            color: var(--text-secondary);
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 30px;
             margin-bottom: 2rem;
             line-height: 1.8;
         }
@@ -243,7 +246,7 @@
         }
 
         .spec-value {
-            color: var(--text-secondary);
+            color: var(--highlight-color);
         }
 
         /* Color Options */
@@ -268,7 +271,7 @@
             padding: 0.8rem;
             background: var(--accent-color);
             border: 2px solid transparent;
-            border-radius: 65px;
+            border-radius: 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -281,7 +284,7 @@
             background: rgba(212, 175, 55, 0.2);
         }
 
-        /* Power Mode Selector */
+        /* Power Mode Information */
         .power-modes {
             margin-bottom: 2rem;
         }
@@ -299,20 +302,36 @@
             gap: 0.5rem;
         }
 
-        .power-option {
+        .power-info {
             padding: 1rem;
             background: var(--accent-color);
-            border: 2px solid transparent;
-            border-radius: 65px;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
             text-align: center;
-            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .power-option:hover,
-        .power-option.selected {
+        .power-info:hover {
             border-color: var(--luxury-gold);
-            background: rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .power-icon {
+            font-size: 1.5rem;
+            color: var(--luxury-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .power-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .power-description {
+            font-size: 0.8rem;
+            color: var(--text-color);
         }
 
         .power-value {
@@ -351,7 +370,7 @@
             border: none;
             background: var(--accent-color);
             color: var(--text-color);
-            border-radius: 50%;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -371,7 +390,7 @@
             border: 1px solid var(--border-color);
             background: var(--secondary-color);
             color: var(--text-color);
-            border-radius: 65px;
+            border-radius: 30px;
             font-size: 1rem;
         }
 
@@ -387,7 +406,7 @@
             color: #000;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 65px;
+            border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -406,7 +425,7 @@
             left: 50%;
             width: 0;
             height: 0;
-            border-radius: 50%;
+            border-radius: 30px;
             background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
@@ -420,24 +439,6 @@
         .pulse-button:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        .secondary-button {
-            background: transparent;
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
-            padding: 1rem 2rem;
-            border-radius: 65px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            text-align: center;
-        }
-
-        .secondary-button:hover {
-            border-color: var(--luxury-gold);
-            color: var(--luxury-gold);
         }
 
         /* Features Section */
@@ -474,7 +475,7 @@
             background: linear-gradient(45deg, var(--luxury-gold), #ffd700);
             color: #000;
             padding: 0.3rem 0.8rem;
-            border-radius: 65px;
+            border-radius: 30px;
             font-size: 0.7rem;
             font-weight: 600;
             margin-left: 0.5rem;
@@ -512,7 +513,7 @@
         .warning-notice {
             background: rgba(255, 171, 0, 0.1);
             border: 1px solid var(--warning-color);
-            border-radius: 65px;
+            border-radius: 30px;
             padding: 1rem;
             margin-top: 2rem;
             text-align: center;
@@ -529,7 +530,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logoai.gif" alt="Deepvape Logo">
+                <img src="logo.png" alt="Deepvape Logo">
                 <h1>Deepvape</h1>
             </div>
             <div class="header-actions">
@@ -614,21 +615,24 @@
                 </div>
             </div>
 
-            <!-- Power Mode Selection -->
+            <!-- Power Mode Information -->
             <div class="power-modes">
-                <h3 class="power-title">智能功率調節</h3>
+                <h3 class="power-title">智能功率說明 <span class="luxury-badge">8W-10W</span></h3>
                 <div class="power-grid">
-                    <div class="power-option selected" data-power="auto">
+                    <div class="power-info">
+                        <div class="power-icon"><i class="fas fa-magic"></i></div>
                         <div class="power-value">AUTO</div>
-                        <div class="power-description">自動調節</div>
+                        <div class="power-description">自動調節最佳功率</div>
                     </div>
-                    <div class="power-option" data-power="8w">
+                    <div class="power-info">
+                        <div class="power-icon"><i class="fas fa-leaf"></i></div>
                         <div class="power-value">8W</div>
-                        <div class="power-description">溫和模式</div>
+                        <div class="power-description">溫和模式，口感柔順</div>
                     </div>
-                    <div class="power-option" data-power="10w">
+                    <div class="power-info">
+                        <div class="power-icon"><i class="fas fa-fire"></i></div>
                         <div class="power-value">10W</div>
-                        <div class="power-description">強勁模式</div>
+                        <div class="power-description">強勁模式，濃郁體驗</div>
                     </div>
                 </div>
             </div>
@@ -650,11 +654,9 @@
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <button class="pulse-button" onclick="addToCart()">
-                    <i class="fas fa-shopping-cart"></i> 立即購買
+                    <i class="fas fa-shopping-cart"></i> 加入購物車
                 </button>
-                <button class="secondary-button" onclick="addToWishlist()">
-                    <i class="fas fa-heart"></i> 加入收藏
-                </button>
+                
             </div>
 
             <!-- Features -->
@@ -725,14 +727,6 @@
             });
         });
 
-        // Power Mode Selection
-        document.querySelectorAll('.power-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.power-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
-
         // Quantity Controls
         function increaseQuantity() {
             const quantityInput = document.getElementById('quantity');
@@ -753,18 +747,32 @@
         // Add to Cart
         function addToCart() {
             const selectedColor = document.querySelector('.color-option.selected').dataset.color;
-            const selectedPower = document.querySelector('.power-option.selected').dataset.power;
             const quantity = document.getElementById('quantity').value;
             
-            alert(`已將 ${quantity} 個 ILIA 皮革主機 (${selectedColor}, ${selectedPower}模式) 加入購物車！\n\n即將轉接至 LINE 客服完成訂購流程。`);
+            const product = {
+                id: 'ilia_leather_host',
+                name: 'ILIA 皮革主機',
+                price: 900,
+                color: selectedColor,
+                quantity: parseInt(quantity),
+                image: 'ilia_L/ILIA主機-皮革圖.jpg',
+                category: 'host'
+            };
             
-            // 這裡可以整合實際的購物車功能或 LINE 客服系統
-            // window.open('https://line.me/ti/p/your-line-id', '_blank');
-        }
-
-        // Add to Wishlist
-        function addToWishlist() {
-            alert('已加入收藏清單！');
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingIndex = cart.findIndex(item => 
+                item.id === product.id && item.color === product.color
+            );
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += product.quantity;
+            } else {
+                cart.push(product);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            alert(`已將 ${quantity} 個 ILIA 皮革主機 (${selectedColor}) 加入購物車！`);
         }
 
         // Smooth scroll and animations
