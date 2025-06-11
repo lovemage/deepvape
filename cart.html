@@ -1234,8 +1234,8 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">門市地址 *</label>
-                            <input type="text" id="storeAddressInput" class="form-input" placeholder="例如：台中市豐原區中正路805號" required>
+                            <label class="form-label">門市地址 (選填)</label>
+                            <input type="text" id="storeAddressInput" class="form-input" placeholder="例如：台中市豐原區中正路805號（選填）">
                         </div>
                         
                         <button class="confirm-store-btn" onclick="confirmStoreSelection()">
@@ -1605,9 +1605,9 @@
             const storeName = document.getElementById('storeNameInput').value.trim();
             const storeAddress = document.getElementById('storeAddressInput').value.trim();
                     
-            // 驗證必填欄位
-            if (!storeType || !storeId || !storeName || !storeAddress) {
-                alert('請填寫所有必填欄位');
+            // 驗證必填欄位（地址為選填）
+            if (!storeType || !storeId || !storeName) {
+                alert('請填寫所有必填欄位（門市類型、店號、門市名稱）');
                 return;
         }
 
@@ -1623,7 +1623,7 @@
             // 更新顯示
             const storeTypeText = storeType === '711' ? '7-ELEVEN' : '全家便利商店';
             document.getElementById('storeName').textContent = `${storeTypeText} - ${storeName}`;
-            document.getElementById('storeAddress').textContent = storeAddress;
+            document.getElementById('storeAddress').textContent = storeAddress || '地址未提供';
             document.getElementById('storeId').textContent = `店號：${storeId}`;
             document.getElementById('selectedStore').classList.add('show');
             
@@ -1688,7 +1688,7 @@
 
 🏪 **取貨門市**:
 • ${orderData.store.name}
-• ${orderData.store.address}
+• ${orderData.store.address || '地址未提供'}
 • 店號: ${orderData.store.id}
 
 🛍️ **訂購商品**:
@@ -1808,15 +1808,74 @@ ${orderData.items.map(item =>
             document.getElementById('checkoutModal').style.display = 'none';
         }
 
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCart();
-            generateCaptcha();
-        });
+
         // 顯示聯絡方式
         function showContact() {
             window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
         }
+
+        // 測試Telegram機器人功能
+        async function testTelegramBot() {
+            console.log('🧪 開始測試Telegram機器人...');
+            
+            const testOrderData = {
+                orderId: 'TEST' + Date.now(),
+                orderDate: new Date().toISOString(),
+                customer: {
+                    name: '測試客戶',
+                    phone: '0912-345-678'
+                },
+                store: {
+                    id: 'TEST001',
+                    name: '統一超商測試門市',
+                    address: '台北市信義區信義路五段7號'
+                },
+                items: [
+                    {
+                        name: 'SP2 一代主機',
+                        quantity: 1,
+                        price: 650,
+                        flavor: '薄荷',
+                        color: '黑色'
+                    }
+                ],
+                subtotal: 650,
+                shipping: 60,
+                total: 710
+            };
+            
+            try {
+                await sendTelegramNotification(testOrderData);
+                alert('✅ Telegram機器人測試成功！\n請檢查Telegram群組是否收到測試訊息。');
+            } catch (error) {
+                alert('❌ Telegram機器人測試失敗！\n\n錯誤詳情：\n' + error.message + '\n\n請檢查：\n1. Bot Token是否正確\n2. Chat ID是否正確\n3. 機器人是否已加入群組\n4. 網路連線是否正常');
+                console.error('Telegram測試失敗:', error);
+            }
+        }
+
+        // 在頁面載入時添加測試按鈕（僅開發環境）
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            generateCaptcha();
+            
+            // 添加隱藏的測試功能（連續點擊logo 3次）
+            let logoClickCount = 0;
+            const logo = document.querySelector('.logo-button');
+            if (logo) {
+                logo.addEventListener('click', function() {
+                    logoClickCount++;
+                    if (logoClickCount === 3) {
+                        if (confirm('是否要測試Telegram機器人功能？')) {
+                            testTelegramBot();
+                        }
+                        logoClickCount = 0;
+                    }
+                    setTimeout(() => {
+                        logoClickCount = 0;
+                    }, 2000);
+                });
+            }
+        });
     </script>
 
     <!-- 物流方式展示區域 -->
