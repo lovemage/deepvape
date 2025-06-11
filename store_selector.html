@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>選擇取貨門市 - DeepVape</title>
     
-    <!-- 載入配置檔案 -->
-    <script src="config.js"></script>
-    
     <style>
         * {
             margin: 0;
@@ -449,7 +446,8 @@
     <script>
         class StoreSelector {
             constructor() {
-                this.apiKey = window.GOOGLE_MAPS_API_KEY || '';  // 從全域配置讀取
+                // 在Netlify上不需要直接存取API金鑰，透過Functions呼叫
+                this.apiKey = null;  // 透過Netlify Functions存取
                 this.map = null;
                 this.markers = [];
                 this.selectedStore = null;
