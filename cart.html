@@ -1193,13 +1193,17 @@
                 <!-- Store Selection -->
                 <div class="store-selection">
                     <label class="form-label">選擇取貨門市 *</label>
-                    <p class="store-instruction">使用「智慧門市選擇」功能，支援7-ELEVEN和全家便利商店，可自動搜尋門市並載入資訊</p>
+                    <p class="store-instruction">點擊下方按鈕使用7-ELEVEN或全家官方門市選擇系統，選擇完成後會自動帶入門市資訊</p>
                     
                     <!-- Store Search Button -->
                     <div class="store-buttons">
-                        <button class="store-btn smart-search" onclick="openSmartStoreSelector()">
+                        <button class="store-btn smart-search" onclick="open711OfficialMap()">
                             <i class="fas fa-map-marker-alt"></i>
-                            智慧門市選擇
+                            7-ELEVEN 官方門市選擇
+                        </button>
+                        <button class="store-btn smart-search" onclick="openFamilyOfficialMap()" style="background: #25a147;">
+                            <i class="fas fa-store"></i>
+                            全家官方門市選擇
                         </button>
                     </div>
 
@@ -1415,14 +1419,159 @@
             document.getElementById('total').textContent = `NT$ ${total}`;
         }
 
-        // Open smart store selector
-        function openSmartStoreSelector() {
-            // 直接跳轉到門市選擇頁面
-            window.location.href = 'store_selector.html?from=cart';
+        // 開啟7-11官方門市選擇系統
+        function open711OfficialMap() {
+            // 檢查是否在本地檔案系統運行
+            if (window.location.protocol === 'file:') {
+                alert('⚠️ 偵測到您在本地檔案系統運行網站\n\n' + 
+                      '由於7-11官方系統需要有效的網址回調，建議您：\n\n' +
+                      '1. 將網站部署到實際伺服器\n' +
+                      '2. 或直接前往7-11官網查詢門市後，手動輸入門市資訊\n\n' +
+                      '點擊確定將開啟7-11官方門市查詢頁面');
+                
+                // 直接開啟7-11官方門市查詢頁面（不帶回調參數）
+                window.open('https://emap.pcsc.com.tw/ecmap/default.aspx', '711StoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+                
+                // 提示手動輸入
+                setTimeout(() => {
+                    alert('📍 請在7-11官方地圖選擇門市後\n\n' +
+                          '記下以下資訊並手動填入：\n' +
+                          '• 門市店號（通常為5-6位數字）\n' +
+                          '• 門市名稱\n' +
+                          '• 門市地址\n\n' +
+                          '填寫完成後點擊「確認門市選擇」');
+                }, 1000);
+                
+                return;
+            }
+            
+            // 原本的邏輯（用於正式環境）
+            const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+            const callbackUrl = baseUrl + '/cvs_callback.html';
+            
+            // 7-11官方電子地圖URL
+            const mapUrl = 'https://emap.pcsc.com.tw/ecmap/default.aspx';
+            
+            // 構建完整的URL，包含callback參數
+            const fullUrl = `${mapUrl}?BackURL=${encodeURIComponent(callbackUrl)}`;
+            
+            console.log('開啟7-11官方門市地圖:', fullUrl);
+            console.log('Callback URL:', callbackUrl);
+            
+            // 開啟新視窗
+            const mapWindow = window.open(fullUrl, '711StoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+            
+            if (!mapWindow) {
+                alert('無法開啟門市選擇視窗，請檢查瀏覽器的彈出視窗設定。');
+                return;
+            }
+            
+            // 監聽來自回調頁面的訊息
+            window.addEventListener('message', function(event) {
+                console.log('收到訊息:', event.data);
+                
+                // 檢查訊息是否來自我們的回調頁面
+                if (event.data && event.data.type === 'storeSelected') {
+                    const storeInfo = event.data.storeInfo;
+                    console.log('收到門市資訊:', storeInfo);
+                    
+                    // 填入門市資訊
+                    document.getElementById('storeTypeSelect').value = '711';
+                    document.getElementById('storeIdInput').value = storeInfo.storeId;
+                    document.getElementById('storeNameInput').value = storeInfo.storeName;
+                    document.getElementById('storeAddressInput').value = storeInfo.storeAddress;
+                    
+                    // 自動確認門市選擇
+                    confirmStoreSelection();
+                    
+                    // 顯示成功訊息
+                    alert('✅ 7-ELEVEN門市選擇成功！\n\n' +
+                          `店號：${storeInfo.storeId}\n` +
+                          `門市名稱：${storeInfo.storeName}\n` +
+                          `地址：${storeInfo.storeAddress}`);
+                }
+            });
+            
+            // 顯示提示
+            alert('已開啟7-ELEVEN官方門市查詢系統\n\n請在新視窗中選擇您要的門市，選擇完成後會自動回傳門市資訊。');
         }
 
-
-
+        // 開啟全家官方門市選擇系統
+        function openFamilyOfficialMap() {
+            // 檢查是否在本地檔案系統運行
+            if (window.location.protocol === 'file:') {
+                alert('⚠️ 偵測到您在本地檔案系統運行網站\n\n' + 
+                      '由於全家官方系統需要有效的網址回調，建議您：\n\n' +
+                      '1. 將網站部署到實際伺服器\n' +
+                      '2. 或直接前往全家官網查詢門市後，手動輸入門市資訊\n\n' +
+                      '點擊確定將開啟全家官方門市查詢頁面');
+                
+                // 直接開啟全家官方門市查詢頁面（不帶回調參數）
+                window.open('https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp', 'FamilyStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+                
+                // 提示手動輸入
+                setTimeout(() => {
+                    alert('🏪 請在全家官方網站選擇門市後\n\n' +
+                          '記下以下資訊並手動填入：\n' +
+                          '• 門市店號（通常為5-6位數字）\n' +
+                          '• 門市名稱\n' +
+                          '• 門市地址\n\n' +
+                          '填寫完成後點擊「確認門市選擇」');
+                }, 1000);
+                
+                return;
+            }
+            
+            // 原本的邏輯（用於正式環境）
+            const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+            const callbackUrl = baseUrl + '/cvs_callback.html';
+            
+            // 全家官方門市查詢URL
+            const mapUrl = 'https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp';
+            
+            // 構建完整的URL（全家API可能使用不同的參數名稱）
+            const fullUrl = `${mapUrl}?ReturnURL=${encodeURIComponent(callbackUrl)}`;
+            
+            console.log('開啟全家官方門市查詢:', fullUrl);
+            console.log('Callback URL:', callbackUrl);
+            
+            // 開啟新視窗
+            const mapWindow = window.open(fullUrl, 'FamilyStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+            
+            if (!mapWindow) {
+                alert('無法開啟門市選擇視窗，請檢查瀏覽器的彈出視窗設定。');
+                return;
+            }
+            
+            // 監聽來自回調頁面的訊息
+            window.addEventListener('message', function(event) {
+                console.log('收到訊息:', event.data);
+                
+                // 檢查訊息是否來自我們的回調頁面
+                if (event.data && event.data.type === 'storeSelected') {
+                    const storeInfo = event.data.storeInfo;
+                    console.log('收到門市資訊:', storeInfo);
+                    
+                    // 填入門市資訊
+                    document.getElementById('storeTypeSelect').value = 'family';
+                    document.getElementById('storeIdInput').value = storeInfo.storeId;
+                    document.getElementById('storeNameInput').value = storeInfo.storeName;
+                    document.getElementById('storeAddressInput').value = storeInfo.storeAddress;
+                    
+                    // 自動確認門市選擇
+                    confirmStoreSelection();
+                    
+                    // 顯示成功訊息
+                    alert('✅ 全家門市選擇成功！\n\n' +
+                          `店號：${storeInfo.storeId}\n` +
+                          `門市名稱：${storeInfo.storeName}\n` +
+                          `地址：${storeInfo.storeAddress}`);
+                }
+            });
+            
+            // 顯示提示
+            alert('已開啟全家官方門市查詢系統\n\n請在新視窗中選擇您要的門市，選擇完成後會自動回傳門市資訊。');
+        }
 
 
         // Confirm store selection
