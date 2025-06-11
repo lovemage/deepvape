@@ -124,7 +124,7 @@
         .header.scrolled {
             background-color: rgba(17, 24, 39, 0.9);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
+            }
 
         .nav-container {
             max-width: 1280px;
@@ -136,7 +136,7 @@
             height: 100%;
         }
 
-        .logo {
+        .logo img {
             height: 40px;
             width: auto;
         }
@@ -144,7 +144,6 @@
         .nav-links {
             display: flex;
             gap: 2rem;
-            list-style: none;
             align-items: center;
         }
 
@@ -185,6 +184,110 @@
 
         .nav-links i {
             font-size: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-button {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--glow-indigo);
+        }
+
+        .cart-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            transition: transform 0.6s ease;
+        }
+
+        .cart-button:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
+        .cart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-purple);
+        }
+
+        .cart-button i {
+            font-size: 1.1rem;
+        }
+
+        .cart-button #cart-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .nav-links a i {
+                display: none;
+            }
+
+            .cart-button {
+                padding: 0.6rem 1.2rem;
+            }
+
+            .cart-button span {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .cart-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
         }
 
         /* Main Content */
@@ -746,16 +849,23 @@
     <div class="bg-glow bottom-left"></div>
 
     <header class="header" id="navbar">
-        <nav class="nav-container">
-            <img src="deepvape_logo_main.png" alt="Deepvape" class="logo">
-            <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i> 首頁</a></li>
-                <li><a href="index.html#hosts"><i class="fas fa-microchip"></i> 主機</a></li>
-                <li><a href="index.html#pods"><i class="fas fa-capsules"></i> 煙彈</a></li>
-                <li><a href="index.html#disposable"><i class="fas fa-trash-alt"></i> 拋棄式</a></li>
-                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> 購物車</a></li>
-            </ul>
-        </nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="deepvape_logo_main.png" alt="Deepvape">
+            </div>
+            <nav class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> 首頁</a>
+                <a href="index.html#hosts"><i class="fas fa-microchip"></i> 主機</a>
+                <a href="index.html#pods"><i class="fas fa-capsules"></i> 煙彈</a>
+                <a href="index.html#disposable"><i class="fas fa-trash-alt"></i> 拋棄式</a>
+            </nav>
+            <div class="header-actions">
+                <a href="cart.html" class="cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
     </header>
 
     <main class="main-content">
@@ -775,15 +885,15 @@
 
                     <!-- Product Info -->
                     <div class="product-info">
-                        <h1 class="product-title">ILIA 哩亞布紋主機</h1>
-                        <p class="product-subtitle">時尚布紋外觀 | 8W~10W功率調節 | 400mAh電池</p>
+                <h1 class="product-title">ILIA 哩亞布紋主機</h1>
+                <p class="product-subtitle">時尚布紋外觀 | 8W~10W功率調節 | 400mAh電池</p>
                         <div class="product-price">NT$ 650</div>
                         
                         <div class="product-description">
                             ILIA 哩亞布紋主機採用獨特的布紋外觀設計，結合現代工藝與經典美學。
                             8W-10W可調功率，400mAh大容量電池，為您帶來卓越的使用體驗。
                             精緻的布紋質感，舒適的握感，是品味與性能的完美結合。
-                        </div>
+            </div>
 
                         <!-- Color Selection -->
                         <div class="color-selection">
@@ -803,15 +913,15 @@
                                 </div>
                                 <div class="color-option" data-color="布紋粉色" data-image="ilia_Bu/ilia_fabric_device_main.png">
                                     <div class="color-name">布紋粉色</div>
-                                </div>
+                </div>
                                 <div class="color-option" data-color="布紋綠色" data-image="ilia_Bu/ilia_fabric_device_main.png">
                                     <div class="color-name">布紋綠色</div>
                                 </div>
                                 <div class="color-option" data-color="布紋藍色" data-image="ilia_Bu/ilia_fabric_device_main.png">
                                     <div class="color-name">布紋藍色</div>
                                 </div>
-                            </div>
-                        </div>
+                </div>
+            </div>
 
                         <!-- Specifications -->
                         <div class="specifications">
@@ -933,6 +1043,20 @@
             }
         });
 
+        // Update cart count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = cartCount;
+            }
+        }
+
         // 初始化顏色選項
         function initializeColorOptions() {
             const colorOptions = document.querySelectorAll('.color-option');
@@ -984,7 +1108,7 @@
             const currentValue = parseInt(quantityInput.value);
             if (currentValue < 10) {
                 quantityInput.value = currentValue + 1;
-                updateTotalPrice();
+            updateTotalPrice();
             }
         }
 
@@ -1035,6 +1159,9 @@
             
             // 儲存購物車
             localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // 更新購物車計數器
+            updateCartCount();
             
             // 顯示成功訊息
             alert(`已將 ${product.name} (${product.color}) x${product.quantity} 加入購物車！`);
