@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>選擇取貨門市 - DeepVape</title>
+    
+    <!-- 載入配置檔案 -->
+    <script src="config.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -32,29 +36,6 @@
             color: white;
             padding: 30px;
             text-align: center;
-            position: relative;
-        }
-
-        #iframeCloseBtn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        #iframeCloseBtn:hover {
-            background: #c0392b;
-            transform: scale(1.1);
         }
 
         .header h1 {
@@ -371,7 +352,6 @@
         <div class="header">
             <h1>🏪 選擇取貨門市</h1>
             <p>請依序選擇縣市、區域及門市，我們將為您保留商品至指定門市</p>
-            <button id="iframeCloseBtn" style="display: none;" onclick="closeIframe()">✕ 關閉</button>
         </div>
 
         <div class="content">
@@ -469,7 +449,7 @@
     <script>
         class StoreSelector {
             constructor() {
-                this.apiKey = '***REMOVED***';
+                this.apiKey = window.GOOGLE_MAPS_API_KEY || '';  // 從全域配置讀取
                 this.map = null;
                 this.markers = [];
                 this.selectedStore = null;
@@ -479,22 +459,6 @@
                 this.loadCities();
                 this.initializeMap();
                 this.bindEvents();
-                this.checkIframeMode();
-            }
-
-            checkIframeMode() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const isIframe = urlParams.get('mode') === 'iframe';
-                
-                if (isIframe) {
-                    // 顯示iframe關閉按鈕
-                    document.getElementById('iframeCloseBtn').style.display = 'block';
-                    
-                    // 修改容器樣式以適應iframe
-                    document.querySelector('.container').style.margin = '0';
-                    document.querySelector('.container').style.height = '100vh';
-                    document.querySelector('.content').style.minHeight = 'calc(100vh - 120px)';
-                }
             }
 
             initializeElements() {
@@ -936,16 +900,10 @@
                 // 檢查是否是從購物車頁面呼叫的
                 const urlParams = new URLSearchParams(window.location.search);
                 const fromCart = urlParams.get('from') === 'cart';
-                const isIframe = urlParams.get('mode') === 'iframe';
                 
                 if (fromCart) {
-                    if (isIframe) {
-                        // 如果是iframe模式，發送訊息給父頁面
-                        this.sendToParent(order.selectedStore);
-                    } else {
-                        // 如果是頁面跳轉模式，返回購物車並傳遞門市資訊
-                        this.returnToCart(order.selectedStore);
-                    }
+                    // 返回購物車並傳遞門市資訊
+                    this.returnToCart(order.selectedStore);
                     return;
                 }
                 
@@ -963,25 +921,6 @@
                 // 更新標題
                 document.querySelector('.header h1').textContent = '🎉 訂單生成成功';
                 document.querySelector('.header p').textContent = '請將訂單號碼提供給客服確認訂單';
-            }
-
-            sendToParent(storeData) {
-                // 準備要發送給父頁面的門市資料
-                const messageData = {
-                    storeType: this.getStoreType(storeData.storeName),
-                    storeId: this.extractStoreId(storeData.storeName, storeData.storeAddress),
-                    storeName: this.cleanStoreName(storeData.storeName),
-                    storeAddress: storeData.storeAddress,
-                    timestamp: Date.now()
-                };
-                
-                // 發送訊息給父頁面
-                if (window.parent && window.parent !== window) {
-                    window.parent.postMessage({
-                        type: 'storeSelected',
-                        storeData: messageData
-                    }, window.location.origin);
-                }
             }
 
             returnToCart(storeData) {
@@ -1119,15 +1058,6 @@
                 button.textContent = originalText;
                 button.classList.remove('copied');
             }, 2000);
-        }
-
-        // 關閉iframe函數
-        function closeIframe() {
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({
-                    type: 'closeIframe'
-                }, window.location.origin);
-            }
         }
 
         // 初始化門市選擇器

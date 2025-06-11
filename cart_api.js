@@ -12,7 +12,7 @@ app.use(express.static('public')); // 提供靜態檔案
 
 // Google Maps API客戶端
 const googleMapsClient = new Client({});
-const GOOGLE_MAPS_API_KEY = '***REMOVED***';
+const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || ''; // 從環境變數讀取API金鑰
 
 // 模擬資料庫
 let carts = new Map(); // 購物車資料
