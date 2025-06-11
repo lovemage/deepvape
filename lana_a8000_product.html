@@ -24,28 +24,33 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../nav_logo.png">
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Base styles & Custom properties */
         :root {
-            --primary-color: #1a1a1a;
-            --secondary-color: #ff6b35;
-            --accent-color: #00d4ff;
-            --text-light: #f8f9fa;
-            --text-dark: #333;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #ff6b35 0%, #f7971e 100%);
-            --gradient-3: linear-gradient(135deg, #00d4ff 0%, #5b86e5 100%);
+            --primary: #6366f1; /* Indigo */
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4; /* Cyan */
+            --accent: #a855f7; /* Purple */
+            --dark-bg: #111827;
+            --darker-bg: #030712;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --navbar-bg: rgba(17, 24, 39, 0.7);
+            --glass-effect: blur(12px);
+            --transition-normal: all 0.3s ease;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-glow: rgba(99, 102, 241, 0.3);
+            --neon-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+            --glow-cyan: 0 0 15px rgba(6, 182, 212, 0.5);
+            --glow-indigo: 0 0 15px rgba(99, 102, 241, 0.5);
+            --glow-purple: 0 0 15px rgba(168, 85, 247, 0.5);
+            --card-bg: rgba(17, 24, 39, 0.7);
         }
 
         * {
@@ -54,14 +59,87 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
-        /* 導航欄 */
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--darker-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-glow.top-right {
+            top: -20%;
+            right: -20%;
+        }
+
+        .bg-glow.bottom-left {
+            bottom: -20%;
+            left: -20%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--primary-dark), var(--accent));
+        }
+
         /* Header */
         header {
             position: fixed;
@@ -69,23 +147,31 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background-color: var(--navbar-bg);
+            backdrop-filter: var(--glass-effect);
+            -webkit-backdrop-filter: var(--glass-effect);
+            border-bottom: 1px solid var(--border-glow);
+            transition: var(--transition-normal);
+            height: 70px;
+        }
+
+        header.scrolled {
+            background-color: rgba(17, 24, 39, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .header-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 100%;
         }
 
         .logo img {
-            height: 50px;
+            height: 40px;
             width: auto;
         }
 
@@ -96,19 +182,35 @@
         }
 
         .nav-links a {
-            color: white;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: var(--transition-normal);
             padding: 0.5rem 1rem;
             border-radius: 25px;
             position: relative;
             overflow: hidden;
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            transition: width 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
         .nav-links a:hover {
-            color: var(--accent-color);
-            background: rgba(0, 212, 255, 0.1);
+            color: var(--secondary);
+            text-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
         }
 
         .header-actions {
@@ -118,41 +220,67 @@
         }
 
         .cart-button {
-            background: linear-gradient(45deg, var(--accent-color), #5b86e5);
-            color: white;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--text-primary);
             text-decoration: none;
             padding: 0.5rem 1.5rem;
             border-radius: 25px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: var(--transition-normal);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cart-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .cart-button:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
         .cart-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
-            color: white;
+            box-shadow: var(--neon-shadow);
+            color: var(--text-primary);
         }
 
         .mobile-nav-toggle {
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: var(--text-primary);
             font-size: 1.5rem;
             cursor: pointer;
         }
 
-        /* 英雄區域 */
+        /* Hero Section */
         .hero-section {
-            background: var(--gradient-1);
-            min-height: 60vh;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
+            padding-top: 70px;
         }
 
         .hero-section::before {
@@ -162,8 +290,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.05"/><circle cx="20" cy="80" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
+            background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            opacity: 0.8;
         }
 
         .hero-content {
@@ -174,33 +303,38 @@
         .hero-title {
             font-size: 3.5rem;
             font-weight: 700;
-            color: var(--text-light);
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: none;
         }
 
         .hero-subtitle {
             font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-secondary);
             margin-bottom: 2rem;
         }
 
-        /* 產品詳情區域 */
+        /* Product Section */
         .product-section {
             padding: 5rem 0;
-            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+            background: var(--darker-bg);
         }
 
         .product-image {
             max-width: 100%;
             height: auto;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            border: 1px solid var(--border-glow);
+            box-shadow: var(--glow-cyan);
+            transition: var(--transition-smooth);
         }
 
         .product-image:hover {
             transform: scale(1.05);
+            box-shadow: var(--glow-indigo);
         }
 
         .product-info {
@@ -210,31 +344,36 @@
         .product-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--primary-color);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 1rem;
         }
 
         .product-price {
             font-size: 2rem;
             font-weight: 600;
-            color: var(--secondary-color);
+            color: var(--secondary);
             margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
         .original-price {
             text-decoration: line-through;
-            color: #999;
+            color: var(--text-secondary);
             font-size: 1.2rem;
             margin-right: 1rem;
         }
 
         .discount-badge {
-            background: var(--gradient-2);
-            color: white;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            color: var(--text-primary);
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.9rem;
             font-weight: 600;
+            box-shadow: var(--glow-purple);
         }
 
         .stock-status {
@@ -243,57 +382,63 @@
             font-weight: 600;
             display: inline-block;
             margin-bottom: 1.5rem;
+            backdrop-filter: blur(8px);
         }
 
         .stock-status.in-stock {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: rgba(34, 197, 94, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
         .stock-status.low-stock {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
+            background: rgba(251, 191, 36, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(251, 191, 36, 0.3);
         }
 
         .stock-status.critical-low {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
         .stock-status.out-of-stock {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: rgba(107, 114, 128, 0.2);
+            color: #6b7280;
+            border: 1px solid rgba(107, 114, 128, 0.3);
         }
 
-        /* 特色區域 */
+        /* Features Section */
         .features-section {
             padding: 5rem 0;
-            background: var(--primary-color);
-            color: var(--text-light);
+            background: var(--dark-bg);
+            color: var(--text-primary);
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: var(--transition-smooth);
             height: 100%;
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
+            box-shadow: var(--neon-shadow);
+            border-color: rgba(99, 102, 241, 0.5);
         }
 
         .feature-icon {
             font-size: 3rem;
-            color: var(--accent-color);
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 1rem;
         }
 
@@ -301,24 +446,27 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            color: var(--text-primary);
         }
 
-        /* 規格表 */
+        /* Specs Table */
         .specs-section {
             padding: 5rem 0;
-            background: #f8f9fa;
+            background: var(--darker-bg);
         }
 
         .specs-table {
-            background: white;
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--neon-shadow);
         }
 
         .specs-table th {
-            background: var(--gradient-3);
-            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--text-primary);
             font-weight: 600;
             padding: 1.5rem;
             border: none;
@@ -326,140 +474,209 @@
 
         .specs-table td {
             padding: 1.2rem 1.5rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--text-primary);
         }
 
-        /* 口味選擇 */
+        .specs-table tbody tr:hover {
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        /* Flavor Selection */
         .flavor-selection-section {
             margin: 2rem 0;
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-glow);
         }
 
         .flavor-selection-section h4 {
-            color: #ffffff;
-            margin-bottom: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
             font-weight: bold;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         #flavor-grid-main {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
         .flavor-option {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(26, 254, 73, 0.3);
+            background: rgba(17, 24, 39, 0.5);
+            border: 2px solid var(--border-glow);
             border-radius: 15px;
-            padding: 0.8rem;
+            padding: 1rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(8px);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flavor-option::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(6, 182, 212, 0.1) 45%,
+                rgba(6, 182, 212, 0.2) 50%,
+                rgba(6, 182, 212, 0.1) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .flavor-option:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
         .flavor-option:hover {
-            border-color: #1afe49;
-            background: rgba(26, 254, 73, 0.1);
+            border-color: var(--secondary);
+            background: rgba(6, 182, 212, 0.1);
             transform: translateY(-2px);
+            box-shadow: var(--glow-cyan);
         }
 
         .flavor-option.selected {
-            border-color: #1afe49;
-            background: linear-gradient(135deg, #1afe49, #8386f5);
-            color: white;
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--text-primary);
+            box-shadow: var(--glow-indigo);
         }
         
         .flavor-name {
             font-weight: bold;
-            color: #ffffff;
-            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
         }
         
         .flavor-option.selected .flavor-name {
-            color: white;
+            color: var(--text-primary);
         }
 
-        .flavor-section {
-            background: rgba(4, 19, 72, 0.9);
-            padding: 4rem 0;
-            border-radius: 30px;
-            margin: 3rem 0;
-        }
-
-        /* 購買按鈕 */
+        /* Buttons */
         .buy-buttons {
             margin-top: 2rem;
             text-align: center;
         }
 
         .btn-primary-custom {
-            background: linear-gradient(135deg, #1afe49, #8386f5) !important;
+            background: linear-gradient(45deg, var(--primary), var(--accent)) !important;
             border: none !important;
             padding: 1rem 2rem;
             font-size: 1.1rem;
             font-weight: 600;
             border-radius: 50px;
-            color: white !important;
-            transition: all 0.3s ease;
+            color: var(--text-primary) !important;
+            transition: var(--transition-smooth);
             margin-right: 1rem;
             margin-bottom: 1rem;
             display: inline-block;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+            box-shadow: var(--glow-indigo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .btn-primary-custom:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
         .btn-primary-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(26, 254, 73, 0.4);
-            color: white !important;
+            transform: translateY(-3px);
+            box-shadow: var(--neon-shadow);
+            color: var(--text-primary) !important;
         }
 
         .btn-primary-custom:disabled {
-            background: #6c757d !important;
+            background: rgba(107, 114, 128, 0.5) !important;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
-            color: white !important;
-            opacity: 0.8;
+            color: var(--text-secondary) !important;
+            opacity: 0.6;
         }
 
         .btn-secondary-custom {
             background: transparent;
-            border: 2px solid var(--secondary-color);
+            border: 2px solid var(--secondary);
             padding: 1rem 2rem;
             font-size: 1.1rem;
             font-weight: 600;
             border-radius: 50px;
-            color: var(--secondary-color);
-            transition: all 0.3s ease;
+            color: var(--secondary);
+            transition: var(--transition-smooth);
             margin-bottom: 1rem;
         }
 
         .btn-secondary-custom:hover {
-            background: var(--secondary-color);
-            color: white;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-cyan);
         }
 
-        /* 公告區域 */
+        /* Announcements */
         .announcements-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--text-primary);
             padding: 2rem 0;
         }
 
         .announcement-item {
             background: rgba(255, 255, 255, 0.1);
-            border-left: 4px solid var(--accent-color);
+            border-left: 4px solid var(--secondary);
             padding: 1rem;
             margin-bottom: 1rem;
             border-radius: 8px;
+            backdrop-filter: blur(8px);
         }
 
-        /* Footer 上方設計區域 */
+        /* Footer Design Section */
         .footer-design-section {
-            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
             padding: 4rem 0;
             position: relative;
             overflow: hidden;
@@ -472,14 +689,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(26,254,73,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(131,134,245,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            opacity: 0.8;
         }
 
         .design-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             position: relative;
             z-index: 2;
         }
@@ -495,24 +713,24 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
             padding: 2rem;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(26, 254, 73, 0.2);
-            transition: all 0.3s ease;
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
+            transition: var(--transition-smooth);
         }
 
         .guarantee-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(26, 254, 73, 0.2);
-            border-color: rgba(26, 254, 73, 0.4);
+            box-shadow: var(--neon-shadow);
+            border-color: rgba(99, 102, 241, 0.5);
         }
 
         .guarantee-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #1afe49, #8386f5);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -522,7 +740,7 @@
 
         .guarantee-icon i {
             font-size: 1.8rem;
-            color: white;
+            color: var(--text-primary);
         }
 
         .guarantee-content {
@@ -532,21 +750,23 @@
         .guarantee-title {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #ffffff;
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
         .guarantee-desc {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             margin: 0;
             line-height: 1.4;
         }
 
-        /* 頁腳 */
+        /* Footer */
         .footer {
-            background: var(--primary-color);
-            color: var(--text-light);
+            background: var(--dark-bg);
+            backdrop-filter: var(--glass-effect);
+            border-top: 1px solid var(--border-glow);
+            color: var(--text-primary);
             padding: 3rem 0 1rem;
         }
 
@@ -558,34 +778,109 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--accent-color);
+            color: var(--secondary);
         }
 
         .footer-link {
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: var(--transition-normal);
             display: block;
             margin-bottom: 0.5rem;
         }
 
         .footer-link:hover {
-            color: var(--accent-color);
+            color: var(--secondary);
         }
 
         .social-links a {
-            color: var(--text-light);
+            color: var(--text-primary);
             font-size: 1.5rem;
             margin-right: 1rem;
-            transition: color 0.3s ease;
+            transition: var(--transition-normal);
         }
 
         .social-links a:hover {
-            color: var(--accent-color);
+            color: var(--secondary);
+            text-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
         }
 
-        /* 響應式設計 */
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .hero-section > .container > div {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+                text-align: center;
+            }
+            
+            .product-section > .container > div {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(17, 24, 39, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                border-top: 1px solid var(--border-glow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
             .hero-title {
                 font-size: 2.5rem;
             }
@@ -598,13 +893,23 @@
                 font-size: 2rem;
             }
             
-            .navbar-nav {
-                text-align: center;
+            #flavor-grid-main {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
             }
             
-            .flavor-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 1rem;
+            .flavor-option {
+                padding: 0.8rem;
+                min-height: 50px;
+            }
+            
+            .flavor-name {
+                font-size: 0.9rem;
+            }
+            
+            .flavor-selection-section {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
             }
 
             .footer-design-section {
@@ -637,16 +942,39 @@
             .guarantee-desc {
                 font-size: 0.85rem;
             }
+
+            section {
+                padding: 4rem 0;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
         }
 
-        /* 載入動畫 */
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        a:focus, button:focus {
+            outline: 2px solid rgba(6, 182, 212, 0.5);
+            outline-offset: 2px;
+        }
+
+        /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+            border: 3px solid rgba(6, 182, 212, 0.3);
             border-radius: 50%;
-            border-top-color: #fff;
+            border-top-color: var(--secondary);
             animation: spin 1s ease-in-out infinite;
         }
 
@@ -654,91 +982,63 @@
             to { transform: rotate(360deg); }
         }
 
-        /* 淡入動畫 */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
+        /* Product Description */
+        .product-description {
+            margin: 2rem 0;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+        .product-description h4 {
+            color: var(--text-primary);
             margin-bottom: 1rem;
+            font-weight: 600;
         }
 
-        .section-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
+        .product-description ul {
+            list-style: none;
+            padding: 0;
         }
 
-        /* 響應式設計 */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(26, 26, 26, 0.98);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
+        .product-description li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-nav-toggle {
-                display: block;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .product-title {
-                font-size: 2rem;
-            }
-            
-            .flavor-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 1rem;
-            }
+        .product-description .fas {
+            color: var(--secondary);
         }
     </style>
 </head>
 <body>
-    <!-- 導航欄 -->
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow top-right"></div>
+    <div class="bg-glow bottom-left"></div>
+
     <!-- Header -->
-    <header>
+    <header id="navbar">
         <div class="header-container">
             <div class="logo">
-                <img src="deepvape_logo_main.png" alt="Logo">
+                <img src="deepvape_logo_main.png" alt="深煙電子煙">
             </div>
             <nav class="nav-links" id="navLinks">
-                <a href="index.html">首頁</a>
-                <a href="index.html#products">產品</a>
-                <a href="shopping_guide.html">購買指南</a>
+                <a href="index.html" class="nav-link">首頁</a>
+                <a href="index.html#products" class="nav-link">產品</a>
+                <a href="shopping_guide.html" class="nav-link">購買指南</a>
             </nav>
             <div class="header-actions">
-                <a href="cart.html" class="cart-button">
-                            <i class="fas fa-shopping-cart"></i>
+                <a href="cart.html" class="cart-button contact-btn">
+                    <i class="fas fa-shopping-cart"></i>
                     <span id="cart-count">0</span>
-                        </a>
-                <button class="mobile-nav-toggle" onclick="toggleNav()">
-                    <i class="fas fa-bars"></i>
+                </a>
+                <button class="mobile-nav-toggle" onclick="toggleNav()" id="mobile-menu-button">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6" id="line1"></line>
+                        <line x1="3" y1="12" x2="21" y2="12" id="line2"></line>
+                        <line x1="3" y1="18" x2="21" y2="18" id="line3"></line>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -753,37 +1053,33 @@
         </div>
     </div>
 
-    <!-- 英雄區域 -->
+    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="hero-content" data-aos="fade-right">
-                        <h1 class="hero-title">LANA A8000</h1>
-                        <p class="hero-subtitle">8000口超長續航，極致口感體驗</p>
-                        <a href="#product-details" class="btn btn-primary-custom">
-                            <i class="fas fa-arrow-down me-2"></i>
-                            了解更多
-                        </a>
-                    </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; min-height: 80vh;">
+                <div class="hero-content section-hidden">
+                    <h1 class="hero-title">LANA A8000</h1>
+                    <p class="hero-subtitle">8000口超長續航，極致口感體驗</p>
+                    <a href="#product-details" class="btn-primary-custom" style="display: inline-block; text-decoration: none;">
+                        <i class="fas fa-arrow-down" style="margin-right: 0.5rem;"></i>
+                        了解更多
+                    </a>
                 </div>
-                <div class="col-lg-6">
-                    <div class="text-center" data-aos="fade-left">
-                        <img src="lana_a8000/lana_a8000.webp" alt="LANA A8000" class="product-image">
-                    </div>
+                <div style="text-align: center;" class="section-hidden">
+                    <img src="lana_a8000/lana_a8000.webp" alt="LANA A8000" class="product-image">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 產品詳情 -->
+    <!-- Product Details -->
     <section class="product-section" id="product-details">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6" data-aos="fade-right">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+                <div class="section-hidden">
                     <img src="lana_a8000/lana_a8000.webp" alt="LANA A8000 一次性電子煙" class="product-image">
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
+                <div class="section-hidden">
                     <div class="product-info">
                         <h2 class="product-title">LANA A8000 一次性電子煙</h2>
                         
@@ -792,32 +1088,32 @@
                         </div>
                         
                         <div class="stock-status in-stock" id="stock-status">
-                            <i class="fas fa-check-circle me-2"></i>
+                            <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
                             現貨供應
                         </div>
                         
                         <div class="product-description">
                             <h4>產品特色</h4>
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-check text-success me-2"></i>8000口超長續航，持久使用</li>
-                                <li><i class="fas fa-check text-success me-2"></i>多種口味選擇，滿足不同需求</li>
-                                <li><i class="fas fa-check text-success me-2"></i>緊湊設計，攜帶方便</li>
-                                <li><i class="fas fa-check text-success me-2"></i>無需充電，即開即用</li>
-                                <li><i class="fas fa-check text-success me-2"></i>食品級材料，安全可靠</li>
+                            <ul>
+                                <li><i class="fas fa-check"></i>8000口超長續航，持久使用</li>
+                                <li><i class="fas fa-check"></i>多種口味選擇，滿足不同需求</li>
+                                <li><i class="fas fa-check"></i>緊湊設計，攜帶方便</li>
+                                <li><i class="fas fa-check"></i>無需充電，即開即用</li>
+                                <li><i class="fas fa-check"></i>食品級材料，安全可靠</li>
                             </ul>
                         </div>
                         
-                        <!-- 口味選擇 -->
+                        <!-- Flavor Selection -->
                         <div class="flavor-selection-section">
                             <h4>選擇口味</h4>
-                            <div class="flavor-grid" id="flavor-grid-main">
+                            <div id="flavor-grid-main">
                                 <!-- 口味選項將通過 JavaScript 動態載入 -->
                             </div>
                         </div>
                         
                         <div class="buy-buttons">
-                            <button class="btn btn-primary-custom" onclick="addToCart('lana-a8000')" id="addToCartBtn" disabled>
-                                <i class="fas fa-shopping-cart me-2"></i>
+                            <button class="btn-primary-custom" onclick="addToCart('lana-a8000')" id="addToCartBtn" disabled>
+                                <i class="fas fa-shopping-cart" style="margin-right: 0.5rem;"></i>
                                 請先選擇口味
                             </button>
                         </div>
@@ -827,69 +1123,61 @@
         </div>
     </section>
 
-    <!-- 產品特色 -->
+    <!-- Features Section -->
     <section class="features-section">
         <div class="container">
-            <div class="text-center mb-5" data-aos="fade-up">
+            <div style="text-align: center; margin-bottom: 3rem;" class="section-hidden">
                 <h2 class="section-title">為什麼選擇 LANA A8000？</h2>
                 <p class="section-subtitle">專業品質，卓越體驗</p>
             </div>
             
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-battery-full"></i>
-                        </div>
-                        <h4 class="feature-title">超長續航</h4>
-                        <p>8000口超大容量，滿足長時間使用需求</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="feature-card section-hidden">
+                    <div class="feature-icon">
+                        <i class="fas fa-battery-full"></i>
                     </div>
+                    <h4 class="feature-title">超長續航</h4>
+                    <p>8000口超大容量，滿足長時間使用需求</p>
                 </div>
                 
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <h4 class="feature-title">純正口味</h4>
-                        <p>精選原料調配，口感純正自然</p>
+                <div class="feature-card section-hidden">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
                     </div>
+                    <h4 class="feature-title">純正口味</h4>
+                    <p>精選原料調配，口感純正自然</p>
                 </div>
                 
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h4 class="feature-title">安全可靠</h4>
-                        <p>通過多項安全認證，品質有保障</p>
+                <div class="feature-card section-hidden">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
+                    <h4 class="feature-title">安全可靠</h4>
+                    <p>通過多項安全認證，品質有保障</p>
                 </div>
                 
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h4 class="feature-title">便攜設計</h4>
-                        <p>輕巧便攜，隨時隨地享受</p>
+                <div class="feature-card section-hidden">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
+                    <h4 class="feature-title">便攜設計</h4>
+                    <p>輕巧便攜，隨時隨地享受</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 產品規格 -->
+    <!-- Specs Section -->
     <section class="specs-section">
         <div class="container">
-            <div class="text-center mb-5" data-aos="fade-up">
+            <div style="text-align: center; margin-bottom: 3rem;" class="section-hidden">
                 <h2 class="section-title">產品規格</h2>
                 <p class="section-subtitle">詳細技術參數</p>
             </div>
             
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <table class="table specs-table" data-aos="fade-up">
+            <div style="display: flex; justify-content: center;">
+                <div style="width: 100%; max-width: 800px;">
+                    <table class="specs-table section-hidden" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>規格項目</th>
@@ -1050,20 +1338,34 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- AOS Animation -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- 自定義 JavaScript -->
+    <!-- Custom JavaScript -->
     <script>
-        // AOS 初始化
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                    entry.target.classList.remove('section-hidden');
+                }
+            });
+        }, observerOptions);
+
+        // Navbar scroll effect
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        window.addEventListener('scroll', handleNavbarScroll);
 
         // 口味數據
         const flavors = [
@@ -1306,30 +1608,20 @@
             });
         });
 
-        // 頁面載入完成
+        // Page initialization
         document.addEventListener('DOMContentLoaded', function() {
             loadFlavors();
             loadAnnouncements();
             loadProductStock();
             updateCartCount();
             
-            // 淡入動畫
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('.fade-in').forEach(el => {
+            // Initialize scroll animations
+            document.querySelectorAll('.section-hidden').forEach(el => {
                 observer.observe(el);
             });
+            
+            // Initialize navbar scroll effect
+            handleNavbarScroll();
         });
 
         // 顯示聯絡方式

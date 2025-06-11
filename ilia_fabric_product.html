@@ -6,56 +6,134 @@
     <title>ILIA 哩亞布紋主機 - Deepvape</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="deepvape_logo_main.png">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base styles & Custom properties */
+        :root {
+            --primary: #6366f1; /* Indigo */
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4; /* Cyan */
+            --accent: #a855f7; /* Purple */
+            --dark-bg: #111827;
+            --darker-bg: #030712;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --navbar-bg: rgba(17, 24, 39, 0.7);
+            --glass-effect: blur(12px);
+            --transition-normal: all 0.3s ease;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-glow: rgba(99, 102, 241, 0.3);
+            --neon-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+            --glow-cyan: 0 0 15px rgba(6, 182, 212, 0.5);
+            --glow-indigo: 0 0 15px rgba(99, 102, 241, 0.5);
+            --glow-purple: 0 0 15px rgba(168, 85, 247, 0.5);
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --border-radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #e74c3c;
-            --highlight-color: #f39c12;
-            --text-primary: #2c3e50;
-            --text-secondary: #7f8c8d;
-            --background-light: #ecf0f1;
-            --white: #ffffff;
-            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
-            --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
-            --border-radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--darker-bg);
             color: var(--text-primary);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            line-height: 1.6;
+            overflow-x: hidden;
             min-height: 100vh;
+            position: relative;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-glow.top-right {
+            top: -20%;
+            right: -20%;
+        }
+
+        .bg-glow.bottom-left {
+            bottom: -20%;
+            left: -20%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--primary-dark), var(--accent));
         }
 
         /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            background-color: var(--navbar-bg);
+            backdrop-filter: var(--glass-effect);
+            -webkit-backdrop-filter: var(--glass-effect);
+            border-bottom: 1px solid var(--border-glow);
             z-index: 1000;
-            box-shadow: var(--shadow-light);
-            }
+            transition: var(--transition-normal);
+            height: 70px;
+        }
+
+        .header.scrolled {
+            background-color: rgba(17, 24, 39, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 100%;
         }
 
         .logo {
@@ -74,35 +152,68 @@
             text-decoration: none;
             color: var(--text-primary);
             font-weight: 500;
-            transition: var(--transition);
+            transition: var(--transition-normal);
             padding: 0.5rem 1rem;
             border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            transition: width 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
         }
 
         .nav-links a:hover {
-            background: var(--accent-color);
-            color: var(--white);
-            transform: translateY(-2px);
+            color: var(--secondary);
+            text-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+        }
+
+        .nav-links i {
+            font-size: 1rem;
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 80px;
-            padding: 2rem 0;
+            margin-top: 70px;
+            padding: 4rem 0;
         }
 
         .container {
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
         }
 
+        /* Product Container */
         .product-container {
-            background: var(--white);
+            background-color: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: var(--shadow-medium);
             margin-bottom: 2rem;
+            transition: var(--transition-normal);
+        }
+
+        .product-container:hover {
+            box-shadow: var(--neon-shadow);
+            border-color: rgba(99, 102, 241, 0.5);
         }
 
         .product-layout {
@@ -123,15 +234,21 @@
             position: relative;
             border-radius: var(--border-radius);
             overflow: hidden;
-            background: var(--background-light);
+            background: rgba(31, 41, 55, 0.5);
             aspect-ratio: 1;
+            border: 1px solid var(--border-glow);
         }
 
         .main-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: var(--transition-normal);
+        }
+
+        .main-image-container:hover {
+            box-shadow: var(--glow-cyan);
+            border-color: var(--secondary);
         }
 
         .gallery-thumbnails {
@@ -147,15 +264,16 @@
             object-fit: cover;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: var(--transition);
+            transition: var(--transition-normal);
             opacity: 0.7;
         }
 
         .gallery-image:hover,
         .gallery-image.active {
-            border-color: var(--accent-color);
+            border-color: var(--secondary);
             opacity: 1;
             transform: scale(1.05);
+            box-shadow: var(--glow-cyan);
         }
 
         /* Product Info */
@@ -168,7 +286,10 @@
         .product-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--text-primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 0.5rem;
         }
 
@@ -181,8 +302,9 @@
         .product-price {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--accent-color);
+            color: var(--secondary);
             margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
         .product-description {
@@ -206,6 +328,10 @@
             gap: 0.5rem;
         }
 
+        .color-title i {
+            color: var(--accent);
+        }
+
         .color-options {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -214,37 +340,32 @@
 
         .color-option {
             position: relative;
-            background: var(--background-light);
+            background: rgba(31, 41, 55, 0.5);
             border: 2px solid transparent;
             border-radius: 12px;
             padding: 1.5rem 1rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: var(--transition-smooth);
             text-align: center;
             min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(8px);
         }
 
         .color-option:hover {
-            border-color: var(--accent-color);
+            border-color: var(--secondary);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-light);
+            box-shadow: var(--glow-cyan);
         }
 
         .color-option.selected {
-            border-color: var(--accent-color);
-            background: rgba(231, 76, 60, 0.1);
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: var(--glow-indigo);
         }
 
-        .color-option img {
-            display: none;
-        }
-
-        /* 顏色濾鏡效果 - 移除 */
-
-        /* 顏色方塊備用方案 */
         .color-option::before {
             content: '';
             position: absolute;
@@ -254,32 +375,32 @@
             height: 20px;
             border-radius: 8px;
             opacity: 1;
-            transition: var(--transition);
+            transition: var(--transition-normal);
             margin-bottom: 0.5rem;
         }
 
         .color-option[data-color="布紋黑色"]::before {
-            background: #2c3e50;
+            background: linear-gradient(45deg, #2c3e50, #34495e);
         }
 
         .color-option[data-color="布紋灰色"]::before {
-            background: #95a5a6;
+            background: linear-gradient(45deg, #95a5a6, #bdc3c7);
         }
 
         .color-option[data-color="布紋牛仔藍"]::before {
-            background: #34495e;
+            background: linear-gradient(45deg, #34495e, #2c3e50);
         }
 
         .color-option[data-color="布紋粉色"]::before {
-            background: #e91e63;
+            background: linear-gradient(45deg, #e91e63, #f06292);
         }
 
         .color-option[data-color="布紋綠色"]::before {
-            background: #27ae60;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
         }
 
         .color-option[data-color="布紋藍色"]::before {
-            background: #3498db;
+            background: linear-gradient(45deg, #3498db, #5dade2);
         }
 
         .color-name {
@@ -291,10 +412,18 @@
 
         /* Specifications */
         .specifications {
-            background: var(--background-light);
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
             border-radius: var(--border-radius);
             padding: 2rem;
             margin-top: 1rem;
+            transition: var(--transition-normal);
+        }
+
+        .specifications:hover {
+            box-shadow: var(--glow-cyan);
+            border-color: var(--secondary);
         }
 
         .spec-title {
@@ -305,6 +434,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .spec-title i {
+            color: var(--accent);
         }
 
         .spec-list {
@@ -318,9 +451,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.8rem;
-            background: var(--white);
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(75, 85, 99, 0.3);
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-normal);
+        }
+
+        .spec-list li:hover {
+            border-color: var(--secondary);
+            background: rgba(6, 182, 212, 0.05);
         }
 
         .spec-label {
@@ -356,35 +495,45 @@
             width: 40px;
             height: 40px;
             border: none;
-            background: var(--accent-color);
-            color: var(--white);
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--text-primary);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition);
+            transition: var(--transition-normal);
         }
 
         .quantity-btn:hover {
-            background: #c0392b;
             transform: scale(1.1);
+            box-shadow: var(--glow-indigo);
         }
 
         .quantity-input {
             width: 80px;
             height: 40px;
-            border: 2px solid #e0e0e0;
+            border: 1px solid var(--border-glow);
             border-radius: 8px;
             text-align: center;
             font-size: 1.1rem;
             font-weight: 600;
+            background: rgba(31, 41, 55, 0.5);
+            color: var(--text-primary);
+            transition: var(--transition-normal);
+        }
+
+        .quantity-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
         }
 
         .total-price {
-            color: var(--highlight-color);
+            color: var(--secondary);
             font-weight: 600;
             font-size: 1.2rem;
+            text-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
         }
 
         /* Action Buttons */
@@ -396,39 +545,74 @@
 
         .pulse-button {
             flex: 1;
-            background: linear-gradient(45deg, var(--highlight-color), #8e44ad);
-            color: var(--white);
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--text-primary);
             border: none;
             padding: 1rem 2rem;
             border-radius: var(--border-radius);
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
+            transition: var(--transition-normal);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pulse-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .pulse-button:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
         .pulse-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
+            transform: translateY(-3px);
+            box-shadow: var(--neon-shadow);
         }
 
         /* Features */
         .features {
-            background: var(--white);
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
             border-radius: var(--border-radius);
             padding: 2rem;
             margin-top: 2rem;
-            box-shadow: var(--shadow-light);
+            transition: var(--transition-normal);
+        }
+
+        .features:hover {
+            box-shadow: var(--glow-cyan);
+            border-color: var(--secondary);
         }
 
         .features-title {
             font-size: 1.5rem;
             font-weight: 600;
-            color: var(--text-primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 1.5rem;
             text-align: center;
         }
@@ -445,37 +629,63 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background: var(--background-light);
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(75, 85, 99, 0.3);
             border-radius: 8px;
-            transition: var(--transition);
+            transition: var(--transition-normal);
         }
 
         .features-list li:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-light);
+            border-color: var(--secondary);
+            background: rgba(6, 182, 212, 0.05);
+            box-shadow: var(--glow-cyan);
         }
 
         .features-list i {
-            color: var(--accent-color);
+            color: var(--accent);
             font-size: 1.2rem;
             width: 20px;
         }
 
         /* Warning Notice */
         .warning-notice {
-            background: linear-gradient(45deg, var(--highlight-color), #8e44ad);
-            color: var(--white);
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            color: var(--text-primary);
             padding: 1.5rem;
             border-radius: var(--border-radius);
             margin-top: 2rem;
             display: flex;
             align-items: flex-start;
             gap: 1rem;
+            border: 1px solid var(--border-glow);
+            box-shadow: var(--glow-purple);
         }
 
         .warning-notice i {
             font-size: 1.5rem;
             margin-top: 0.2rem;
+            color: #fbbf24;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
         }
 
         /* Responsive Design */
@@ -501,11 +711,41 @@
             .color-options {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* 確保桌面版本導航正常顯示 */
+        @media (min-width: 769px) {
+            .nav-links {
+                display: flex !important;
+            }
+        }
+
+        /* Enhanced focus styles for accessibility */
+        a:focus, button:focus {
+            outline: 2px solid rgba(6, 182, 212, 0.5);
+            outline-offset: 2px;
+        }
+
+        /* Gradient Text Utility */
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
     </style>
 </head>
 <body>
-    <header class="header">
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow top-right"></div>
+    <div class="bg-glow bottom-left"></div>
+
+    <header class="header" id="navbar">
         <nav class="nav-container">
             <img src="deepvape_logo_main.png" alt="Deepvape" class="logo">
             <ul class="nav-links">
@@ -520,7 +760,7 @@
 
     <main class="main-content">
         <div class="container">
-            <div class="product-container">
+            <div class="product-container animate-fadeIn">
                 <div class="product-layout">
                     <!-- Image Gallery -->
                     <div class="image-gallery">
@@ -529,22 +769,21 @@
                         </div>
                         <div class="gallery-thumbnails">
                             <img src="ilia_Bu/ilia_fabric_device_main.png" alt="ILIA 布紋主機正面" class="gallery-image active" onclick="changeMainImage(this)">
-                            <img src="ilia_Bu/ilia_fabric_premium_design.png" alt="ILIA 布紋設計" class="gallery-image" onclick="changeMainImage(this)">
                             <img src="ilia_Bu/ilia_fabric_compact.webp" alt="ILIA 布紋緊湊" class="gallery-image" onclick="changeMainImage(this)">
                         </div>
                     </div>
 
                     <!-- Product Info -->
                     <div class="product-info">
-                <h1 class="product-title">ILIA 哩亞布紋主機</h1>
-                <p class="product-subtitle">時尚布紋外觀 | 8W~10W功率調節 | 400mAh電池</p>
+                        <h1 class="product-title">ILIA 哩亞布紋主機</h1>
+                        <p class="product-subtitle">時尚布紋外觀 | 8W~10W功率調節 | 400mAh電池</p>
                         <div class="product-price">NT$ 650</div>
                         
                         <div class="product-description">
                             ILIA 哩亞布紋主機採用獨特的布紋外觀設計，結合現代工藝與經典美學。
                             8W-10W可調功率，400mAh大容量電池，為您帶來卓越的使用體驗。
                             精緻的布紋質感，舒適的握感，是品味與性能的完美結合。
-            </div>
+                        </div>
 
                         <!-- Color Selection -->
                         <div class="color-selection">
@@ -571,8 +810,8 @@
                                 <div class="color-option" data-color="布紋藍色" data-image="ilia_Bu/ilia_fabric_device_main.png">
                                     <div class="color-name">布紋藍色</div>
                                 </div>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
                         <!-- Specifications -->
                         <div class="specifications">
@@ -639,7 +878,7 @@
             </div>
 
             <!-- Features -->
-            <div class="features">
+            <div class="features animate-fadeIn">
                 <h3 class="features-title">產品特色</h3>
                 <ul class="features-list">
                     <li>
@@ -670,7 +909,7 @@
             </div>
 
             <!-- Warning Notice -->
-            <div class="warning-notice">
+            <div class="warning-notice animate-fadeIn">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div>
                     <strong>重要提醒：</strong>本產品僅供 18 歲以上成年人使用，請遵守當地相關法規。
@@ -683,6 +922,16 @@
     <script>
         let selectedColor = '布紋黑色';
         let currentPrice = 650;
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
         // 初始化顏色選項
         function initializeColorOptions() {
@@ -735,7 +984,7 @@
             const currentValue = parseInt(quantityInput.value);
             if (currentValue < 10) {
                 quantityInput.value = currentValue + 1;
-            updateTotalPrice();
+                updateTotalPrice();
             }
         }
 
@@ -794,10 +1043,34 @@
             // window.location.href = 'cart.html';
         }
 
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
         // 初始化頁面
         document.addEventListener('DOMContentLoaded', function() {
             initializeColorOptions();
             updateTotalPrice();
+            
+            // Observe elements for animation
+            const animatedElements = document.querySelectorAll('.animate-fadeIn');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
         });
     </script>
 </body>

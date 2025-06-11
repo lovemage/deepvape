@@ -3,67 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>思博瑞 SP2 煙彈 - 32種口味選擇 | Image Vape</title>
+    <title>思博瑞 SP2 煙彈 - 32種口味選擇 | 深煙電子煙</title>
     <link rel="icon" type="image/png" href="deepvape_logo_main.png">
     <link rel="shortcut icon" type="image/png" href="deepvape_logo_main.png">
     <link rel="apple-touch-icon" href="deepvape_logo_main.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base styles & Custom properties */
+        :root {
+            --primary: #6366f1; /* Indigo */
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4; /* Cyan */
+            --accent: #a855f7; /* Purple */
+            --dark-bg: #111827;
+            --darker-bg: #030712;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --navbar-bg: rgba(17, 24, 39, 0.7);
+            --glass-effect: blur(12px);
+            --transition-normal: all 0.3s ease;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-glow: rgba(99, 102, 241, 0.3);
+            --neon-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+            --glow-cyan: 0 0 15px rgba(6, 182, 212, 0.5);
+            --glow-indigo: 0 0 15px rgba(99, 102, 241, 0.5);
+            --glow-purple: 0 0 15px rgba(168, 85, 247, 0.5);
+            --card-bg: rgba(17, 24, 39, 0.7);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
         body {
-            font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--darker-bg);
+            color: var(--text-primary);
             line-height: 1.6;
-            color: #ffffff;
-            background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
+            overflow-x: hidden;
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-glow.top-right {
+            top: -20%;
+            right: -20%;
+        }
+
+        .bg-glow.bottom-left {
+            bottom: -20%;
+            left: -20%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--primary-dark), var(--accent));
         }
 
         /* Header */
         header {
-            background: #000000;
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
             position: fixed;
-            width: 100%;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-            border: 2px solid transparent;
-            animation: headerBorderMove 3s infinite linear;
+            background-color: var(--navbar-bg);
+            backdrop-filter: var(--glass-effect);
+            -webkit-backdrop-filter: var(--glass-effect);
+            border-bottom: 1px solid var(--border-glow);
+            transition: var(--transition-normal);
+            height: 70px;
         }
 
-        @keyframes headerBorderMove {
-            0% {
-                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
-            }
-            25% {
-                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
-            }
-            50% {
-                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
-            }
-            75% {
-                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
-            }
-            100% {
-                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
-            }
+        header.scrolled {
+            background-color: rgba(17, 24, 39, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .header-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
+            padding: 0 1.5rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            justify-content: space-between;
+            height: 100%;
         }
 
         .logo {
@@ -72,18 +150,10 @@
         }
 
         .logo img {
-            height: 50px;
+            height: 40px;
             width: auto;
-            object-fit: contain;
-            border-radius: 10px;
-            border: 1px solid rgba(26, 254, 73, 0.3);
-        }
-
-        .logo h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            color: #1afe49;
-            font-weight: 700;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
         }
 
         .header-actions {
@@ -93,53 +163,72 @@
         }
 
         .back-button, .cart-button {
-            background: var(--accent-color);
-            color: var(--text-color);
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--text-primary);
             width: 50px;
             height: 50px;
             border: none;
             border-radius: 15px;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            border: 2px solid var(--border-color);
+            border: 1px solid var(--border-glow);
+            position: relative;
+            overflow: hidden;
         }
 
-        .back-button:hover {
-            background: var(--highlight-color);
+        .back-button::before, .cart-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .back-button:hover::before, .cart-button:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
+        .back-button:hover, .cart-button:hover {
             transform: translateY(-2px);
-            border-color: var(--highlight-color);
+            box-shadow: var(--neon-shadow);
+            border-color: var(--secondary);
         }
 
-        .cart-button {
-            background: var(--highlight-color);
-        }
-
-        .cart-button:hover {
-            background: var(--accent-color);
-            transform: translateY(-2px);
-            border-color: var(--accent-color);
-        }
-
-        /* 主要內容 */
+        /* Main Content */
         .main-content {
-            margin-top: 100px;
-            padding: 2rem;
+            margin-top: 70px;
+            padding: 2rem 0;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            background: rgba(4, 19, 72, 0.9);
-            border: 1px solid rgba(26, 254, 73, 0.2);
+            padding: 0 1.5rem;
+        }
+
+        .content-wrapper {
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
             border-radius: 30px;
             padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            box-shadow: var(--neon-shadow);
         }
 
         .product-header {
@@ -150,28 +239,28 @@
         .product-title {
             font-size: 3rem;
             font-weight: bold;
-            background: linear-gradient(135deg, #1afe49, #8386f5);
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 1rem;
-            text-shadow: none;
         }
 
         .product-subtitle {
             font-size: 1.2rem;
-            color: #ffffff;
+            color: var(--text-secondary);
             margin-bottom: 2rem;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .price {
             font-size: 2.5rem;
             font-weight: bold;
-            color: #e74c3c;
+            color: var(--secondary);
             margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
-        /* 產品展示區 */
+        /* Product Showcase */
         .product-showcase {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -186,8 +275,15 @@
         .product-image img {
             max-width: 100%;
             height: auto;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 1px solid var(--border-glow);
+            box-shadow: var(--glow-cyan);
+            transition: var(--transition-smooth);
+        }
+
+        .product-image img:hover {
+            transform: scale(1.05);
+            box-shadow: var(--glow-indigo);
         }
 
         .product-info {
@@ -203,21 +299,21 @@
 
         .feature-list li {
             padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(26, 254, 73, 0.2);
+            border-bottom: 1px solid var(--border-glow);
             display: flex;
             align-items: center;
-            color: #ffffff;
+            color: var(--text-primary);
         }
 
         .feature-list li:before {
             content: "✓";
-            color: #1afe49;
+            color: var(--secondary);
             font-weight: bold;
             margin-right: 1rem;
             font-size: 1.2rem;
         }
 
-        /* 口味選擇區 */
+        /* Flavor Selection */
         .flavor-section {
             margin-bottom: 3rem;
         }
@@ -225,79 +321,112 @@
         .section-title {
             font-size: 2rem;
             font-weight: bold;
-            color: #ffffff;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 2rem;
             text-align: center;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .flavor-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
         .flavor-option {
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid rgba(26, 254, 73, 0.3);
-            border-radius: 20px;
-            padding: 0.6rem;
+            background: rgba(17, 24, 39, 0.5);
+            border: 2px solid var(--border-glow);
+            border-radius: 15px;
+            padding: 1rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            min-height: 60px;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(8px);
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flavor-option::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(6, 182, 212, 0.1) 45%,
+                rgba(6, 182, 212, 0.2) 50%,
+                rgba(6, 182, 212, 0.1) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .flavor-option:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
         .flavor-option:hover {
-            border-color: #1afe49;
+            border-color: var(--secondary);
+            background: rgba(6, 182, 212, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(26, 254, 73, 0.2);
+            box-shadow: var(--glow-cyan);
         }
 
         .flavor-option.selected {
-            border-color: #1afe49;
-            background: linear-gradient(135deg, #1afe49, #8386f5);
-            color: white;
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--text-primary);
+            box-shadow: var(--glow-indigo);
         }
 
         .flavor-name {
             font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 0.2rem;
-            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .flavor-option.selected .flavor-name {
-            color: white;
+            color: var(--text-primary);
         }
 
         .flavor-description {
-            font-size: 0.75rem;
-            color: #666;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
             line-height: 1.2;
+            position: relative;
+            z-index: 1;
         }
 
         .flavor-option.selected .flavor-description {
             color: rgba(255, 255, 255, 0.9);
         }
 
-        /* 規格表 */
+        /* Specs Table */
         .specs-section {
             margin-bottom: 3rem;
         }
 
         .specs-table {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
             padding: 2rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--neon-shadow);
         }
 
         .specs-table table {
@@ -309,13 +438,13 @@
         .specs-table td {
             padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid rgba(26, 254, 73, 0.2);
-            color: #2c3e50;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--text-primary);
         }
 
         .specs-table th {
-            background: linear-gradient(135deg, #1afe49, #8386f5);
-            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--text-primary);
             font-weight: bold;
         }
 
@@ -323,14 +452,19 @@
             border-bottom: none;
         }
 
-        /* 購買區域 */
+        .specs-table tbody tr:hover {
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        /* Purchase Section */
         .purchase-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-effect);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--neon-shadow);
         }
 
         .quantity-control {
@@ -343,64 +477,141 @@
 
         .quantity-label {
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--text-primary);
         }
 
         .quantity-btn {
-            background: linear-gradient(135deg, #1afe49, #8386f5);
-            color: white;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--text-primary);
             border: none;
             width: 40px;
             height: 40px;
-            border-radius: 30px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quantity-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .quantity-btn:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
         .quantity-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+            box-shadow: var(--glow-indigo);
         }
 
         .quantity-input {
             width: 80px;
             height: 40px;
             text-align: center;
-            border: 2px solid rgba(26, 254, 73, 0.3);
-            border-radius: 30px;
+            border: 2px solid var(--border-glow);
+            border-radius: 20px;
             font-size: 1rem;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--text-primary);
+            background: rgba(17, 24, 39, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        .quantity-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
         }
 
         .add-to-cart-btn {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-            color: white;
+            background: linear-gradient(45deg, var(--secondary), #10b981);
+            color: var(--text-primary);
             border: none;
             padding: 1rem 3rem;
             font-size: 1.2rem;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .add-to-cart-btn:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
         .add-to-cart-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
+            box-shadow: var(--glow-cyan);
         }
 
         .add-to-cart-btn:disabled {
-            background: #95a5a6;
+            background: rgba(107, 114, 128, 0.5);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+            color: var(--text-secondary);
+            opacity: 0.6;
         }
 
-        /* 響應式設計 */
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
+            .content-wrapper {
                 padding: 2rem 1rem;
             }
             
@@ -410,7 +621,22 @@
             }
             
             .flavor-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .flavor-option {
+                padding: 0.8rem;
+                min-height: 70px;
+            }
+            
+            .flavor-name {
+                font-size: 0.9rem;
+                margin-bottom: 0.2rem;
+            }
+            
+            .flavor-description {
+                font-size: 0.75rem;
             }
             
             .product-title {
@@ -428,13 +654,49 @@
                 font-size: 1rem;
             }
         }
+
+        /* Tablet Optimization */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .flavor-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        /* Desktop Optimization */
+        @media (min-width: 1025px) {
+            .flavor-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.2rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        a:focus, button:focus {
+            outline: 2px solid rgba(6, 182, 212, 0.5);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
-    <header>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow top-right"></div>
+    <div class="bg-glow bottom-left"></div>
+
+    <header id="navbar">
         <div class="header-container">
             <div class="logo">
-                <img src="deepvape_logo_main.png" alt="Logo">
+                <img src="deepvape_logo_main.png" alt="深煙電子煙">
             </div>
             <div class="header-actions">
                 <a href="index.html" class="back-button">
@@ -449,6 +711,7 @@
 
     <main class="main-content">
         <div class="container">
+            <div class="content-wrapper section-hidden">
             <div class="product-header">
                 <h1 class="product-title">思博瑞 SP2 煙彈</h1>
                 <p class="product-subtitle">32種口味選擇 • 2.0ML大容量 • 3%尼古丁含量</p>
@@ -653,6 +916,7 @@
                     請先選擇口味
                 </button>
             </section>
+            </div>
         </div>
     </main>
 
@@ -660,24 +924,55 @@
         let selectedFlavor = '';
         let quantity = 1;
 
-        // 口味選擇
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('section-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.section-hidden').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Initialize button state
+            updateAddToCartButton();
+        });
+
+        // Flavor selection
         document.querySelectorAll('.flavor-option').forEach(option => {
             option.addEventListener('click', function() {
-                // 移除其他選項的選中狀態
+                // Remove selected state from other options
                 document.querySelectorAll('.flavor-option').forEach(opt => {
                     opt.classList.remove('selected');
                 });
                 
-                // 添加選中狀態
+                // Add selected state
                 this.classList.add('selected');
                 selectedFlavor = this.dataset.flavor;
                 
-                // 更新按鈕狀態
+                // Update button state
                 updateAddToCartButton();
             });
         });
 
-        // 數量控制
+        // Quantity control
         function updateQuantity(change) {
             quantity = Math.max(1, quantity + change);
             document.getElementById('quantity').value = quantity;
@@ -688,7 +983,7 @@
             this.value = quantity;
         });
 
-        // 更新加入購物車按鈕
+        // Update add to cart button
         function updateAddToCartButton() {
             const button = document.querySelector('.add-to-cart-btn');
             if (selectedFlavor) {
@@ -700,7 +995,7 @@
             }
         }
 
-        // 加入購物車
+        // Add to cart
         function addToCart() {
             if (!selectedFlavor) {
                 alert('請先選擇口味');
@@ -715,10 +1010,10 @@
                 image: 'sp2_d/sp2_pods_cartridge_collection.jpg'
             };
 
-            // 獲取現有購物車
+            // Get existing cart
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             
-            // 檢查是否已有相同商品和口味
+            // Check if item already exists
             const existingItem = cart.find(item => 
                 item.name === product.name && item.flavor === product.flavor
             );
@@ -729,13 +1024,13 @@
                 cart.push(product);
             }
 
-            // 儲存到 localStorage
+            // Save to localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
 
-            // 顯示成功訊息
+            // Show success message
             alert(`已將 ${product.name} (${product.flavor}) x${product.quantity} 加入購物車！`);
             
-            // 重置選擇
+            // Reset selection
             selectedFlavor = '';
             quantity = 1;
             document.getElementById('quantity').value = 1;
