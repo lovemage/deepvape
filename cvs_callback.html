@@ -131,9 +131,29 @@
     <script>
         let selectedStoreData = null;
 
+        // 處理POST請求 - 在頁面載入前就嘗試獲取POST數據
+        (function() {
+            // 如果是通過form POST提交的，嘗試從referrer獲取數據
+            if (document.referrer && document.referrer.includes('emap.pcsc.com.tw')) {
+                console.log('來自7-11官方網站的請求');
+                
+                // 嘗試從各種可能的來源獲取數據
+                // 1. 檢查是否有form data
+                if (window.location.search) {
+                    console.log('發現URL參數:', window.location.search);
+                }
+                
+                // 2. 檢查hash
+                if (window.location.hash) {
+                    console.log('發現Hash參數:', window.location.hash);
+                }
+            }
+        })();
+
         document.addEventListener('DOMContentLoaded', function() {
             console.log('CVS回調頁面載入完成');
             console.log('當前URL:', window.location.href);
+            console.log('Referrer:', document.referrer);
             
             // 解析 URL 參數
             const urlParams = new URLSearchParams(window.location.search);
@@ -329,6 +349,27 @@
 
         // 檢查 7-11 回調
         handle711Callback();
+        
+        // 處理全家 API 的回調格式
+        function handleFamilyCallback() {
+            // 全家 API 可能會使用不同的參數名稱
+            const url = window.location.href;
+            
+            // 檢查是否包含全家的回調參數
+            if (url.includes('shopid') || url.includes('shopname') || url.includes('shopaddr')) {
+                const params = new URLSearchParams(window.location.search);
+                
+                processStoreSelection({
+                    storeId: params.get('shopid') || params.get('ShopID') || params.get('storeId'),
+                    storeName: params.get('shopname') || params.get('ShopName') || params.get('storeName'),
+                    storeAddress: params.get('shopaddr') || params.get('ShopAddr') || params.get('storeAddress'),
+                    storePhone: params.get('shoptel') || params.get('ShopTel') || params.get('storePhone')
+                });
+            }
+        }
+        
+        // 檢查全家回調
+        handleFamilyCallback();
         
         // 測試門市選擇功能
         function testStoreSelection() {
