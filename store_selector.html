@@ -407,6 +407,9 @@
                 <button id="confirmBtn" class="confirm-btn" disabled>
                     確認選擇此門市
                 </button>
+                
+                <!-- 除錯按鈕 (開發用) -->
+                <button id="debugBtn" class="confirm-btn" style="background: #ff6b6b; margin-top: 10px;" onclick="storeSelector.testLocalData()">🔧 測試本地資料</button>
 
                 <!-- 步驟5: 生成訂單 -->
                 <div id="orderStep" class="step" style="display: none;">
@@ -444,6 +447,98 @@
     </div>
 
     <script>
+        // 全域變數：本地7-ELEVEN門市資料庫
+        const sevenElevenStores = {
+            '台北市': {
+                '中正區': [
+                    { id: 'TP001', name: '7-ELEVEN 中正門市', address: '台北市中正區中正路123號', phone: '02-2345-6789', lat: 25.0330, lng: 121.5654 },
+                    { id: 'TP002', name: '7-ELEVEN 台北車站門市', address: '台北市中正區北平西路3號', phone: '02-2345-6790', lat: 25.0478, lng: 121.5170 },
+                    { id: 'TP003', name: '7-ELEVEN 西門門市', address: '台北市中正區西門路88號', phone: '02-2345-6791', lat: 25.0419, lng: 121.5070 }
+                ],
+                '大安區': [
+                    { id: 'TP004', name: '7-ELEVEN 忠孝門市', address: '台北市大安區忠孝東路四段123號', phone: '02-2345-6792', lat: 25.0415, lng: 121.5440 },
+                    { id: 'TP005', name: '7-ELEVEN 敦南門市', address: '台北市大安區敦化南路一段456號', phone: '02-2345-6793', lat: 25.0400, lng: 121.5500 },
+                    { id: 'TP006', name: '7-ELEVEN 東區門市', address: '台北市大安區大安路一段789號', phone: '02-2345-6794', lat: 25.0380, lng: 121.5380 }
+                ],
+                '信義區': [
+                    { id: 'TP007', name: '7-ELEVEN 信義門市', address: '台北市信義區信義路五段7號', phone: '02-2345-6795', lat: 25.0330, lng: 121.5654 },
+                    { id: 'TP008', name: '7-ELEVEN 101門市', address: '台北市信義區市府路45號', phone: '02-2345-6796', lat: 25.0340, lng: 121.5664 },
+                    { id: 'TP009', name: '7-ELEVEN 松高門市', address: '台北市信義區松高路11號', phone: '02-2345-6797', lat: 25.0350, lng: 121.5674 }
+                ]
+            },
+            '新北市': {
+                '板橋區': [
+                    { id: 'NB001', name: '7-ELEVEN 板橋門市', address: '新北市板橋區中山路一段123號', phone: '02-2960-1234', lat: 25.0118, lng: 121.4627 },
+                    { id: 'NB002', name: '7-ELEVEN 新板門市', address: '新北市板橋區縣民大道二段7號', phone: '02-2960-1235', lat: 25.0138, lng: 121.4647 },
+                    { id: 'NB003', name: '7-ELEVEN 府中門市', address: '新北市板橋區府中路15號', phone: '02-2960-1236', lat: 25.0108, lng: 121.4607 }
+                ],
+                '中和區': [
+                    { id: 'NB004', name: '7-ELEVEN 中和門市', address: '新北市中和區中和路234號', phone: '02-2940-2345', lat: 24.9988, lng: 121.4967 },
+                    { id: 'NB005', name: '7-ELEVEN 景安門市', address: '新北市中和區景平路567號', phone: '02-2940-2346', lat: 24.9978, lng: 121.4977 },
+                    { id: 'NB006', name: '7-ELEVEN 南勢角門市', address: '新北市中和區南山路890號', phone: '02-2940-2347', lat: 24.9968, lng: 121.4987 }
+                ]
+            },
+            '桃園市': {
+                '桃園區': [
+                    { id: 'TY001', name: '7-ELEVEN 桃園門市', address: '桃園市桃園區中正路345號', phone: '03-333-4567', lat: 24.9936, lng: 121.3010 },
+                    { id: 'TY002', name: '7-ELEVEN 火車站門市', address: '桃園市桃園區復興路123號', phone: '03-333-4568', lat: 24.9896, lng: 121.3130 },
+                    { id: 'TY003', name: '7-ELEVEN 藝文門市', address: '桃園市桃園區同德路456號', phone: '03-333-4569', lat: 24.9916, lng: 121.3050 }
+                ]
+            },
+            '台中市': {
+                '中區': [
+                    { id: 'TC001', name: '7-ELEVEN 台中門市', address: '台中市中區台灣大道一段456號', phone: '04-2220-3456', lat: 24.1477, lng: 120.6736 },
+                    { id: 'TC002', name: '7-ELEVEN 火車站門市', address: '台中市中區建國路123號', phone: '04-2220-3457', lat: 24.1367, lng: 120.6856 },
+                    { id: 'TC003', name: '7-ELEVEN 一中門市', address: '台中市中區三民路789號', phone: '04-2220-3458', lat: 24.1547, lng: 120.6816 }
+                ]
+            },
+            '高雄市': {
+                '前金區': [
+                    { id: 'KH001', name: '7-ELEVEN 高雄門市', address: '高雄市前金區中正四路567號', phone: '07-201-2345', lat: 22.6273, lng: 120.3014 },
+                    { id: 'KH002', name: '7-ELEVEN 中央公園門市', address: '高雄市前金區五福三路123號', phone: '07-201-2346', lat: 22.6293, lng: 120.3034 },
+                    { id: 'KH003', name: '7-ELEVEN 愛河門市', address: '高雄市前金區河東路234號', phone: '07-201-2347', lat: 22.6313, lng: 120.3054 }
+                ]
+            }
+        };
+
+        // 全域變數：全家便利商店門市資料庫
+        const familyMartStores = {
+            '台北市': {
+                '中正區': [
+                    { id: 'FM001', name: '全家 中正店', address: '台北市中正區重慶南路一段122號', phone: '02-2345-6789', lat: 25.0330, lng: 121.5654 },
+                    { id: 'FM002', name: '全家 台北車站店', address: '台北市中正區北平西路3號B1', phone: '02-2345-6790', lat: 25.0478, lng: 121.5170 },
+                    { id: 'FM003', name: '全家 西門店', address: '台北市中正區峨嵋街52號', phone: '02-2345-6791', lat: 25.0419, lng: 121.5070 }
+                ],
+                '大安區': [
+                    { id: 'FM004', name: '全家 忠孝店', address: '台北市大安區忠孝東路四段216巷8號', phone: '02-2345-6792', lat: 25.0415, lng: 121.5440 },
+                    { id: 'FM005', name: '全家 敦南店', address: '台北市大安區敦化南路一段187巷3號', phone: '02-2345-6793', lat: 25.0400, lng: 121.5500 },
+                    { id: 'FM006', name: '全家 東區店', address: '台北市大安區大安路一段51巷15號', phone: '02-2345-6794', lat: 25.0380, lng: 121.5380 }
+                ]
+            },
+            '新北市': {
+                '板橋區': [
+                    { id: 'FM007', name: '全家 板橋店', address: '新北市板橋區中山路一段50號', phone: '02-2960-1234', lat: 25.0118, lng: 121.4627 },
+                    { id: 'FM008', name: '全家 新板店', address: '新北市板橋區縣民大道二段68號', phone: '02-2960-1235', lat: 25.0138, lng: 121.4647 }
+                ]
+            },
+            '台中市': {
+                '中區': [
+                    { id: 'FM009', name: '全家 台中店', address: '台中市中區台灣大道一段57號', phone: '04-2220-3456', lat: 24.1477, lng: 120.6736 },
+                    { id: 'FM010', name: '全家 一中店', address: '台中市中區一中街127號', phone: '04-2220-3457', lat: 24.1547, lng: 120.6816 }
+                ]
+            }
+        };
+
+        // 台灣縣市資料
+        const taiwanData = {
+            '台北市': ['中正區', '大同區', '中山區', '松山區', '大安區', '萬華區', '信義區', '士林區', '北投區', '內湖區', '南港區', '文山區'],
+            '新北市': ['板橋區', '三重區', '中和區', '永和區', '新莊區', '新店區', '樹林區', '鶯歌區', '三峽區', '淡水區', '汐止區', '瑞芳區', '土城區', '蘆洲區', '五股區', '泰山區', '林口區', '深坑區', '石碇區', '坪林區', '三芝區', '石門區', '八里區', '平溪區', '雙溪區', '貢寮區', '金山區', '萬里區', '烏來區'],
+            '桃園市': ['桃園區', '中壢區', '大溪區', '楊梅區', '蘆竹區', '大園區', '龜山區', '八德區', '龍潭區', '平鎮區', '新屋區', '觀音區', '復興區'],
+            '台中市': ['中區', '東區', '南區', '西區', '北區', '北屯區', '西屯區', '南屯區', '太平區', '大里區', '霧峰區', '烏日區', '豐原區', '后里區', '石岡區', '東勢區', '和平區', '新社區', '潭子區', '大雅區', '神岡區', '大肚區', '沙鹿區', '龍井區', '梧棲區', '清水區', '大甲區', '外埔區', '大安區'],
+            '台南市': ['中西區', '東區', '南區', '北區', '安平區', '安南區', '永康區', '歸仁區', '新化區', '左鎮區', '玉井區', '楠西區', '南化區', '仁德區', '關廟區', '龍崎區', '官田區', '麻豆區', '佳里區', '西港區', '七股區', '將軍區', '學甲區', '北門區', '新營區', '後壁區', '白河區', '東山區', '六甲區', '下營區', '柳營區', '鹽水區', '善化區', '大內區', '山上區', '新市區', '安定區'],
+            '高雄市': ['新興區', '前金區', '苓雅區', '鹽埕區', '鼓山區', '旗津區', '前鎮區', '三民區', '楠梓區', '小港區', '左營區', '仁武區', '大社區', '岡山區', '路竹區', '阿蓮區', '田寮區', '燕巢區', '橋頭區', '梓官區', '彌陀區', '永安區', '湖內區', '鳳山區', '大寮區', '林園區', '鳥松區', '大樹區', '旗山區', '美濃區', '六龜區', '內門區', '杉林區', '甲仙區', '桃源區', '那瑪夏區', '茂林區', '茄萣區']
+        };
+
         class StoreSelector {
             constructor() {
                 // 在Netlify上不需要直接存取API金鑰，透過Functions呼叫
@@ -468,106 +563,14 @@
                 this.selectedInfo = document.getElementById('selectedInfo');
             }
 
-            // 本地7-ELEVEN門市資料庫
-            sevenElevenStores = {
-                '台北市': {
-                    '中正區': [
-                        { id: 'TP001', name: '7-ELEVEN 中正門市', address: '台北市中正區中正路123號', phone: '02-2345-6789', lat: 25.0330, lng: 121.5654 },
-                        { id: 'TP002', name: '7-ELEVEN 台北車站門市', address: '台北市中正區北平西路3號', phone: '02-2345-6790', lat: 25.0478, lng: 121.5170 },
-                        { id: 'TP003', name: '7-ELEVEN 西門門市', address: '台北市中正區西門路88號', phone: '02-2345-6791', lat: 25.0419, lng: 121.5070 }
-                    ],
-                    '大安區': [
-                        { id: 'TP004', name: '7-ELEVEN 忠孝門市', address: '台北市大安區忠孝東路四段123號', phone: '02-2345-6792', lat: 25.0415, lng: 121.5440 },
-                        { id: 'TP005', name: '7-ELEVEN 敦南門市', address: '台北市大安區敦化南路一段456號', phone: '02-2345-6793', lat: 25.0400, lng: 121.5500 },
-                        { id: 'TP006', name: '7-ELEVEN 東區門市', address: '台北市大安區大安路一段789號', phone: '02-2345-6794', lat: 25.0380, lng: 121.5380 }
-                    ],
-                    '信義區': [
-                        { id: 'TP007', name: '7-ELEVEN 信義門市', address: '台北市信義區信義路五段7號', phone: '02-2345-6795', lat: 25.0330, lng: 121.5654 },
-                        { id: 'TP008', name: '7-ELEVEN 101門市', address: '台北市信義區市府路45號', phone: '02-2345-6796', lat: 25.0340, lng: 121.5664 },
-                        { id: 'TP009', name: '7-ELEVEN 松高門市', address: '台北市信義區松高路11號', phone: '02-2345-6797', lat: 25.0350, lng: 121.5674 }
-                    ]
-                },
-                '新北市': {
-                    '板橋區': [
-                        { id: 'NB001', name: '7-ELEVEN 板橋門市', address: '新北市板橋區中山路一段123號', phone: '02-2960-1234', lat: 25.0118, lng: 121.4627 },
-                        { id: 'NB002', name: '7-ELEVEN 新板門市', address: '新北市板橋區縣民大道二段7號', phone: '02-2960-1235', lat: 25.0138, lng: 121.4647 },
-                        { id: 'NB003', name: '7-ELEVEN 府中門市', address: '新北市板橋區府中路15號', phone: '02-2960-1236', lat: 25.0108, lng: 121.4607 }
-                    ],
-                    '中和區': [
-                        { id: 'NB004', name: '7-ELEVEN 中和門市', address: '新北市中和區中和路234號', phone: '02-2940-2345', lat: 24.9988, lng: 121.4967 },
-                        { id: 'NB005', name: '7-ELEVEN 景安門市', address: '新北市中和區景平路567號', phone: '02-2940-2346', lat: 24.9978, lng: 121.4977 },
-                        { id: 'NB006', name: '7-ELEVEN 南勢角門市', address: '新北市中和區南山路890號', phone: '02-2940-2347', lat: 24.9968, lng: 121.4987 }
-                    ]
-                },
-                '桃園市': {
-                    '桃園區': [
-                        { id: 'TY001', name: '7-ELEVEN 桃園門市', address: '桃園市桃園區中正路345號', phone: '03-333-4567', lat: 24.9936, lng: 121.3010 },
-                        { id: 'TY002', name: '7-ELEVEN 火車站門市', address: '桃園市桃園區復興路123號', phone: '03-333-4568', lat: 24.9896, lng: 121.3130 },
-                        { id: 'TY003', name: '7-ELEVEN 藝文門市', address: '桃園市桃園區同德路456號', phone: '03-333-4569', lat: 24.9916, lng: 121.3050 }
-                    ]
-                },
-                '台中市': {
-                    '中區': [
-                        { id: 'TC001', name: '7-ELEVEN 台中門市', address: '台中市中區台灣大道一段456號', phone: '04-2220-3456', lat: 24.1477, lng: 120.6736 },
-                        { id: 'TC002', name: '7-ELEVEN 火車站門市', address: '台中市中區建國路123號', phone: '04-2220-3457', lat: 24.1367, lng: 120.6856 },
-                        { id: 'TC003', name: '7-ELEVEN 一中門市', address: '台中市中區三民路789號', phone: '04-2220-3458', lat: 24.1547, lng: 120.6816 }
-                    ]
-                },
-                '高雄市': {
-                    '前金區': [
-                        { id: 'KH001', name: '7-ELEVEN 高雄門市', address: '高雄市前金區中正四路567號', phone: '07-201-2345', lat: 22.6273, lng: 120.3014 },
-                        { id: 'KH002', name: '7-ELEVEN 中央公園門市', address: '高雄市前金區五福三路123號', phone: '07-201-2346', lat: 22.6293, lng: 120.3034 },
-                        { id: 'KH003', name: '7-ELEVEN 愛河門市', address: '高雄市前金區河東路234號', phone: '07-201-2347', lat: 22.6313, lng: 120.3054 }
-                    ]
-                }
-            };
-
-            // 台灣縣市資料
-            taiwanData = {
-                '台北市': ['中正區', '大同區', '中山區', '松山區', '大安區', '萬華區', '信義區', '士林區', '北投區', '內湖區', '南港區', '文山區'],
-                '新北市': ['板橋區', '三重區', '中和區', '永和區', '新莊區', '新店區', '樹林區', '鶯歌區', '三峽區', '淡水區', '汐止區', '瑞芳區', '土城區', '蘆洲區', '五股區', '泰山區', '林口區', '深坑區', '石碇區', '坪林區', '三芝區', '石門區', '八里區', '平溪區', '雙溪區', '貢寮區', '金山區', '萬里區', '烏來區'],
-                '桃園市': ['桃園區', '中壢區', '大溪區', '楊梅區', '蘆竹區', '大園區', '龜山區', '八德區', '龍潭區', '平鎮區', '新屋區', '觀音區', '復興區'],
-                '台中市': ['中區', '東區', '南區', '西區', '北區', '北屯區', '西屯區', '南屯區', '太平區', '大里區', '霧峰區', '烏日區', '豐原區', '后里區', '石岡區', '東勢區', '和平區', '新社區', '潭子區', '大雅區', '神岡區', '大肚區', '沙鹿區', '龍井區', '梧棲區', '清水區', '大甲區', '外埔區', '大安區'],
-                '台南市': ['中西區', '東區', '南區', '北區', '安平區', '安南區', '永康區', '歸仁區', '新化區', '左鎮區', '玉井區', '楠西區', '南化區', '仁德區', '關廟區', '龍崎區', '官田區', '麻豆區', '佳里區', '西港區', '七股區', '將軍區', '學甲區', '北門區', '新營區', '後壁區', '白河區', '東山區', '六甲區', '下營區', '柳營區', '鹽水區', '善化區', '大內區', '山上區', '新市區', '安定區'],
-                '高雄市': ['新興區', '前金區', '苓雅區', '鹽埕區', '鼓山區', '旗津區', '前鎮區', '三民區', '楠梓區', '小港區', '左營區', '仁武區', '大社區', '岡山區', '路竹區', '阿蓮區', '田寮區', '燕巢區', '橋頭區', '梓官區', '彌陀區', '永安區', '湖內區', '鳳山區', '大寮區', '林園區', '鳥松區', '大樹區', '旗山區', '美濃區', '六龜區', '內門區', '杉林區', '甲仙區', '桃源區', '那瑪夏區', '茂林區', '茄萣區']
-            };
-
             loadCities() {
-                Object.keys(this.taiwanData).forEach(city => {
+                Object.keys(taiwanData).forEach(city => {
                     const option = document.createElement('option');
                     option.value = city;
                     option.textContent = city;
                     this.citySelect.appendChild(option);
                 });
             }
-
-            // 全家便利商店門市資料庫
-            familyMartStores = {
-                '台北市': {
-                    '中正區': [
-                        { id: 'FM001', name: '全家 中正店', address: '台北市中正區重慶南路一段122號', phone: '02-2345-6789', lat: 25.0330, lng: 121.5654 },
-                        { id: 'FM002', name: '全家 台北車站店', address: '台北市中正區北平西路3號B1', phone: '02-2345-6790', lat: 25.0478, lng: 121.5170 },
-                        { id: 'FM003', name: '全家 西門店', address: '台北市中正區峨嵋街52號', phone: '02-2345-6791', lat: 25.0419, lng: 121.5070 }
-                    ],
-                    '大安區': [
-                        { id: 'FM004', name: '全家 忠孝店', address: '台北市大安區忠孝東路四段216巷8號', phone: '02-2345-6792', lat: 25.0415, lng: 121.5440 },
-                        { id: 'FM005', name: '全家 敦南店', address: '台北市大安區敦化南路一段187巷3號', phone: '02-2345-6793', lat: 25.0400, lng: 121.5500 },
-                        { id: 'FM006', name: '全家 東區店', address: '台北市大安區大安路一段51巷15號', phone: '02-2345-6794', lat: 25.0380, lng: 121.5380 }
-                    ]
-                },
-                '新北市': {
-                    '板橋區': [
-                        { id: 'FM007', name: '全家 板橋店', address: '新北市板橋區中山路一段50號', phone: '02-2960-1234', lat: 25.0118, lng: 121.4627 },
-                        { id: 'FM008', name: '全家 新板店', address: '新北市板橋區縣民大道二段68號', phone: '02-2960-1235', lat: 25.0138, lng: 121.4647 }
-                    ]
-                },
-                '台中市': {
-                    '中區': [
-                        { id: 'FM009', name: '全家 台中店', address: '台中市中區台灣大道一段57號', phone: '04-2220-3456', lat: 24.1477, lng: 120.6736 },
-                        { id: 'FM010', name: '全家 一中店', address: '台中市中區一中街127號', phone: '04-2220-3457', lat: 24.1547, lng: 120.6816 }
-                    ]
-                }
-            };
 
             bindEvents() {
                 this.storeTypeSelect.addEventListener('change', () => this.onStoreTypeChange());
@@ -594,8 +597,8 @@
                 this.districtSelect.innerHTML = '<option value="">請選擇區域</option>';
                 this.districtSelect.disabled = !selectedCity;
                 
-                if (selectedCity && this.taiwanData[selectedCity]) {
-                    this.taiwanData[selectedCity].forEach(district => {
+                if (selectedCity && taiwanData[selectedCity]) {
+                    taiwanData[selectedCity].forEach(district => {
                         const option = document.createElement('option');
                         option.value = district;
                         option.textContent = district;
@@ -622,71 +625,112 @@
                 this.storeList.innerHTML = '<div class="loading">搜尋門市中...</div>';
                 
                 const storeType = this.storeTypeSelect.value;
+                let useLocalData = false;
                 
                 try {
-                    // 使用Netlify Functions呼叫Google Places API
-                    const response = await fetch(`/.netlify/functions/search-stores?city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}&storeType=${storeType}`);
+                    console.log(`搜尋門市: ${city} ${district} (${storeType})`);
+                    
+                    // 首先嘗試使用Netlify Functions呼叫Google Places API
+                    const response = await fetch(`/.netlify/functions/search-stores?city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}&storeType=${storeType}`, {
+                        timeout: 10000 // 10秒超時
+                    });
                     
                     if (!response.ok) {
-                        throw new Error('API請求失敗');
-                    }
-                    
-                    const data = await response.json();
-                    
-                    if (data.success && data.stores.length > 0) {
-                        // 轉換API回傳格式為前端需要的格式
-                        const formattedStores = data.stores.map(store => ({
-                            name: store.storeName,
-                            formatted_address: store.storeAddress,
-                            place_id: store.storeId,
-                            geometry: {
-                                location: store.location
-                            },
-                            rating: store.rating,
-                            opening_hours: {
-                                open_now: store.openNow
-                            }
-                        }));
-                        
-                        this.displayStores(formattedStores);
+                        console.warn(`API請求失敗 (${response.status}), 使用本地資料`);
+                        useLocalData = true;
                     } else {
-                        // 如果沒有找到門市，使用本地資料庫
-                        console.log('Google API無結果，使用本地資料');
-                        const localStores = this.getLocalStores(city, district, storeType);
-                        this.displayStores(localStores);
+                        const data = await response.json();
+                        console.log('API回傳資料:', data);
+                        
+                        if (data.success && data.stores && data.stores.length > 0) {
+                            // 轉換API回傳格式為前端需要的格式
+                            const formattedStores = data.stores.map(store => ({
+                                name: store.storeName,
+                                formatted_address: store.storeAddress,
+                                place_id: store.storeId,
+                                geometry: {
+                                    location: store.location
+                                },
+                                rating: store.rating,
+                                opening_hours: {
+                                    open_now: store.openNow
+                                }
+                            }));
+                            
+                            console.log(`找到 ${formattedStores.length} 個Google API門市`);
+                            this.displayStores(formattedStores);
+                            return;
+                        } else {
+                            console.log('Google API無結果，使用本地資料');
+                            useLocalData = true;
+                        }
                     }
                     
                 } catch (error) {
                     console.error('搜尋門市錯誤:', error);
-                    // 發生錯誤時，使用本地資料庫作為備援
+                    useLocalData = true;
+                }
+                
+                // 使用本地資料庫作為備援
+                if (useLocalData) {
                     console.log('使用本地門市資料作為備援');
                     const localStores = this.getLocalStores(city, district, storeType);
-                    this.displayStores(localStores);
+                    console.log(`找到 ${localStores.length} 個本地門市`);
+                    
+                    if (localStores.length > 0) {
+                        this.displayStores(localStores);
+                    } else {
+                        // 如果本地也沒有資料，顯示錯誤訊息
+                        const storeTypeName = storeType === 'family' ? '全家便利商店' : '7-ELEVEN';
+                        this.storeList.innerHTML = `
+                            <div class="loading" style="text-align: center; padding: 20px;">
+                                <p>😅 此區域暫無${storeTypeName}門市資料</p>
+                                <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                                    請嘗試選擇其他區域，或稍後再試
+                                </p>
+                            </div>
+                        `;
+                    }
                 }
             }
 
             getLocalStores(city, district, storeType = '711') {
+                console.log(`取得本地門市資料: ${city} ${district} ${storeType}`);
+                
                 let storeDatabase;
                 
                 // 根據門市類型選擇資料庫
                 if (storeType === 'family') {
-                    storeDatabase = this.familyMartStores;
+                    storeDatabase = familyMartStores;
                 } else {
-                    storeDatabase = this.sevenElevenStores;
+                    storeDatabase = sevenElevenStores;
                 }
                 
+                console.log('可用城市:', Object.keys(storeDatabase));
+                
                 // 從本地資料庫獲取門市資料（作為備援）
-                if (storeDatabase[city] && storeDatabase[city][district]) {
-                    return storeDatabase[city][district].map(store => ({
-                        name: store.name,
-                        address: store.address,
-                        phone: store.phone,
-                        geometry: {
-                            location: { lat: store.lat, lng: store.lng }
-                        },
-                        place_id: store.id,
-                        formatted_address: store.address
-                    }));
+                if (storeDatabase[city]) {
+                    console.log(`${city}可用區域:`, Object.keys(storeDatabase[city]));
+                    
+                    if (storeDatabase[city][district]) {
+                        const stores = storeDatabase[city][district].map(store => ({
+                            name: store.name,
+                            address: store.address,
+                            phone: store.phone,
+                            geometry: {
+                                location: { lat: store.lat, lng: store.lng }
+                            },
+                            place_id: store.id,
+                            formatted_address: store.address
+                        }));
+                        
+                        console.log(`本地資料庫找到 ${stores.length} 個門市`);
+                        return stores;
+                    } else {
+                        console.log(`${city}沒有${district}的門市資料`);
+                    }
+                } else {
+                    console.log(`沒有${city}的門市資料`);
                 }
                 
                 // 如果沒有本地資料，返回空陣列
@@ -1063,6 +1107,34 @@
                 // 從localStorage或cookie取得購物車ID
                 return localStorage.getItem('cartId') || 'temp_cart_id';
             }
+
+            // 測試本地資料功能
+            testLocalData() {
+                console.log('=== 測試本地資料 ===');
+                
+                // 測試sevenElevenStores
+                console.log('7-ELEVEN資料庫:', sevenElevenStores);
+                console.log('全家資料庫:', familyMartStores);
+                
+                // 測試台北市中正區7-ELEVEN
+                const test711 = this.getLocalStores('台北市', '中正區', '711');
+                console.log('測試台北市中正區7-ELEVEN:', test711);
+                
+                // 測試台北市中正區全家
+                const testFamily = this.getLocalStores('台北市', '中正區', 'family');
+                console.log('測試台北市中正區全家:', testFamily);
+                
+                // 自動選擇台北市中正區進行測試
+                this.citySelect.value = '台北市';
+                this.onCityChange();
+                
+                setTimeout(() => {
+                    this.districtSelect.value = '中正區';
+                    this.onDistrictChange();
+                }, 100);
+                
+                alert('測試完成，請查看瀏覽器控制台 (F12) 的Console');
+            }
         }
 
         // 複製訂單號碼功能
@@ -1117,8 +1189,9 @@
         }
 
         // 初始化門市選擇器
+        let storeSelector;
         document.addEventListener('DOMContentLoaded', () => {
-            new StoreSelector();
+            storeSelector = new StoreSelector();
         });
     </script>
 </body>
