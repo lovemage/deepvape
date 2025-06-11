@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>詳細錯誤測試</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #e7f3ff; color: #004085; border: 1px solid #b3d7ff; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 詳細錯誤測試</h1>
+        
+        <div class="test-section">
+            <h3>📋 API金鑰資訊</h3>
+            <div id="apiKeyInfo" class="results info">載入中...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🏛️ 舊版Places API詳細測試</h3>
+            <button onclick="testLegacyDetailed()" class="test-btn">詳細測試舊版API</button>
+            <div id="legacyDetailed" class="results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🆕 新版Places API詳細測試</h3>
+            <button onclick="testNewDetailed()" class="test-btn">詳細測試新版API</button>
+            <div id="newDetailed" class="results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 API服務檢查</h3>
+            <button onclick="checkServices()" class="test-btn">檢查所有服務</button>
+            <div id="serviceCheck" class="results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>💡 解決建議</h3>
+            <div id="suggestions" class="results warning">
+根據測試結果，以下是可能的解決方案：
+
+🔑 API金鑰問題：
+1. 前往 Google Cloud Console
+2. 進入 APIs & Services > Library
+3. 搜尋並啟用以下服務：
+   - Places API (舊版)
+   - Places API (New)
+   - Geocoding API (可選)
+
+🔒 API金鑰限制：
+1. 進入 APIs & Services > Credentials
+2. 編輯你的API金鑰
+3. 在 "API restrictions" 中選擇 "Restrict key"
+4. 勾選以下API：
+   ✅ Maps JavaScript API
+   ✅ Places API
+   ✅ Places API (New)
+
+💳 計費設定：
+1. 確認已設定計費帳戶
+2. 檢查API配額是否足夠
+3. 新版Places API可能需要啟用計費
+
+🌐 網域限制：
+1. 如果設定了HTTP referrer限制
+2. 確認包含：
+   - http://localhost:*
+   - https://deepvape.netlify.app/*
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let apiKey = '';
+
+        // 初始化並顯示API金鑰資訊
+        async function initAndShowApiKey() {
+            try {
+                const response = await fetch('/.netlify/functions/get-map-config');
+                const config = await response.json();
+                
+                if (config.success && config.apiKey) {
+                    apiKey = config.apiKey;
+                    
+                    document.getElementById('apiKeyInfo').textContent = `
+✅ API金鑰載入成功
+
+完整金鑰: ${apiKey}
+金鑰長度: ${apiKey.length} 字元
+格式檢查: ${apiKey.startsWith('AIza') ? '✅ 正確' : '❌ 格式可能有誤'}
+金鑰前綴: ${apiKey.substring(0, 10)}...
+金鑰後綴: ...${apiKey.substring(apiKey.length - 10)}
+
+請複製此金鑰到Google Cloud Console進行檢查`;
+                } else {
+                    throw new Error('無法取得API金鑰');
+                }
+            } catch (error) {
+                document.getElementById('apiKeyInfo').className = 'results error';
+                document.getElementById('apiKeyInfo').textContent = `❌ API金鑰載入失敗: ${error.message}`;
+            }
+        }
+
+        // 詳細測試舊版Places API
+        async function testLegacyDetailed() {
+            const resultsDiv = document.getElementById('legacyDetailed');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '🔄 詳細測試舊版Places API...';
+
+            if (!apiKey) await initAndShowApiKey();
+
+            try {
+                // 測試多個舊版API端點
+                const tests = [
+                    {
+                        name: 'Find Place From Text',
+                        url: `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=台北車站&inputtype=textquery&fields=place_id,name&key=${apiKey}`
+                    },
+                    {
+                        name: 'Nearby Search',
+                        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=25.0330,121.5654&radius=1000&type=convenience_store&key=${apiKey}`
+                    },
+                    {
+                        name: 'Text Search',
+                        url: `https://maps.googleapis.com/maps/api/place/textsearch/json?query=7-11+台北&key=${apiKey}`
+                    }
+                ];
+
+                let results = '舊版Places API測試結果:\n\n';
+
+                for (const test of tests) {
+                    try {
+                        const response = await fetch(test.url);
+                        const data = await response.json();
+                        
+                        results += `📍 ${test.name}:\n`;
+                        results += `   狀態碼: ${response.status}\n`;
+                        results += `   API狀態: ${data.status || 'N/A'}\n`;
+                        
+                        if (data.error_message) {
+                            results += `   錯誤訊息: ${data.error_message}\n`;
+                        }
+                        
+                        if (data.results && data.results.length > 0) {
+                            results += `   結果數量: ${data.results.length}\n`;
+                        } else if (data.candidates && data.candidates.length > 0) {
+                            results += `   結果數量: ${data.candidates.length}\n`;
+                        } else {
+                            results += `   結果數量: 0\n`;
+                        }
+                        
+                        results += `   完整回應: ${JSON.stringify(data, null, 2)}\n\n`;
+                        
+                    } catch (error) {
+                        results += `📍 ${test.name}:\n`;
+                        results += `   ❌ 請求失敗: ${error.message}\n\n`;
+                    }
+                }
+
+                resultsDiv.className = 'results info';
+                resultsDiv.textContent = results;
+
+            } catch (error) {
+                resultsDiv.className = 'results error';
+                resultsDiv.textContent = `❌ 舊版API測試失敗: ${error.message}`;
+            }
+        }
+
+        // 詳細測試新版Places API
+        async function testNewDetailed() {
+            const resultsDiv = document.getElementById('newDetailed');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '🔄 詳細測試新版Places API...';
+
+            if (!apiKey) await initAndShowApiKey();
+
+            try {
+                const tests = [
+                    {
+                        name: 'Text Search (New)',
+                        url: 'https://places.googleapis.com/v1/places:searchText',
+                        body: { textQuery: '台北車站', maxResultCount: 1 },
+                        fieldMask: 'places.id,places.displayName'
+                    },
+                    {
+                        name: 'Nearby Search (New)',
+                        url: 'https://places.googleapis.com/v1/places:searchNearby',
+                        body: {
+                            locationRestriction: {
+                                circle: {
+                                    center: { latitude: 25.0330, longitude: 121.5654 },
+                                    radius: 1000.0
+                                }
+                            },
+                            includedTypes: ['convenience_store'],
+                            maxResultCount: 5
+                        },
+                        fieldMask: 'places.id,places.displayName,places.formattedAddress'
+                    }
+                ];
+
+                let results = '新版Places API測試結果:\n\n';
+
+                for (const test of tests) {
+                    try {
+                        const response = await fetch(test.url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Goog-Api-Key': apiKey,
+                                'X-Goog-FieldMask': test.fieldMask
+                            },
+                            body: JSON.stringify(test.body)
+                        });
+
+                        const responseText = await response.text();
+                        let data;
+                        
+                        try {
+                            data = JSON.parse(responseText);
+                        } catch {
+                            data = { rawResponse: responseText };
+                        }
+
+                        results += `🆕 ${test.name}:\n`;
+                        results += `   狀態碼: ${response.status}\n`;
+                        results += `   狀態文字: ${response.statusText}\n`;
+                        
+                        // 顯示回應標頭
+                        results += `   回應標頭:\n`;
+                        for (const [key, value] of response.headers.entries()) {
+                            results += `     ${key}: ${value}\n`;
+                        }
+                        
+                        if (data.error) {
+                            results += `   錯誤代碼: ${data.error.code}\n`;
+                            results += `   錯誤訊息: ${data.error.message}\n`;
+                            results += `   錯誤狀態: ${data.error.status}\n`;
+                        }
+                        
+                        if (data.places && data.places.length > 0) {
+                            results += `   結果數量: ${data.places.length}\n`;
+                        }
+                        
+                        results += `   完整回應: ${JSON.stringify(data, null, 2)}\n\n`;
+                        
+                    } catch (error) {
+                        results += `🆕 ${test.name}:\n`;
+                        results += `   ❌ 請求失敗: ${error.message}\n\n`;
+                    }
+                }
+
+                resultsDiv.className = 'results info';
+                resultsDiv.textContent = results;
+
+            } catch (error) {
+                resultsDiv.className = 'results error';
+                resultsDiv.textContent = `❌ 新版API測試失敗: ${error.message}`;
+            }
+        }
+
+        // 檢查API服務狀態
+        async function checkServices() {
+            const resultsDiv = document.getElementById('serviceCheck');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '📊 檢查API服務狀態...';
+
+            const serviceInfo = `
+🔍 API服務檢查清單
+
+當前使用的API金鑰: ${apiKey || '未載入'}
+
+📋 需要在Google Cloud Console中啟用的服務：
+
+1. 🗺️ Maps JavaScript API
+   - 服務名稱: maps-backend.googleapis.com
+   - 狀態: ✅ 正常 (地圖可顯示)
+
+2. 🏛️ Places API (舊版)
+   - 服務名稱: places-backend.googleapis.com
+   - 狀態: ❌ 可能未啟用或無權限
+
+3. 🆕 Places API (New)
+   - 服務名稱: places.googleapis.com
+   - 狀態: ❌ 可能未啟用或無權限
+
+🔧 立即檢查步驟：
+
+1. 前往 Google Cloud Console:
+   https://console.cloud.google.com/
+
+2. 選擇正確的專案
+
+3. 進入 APIs & Services > Library
+
+4. 搜尋並確認以下服務已啟用：
+   □ "Places API" (舊版)
+   □ "Places API (New)" (新版)
+
+5. 進入 APIs & Services > Credentials
+
+6. 找到並編輯你的API金鑰
+
+7. 在 "API restrictions" 中：
+   - 選擇 "Restrict key"
+   - 勾選所有需要的API服務
+
+8. 在 "Application restrictions" 中：
+   - 設定適當的網域限制
+   - 包含 localhost 和你的正式網域
+
+💡 如果服務已啟用但仍有問題：
+- 檢查計費帳戶是否已設定
+- 確認API配額是否足夠
+- 嘗試創建新的API金鑰
+- 檢查專案權限設定`;
+
+            resultsDiv.className = 'results warning';
+            resultsDiv.textContent = serviceInfo;
+        }
+
+        // 頁面載入時初始化
+        window.addEventListener('load', () => {
+            initAndShowApiKey();
+        });
+    </script>
+</body>
+</html> 

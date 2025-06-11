@@ -67,6 +67,57 @@
             width: 40px;
             object-fit: contain;
         }
+        /* 炫酷Logo按鈕樣式 */
+        .logo-button {
+            all: unset;
+            background-color: #040a1a;
+            background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='40' patternTransform='scale(2) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(224, 73%, 6%, 1)'/><path d='M0 30h20L10 50zm-10-20h20L0 30zm20 0h20L20 30zM0-10h20L10 10z'  stroke-width='2' stroke='hsla(224, 59%, 18%, 0.6)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+            border: 3px solid #252e45;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-family: "Arial", sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 0.4rem 0.8rem;
+            text-transform: uppercase;
+            transform: skewX(-10deg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logo-button:hover {
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 15px rgba(26, 254, 73, 0.5);
+            transform: skewX(-10deg) scale(1.05);
+        }
+
+        .logo-button:focus {
+            outline: 2px solid var(--highlight-color);
+            outline-offset: 2px;
+        }
+
+        .logo-button:active {
+            transform: skewX(-10deg) scale(0.98);
+        }
+
+        /* Logo文字樣式 */
+        .logo-text {
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan), var(--highlight-color));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
 
         .logo h1 {
             font-family: 'Montserrat', sans-serif;
@@ -634,6 +685,64 @@
         }
 
         
+    </script>
+
+    <!-- VFX.js 故障效果腳本 -->
+    <script type="module">
+        import { VFX } from "https://esm.sh/@vfx-js/core";
+        
+        class LogoButtonEffect {
+            constructor(button) {
+                this.vfx = new VFX();
+                
+                button.addEventListener("mouseenter", (e) => {
+                    this.vfx.add(button, { 
+                        shader: "glitch", 
+                        overflow: 50,
+                        uniforms: {
+                            uTime: 0,
+                            uIntensity: 0.3
+                        }
+                    });
+                });
+
+                button.addEventListener("mouseleave", (e) => {
+                    this.vfx.remove(button);
+                });
+
+                // 點擊效果
+                button.addEventListener("click", (e) => {
+                    console.log("DeepVape Logo clicked!");
+                    
+                    // 點擊反饋動畫
+                    button.style.transform = "skewX(-10deg) scale(0.95)";
+                    setTimeout(() => {
+                        button.style.transform = "skewX(-10deg) scale(1)";
+                    }, 150);
+                });
+            }
+        }
+
+        // 初始化Logo按鈕效果
+        document.addEventListener("DOMContentLoaded", () => {
+            const logoButton = document.getElementById("navLogo");
+            if (logoButton) {
+                new LogoButtonEffect(logoButton);
+                
+                // 添加無障礙支援
+                logoButton.setAttribute("tabindex", "0");
+                logoButton.setAttribute("role", "button");
+                logoButton.setAttribute("aria-label", "DeepVape 主頁連結");
+                
+                // 鍵盤支援
+                logoButton.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        logoButton.click();
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html> 

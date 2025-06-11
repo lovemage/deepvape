@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepVape Logo按鈕測試</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #040a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: "Arial", sans-serif;
+        }
+
+        .logo-button {
+            all: unset;
+            background-color: #040a1a;
+            background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='40' patternTransform='scale(2) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(224, 73%, 6%, 1)'/><path d='M0 30h20L10 50zm-10-20h20L0 30zm20 0h20L20 30zM0-10h20L10 10z'  stroke-width='2' stroke='hsla(224, 59%, 18%, 0.6)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+            border: 6px solid #252e45;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 3rem;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            text-transform: uppercase;
+            transform: skewX(-15deg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-button:hover {
+            border-color: #4a90e2;
+            box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+        }
+
+        .logo-button:focus {
+            outline: 2px solid #4a90e2;
+            outline-offset: 4px;
+        }
+
+        .logo-button:active {
+            transform: skewX(-15deg) scale(0.98);
+        }
+
+        /* Logo圖片樣式 */
+        .logo-image {
+            max-height: 60px;
+            width: auto;
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        /* 文字版本的logo */
+        .logo-text {
+            background: linear-gradient(45deg, #4a90e2, #50c878, #4a90e2);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* 測試區域 */
+        .test-section {
+            margin-top: 50px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .test-section h2 {
+            color: #4a90e2;
+            margin-bottom: 30px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .button-variant {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .variant-title {
+            color: #ccc;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* 不同尺寸的按鈕 */
+        .logo-button.small {
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .logo-button.medium {
+            font-size: 2rem;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .logo-button.large {
+            font-size: 3.5rem;
+            padding: 1.5rem 3rem;
+        }
+
+        /* 不同顏色主題 */
+        .logo-button.green-theme {
+            border-color: #50c878;
+        }
+
+        .logo-button.green-theme:hover {
+            border-color: #50c878;
+            box-shadow: 0 0 20px rgba(80, 200, 120, 0.5);
+        }
+
+        .logo-button.purple-theme {
+            border-color: #8a2be2;
+        }
+
+        .logo-button.purple-theme:hover {
+            border-color: #8a2be2;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        }
+
+        /* 說明文字 */
+        .description {
+            color: #aaa;
+            max-width: 800px;
+            margin: 30px auto;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .feature-list {
+            color: #ccc;
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .feature-list li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+
+        .feature-list li::marker {
+            color: #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主要Logo按鈕 -->
+    <button class="logo-button" id="mainLogo">
+        <span class="logo-text">DeepVape</span>
+    </button>
+
+    <div class="test-section">
+        <h2>🎨 Logo按鈕效果測試</h2>
+        
+        <div class="description">
+            這個炫酷的按鈕效果包含了故障效果、漸變背景和互動動畫。
+            將滑鼠移到按鈕上體驗效果！
+        </div>
+
+        <div class="button-grid">
+            <!-- 不同尺寸測試 -->
+            <div class="button-variant">
+                <div class="variant-title">小尺寸</div>
+                <button class="logo-button small">
+                    <span class="logo-text">DeepVape</span>
+                </button>
+            </div>
+
+            <div class="button-variant">
+                <div class="variant-title">中尺寸</div>
+                <button class="logo-button medium">
+                    <span class="logo-text">DeepVape</span>
+                </button>
+            </div>
+
+            <div class="button-variant">
+                <div class="variant-title">大尺寸</div>
+                <button class="logo-button large">
+                    <span class="logo-text">DeepVape</span>
+                </button>
+            </div>
+
+            <!-- 不同顏色主題 -->
+            <div class="button-variant">
+                <div class="variant-title">綠色主題</div>
+                <button class="logo-button green-theme">
+                    <span class="logo-text">DeepVape</span>
+                </button>
+            </div>
+
+            <div class="button-variant">
+                <div class="variant-title">紫色主題</div>
+                <button class="logo-button purple-theme">
+                    <span class="logo-text">DeepVape</span>
+                </button>
+            </div>
+
+            <!-- 帶圖片的版本 -->
+            <div class="button-variant">
+                <div class="variant-title">圖片+文字</div>
+                <button class="logo-button">
+                    <!-- 這裡可以放置實際的logo圖片 -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #4a90e2, #50c878); border-radius: 50%;"></div>
+                        <span class="logo-text">DeepVape</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="description">
+            <h3 style="color: #4a90e2;">✨ 特色功能</h3>
+            <ul class="feature-list">
+                <li>🎭 滑鼠懸停時的故障效果 (Glitch Effect)</li>
+                <li>🌈 動態漸變文字顏色</li>
+                <li>📐 傾斜設計 (Skew Transform)</li>
+                <li>💫 發光邊框效果</li>
+                <li>🎨 幾何圖案背景</li>
+                <li>📱 響應式設計</li>
+                <li>⚡ 流暢的動畫過渡</li>
+            </ul>
+        </div>
+
+        <div class="description">
+            <strong style="color: #50c878;">💡 使用建議：</strong>
+            這個效果非常適合作為網站的主要Logo或CTA按鈕。
+            可以根據品牌色彩調整主題，也可以加入實際的logo圖片。
+        </div>
+    </div>
+
+    <!-- VFX.js 故障效果 -->
+    <script type="module">
+        import { VFX } from "https://esm.sh/@vfx-js/core";
+        
+        class ButtonEffect {
+            constructor(button) {
+                this.vfx = new VFX();
+                
+                button.addEventListener("mouseenter", (e) => {
+                    this.vfx.add(button, { 
+                        shader: "glitch", 
+                        overflow: 100,
+                        uniforms: {
+                            uTime: 0,
+                            uIntensity: 0.5
+                        }
+                    });
+                });
+
+                button.addEventListener("mouseleave", (e) => {
+                    this.vfx.remove(button);
+                });
+
+                // 點擊效果
+                button.addEventListener("click", (e) => {
+                    // 可以在這裡添加點擊後的行為
+                    console.log("DeepVape Logo clicked!");
+                    
+                    // 簡單的點擊反饋
+                    button.style.transform = "skewX(-15deg) scale(0.95)";
+                    setTimeout(() => {
+                        button.style.transform = "skewX(-15deg) scale(1)";
+                    }, 150);
+                });
+            }
+        }
+
+        // 初始化所有按鈕效果
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".logo-button");
+            buttons.forEach(button => {
+                new ButtonEffect(button);
+            });
+        });
+
+        // 額外的互動效果
+        document.addEventListener("DOMContentLoaded", () => {
+            // 為主要logo添加額外的鍵盤支援
+            const mainLogo = document.getElementById("mainLogo");
+            
+            mainLogo.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    mainLogo.click();
+                }
+            });
+
+            // 添加焦點指示器
+            mainLogo.setAttribute("tabindex", "0");
+            mainLogo.setAttribute("role", "button");
+            mainLogo.setAttribute("aria-label", "DeepVape 主要標誌按鈕");
+        });
+    </script>
+</body>
+</html> 

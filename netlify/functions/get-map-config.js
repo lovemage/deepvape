@@ -17,7 +17,7 @@ exports.handler = async (event, context) => {
 
   try {
             // 使用新的API金鑰
-        const apiKey = 'AIzaSyB23S3-kt6Yi1E_aQW7bQ86S65bb3RlFfQ';
+        const apiKey = 'AIzaSyCEXKlt8GuddzTW9m_sTFI5J_25F41ctt0';
     
     return {
       statusCode: 200,

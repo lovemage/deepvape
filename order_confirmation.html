@@ -867,5 +867,63 @@
             loadOrderData();
         });
     </script>
+
+    <!-- VFX.js 故障效果腳本 -->
+    <script type="module">
+        import { VFX } from "https://esm.sh/@vfx-js/core";
+        
+        class LogoButtonEffect {
+            constructor(button) {
+                this.vfx = new VFX();
+                
+                button.addEventListener("mouseenter", (e) => {
+                    this.vfx.add(button, { 
+                        shader: "glitch", 
+                        overflow: 50,
+                        uniforms: {
+                            uTime: 0,
+                            uIntensity: 0.3
+                        }
+                    });
+                });
+
+                button.addEventListener("mouseleave", (e) => {
+                    this.vfx.remove(button);
+                });
+
+                // 點擊效果
+                button.addEventListener("click", (e) => {
+                    console.log("DeepVape Logo clicked!");
+                    
+                    // 點擊反饋動畫
+                    button.style.transform = "skewX(-10deg) scale(0.95)";
+                    setTimeout(() => {
+                        button.style.transform = "skewX(-10deg) scale(1)";
+                    }, 150);
+                });
+            }
+        }
+
+        // 初始化Logo按鈕效果
+        document.addEventListener("DOMContentLoaded", () => {
+            const logoButton = document.getElementById("navLogo");
+            if (logoButton) {
+                new LogoButtonEffect(logoButton);
+                
+                // 添加無障礙支援
+                logoButton.setAttribute("tabindex", "0");
+                logoButton.setAttribute("role", "button");
+                logoButton.setAttribute("aria-label", "DeepVape 主頁連結");
+                
+                // 鍵盤支援
+                logoButton.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        logoButton.click();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html> 

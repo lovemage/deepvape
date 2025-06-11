@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API診斷工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #e7f3ff;
+            color: #004085;
+            border: 1px solid #b3d7ff;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 API診斷工具</h1>
+            <p>診斷Google Places API的各種問題</p>
+        </div>
+
+        <!-- API金鑰測試 -->
+        <div class="test-section">
+            <h3>🔑 API金鑰基本測試</h3>
+            <button onclick="testApiKeyBasic()" class="test-btn">測試API金鑰載入</button>
+            <div id="apiKeyBasicResults" class="results"></div>
+        </div>
+
+        <!-- 舊版API測試 -->
+        <div class="test-section">
+            <h3>🏛️ 舊版Places API測試</h3>
+            <button onclick="testLegacyAPI()" class="test-btn">測試舊版API</button>
+            <div id="legacyResults" class="results"></div>
+        </div>
+
+        <!-- 新版API測試 -->
+        <div class="test-section">
+            <h3>🆕 新版Places API測試</h3>
+            <button onclick="testNewAPI()" class="test-btn">測試新版API</button>
+            <div id="newResults" class="results"></div>
+        </div>
+
+        <!-- Maps JavaScript API測試 -->
+        <div class="test-section">
+            <h3>🗺️ Maps JavaScript API測試</h3>
+            <button onclick="testMapsAPI()" class="test-btn">測試Maps API</button>
+            <div id="mapsResults" class="results"></div>
+        </div>
+
+        <!-- 詳細錯誤分析 -->
+        <div class="test-section">
+            <h3>🔍 詳細錯誤分析</h3>
+            <button onclick="analyzeError()" class="test-btn">分析403錯誤</button>
+            <div id="errorAnalysis" class="results"></div>
+        </div>
+
+        <!-- API服務狀態檢查 -->
+        <div class="test-section">
+            <h3>📊 API服務狀態</h3>
+            <button onclick="checkServiceStatus()" class="test-btn">檢查服務狀態</button>
+            <div id="serviceStatus" class="results"></div>
+        </div>
+    </div>
+
+    <script>
+        let apiKey = '';
+
+        // 初始化
+        async function initializeAPI() {
+            try {
+                const response = await fetch('/.netlify/functions/get-map-config');
+                const config = await response.json();
+                
+                if (config.success && config.apiKey) {
+                    apiKey = config.apiKey;
+                    console.log('✅ API金鑰已載入:', apiKey.substring(0, 10) + '...');
+                } else {
+                    throw new Error('無法取得API金鑰');
+                }
+            } catch (error) {
+                console.error('❌ API初始化失敗:', error);
+                apiKey = 'FAILED_TO_LOAD';
+            }
+        }
+
+        // 測試API金鑰基本功能
+        async function testApiKeyBasic() {
+            const resultsDiv = document.getElementById('apiKeyBasicResults');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '🔄 測試API金鑰載入...';
+
+            try {
+                await initializeAPI();
+                
+                if (apiKey === 'FAILED_TO_LOAD') {
+                    throw new Error('API金鑰載入失敗');
+                }
+
+                resultsDiv.className = 'results success';
+                resultsDiv.textContent = `✅ API金鑰載入成功
+金鑰: ${apiKey.substring(0, 15)}...${apiKey.substring(apiKey.length - 5)}
+長度: ${apiKey.length} 字元
+格式: ${apiKey.startsWith('AIza') ? '正確' : '可能有誤'}`;
+
+            } catch (error) {
+                resultsDiv.className = 'results error';
+                resultsDiv.textContent = `❌ API金鑰測試失敗: ${error.message}`;
+            }
+        }
+
+        // 測試舊版Places API
+        async function testLegacyAPI() {
+            const resultsDiv = document.getElementById('legacyResults');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '🔄 測試舊版Places API...';
+
+            if (!apiKey || apiKey === 'FAILED_TO_LOAD') {
+                await initializeAPI();
+            }
+
+            try {
+                // 使用舊版API的簡單請求
+                const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=台北車站&inputtype=textquery&fields=place_id,name&key=${apiKey}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultsDiv.className = 'results success';
+                    resultsDiv.textContent = `✅ 舊版Places API正常運作
+狀態: ${data.status}
+結果數量: ${data.candidates ? data.candidates.length : 0}
+回應: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${data.error_message || '未知錯誤'}`);
+                }
+            } catch (error) {
+                resultsDiv.className = 'results error';
+                resultsDiv.textContent = `❌ 舊版Places API測試失敗: ${error.message}`;
+            }
+        }
+
+        // 測試新版Places API
+        async function testNewAPI() {
+            const resultsDiv = document.getElementById('newResults');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '🔄 測試新版Places API...';
+
+            if (!apiKey || apiKey === 'FAILED_TO_LOAD') {
+                await initializeAPI();
+            }
+
+            try {
+                const requestBody = {
+                    textQuery: '台北車站',
+                    maxResultCount: 1
+                };
+
+                const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Goog-Api-Key': apiKey,
+                        'X-Goog-FieldMask': 'places.id,places.displayName'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultsDiv.className = 'results success';
+                    resultsDiv.textContent = `✅ 新版Places API正常運作
+狀態碼: ${response.status}
+結果數量: ${data.places ? data.places.length : 0}
+回應: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${data.error?.message || '未知錯誤'}`);
+                }
+            } catch (error) {
+                resultsDiv.className = 'results error';
+                resultsDiv.textContent = `❌ 新版Places API測試失敗: ${error.message}
+
+可能原因:
+1. Places API (New) 未啟用
+2. API金鑰沒有正確的權限
+3. API金鑰限制設定問題
+4. 計費帳戶問題`;
+            }
+        }
+
+        // 測試Maps JavaScript API
+        async function testMapsAPI() {
+            const resultsDiv = document.getElementById('mapsResults');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '🔄 測試Maps JavaScript API...';
+
+            if (!apiKey || apiKey === 'FAILED_TO_LOAD') {
+                await initializeAPI();
+            }
+
+            try {
+                // 測試載入Maps JavaScript API
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=mapsApiCallback`;
+                
+                window.mapsApiCallback = function() {
+                    resultsDiv.className = 'results success';
+                    resultsDiv.textContent = `✅ Maps JavaScript API載入成功
+Google Maps 物件可用: ${typeof google !== 'undefined' && typeof google.maps !== 'undefined'}`;
+                };
+
+                script.onerror = function() {
+                    resultsDiv.className = 'results error';
+                    resultsDiv.textContent = '❌ Maps JavaScript API載入失敗';
+                };
+
+                document.head.appendChild(script);
+
+                // 5秒後檢查是否載入成功
+                setTimeout(() => {
+                    if (resultsDiv.className === 'results info') {
+                        resultsDiv.className = 'results warning';
+                        resultsDiv.textContent = '⚠️ Maps JavaScript API載入超時';
+                    }
+                }, 5000);
+
+            } catch (error) {
+                resultsDiv.className = 'results error';
+                resultsDiv.textContent = `❌ Maps JavaScript API測試失敗: ${error.message}`;
+            }
+        }
+
+        // 分析403錯誤
+        async function analyzeError() {
+            const resultsDiv = document.getElementById('errorAnalysis');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '🔍 分析403錯誤原因...';
+
+            const analysis = `
+403錯誤 "Method doesn't allow unregistered callers" 可能原因:
+
+🔑 API金鑰問題:
+- API金鑰格式錯誤
+- API金鑰已過期或被撤銷
+- API金鑰沒有正確的權限
+
+🚫 API服務問題:
+- Places API (New) 未啟用
+- 專案中沒有啟用正確的API服務
+- API配額已用完
+
+🔒 權限設定問題:
+- API金鑰限制設定錯誤
+- 沒有設定正確的API限制
+- 應用程式限制阻止了請求
+
+💳 計費問題:
+- 沒有設定計費帳戶
+- 計費帳戶已停用
+- 超出免費配額但沒有付費
+
+🌐 請求格式問題:
+- 使用錯誤的端點
+- 標頭格式不正確
+- 請求方法錯誤
+
+建議檢查順序:
+1. 確認API金鑰正確載入
+2. 檢查Google Cloud Console中的API服務狀態
+3. 驗證API金鑰的限制設定
+4. 確認計費帳戶狀態
+5. 檢查API配額使用情況`;
+
+            resultsDiv.className = 'results warning';
+            resultsDiv.textContent = analysis;
+        }
+
+        // 檢查API服務狀態
+        async function checkServiceStatus() {
+            const resultsDiv = document.getElementById('serviceStatus');
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = '📊 檢查API服務狀態...';
+
+            const statusInfo = `
+當前API金鑰: ${apiKey ? apiKey.substring(0, 15) + '...' : '未載入'}
+
+需要啟用的服務:
+✅ Places API (New) - places.googleapis.com
+✅ Maps JavaScript API - maps-backend.googleapis.com (可選)
+
+檢查清單:
+□ 前往 Google Cloud Console
+□ 選擇正確的專案
+□ 進入 APIs & Services > Library
+□ 搜尋 "Places API (New)"
+□ 確認已啟用
+□ 進入 APIs & Services > Credentials
+□ 編輯API金鑰
+□ 設定API限制包含 "Places API (New)"
+□ 確認計費帳戶已設定
+
+如果問題持續:
+1. 嘗試創建新的API金鑰
+2. 確認專案有正確的權限
+3. 檢查API配額和使用量
+4. 聯繫Google Cloud支援`;
+
+            resultsDiv.className = 'results info';
+            resultsDiv.textContent = statusInfo;
+        }
+
+        // 頁面載入時初始化
+        window.addEventListener('load', () => {
+            testApiKeyBasic();
+        });
+    </script>
+</body>
+</html> 
