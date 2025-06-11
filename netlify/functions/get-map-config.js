@@ -3,7 +3,7 @@ exports.handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
   };
 
   // 處理預檢請求
@@ -11,54 +11,32 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 200,
       headers,
-      body: '',
-    };
-  }
-
-  // 只允許GET請求
-  if (event.httpMethod !== 'GET') {
-    return {
-      statusCode: 405,
-      headers,
-      body: JSON.stringify({ error: '方法不被允許' }),
+      body: ''
     };
   }
 
   try {
-    // 從環境變數獲取API金鑰
-    const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+            // 使用新的API金鑰
+        const apiKey = 'AIzaSyB23S3-kt6Yi1E_aQW7bQ86S65bb3RlFfQ';
     
-    if (!API_KEY) {
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({
-          success: false,
-          error: 'Google Maps API金鑰未設定'
-        }),
-      };
-    }
-
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
         success: true,
-        apiKey: API_KEY
-      }),
+        apiKey: apiKey
+      })
     };
-
   } catch (error) {
-    console.error('取得地圖配置錯誤:', error);
+    console.error('取得地圖配置失敗:', error);
     
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         success: false,
-        error: '取得地圖配置失敗',
-        message: error.message
-      }),
+        error: '伺服器錯誤'
+      })
     };
   }
 }; 

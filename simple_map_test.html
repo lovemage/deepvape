@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>簡化地圖測試</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #map { height: 400px; width: 100%; border: 1px solid #ccc; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>🗺️ 簡化地圖API測試</h1>
+    <div id="status" class="status info">載入中...</div>
+    <div id="map"></div>
+    <div id="debug" style="margin-top: 20px; font-family: monospace; background: #f8f9fa; padding: 10px; border-radius: 5px;"></div>
+
+    <script>
+        const API_KEY = 'AIzaSyDG6TOXf2AXyGCHvfUWQZD3ZdP6dHd8c2g';
+        
+        function log(message) {
+            const debug = document.getElementById('debug');
+            const time = new Date().toLocaleTimeString();
+            debug.innerHTML += `[${time}] ${message}<br>`;
+            console.log(message);
+        }
+        
+        function updateStatus(type, message) {
+            const status = document.getElementById('status');
+            status.className = `status ${type}`;
+            status.textContent = message;
+        }
+        
+        // 全域錯誤處理
+        window.gm_authFailure = function() {
+            updateStatus('error', '❌ 認證失敗：請檢查API金鑰設定');
+            log('❌ gm_authFailure: API認證失敗');
+            log('解決方案：');
+            log('1. 檢查API金鑰是否正確');
+            log('2. 確認Maps JavaScript API已啟用');
+            log('3. 移除API金鑰的網域限制（測試用）');
+            log('4. 確認計費已啟用');
+        };
+        
+        function initMap() {
+            log('✅ initMap 回調被執行');
+            try {
+                const map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 25.0330, lng: 121.5654 }, // 台北101
+                    zoom: 15
+                });
+                
+                new google.maps.Marker({
+                    position: { lat: 25.0330, lng: 121.5654 },
+                    map: map,
+                    title: '台北101 - 測試成功！'
+                });
+                
+                updateStatus('success', '✅ 地圖載入成功！API金鑰有效');
+                log('✅ 地圖初始化成功');
+                log('✅ 標記已添加');
+                
+            } catch (error) {
+                updateStatus('error', '❌ 地圖初始化失敗');
+                log(`❌ 地圖錯誤: ${error.message}`);
+            }
+        }
+        
+        // 載入Google Maps
+        function loadMap() {
+            log(`開始載入 Google Maps API`);
+            log(`API Key: ${API_KEY.substring(0, 20)}...${API_KEY.substring(-5)}`);
+            
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            
+            script.onerror = function() {
+                updateStatus('error', '❌ 腳本載入失敗');
+                log('❌ 無法載入Google Maps腳本');
+            };
+            
+            script.onload = function() {
+                log('✅ Google Maps腳本載入完成');
+            };
+            
+            document.head.appendChild(script);
+            log(`載入URL: ${script.src}`);
+        }
+        
+        // 頁面載入時執行
+        window.addEventListener('load', loadMap);
+        
+        // 捕獲所有錯誤
+        window.addEventListener('error', function(e) {
+            log(`❌ JavaScript錯誤: ${e.message}`);
+            if (e.message.includes('Google') || e.message.includes('gm_')) {
+                updateStatus('error', '❌ Google Maps相關錯誤');
+            }
+        });
+    </script>
+</body>
+</html> 
