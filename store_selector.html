@@ -754,7 +754,7 @@
             }
 
             showStoreOnMap(store) {
-                if (this.map && store.geometry) {
+                if (this.map && store.geometry && window.google) {
                     const location = store.geometry.location;
                     this.map.setCenter(location);
                     this.map.setZoom(16);
@@ -776,7 +776,27 @@
                             url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
                         });
                     }
+                } else {
+                    // 如果地圖未載入，顯示門市資訊
+                    this.showStoreInfoInMapPanel(store);
                 }
+            }
+
+            showStoreInfoInMapPanel(store) {
+                const mapElement = document.getElementById('map');
+                mapElement.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f9fa; flex-direction: column; text-align: center; padding: 40px;">
+                        <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; width: 100%;">
+                            <div style="font-size: 3em; margin-bottom: 20px;">🏪</div>
+                            <h3 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3em;">${store.name}</h3>
+                            <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">${store.formatted_address || store.address}</p>
+                            ${store.phone ? `<p style="color: #667eea; margin: 0; font-weight: bold;">📞 ${store.phone}</p>` : ''}
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9ecef; color: #999; font-size: 0.9em;">
+                                已選擇的門市
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
 
             showSelectedInfo(store) {
@@ -830,10 +850,32 @@
                 this.markers = [];
             }
 
-            initializeMap() {
+            async initializeMap() {
+                try {
+                    // 透過Netlify Function取得API金鑰並載入地圖
+                    const response = await fetch('/.netlify/functions/get-map-config');
+                    const config = await response.json();
+                    
+                    if (config.success && config.apiKey) {
+                        this.loadGoogleMaps(config.apiKey);
+                    } else {
+                        throw new Error('無法取得地圖配置');
+                    }
+                } catch (error) {
+                    console.error('地圖初始化失敗:', error);
+                    // 使用本地地圖替代方案
+                    this.showLocalMapAlternative();
+                }
+            }
+
+            loadGoogleMaps(apiKey) {
                 const script = document.createElement('script');
-                script.src = `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}&callback=initMap&language=zh-TW`;
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap&language=zh-TW`;
                 script.async = true;
+                script.onerror = () => {
+                    console.error('Google Maps載入失敗');
+                    this.showLocalMapAlternative();
+                };
                 document.head.appendChild(script);
                 
                 window.initMap = () => {
@@ -849,6 +891,22 @@
                         ]
                     });
                 };
+            }
+
+            showLocalMapAlternative() {
+                const mapElement = document.getElementById('map');
+                mapElement.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f9fa; flex-direction: column; text-align: center; padding: 40px;">
+                        <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; width: 100%;">
+                            <div style="font-size: 4em; margin-bottom: 20px;">🗺️</div>
+                            <h3 style="color: #666; margin-bottom: 15px;">地圖服務暫時無法使用</h3>
+                            <p style="color: #999; margin-bottom: 20px;">選擇門市後將在此顯示詳細資訊</p>
+                            <div style="margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 10px; color: #1976d2; font-size: 0.9em;">
+                                💡 提示：門市功能正常運作，地圖顯示不影響選擇
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
 
             confirmSelection() {
