@@ -541,14 +541,16 @@
         .store-buttons {
             display: flex;
             justify-content: center;
+            gap: 1rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .store-btn {
             background: var(--accent-color);
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -557,6 +559,11 @@
             justify-content: center;
             gap: 0.5rem;
             font-weight: 500;
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .store-btn:hover {
@@ -753,7 +760,15 @@
             }
 
             .store-buttons {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .store-btn {
+                min-width: 280px;
+                max-width: 320px;
+                width: 100%;
             }
 
             .location-selection {
@@ -1205,10 +1220,6 @@
                             <i class="fas fa-store"></i>
                             全家官方門市選擇
                         </button>
-                        <button class="store-btn smart-search" onclick="openManualStoreInput()" style="background: #6c757d;">
-                            <i class="fas fa-edit"></i>
-                            手動輸入門市
-                        </button>
                     </div>
 
                     <!-- Manual Store Input -->
@@ -1450,11 +1461,9 @@
                   '5. 回到本頁面手動填入門市資訊\n' +
                   '6. 點擊「確認門市選擇」完成');
             
-            // 延遲顯示手動輸入提示
+            // 延遲提示用戶手動填入資訊
             setTimeout(() => {
-                if (confirm('是否要直接開啟手動輸入門市資訊的功能？')) {
-                    openManualStoreInput();
-                }
+                alert('💡 提醒：\n\n查詢完門市後，請回到本頁面手動填入：\n• 門市類型\n• 門市店號\n• 門市名稱\n• 門市地址（選填）\n\n然後點擊「確認門市選擇」完成設定。');
             }, 3000);
         }
 
@@ -1535,67 +1544,7 @@
             alert('已開啟全家官方門市查詢系統\n\n請在新視窗中選擇您要的門市，選擇完成後會自動回傳門市資訊。');
         }
 
-        // 開啟手動輸入門市功能
-        function openManualStoreInput() {
-            // 自動設定為7-11
-            document.getElementById('storeTypeSelect').value = '711';
-            
-            // 聚焦到店號輸入框
-            document.getElementById('storeIdInput').focus();
-            
-            // 顯示輸入指引
-            alert('📝 手動輸入門市資訊：\n\n' +
-                  '請依序填入以下資訊：\n' +
-                  '1. 選擇門市類型（7-11或全家）\n' +
-                  '2. 輸入門市店號（通常為5-6位數字）\n' +
-                  '3. 輸入門市名稱\n' +
-                  '4. 輸入門市地址\n\n' +
-                  '填寫完成後點擊「確認門市選擇」');
-            
-            // 添加輸入提示和驗證
-            const storeIdInput = document.getElementById('storeIdInput');
-            const storeNameInput = document.getElementById('storeNameInput');
-            const storeAddressInput = document.getElementById('storeAddressInput');
-            
-            // 為輸入框添加placeholder
-            storeIdInput.placeholder = '例如：12345';
-            storeNameInput.placeholder = '例如：統一超商信義門市';
-            storeAddressInput.placeholder = '例如：台北市信義區信義路五段7號';
-            
-            // 添加即時驗證
-            storeIdInput.addEventListener('input', function() {
-                const value = this.value.trim();
-                if (value && !/^\d{4,6}$/.test(value)) {
-                    this.style.borderColor = '#e74c3c';
-                    this.title = '店號應為4-6位數字';
-                } else {
-                    this.style.borderColor = '';
-                    this.title = '';
-                }
-            });
-            
-            storeNameInput.addEventListener('input', function() {
-                const value = this.value.trim();
-                if (value && value.length < 3) {
-                    this.style.borderColor = '#e74c3c';
-                    this.title = '門市名稱至少需要3個字元';
-                } else {
-                    this.style.borderColor = '';
-                    this.title = '';
-                }
-            });
-            
-            storeAddressInput.addEventListener('input', function() {
-                const value = this.value.trim();
-                if (value && value.length < 10) {
-                    this.style.borderColor = '#e74c3c';
-                    this.title = '請輸入完整地址';
-                } else {
-                    this.style.borderColor = '';
-                    this.title = '';
-                }
-            });
-        }
+
 
 
         // Confirm store selection
