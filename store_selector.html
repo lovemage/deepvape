@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選擇取貨門市 - DeepVape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        #iframeCloseBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #iframeCloseBtn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .selector-panel {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .map-panel {
+            position: relative;
+            background: #e9ecef;
+        }
+
+        .step {
+            margin-bottom: 30px;
+        }
+
+        .step-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .select-container {
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1em;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        select:disabled {
+            background: #f8f9fa;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .store-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .store-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .store-item:hover {
+            background: #f8f9fa;
+        }
+
+        .store-item.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .store-item:last-child {
+            border-bottom: none;
+        }
+
+        .store-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .store-address {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .store-item.selected .store-address {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .confirm-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .confirm-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+        }
+
+        .selected-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .selected-info.show {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #667eea;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .order-info {
+            background: #f8f9fa;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .order-number {
+            margin-bottom: 20px;
+        }
+
+        .order-number label {
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .order-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+        }
+
+        #orderNumber {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+        }
+
+        .customer-service p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .line-btn {
+            display: inline-block;
+            background: #00C300;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 195, 0, 0.3);
+        }
+
+        .line-btn:hover {
+            background: #00A300;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 195, 0, 0.4);
+        }
+
+        .success-animation {
+            animation: successPulse 0.6s ease-in-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .selector-panel {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .order-display {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            #orderNumber {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏪 選擇取貨門市</h1>
+            <p>請依序選擇縣市、區域及門市，我們將為您保留商品至指定門市</p>
+            <button id="iframeCloseBtn" style="display: none;" onclick="closeIframe()">✕ 關閉</button>
+        </div>
+
+        <div class="content">
+            <div class="selector-panel">
+                <!-- 步驟1: 選擇門市類型 -->
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">1</span>
+                        選擇門市類型
+                    </div>
+                    <div class="select-container">
+                        <select id="storeTypeSelect">
+                            <option value="711">7-ELEVEN</option>
+                            <option value="family">全家便利商店</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 步驟2: 選擇縣市 -->
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">2</span>
+                        選擇縣市
+                    </div>
+                    <div class="select-container">
+                        <select id="citySelect">
+                            <option value="">請選擇縣市</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 步驟3: 選擇區域 -->
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">3</span>
+                        選擇區域
+                    </div>
+                    <div class="select-container">
+                        <select id="districtSelect" disabled>
+                            <option value="">請先選擇縣市</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 步驟4: 選擇門市 -->
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">4</span>
+                        選擇門市
+                    </div>
+                    <div id="storeList" class="store-list">
+                        <div class="loading">請先選擇門市類型、縣市和區域</div>
+                    </div>
+                </div>
+
+                <button id="confirmBtn" class="confirm-btn" disabled>
+                    確認選擇此門市
+                </button>
+
+                <!-- 步驟5: 生成訂單 -->
+                <div id="orderStep" class="step" style="display: none;">
+                    <div class="step-title">
+                        <span class="step-number">5</span>
+                        訂單已生成
+                    </div>
+                    <div class="order-info">
+                        <div class="order-number">
+                            <label>訂單號碼：</label>
+                            <div class="order-display">
+                                <span id="orderNumber">ORD202412240001</span>
+                                <button id="copyBtn" class="copy-btn" onclick="copyOrderNumber()">📋 複製</button>
+                            </div>
+                        </div>
+                        <div class="customer-service">
+                            <p>請將訂單號碼複製給客服確認訂單</p>
+                            <a href="https://line.me/ti/p/@deepvape" target="_blank" class="line-btn">
+                                💬 聯繫客服 Line
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-panel">
+                <div id="selectedInfo" class="selected-info">
+                    <h3 id="selectedStoreName">門市名稱</h3>
+                    <p id="selectedStoreAddress">門市地址</p>
+                    <p id="selectedStorePhone">聯絡電話</p>
+                </div>
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class StoreSelector {
+            constructor() {
+                this.apiKey = '***REMOVED***';
+                this.map = null;
+                this.markers = [];
+                this.selectedStore = null;
+                this.stores = [];
+                
+                this.initializeElements();
+                this.loadCities();
+                this.initializeMap();
+                this.bindEvents();
+                this.checkIframeMode();
+            }
+
+            checkIframeMode() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const isIframe = urlParams.get('mode') === 'iframe';
+                
+                if (isIframe) {
+                    // 顯示iframe關閉按鈕
+                    document.getElementById('iframeCloseBtn').style.display = 'block';
+                    
+                    // 修改容器樣式以適應iframe
+                    document.querySelector('.container').style.margin = '0';
+                    document.querySelector('.container').style.height = '100vh';
+                    document.querySelector('.content').style.minHeight = 'calc(100vh - 120px)';
+                }
+            }
+
+            initializeElements() {
+                this.storeTypeSelect = document.getElementById('storeTypeSelect');
+                this.citySelect = document.getElementById('citySelect');
+                this.districtSelect = document.getElementById('districtSelect');
+                this.storeList = document.getElementById('storeList');
+                this.confirmBtn = document.getElementById('confirmBtn');
+                this.selectedInfo = document.getElementById('selectedInfo');
+            }
+
+            // 本地7-ELEVEN門市資料庫
+            sevenElevenStores = {
+                '台北市': {
+                    '中正區': [
+                        { id: 'TP001', name: '7-ELEVEN 中正門市', address: '台北市中正區中正路123號', phone: '02-2345-6789', lat: 25.0330, lng: 121.5654 },
+                        { id: 'TP002', name: '7-ELEVEN 台北車站門市', address: '台北市中正區北平西路3號', phone: '02-2345-6790', lat: 25.0478, lng: 121.5170 },
+                        { id: 'TP003', name: '7-ELEVEN 西門門市', address: '台北市中正區西門路88號', phone: '02-2345-6791', lat: 25.0419, lng: 121.5070 }
+                    ],
+                    '大安區': [
+                        { id: 'TP004', name: '7-ELEVEN 忠孝門市', address: '台北市大安區忠孝東路四段123號', phone: '02-2345-6792', lat: 25.0415, lng: 121.5440 },
+                        { id: 'TP005', name: '7-ELEVEN 敦南門市', address: '台北市大安區敦化南路一段456號', phone: '02-2345-6793', lat: 25.0400, lng: 121.5500 },
+                        { id: 'TP006', name: '7-ELEVEN 東區門市', address: '台北市大安區大安路一段789號', phone: '02-2345-6794', lat: 25.0380, lng: 121.5380 }
+                    ],
+                    '信義區': [
+                        { id: 'TP007', name: '7-ELEVEN 信義門市', address: '台北市信義區信義路五段7號', phone: '02-2345-6795', lat: 25.0330, lng: 121.5654 },
+                        { id: 'TP008', name: '7-ELEVEN 101門市', address: '台北市信義區市府路45號', phone: '02-2345-6796', lat: 25.0340, lng: 121.5664 },
+                        { id: 'TP009', name: '7-ELEVEN 松高門市', address: '台北市信義區松高路11號', phone: '02-2345-6797', lat: 25.0350, lng: 121.5674 }
+                    ]
+                },
+                '新北市': {
+                    '板橋區': [
+                        { id: 'NB001', name: '7-ELEVEN 板橋門市', address: '新北市板橋區中山路一段123號', phone: '02-2960-1234', lat: 25.0118, lng: 121.4627 },
+                        { id: 'NB002', name: '7-ELEVEN 新板門市', address: '新北市板橋區縣民大道二段7號', phone: '02-2960-1235', lat: 25.0138, lng: 121.4647 },
+                        { id: 'NB003', name: '7-ELEVEN 府中門市', address: '新北市板橋區府中路15號', phone: '02-2960-1236', lat: 25.0108, lng: 121.4607 }
+                    ],
+                    '中和區': [
+                        { id: 'NB004', name: '7-ELEVEN 中和門市', address: '新北市中和區中和路234號', phone: '02-2940-2345', lat: 24.9988, lng: 121.4967 },
+                        { id: 'NB005', name: '7-ELEVEN 景安門市', address: '新北市中和區景平路567號', phone: '02-2940-2346', lat: 24.9978, lng: 121.4977 },
+                        { id: 'NB006', name: '7-ELEVEN 南勢角門市', address: '新北市中和區南山路890號', phone: '02-2940-2347', lat: 24.9968, lng: 121.4987 }
+                    ]
+                },
+                '桃園市': {
+                    '桃園區': [
+                        { id: 'TY001', name: '7-ELEVEN 桃園門市', address: '桃園市桃園區中正路345號', phone: '03-333-4567', lat: 24.9936, lng: 121.3010 },
+                        { id: 'TY002', name: '7-ELEVEN 火車站門市', address: '桃園市桃園區復興路123號', phone: '03-333-4568', lat: 24.9896, lng: 121.3130 },
+                        { id: 'TY003', name: '7-ELEVEN 藝文門市', address: '桃園市桃園區同德路456號', phone: '03-333-4569', lat: 24.9916, lng: 121.3050 }
+                    ]
+                },
+                '台中市': {
+                    '中區': [
+                        { id: 'TC001', name: '7-ELEVEN 台中門市', address: '台中市中區台灣大道一段456號', phone: '04-2220-3456', lat: 24.1477, lng: 120.6736 },
+                        { id: 'TC002', name: '7-ELEVEN 火車站門市', address: '台中市中區建國路123號', phone: '04-2220-3457', lat: 24.1367, lng: 120.6856 },
+                        { id: 'TC003', name: '7-ELEVEN 一中門市', address: '台中市中區三民路789號', phone: '04-2220-3458', lat: 24.1547, lng: 120.6816 }
+                    ]
+                },
+                '高雄市': {
+                    '前金區': [
+                        { id: 'KH001', name: '7-ELEVEN 高雄門市', address: '高雄市前金區中正四路567號', phone: '07-201-2345', lat: 22.6273, lng: 120.3014 },
+                        { id: 'KH002', name: '7-ELEVEN 中央公園門市', address: '高雄市前金區五福三路123號', phone: '07-201-2346', lat: 22.6293, lng: 120.3034 },
+                        { id: 'KH003', name: '7-ELEVEN 愛河門市', address: '高雄市前金區河東路234號', phone: '07-201-2347', lat: 22.6313, lng: 120.3054 }
+                    ]
+                }
+            };
+
+            // 台灣縣市資料
+            taiwanData = {
+                '台北市': ['中正區', '大同區', '中山區', '松山區', '大安區', '萬華區', '信義區', '士林區', '北投區', '內湖區', '南港區', '文山區'],
+                '新北市': ['板橋區', '三重區', '中和區', '永和區', '新莊區', '新店區', '樹林區', '鶯歌區', '三峽區', '淡水區', '汐止區', '瑞芳區', '土城區', '蘆洲區', '五股區', '泰山區', '林口區', '深坑區', '石碇區', '坪林區', '三芝區', '石門區', '八里區', '平溪區', '雙溪區', '貢寮區', '金山區', '萬里區', '烏來區'],
+                '桃園市': ['桃園區', '中壢區', '大溪區', '楊梅區', '蘆竹區', '大園區', '龜山區', '八德區', '龍潭區', '平鎮區', '新屋區', '觀音區', '復興區'],
+                '台中市': ['中區', '東區', '南區', '西區', '北區', '北屯區', '西屯區', '南屯區', '太平區', '大里區', '霧峰區', '烏日區', '豐原區', '后里區', '石岡區', '東勢區', '和平區', '新社區', '潭子區', '大雅區', '神岡區', '大肚區', '沙鹿區', '龍井區', '梧棲區', '清水區', '大甲區', '外埔區', '大安區'],
+                '台南市': ['中西區', '東區', '南區', '北區', '安平區', '安南區', '永康區', '歸仁區', '新化區', '左鎮區', '玉井區', '楠西區', '南化區', '仁德區', '關廟區', '龍崎區', '官田區', '麻豆區', '佳里區', '西港區', '七股區', '將軍區', '學甲區', '北門區', '新營區', '後壁區', '白河區', '東山區', '六甲區', '下營區', '柳營區', '鹽水區', '善化區', '大內區', '山上區', '新市區', '安定區'],
+                '高雄市': ['新興區', '前金區', '苓雅區', '鹽埕區', '鼓山區', '旗津區', '前鎮區', '三民區', '楠梓區', '小港區', '左營區', '仁武區', '大社區', '岡山區', '路竹區', '阿蓮區', '田寮區', '燕巢區', '橋頭區', '梓官區', '彌陀區', '永安區', '湖內區', '鳳山區', '大寮區', '林園區', '鳥松區', '大樹區', '旗山區', '美濃區', '六龜區', '內門區', '杉林區', '甲仙區', '桃源區', '那瑪夏區', '茂林區', '茄萣區']
+            };
+
+            loadCities() {
+                Object.keys(this.taiwanData).forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    this.citySelect.appendChild(option);
+                });
+            }
+
+            // 全家便利商店門市資料庫
+            familyMartStores = {
+                '台北市': {
+                    '中正區': [
+                        { id: 'FM001', name: '全家 中正店', address: '台北市中正區重慶南路一段122號', phone: '02-2345-6789', lat: 25.0330, lng: 121.5654 },
+                        { id: 'FM002', name: '全家 台北車站店', address: '台北市中正區北平西路3號B1', phone: '02-2345-6790', lat: 25.0478, lng: 121.5170 },
+                        { id: 'FM003', name: '全家 西門店', address: '台北市中正區峨嵋街52號', phone: '02-2345-6791', lat: 25.0419, lng: 121.5070 }
+                    ],
+                    '大安區': [
+                        { id: 'FM004', name: '全家 忠孝店', address: '台北市大安區忠孝東路四段216巷8號', phone: '02-2345-6792', lat: 25.0415, lng: 121.5440 },
+                        { id: 'FM005', name: '全家 敦南店', address: '台北市大安區敦化南路一段187巷3號', phone: '02-2345-6793', lat: 25.0400, lng: 121.5500 },
+                        { id: 'FM006', name: '全家 東區店', address: '台北市大安區大安路一段51巷15號', phone: '02-2345-6794', lat: 25.0380, lng: 121.5380 }
+                    ]
+                },
+                '新北市': {
+                    '板橋區': [
+                        { id: 'FM007', name: '全家 板橋店', address: '新北市板橋區中山路一段50號', phone: '02-2960-1234', lat: 25.0118, lng: 121.4627 },
+                        { id: 'FM008', name: '全家 新板店', address: '新北市板橋區縣民大道二段68號', phone: '02-2960-1235', lat: 25.0138, lng: 121.4647 }
+                    ]
+                },
+                '台中市': {
+                    '中區': [
+                        { id: 'FM009', name: '全家 台中店', address: '台中市中區台灣大道一段57號', phone: '04-2220-3456', lat: 24.1477, lng: 120.6736 },
+                        { id: 'FM010', name: '全家 一中店', address: '台中市中區一中街127號', phone: '04-2220-3457', lat: 24.1547, lng: 120.6816 }
+                    ]
+                }
+            };
+
+            bindEvents() {
+                this.storeTypeSelect.addEventListener('change', () => this.onStoreTypeChange());
+                this.citySelect.addEventListener('change', () => this.onCityChange());
+                this.districtSelect.addEventListener('change', () => this.onDistrictChange());
+                this.confirmBtn.addEventListener('click', () => this.confirmSelection());
+            }
+
+            onStoreTypeChange() {
+                // 重置選擇
+                this.citySelect.value = '';
+                this.districtSelect.innerHTML = '<option value="">請先選擇縣市</option>';
+                this.districtSelect.disabled = true;
+                this.clearStoreList();
+                
+                // 更新標題
+                const storeType = this.storeTypeSelect.value;
+                const storeTypeName = storeType === 'family' ? '全家便利商店' : '7-ELEVEN';
+                document.querySelector('.header h1').textContent = `🏪 選擇 ${storeTypeName} 取貨門市`;
+            }
+
+            onCityChange() {
+                const selectedCity = this.citySelect.value;
+                this.districtSelect.innerHTML = '<option value="">請選擇區域</option>';
+                this.districtSelect.disabled = !selectedCity;
+                
+                if (selectedCity && this.taiwanData[selectedCity]) {
+                    this.taiwanData[selectedCity].forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        this.districtSelect.appendChild(option);
+                    });
+                    this.districtSelect.disabled = false;
+                }
+                
+                this.clearStoreList();
+            }
+
+            onDistrictChange() {
+                const city = this.citySelect.value;
+                const district = this.districtSelect.value;
+                
+                if (city && district) {
+                    this.searchStores(city, district);
+                } else {
+                    this.clearStoreList();
+                }
+            }
+
+            async searchStores(city, district) {
+                this.storeList.innerHTML = '<div class="loading">搜尋門市中...</div>';
+                
+                const storeType = this.storeTypeSelect.value;
+                
+                try {
+                    // 使用Netlify Functions呼叫Google Places API
+                    const response = await fetch(`/.netlify/functions/search-stores?city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}&storeType=${storeType}`);
+                    
+                    if (!response.ok) {
+                        throw new Error('API請求失敗');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.success && data.stores.length > 0) {
+                        // 轉換API回傳格式為前端需要的格式
+                        const formattedStores = data.stores.map(store => ({
+                            name: store.storeName,
+                            formatted_address: store.storeAddress,
+                            place_id: store.storeId,
+                            geometry: {
+                                location: store.location
+                            },
+                            rating: store.rating,
+                            opening_hours: {
+                                open_now: store.openNow
+                            }
+                        }));
+                        
+                        this.displayStores(formattedStores);
+                    } else {
+                        // 如果沒有找到門市，使用本地資料庫
+                        console.log('Google API無結果，使用本地資料');
+                        const localStores = this.getLocalStores(city, district, storeType);
+                        this.displayStores(localStores);
+                    }
+                    
+                } catch (error) {
+                    console.error('搜尋門市錯誤:', error);
+                    // 發生錯誤時，使用本地資料庫作為備援
+                    console.log('使用本地門市資料作為備援');
+                    const localStores = this.getLocalStores(city, district, storeType);
+                    this.displayStores(localStores);
+                }
+            }
+
+            getLocalStores(city, district, storeType = '711') {
+                let storeDatabase;
+                
+                // 根據門市類型選擇資料庫
+                if (storeType === 'family') {
+                    storeDatabase = this.familyMartStores;
+                } else {
+                    storeDatabase = this.sevenElevenStores;
+                }
+                
+                // 從本地資料庫獲取門市資料（作為備援）
+                if (storeDatabase[city] && storeDatabase[city][district]) {
+                    return storeDatabase[city][district].map(store => ({
+                        name: store.name,
+                        address: store.address,
+                        phone: store.phone,
+                        geometry: {
+                            location: { lat: store.lat, lng: store.lng }
+                        },
+                        place_id: store.id,
+                        formatted_address: store.address
+                    }));
+                }
+                
+                // 如果沒有本地資料，返回空陣列
+                return [];
+            }
+
+            displayStores(stores) {
+                const storeType = this.storeTypeSelect.value;
+                
+                // 根據門市類型過濾門市
+                if (storeType === 'family') {
+                    this.stores = stores.filter(store => 
+                        store.name.includes('全家') || 
+                        store.name.includes('FamilyMart') ||
+                        store.name.includes('Family')
+                    );
+                } else {
+                    this.stores = stores.filter(store => 
+                        store.name.includes('7-ELEVEN') || 
+                        store.name.includes('7-11') ||
+                        store.name.includes('統一超商')
+                    );
+                }
+
+                if (this.stores.length === 0) {
+                    const storeTypeName = storeType === 'family' ? '全家便利商店' : '7-ELEVEN';
+                    this.storeList.innerHTML = `<div class="loading">此區域暫無${storeTypeName}門市資料</div>`;
+                    return;
+                }
+
+                this.storeList.innerHTML = '';
+                this.stores.forEach((store, index) => {
+                    const storeItem = document.createElement('div');
+                    storeItem.className = 'store-item';
+                    storeItem.dataset.index = index;
+                    
+                    storeItem.innerHTML = `
+                        <div class="store-name">${store.name}</div>
+                        <div class="store-address">${store.formatted_address || store.address}</div>
+                    `;
+                    
+                    storeItem.addEventListener('click', () => this.selectStore(index));
+                    this.storeList.appendChild(storeItem);
+                });
+
+                this.updateMapMarkers();
+            }
+
+            selectStore(index) {
+                // 移除之前的選擇
+                document.querySelectorAll('.store-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                
+                // 選擇新的門市
+                const storeItem = document.querySelector(`[data-index="${index}"]`);
+                storeItem.classList.add('selected');
+                
+                this.selectedStore = this.stores[index];
+                this.confirmBtn.disabled = false;
+                
+                // 更新地圖中心和資訊
+                this.showStoreOnMap(this.selectedStore);
+                this.showSelectedInfo(this.selectedStore);
+            }
+
+            showStoreOnMap(store) {
+                if (this.map && store.geometry) {
+                    const location = store.geometry.location;
+                    this.map.setCenter(location);
+                    this.map.setZoom(16);
+                    
+                    // 高亮選中的標記
+                    this.markers.forEach(marker => {
+                        marker.setIcon({
+                            url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                        });
+                    });
+                    
+                    const selectedMarker = this.markers.find(marker => 
+                        marker.getPosition().lat() === location.lat &&
+                        marker.getPosition().lng() === location.lng
+                    );
+                    
+                    if (selectedMarker) {
+                        selectedMarker.setIcon({
+                            url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                        });
+                    }
+                }
+            }
+
+            showSelectedInfo(store) {
+                document.getElementById('selectedStoreName').textContent = store.name;
+                document.getElementById('selectedStoreAddress').textContent = store.formatted_address || store.address;
+                document.getElementById('selectedStorePhone').textContent = store.phone || '電話資訊待更新';
+                this.selectedInfo.classList.add('show');
+            }
+
+            updateMapMarkers() {
+                // 清除舊標記
+                this.markers.forEach(marker => marker.setMap(null));
+                this.markers = [];
+                
+                if (!this.map) return;
+                
+                // 添加新標記
+                this.stores.forEach(store => {
+                    if (store.geometry) {
+                        const marker = new google.maps.Marker({
+                            position: store.geometry.location,
+                            map: this.map,
+                            title: store.name,
+                            icon: {
+                                url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                            }
+                        });
+                        
+                        this.markers.push(marker);
+                    }
+                });
+                
+                // 調整地圖視野以包含所有標記
+                if (this.markers.length > 0) {
+                    const bounds = new google.maps.LatLngBounds();
+                    this.markers.forEach(marker => {
+                        bounds.extend(marker.getPosition());
+                    });
+                    this.map.fitBounds(bounds);
+                }
+            }
+
+            clearStoreList() {
+                this.storeList.innerHTML = '<div class="loading">請先選擇門市類型、縣市和區域</div>';
+                this.confirmBtn.disabled = true;
+                this.selectedStore = null;
+                this.selectedInfo.classList.remove('show');
+                
+                // 清除地圖標記
+                this.markers.forEach(marker => marker.setMap(null));
+                this.markers = [];
+            }
+
+            initializeMap() {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}&callback=initMap&language=zh-TW`;
+                script.async = true;
+                document.head.appendChild(script);
+                
+                window.initMap = () => {
+                    this.map = new google.maps.Map(document.getElementById('map'), {
+                        center: { lat: 23.8, lng: 121.0 }, // 台灣中心
+                        zoom: 7,
+                        styles: [
+                            {
+                                featureType: 'poi',
+                                elementType: 'labels',
+                                stylers: [{ visibility: 'off' }]
+                            }
+                        ]
+                    });
+                };
+            }
+
+            confirmSelection() {
+                if (!this.selectedStore) return;
+                
+                // 儲存選擇的門市到購物車
+                const storeData = {
+                    storeId: this.selectedStore.place_id,
+                    storeName: this.selectedStore.name,
+                    storeAddress: this.selectedStore.formatted_address || this.selectedStore.address,
+                    storePhone: this.selectedStore.phone,
+                    location: this.selectedStore.geometry?.location
+                };
+                
+                // 生成訂單
+                this.generateOrder(storeData);
+            }
+
+            async generateOrder(storeData) {
+                // 顯示載入狀態
+                this.confirmBtn.disabled = true;
+                this.confirmBtn.textContent = '生成訂單中...';
+                
+                // 模擬載入時間
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // 生成訂單號碼（使用時間戳確保唯一性）
+                const orderNumber = 'ORD' + Date.now();
+                
+                // 儲存訂單資料到localStorage
+                const orderData = {
+                    id: orderNumber,
+                    selectedStore: storeData,
+                    createdAt: new Date().toISOString(),
+                    status: 'pending'
+                };
+                
+                // 保存到本地儲存
+                localStorage.setItem('currentOrder', JSON.stringify(orderData));
+                localStorage.setItem('selectedStore', JSON.stringify(storeData));
+                
+                // 顯示訂單資訊
+                this.showOrderInfo(orderData);
+            }
+
+            showOrderInfo(order) {
+                // 檢查是否是從購物車頁面呼叫的
+                const urlParams = new URLSearchParams(window.location.search);
+                const fromCart = urlParams.get('from') === 'cart';
+                const isIframe = urlParams.get('mode') === 'iframe';
+                
+                if (fromCart) {
+                    if (isIframe) {
+                        // 如果是iframe模式，發送訊息給父頁面
+                        this.sendToParent(order.selectedStore);
+                    } else {
+                        // 如果是頁面跳轉模式，返回購物車並傳遞門市資訊
+                        this.returnToCart(order.selectedStore);
+                    }
+                    return;
+                }
+                
+                // 隱藏確認按鈕
+                this.confirmBtn.style.display = 'none';
+                
+                // 顯示訂單步驟
+                const orderStep = document.getElementById('orderStep');
+                const orderNumber = document.getElementById('orderNumber');
+                
+                orderNumber.textContent = order.id;
+                orderStep.style.display = 'block';
+                orderStep.classList.add('success-animation');
+                
+                // 更新標題
+                document.querySelector('.header h1').textContent = '🎉 訂單生成成功';
+                document.querySelector('.header p').textContent = '請將訂單號碼提供給客服確認訂單';
+            }
+
+            sendToParent(storeData) {
+                // 準備要發送給父頁面的門市資料
+                const messageData = {
+                    storeType: this.getStoreType(storeData.storeName),
+                    storeId: this.extractStoreId(storeData.storeName, storeData.storeAddress),
+                    storeName: this.cleanStoreName(storeData.storeName),
+                    storeAddress: storeData.storeAddress,
+                    timestamp: Date.now()
+                };
+                
+                // 發送訊息給父頁面
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'storeSelected',
+                        storeData: messageData
+                    }, window.location.origin);
+                }
+            }
+
+            returnToCart(storeData) {
+                // 將門市資訊儲存到localStorage
+                localStorage.setItem('selectedStoreData', JSON.stringify({
+                    storeType: this.getStoreType(storeData.storeName),
+                    storeId: this.extractStoreId(storeData.storeName, storeData.storeAddress),
+                    storeName: this.cleanStoreName(storeData.storeName),
+                    storeAddress: storeData.storeAddress,
+                    timestamp: Date.now()
+                }));
+                
+                // 顯示成功訊息
+                alert('✅ 門市選擇完成！\n正在返回購物車頁面...');
+                
+                // 返回購物車頁面
+                window.location.href = 'cart.html';
+            }
+
+            getStoreType(storeName) {
+                if (storeName.includes('7-ELEVEN') || storeName.includes('7-11') || storeName.includes('統一超商')) {
+                    return '711';
+                } else if (storeName.includes('全家') || storeName.includes('FamilyMart')) {
+                    return 'family';
+                }
+                return '711'; // 預設為7-ELEVEN
+            }
+
+            extractStoreId(storeName, storeAddress) {
+                // 嘗試從門市名稱中提取店號
+                const nameMatch = storeName.match(/\d{4,6}/);
+                if (nameMatch) {
+                    return nameMatch[0];
+                }
+                
+                // 嘗試從地址中提取店號
+                const addressMatch = storeAddress.match(/\d{4,6}/);
+                if (addressMatch) {
+                    return addressMatch[0];
+                }
+                
+                // 如果找不到，生成一個基於時間的店號
+                return Date.now().toString().slice(-6);
+            }
+
+            cleanStoreName(storeName) {
+                // 移除常見的前綴和店號，只保留門市名稱
+                return storeName
+                    .replace(/7-ELEVEN\s*/i, '')
+                    .replace(/7-11\s*/i, '')
+                    .replace(/統一超商\s*/i, '')
+                    .replace(/全家\s*/i, '')
+                    .replace(/FamilyMart\s*/i, '')
+                    .replace(/\d{4,6}\s*/, '') // 移除店號
+                    .replace(/門市\s*$/, '') // 移除結尾的"門市"
+                    .trim();
+            }
+
+            async saveToCart(storeData) {
+                try {
+                    // 這裡串接你的購物車API
+                    const response = await fetch('/api/cart/store', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            selectedStore: storeData,
+                            cartId: this.getCartId() // 取得購物車ID
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        console.log('門市資訊已儲存至購物車');
+                        // 可以導向結帳頁面
+                        // window.location.href = '/checkout';
+                    }
+                } catch (error) {
+                    console.error('儲存門市資訊失敗:', error);
+                }
+            }
+
+            getCartId() {
+                // 從localStorage或cookie取得購物車ID
+                return localStorage.getItem('cartId') || 'temp_cart_id';
+            }
+        }
+
+        // 複製訂單號碼功能
+        function copyOrderNumber() {
+            const orderNumber = document.getElementById('orderNumber').textContent;
+            const copyBtn = document.getElementById('copyBtn');
+            
+            // 使用現代的Clipboard API
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(orderNumber).then(() => {
+                    showCopySuccess(copyBtn);
+                }).catch(() => {
+                    fallbackCopy(orderNumber, copyBtn);
+                });
+            } else {
+                fallbackCopy(orderNumber, copyBtn);
+            }
+        }
+
+        // 備用複製方法
+        function fallbackCopy(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動複製訂單號碼');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 顯示複製成功狀態
+        function showCopySuccess(button) {
+            const originalText = button.textContent;
+            button.textContent = '✅ 已複製';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }
+
+        // 關閉iframe函數
+        function closeIframe() {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'closeIframe'
+                }, window.location.origin);
+            }
+        }
+
+        // 初始化門市選擇器
+        document.addEventListener('DOMContentLoaded', () => {
+            new StoreSelector();
+        });
+    </script>
+</body>
+</html> 

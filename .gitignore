@@ -83,3 +83,5 @@ uploads/
 # 備份文件
 *.bak
 *.backup 
+# Local Netlify folder
+.netlify

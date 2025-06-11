@@ -487,9 +487,8 @@
         }
 
         .store-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            display: flex;
+            justify-content: center;
             margin-bottom: 1rem;
         }
 
@@ -518,6 +517,19 @@
             background: var(--highlight-color);
             border-color: var(--highlight-color);
             color: var(--primary-color);
+        }
+
+        .store-btn.smart-search {
+            background: linear-gradient(135deg, var(--highlight-color), #8e44ad);
+            color: var(--primary-color);
+            font-weight: 600;
+            border: 2px solid var(--highlight-color);
+        }
+
+        .store-btn.smart-search:hover {
+            background: linear-gradient(135deg, #8e44ad, var(--highlight-color));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 254, 73, 0.3);
         }
 
         .selected-store {
@@ -1129,17 +1141,13 @@
                 <!-- Store Selection -->
                 <div class="store-selection">
                     <label class="form-label">選擇取貨門市 *</label>
-                    <p class="store-instruction">請點擊下方按鈕前往官方網站查詢門市，查詢完成後請手動填入門市資訊</p>
+                    <p class="store-instruction">使用「智慧門市選擇」功能，支援7-ELEVEN和全家便利商店，可自動搜尋門市並載入資訊</p>
                     
-                    <!-- Official Store Search Buttons -->
+                    <!-- Store Search Button -->
                     <div class="store-buttons">
-                        <button class="store-btn official-search" onclick="openOfficialStoreSearch('711')">
-                            <i class="fas fa-external-link-alt"></i>
-                            查詢 7-ELEVEN 門市
-                        </button>
-                        <button class="store-btn official-search" onclick="openOfficialStoreSearch('family')">
-                            <i class="fas fa-external-link-alt"></i>
-                            查詢 全家便利商店 門市
+                        <button class="store-btn smart-search" onclick="openSmartStoreSelector()">
+                            <i class="fas fa-map-marker-alt"></i>
+                            智慧門市選擇
                         </button>
                     </div>
 
@@ -1240,7 +1248,51 @@
             cart = JSON.parse(localStorage.getItem('cart') || '[]');
             renderCart();
             updateSummary();
+            loadSelectedStore(); // 載入選擇的門市資訊
             validateForm();
+        }
+
+        // Load selected store from localStorage
+        function loadSelectedStore() {
+            const storeData = localStorage.getItem('selectedStoreData');
+            if (storeData) {
+                try {
+                    const store = JSON.parse(storeData);
+                    
+                    // 檢查資料是否是最近的（避免載入過舊的資料）
+                    const hoursSinceSelection = (Date.now() - store.timestamp) / (1000 * 60 * 60);
+                    if (hoursSinceSelection > 24) {
+                        // 如果超過24小時，清除資料
+                        localStorage.removeItem('selectedStoreData');
+                        return;
+                    }
+                    
+                    // 自動填入門市資訊
+                    document.getElementById('storeTypeSelect').value = store.storeType;
+                    document.getElementById('storeIdInput').value = store.storeId;
+                    document.getElementById('storeNameInput').value = store.storeName;
+                    document.getElementById('storeAddressInput').value = store.storeAddress;
+                    
+                    // 自動確認門市選擇
+                    confirmStoreSelection();
+                    
+                    // 清除localStorage中的門市資料（避免重複使用）
+                    localStorage.removeItem('selectedStoreData');
+                    
+                    // 顯示成功訊息
+                    setTimeout(() => {
+                        alert('✅ 門市資訊已自動載入！\n\n' +
+                              `門市類型：${store.storeType === '711' ? '7-ELEVEN' : '全家便利商店'}\n` +
+                              `店號：${store.storeId}\n` +
+                              `門市名稱：${store.storeName}\n` +
+                              `地址：${store.storeAddress}`);
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('載入門市資訊時發生錯誤:', error);
+                    localStorage.removeItem('selectedStoreData');
+                }
+            }
         }
 
         // Render cart items
@@ -1311,29 +1363,157 @@
             document.getElementById('total').textContent = `NT$ ${total}`;
         }
 
-        // Open official store search
-        function openOfficialStoreSearch(storeType) {
-            let url = '';
-            let storeName = '';
+        // Open smart store selector
+        function openSmartStoreSelector() {
+            // 選擇開啟方式：iframe 或 新頁面
+            const useIframe = confirm('選擇門市開啟方式：\n\n✅ 確定 = 在此頁面中開啟（推薦）\n❌ 取消 = 跳轉到新頁面');
             
-            if (storeType === '711') {
-                url = 'https://emap.pcsc.com.tw/ecmap/default.aspx';
-                storeName = '7-ELEVEN';
-            } else if (storeType === 'family') {
-                url = 'https://www.family.com.tw/Marketing/inquiry.aspx';
-                storeName = '全家便利商店';
-            }
-
-            // 在新視窗中開啟官方門市查詢網站
-            const newWindow = window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
-                
-            if (newWindow) {
-                // 顯示提示訊息
-                alert(`已開啟 ${storeName} 官方門市查詢網站\n\n請在新視窗中查詢您要的門市，然後回到此頁面手動填入門市資訊。\n\n門市資訊通常包含：\n• 門市店號\n• 門市名稱\n• 門市地址`);
-                } else {
-                alert('無法開啟新視窗，請檢查瀏覽器設定或手動前往官方網站查詢門市。');
+            if (useIframe) {
+                openStoreIframe();
+            } else {
+                // 跳轉到新頁面
+                window.location.href = 'store_selector.html?from=cart';
             }
         }
+
+        // 開啟iframe門市選擇
+        function openStoreIframe() {
+            // 創建iframe覆蓋層
+            const overlay = document.createElement('div');
+            overlay.id = 'storeIframeOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            `;
+
+            // 創建iframe容器
+            const container = document.createElement('div');
+            container.style.cssText = `
+                width: 100%;
+                max-width: 1200px;
+                height: 90vh;
+                background: white;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                position: relative;
+            `;
+
+            // 創建關閉按鈕
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '✕';
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: #ff4757;
+                color: white;
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                z-index: 10001;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+            `;
+            closeBtn.addEventListener('click', closeStoreIframe);
+            closeBtn.addEventListener('mouseenter', () => {
+                closeBtn.style.background = '#ff3838';
+                closeBtn.style.transform = 'scale(1.1)';
+            });
+            closeBtn.addEventListener('mouseleave', () => {
+                closeBtn.style.background = '#ff4757';
+                closeBtn.style.transform = 'scale(1)';
+            });
+
+            // 創建iframe
+            const iframe = document.createElement('iframe');
+            iframe.src = 'store_selector.html?from=cart&mode=iframe';
+            iframe.style.cssText = `
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 15px;
+            `;
+
+            // 組裝元素
+            container.appendChild(closeBtn);
+            container.appendChild(iframe);
+            overlay.appendChild(container);
+            document.body.appendChild(overlay);
+
+            // 監聽來自iframe的訊息
+            window.addEventListener('message', handleIframeMessage);
+
+            // 禁用背景滾動
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 關閉iframe門市選擇
+        function closeStoreIframe() {
+            const overlay = document.getElementById('storeIframeOverlay');
+            if (overlay) {
+                overlay.remove();
+                window.removeEventListener('message', handleIframeMessage);
+                document.body.style.overflow = '';
+            }
+        }
+
+        // 處理來自iframe的訊息
+        function handleIframeMessage(event) {
+            // 確保訊息來自我們的門市選擇頁面
+            if (event.origin !== window.location.origin) return;
+
+            if (event.data.type === 'storeSelected') {
+                // 收到門市選擇資料
+                const storeData = event.data.storeData;
+                
+                // 自動填入門市資訊
+                document.getElementById('storeTypeSelect').value = storeData.storeType;
+                document.getElementById('storeIdInput').value = storeData.storeId;
+                document.getElementById('storeNameInput').value = storeData.storeName;
+                document.getElementById('storeAddressInput').value = storeData.storeAddress;
+                
+                // 自動確認門市選擇
+                confirmStoreSelection();
+                
+                // 關閉iframe
+                closeStoreIframe();
+                
+                // 顯示成功訊息
+                setTimeout(() => {
+                    alert('✅ 門市資訊已自動載入！\n\n' +
+                          `門市類型：${storeData.storeType === '711' ? '7-ELEVEN' : '全家便利商店'}\n` +
+                          `店號：${storeData.storeId}\n` +
+                          `門市名稱：${storeData.storeName}\n` +
+                          `地址：${storeData.storeAddress}`);
+                }, 500);
+            } else if (event.data.type === 'closeIframe') {
+                // 收到關閉iframe的訊息
+                closeStoreIframe();
+            }
+        }
+
+        // ESC鍵關閉iframe
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('storeIframeOverlay')) {
+                closeStoreIframe();
+            }
+        });
+
+
 
         // Confirm store selection
         function confirmStoreSelection() {
