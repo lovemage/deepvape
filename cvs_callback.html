@@ -152,6 +152,33 @@
                 // 3. 對於POST請求，參數可能會在頁面載入後透過JavaScript設置
                 // 或者透過form自動提交到iframe中
                 console.log('等待POST資料載入...');
+                
+                // 4. 嘗試監聽表單提交（如果7-11使用form POST方式）
+                window.addEventListener('load', function() {
+                    // 檢查是否有表單被提交
+                    const forms = document.getElementsByTagName('form');
+                    console.log('找到表單數量:', forms.length);
+                    
+                    // 如果頁面中有隱藏的input欄位（7-11 API可能會這樣傳資料）
+                    const inputs = document.getElementsByTagName('input');
+                    const postData = {};
+                    for (let input of inputs) {
+                        if (input.name && input.value) {
+                            postData[input.name] = input.value;
+                            console.log('找到POST資料:', input.name, '=', input.value);
+                        }
+                    }
+                    
+                    // 如果有找到資料，處理它
+                    if (postData.CVSStoreID || postData.storeId) {
+                        processStoreSelection({
+                            storeId: postData.CVSStoreID || postData.storeId,
+                            storeName: postData.CVSStoreName || postData.storeName,
+                            storeAddress: postData.CVSAddress || postData.storeAddress,
+                            storePhone: postData.CVSTelephone || postData.storePhone
+                        });
+                    }
+                });
             }
         })();
 
