@@ -1526,8 +1526,25 @@
             // 建構回調URL
             const currentProtocol = window.location.protocol;
             const currentHost = window.location.host;
-            const callbackPath = '/cvs_callback.html'; // 修改為根目錄
-            const callbackUrl = `${currentProtocol}//${currentHost}${callbackPath}`;
+            
+            // 判斷是否為本地開發環境
+            const isLocalhost = currentHost.includes('localhost') || currentHost.includes('127.0.0.1');
+            
+            // 如果是本地開發環境，顯示警告
+            if (isLocalhost) {
+                alert('⚠️ 注意：您目前在本地開發環境。\n\n7-11門市選擇API需要有效的線上callback URL才能正常運作。\n\n建議將網站部署到線上環境進行測試。');
+            }
+            
+            // 使用 Netlify Function 作為 callback URL
+            let callbackUrl;
+            if (isLocalhost) {
+                // 開發環境：使用實際部署的網址的 Netlify Function
+                callbackUrl = 'https://deepvape.org/.netlify/functions/cvs-callback';
+                console.warn('開發環境偵測：使用生產環境 Netlify Function URL');
+            } else {
+                // 生產環境：使用當前網址的 Netlify Function
+                callbackUrl = `${currentProtocol}//${currentHost}/.netlify/functions/cvs-callback`;
+            }
             
             // 7-11 電子地圖 API URL
             const eshopId = '870'; // 您的廠商代碼
@@ -1536,6 +1553,7 @@
             
             console.log('開啟7-11電子地圖API:', apiUrl);
             console.log('回調URL:', callbackUrl);
+            console.log('環境:', isLocalhost ? '開發環境' : '生產環境');
             
             // 開啟新視窗
             const mapWindow = window.open(apiUrl, 'SevenElevenStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
@@ -1550,7 +1568,10 @@
                   '1. 在地圖上選擇您要取貨的門市\n' +
                   '2. 點擊「確認」按鈕\n' +
                   '3. 系統將自動回傳門市資訊\n\n' +
-                  '如果自動回傳失敗，您仍可以手動輸入門市資訊。');
+                  '⚠️ 注意事項：\n' +
+                  '- 請確保允許彈出視窗\n' +
+                  '- 選擇門市後系統會自動填入資訊\n' +
+                  '- 如果自動填入失敗，您仍可手動輸入門市資訊');
         }
 
 
