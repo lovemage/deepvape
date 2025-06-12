@@ -133,20 +133,25 @@
 
         // 處理POST請求 - 在頁面載入前就嘗試獲取POST數據
         (function() {
-            // 如果是通過form POST提交的，嘗試從referrer獲取數據
-            if (document.referrer && document.referrer.includes('emap.pcsc.com.tw')) {
+            // 檢查是否從7-11官方網站來的請求
+            if (document.referrer && (document.referrer.includes('emap.pcsc.com.tw') || document.referrer.includes('emap.presco.com.tw'))) {
                 console.log('來自7-11官方網站的請求');
+                console.log('Referrer:', document.referrer);
                 
                 // 嘗試從各種可能的來源獲取數據
-                // 1. 檢查是否有form data
+                // 1. 檢查是否有URL參數 (GET方式)
                 if (window.location.search) {
                     console.log('發現URL參數:', window.location.search);
                 }
                 
-                // 2. 檢查hash
+                // 2. 檢查hash參數
                 if (window.location.hash) {
                     console.log('發現Hash參數:', window.location.hash);
                 }
+                
+                // 3. 對於POST請求，參數可能會在頁面載入後透過JavaScript設置
+                // 或者透過form自動提交到iframe中
+                console.log('等待POST資料載入...');
             }
         })();
 
@@ -195,19 +200,20 @@
             if (storeData.storeId || storeData.storeName) {
                 processStoreSelection(storeData);
             } else {
-                // 等待一段時間看是否有其他方式傳入資料
-                setTimeout(() => {
-                    // 如果還是沒有資料，顯示測試門市（開發用）
-                    if (!selectedStoreData) {
-                        console.log('未收到門市資料，使用測試資料');
-                        processStoreSelection({
-                            storeId: '001',
-                            storeName: '統一超商信義門市',
-                            storeAddress: '台北市信義區信義路五段7號',
-                            storePhone: '02-2345-6789'
-                        });
-                    }
-                }, 3000);
+                // 立即檢查 7-11 API 回調
+                if (!handle711Callback()) {
+                    // 如果不是 7-11 回調，檢查全家回調
+                    handleFamilyCallback();
+                    
+                    // 給一點時間讓 POST 資料載入
+                    setTimeout(() => {
+                        // 如果還是沒有資料，顯示錯誤訊息
+                        if (!selectedStoreData) {
+                            console.log('未收到門市資料');
+                            showError('未接收到門市選擇資訊，請重新選擇門市或手動輸入。');
+                        }
+                    }, 2000);
+                }
             }
             
             // 監聽來自父視窗的訊息
@@ -280,21 +286,25 @@
                 
                 console.log('準備發送訊息:', messageData);
                 
+                // 取得來源網域（為了安全性）
+                const targetOrigin = window.location.origin;
+                console.log('目標來源:', targetOrigin);
+                
                 // 向父視窗發送門市資訊
                 if (window.opener && !window.opener.closed) {
                     console.log('向opener發送訊息');
-                    window.opener.postMessage(messageData, '*');
+                    window.opener.postMessage(messageData, targetOrigin);
                 }
                 
                 // 也嘗試向父框架發送
                 if (window.parent && window.parent !== window) {
                     console.log('向parent發送訊息');
-                    window.parent.postMessage(messageData, '*');
+                    window.parent.postMessage(messageData, targetOrigin);
                 }
                 
                 // 嘗試向所有可能的目標發送
                 try {
-                    window.top.postMessage(messageData, '*');
+                    window.top.postMessage(messageData, targetOrigin);
                 } catch (e) {
                     console.log('無法向top發送訊息:', e);
                 }
@@ -333,23 +343,62 @@
         function handle711Callback() {
             // 7-11 API 可能會在 URL 中包含特殊參數
             const url = window.location.href;
+            console.log('檢查7-11 API回調參數...');
             
-            // 檢查是否包含 7-11 的回調參數
-            if (url.includes('CVSStoreID') || url.includes('CVSStoreName')) {
-                const params = new URLSearchParams(window.location.search);
+            // 優先檢查標準的 7-11 API 參數
+            const params = new URLSearchParams(window.location.search);
+            
+            // 7-11 API 標準參數名稱
+            const storeId = params.get('CVSStoreID') || params.get('storeId') || params.get('StoreID');
+            const storeName = params.get('CVSStoreName') || params.get('storeName') || params.get('StoreName');
+            const storeAddress = params.get('CVSAddress') || params.get('storeAddress') || params.get('Address');
+            const storePhone = params.get('CVSTelephone') || params.get('storePhone') || params.get('Telephone');
+            
+            if (storeId || storeName) {
+                console.log('找到7-11門市資料:', { storeId, storeName, storeAddress, storePhone });
                 
                 processStoreSelection({
-                    storeId: params.get('CVSStoreID') || params.get('storeId'),
-                    storeName: params.get('CVSStoreName') || params.get('storeName'),
-                    storeAddress: params.get('CVSAddress') || params.get('storeAddress'),
-                    storePhone: params.get('CVSTelephone') || params.get('storePhone')
+                    storeId: storeId,
+                    storeName: storeName,
+                    storeAddress: storeAddress,
+                    storePhone: storePhone
                 });
+                return true;
             }
+            
+            // 如果沒有在URL參數中找到，嘗試其他方式
+            // POST資料可能需要從其他地方獲取
+            if (document.referrer && document.referrer.includes('presco.com.tw')) {
+                console.log('來自7-11官方API，但未在URL中找到參數');
+                console.log('可能是POST請求，等待資料載入...');
+                
+                // 延遲再次檢查，給POST資料載入的時間
+                setTimeout(() => {
+                    // 再次嘗試獲取資料
+                    const postStoreId = document.getElementById('CVSStoreID')?.value || 
+                                       document.querySelector('[name="CVSStoreID"]')?.value;
+                    const postStoreName = document.getElementById('CVSStoreName')?.value || 
+                                         document.querySelector('[name="CVSStoreName"]')?.value;
+                    const postStoreAddress = document.getElementById('CVSAddress')?.value || 
+                                            document.querySelector('[name="CVSAddress"]')?.value;
+                    const postStorePhone = document.getElementById('CVSTelephone')?.value || 
+                                          document.querySelector('[name="CVSTelephone"]')?.value;
+                    
+                    if (postStoreId || postStoreName) {
+                        console.log('從POST資料中找到門市資訊');
+                        processStoreSelection({
+                            storeId: postStoreId,
+                            storeName: postStoreName,
+                            storeAddress: postStoreAddress,
+                            storePhone: postStorePhone
+                        });
+                    }
+                }, 1000);
+            }
+            
+            return false;
         }
 
-        // 檢查 7-11 回調
-        handle711Callback();
-        
         // 處理全家 API 的回調格式
         function handleFamilyCallback() {
             // 全家 API 可能會使用不同的參數名稱
