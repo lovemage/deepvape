@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-11 門市選擇回調處理 | DeepVape</title>
+    <style>
+        body {
+            font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #083e12 0%, #041348 100%);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(4, 19, 72, 0.8);
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        .success { color: #1afe49; }
+        .error { color: #ff6b6b; }
+        .store-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="status">處理中...</h2>
+        <div id="storeInfo" class="store-info" style="display: none;">
+            <div><strong>門市編號：</strong><span id="storeId"></span></div>
+            <div><strong>門市名稱：</strong><span id="storeName"></span></div>
+            <div><strong>門市地址：</strong><span id="storeAddress"></span></div>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        // 處理 7-11 回調資料
+        (function() {
+            console.log('7-11 門市回調頁面載入');
+            
+            // 取得 URL 參數
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // 可能的參數名稱
+            const storeData = {
+                storeId: urlParams.get('CVSStoreID') || urlParams.get('storeId') || 
+                        urlParams.get('storeid') || urlParams.get('POIId') || '',
+                storeName: urlParams.get('CVSStoreName') || urlParams.get('storeName') || 
+                          urlParams.get('storename') || urlParams.get('POIName') || '',
+                storeAddress: urlParams.get('CVSAddress') || urlParams.get('storeAddress') || 
+                             urlParams.get('address') || urlParams.get('POIAddress') || ''
+            };
+            
+            // 如果是 POST 請求，嘗試從表單資料取得
+            if (window.location.method === 'POST') {
+                // 這在純 HTML 中較難處理，但我們嘗試其他方法
+                console.log('偵測到 POST 請求');
+            }
+            
+            console.log('解析的門市資料:', storeData);
+            
+            // 顯示門市資訊
+            if (storeData.storeId || storeData.storeName) {
+                document.getElementById('status').textContent = '✅ 門市選擇成功！';
+                document.getElementById('status').className = 'success';
+                document.getElementById('storeInfo').style.display = 'block';
+                document.getElementById('storeId').textContent = storeData.storeId || '未提供';
+                document.getElementById('storeName').textContent = storeData.storeName || '未提供';
+                document.getElementById('storeAddress').textContent = storeData.storeAddress || '未提供';
+                
+                // 傳送資料回父視窗
+                if (window.opener && !window.opener.closed) {
+                    window.opener.postMessage({
+                        type: 'storeSelected',
+                        storeInfo: storeData
+                    }, '*');
+                    
+                    document.getElementById('message').innerHTML = 
+                        '<p style="color: #999; margin-top: 1rem;">資料已傳送，視窗將自動關閉...</p>';
+                    
+                    // 2秒後關閉
+                    setTimeout(() => {
+                        window.close();
+                    }, 2000);
+                }
+            } else {
+                document.getElementById('status').textContent = '❌ 未收到門市資料';
+                document.getElementById('status').className = 'error';
+                document.getElementById('message').innerHTML = `
+                    <p>可能的原因：</p>
+                    <ul style="text-align: left;">
+                        <li>門市選擇被取消</li>
+                        <li>資料傳送格式問題</li>
+                        <li>請嘗試使用「離線門市選擇器」</li>
+                    </ul>
+                `;
+                
+                // 記錄所有參數供除錯
+                console.log('所有 URL 參數:');
+                for (let [key, value] of urlParams) {
+                    console.log(`${key}: ${value}`);
+                }
+            }
+        })();
+    </script>
+</body>
+</html> 
