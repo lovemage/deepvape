@@ -564,13 +564,19 @@
         }
 
         .cart-button {
-            background: linear-gradient(45deg, var(--warning-color), #ff6b35) !important;
+            background: linear-gradient(45deg, #ff1493, #8a2be2) !important;
             margin-right: 0.5rem;
+            border: none !important;
+            color: white !important;
+            font-weight: 600 !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3) !important;
         }
 
         .cart-button:hover {
             transform: scale(1.05) !important;
-            box-shadow: 0 5px 20px rgba(255, 171, 0, 0.4) !important;
+            box-shadow: 0 6px 25px rgba(255, 20, 147, 0.5), 0 0 20px rgba(138, 43, 226, 0.4) !important;
+            background: linear-gradient(45deg, #ff69b4, #9370db) !important;
         }
         }
 
@@ -1466,9 +1472,6 @@
             <div class="header-actions">
                 <button class="pulse-button cart-button" onclick="window.location.href='cart.html'">
                     <i class="fas fa-shopping-cart"></i> 購物車
-                </button>
-                <button class="pulse-button pulsing" onclick="showContact()">
-                    <i class="fas fa-phone"></i> 聯絡客服
                 </button>
             </div>
         </div>

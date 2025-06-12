@@ -28,11 +28,15 @@
             box-sizing: border-box;
         }
 
+        html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
             background: linear-gradient(135deg, var(--hta-dark) 0%, var(--primary-color) 50%, var(--hta-pink) 100%);
             color: var(--text-color);
-            min-height: 100vh;
             line-height: 1.6;
         }
 
@@ -443,6 +447,71 @@
             margin-right: 0.5rem;
         }
 
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--hta-pink);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--hta-pink);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-warning {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid var(--highlight-color);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .product-detail {
@@ -461,6 +530,11 @@
             .action-buttons {
                 flex-direction: column;
             }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -469,8 +543,9 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logo.png" alt="Deepvape Logo">
-                <h1>Deepvape</h1>
+                <a href="index.html" class="logo-button" id="navLogo">
+                    <span class="logo-text">DEEPVAPE</span>
+                </a>
             </div>
             <div class="header-actions">
                 <a href="cart.html" class="cart-button">
@@ -620,6 +695,63 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>關於 Deepvape</h3>
+                    <ul>
+                        <li><a href="brand_story.html">品牌故事</a></li>
+                        <li><a href="news.html">最新消息</a></li>
+                        <li><a href="about.html">關於我們</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>客戶服務</h3>
+                    <ul>
+                        <li><a href="shopping_guide.html">購物說明</a></li>
+                        <li><a href="shipping.html">運送方式</a></li>
+                        <li><a href="return_policy.html">退換貨政策</a></li>
+                        <li><a href="faq.html">常見問題</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>聯絡我們</h3>
+                    <ul>
+                        <li>LINE ID: @deepvape</li>
+                        <li>Email: service@deepvape.com</li>
+                        <li>服務時間: 週一至週五 10:00-18:00</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>關注我們</h3>
+                    <ul>
+                        <li><a href="#" target="_blank">Facebook</a></li>
+                        <li><a href="#" target="_blank">Instagram</a></li>
+                        <li><a href="#" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>健康警告：</strong>本產品含有尼古丁，尼古丁具有成癮性。未滿18歲者禁止購買與使用。
+                孕婦、哺乳期婦女及心血管疾病患者請勿使用。
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Deepvape. All rights reserved. | 
+                   <a href="privacy.html" style="color: var(--text-secondary);">隱私政策</a> | 
+                   <a href="terms.html" style="color: var(--text-secondary);">服務條款</a>
+                </p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // Flavor Selection
