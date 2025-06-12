@@ -38,7 +38,6 @@
             font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: var(--text-color);
-            min-height: 100vh;
             line-height: 1.6;
         }
 
@@ -1061,10 +1060,83 @@
             text-align: center;
         }
 
+        /* Footer */
+        footer {
+            background: #000000;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            border: 2px solid transparent;
+            animation: footerBorderMove 3s infinite linear;
+        }
+
+        @keyframes footerBorderMove {
+            0% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+            25% {
+                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
+            }
+            50% {
+                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
+            }
+            75% {
+                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
+            }
+            100% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--highlight-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
         /* 響應式設計 */
         @media (max-width: 768px) {
             .shipping-methods-section {
                 padding: 3rem 0;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
             }
 
             .shipping-title {
@@ -1478,7 +1550,7 @@
                       '點擊確定將開啟全家官方門市查詢頁面');
                 
                 // 直接開啟全家官方門市查詢頁面（不帶回調參數）
-                window.open('https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp', 'FamilyStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+                window.open('https://www.family.com.tw/Marketing/inquiry.aspx', 'FamilyStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
                 
                 // 提示手動輸入
                 setTimeout(() => {
@@ -1498,7 +1570,7 @@
             const callbackUrl = baseUrl + '/cvs_callback.html';
             
             // 全家官方門市查詢URL
-            const mapUrl = 'https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp';
+            const mapUrl = 'https://www.family.com.tw/Marketing/inquiry.aspx';
             
             // 構建完整的URL（全家API可能使用不同的參數名稱）
             const fullUrl = `${mapUrl}?ReturnURL=${encodeURIComponent(callbackUrl)}`;
@@ -1900,6 +1972,49 @@ ${orderData.items.map(item =>
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>關於 Deepvape</h3>
+                <ul>
+                    <li><a href="brand_story.html">品牌故事</a></li>
+                    <li><a href="#">最新消息</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>客戶服務</h3>
+                <ul>
+                    <li><a href="shopping_guide.html">購物說明</a></li>
+                    <li><a href="shipping_info.html">運送方式</a></li>
+                    <li><a href="return_policy.html">退換貨政策</a></li>
+                    <li><a href="faq.html">常見問題</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>聯絡我們</h3>
+                <ul>
+                    <li><i class="fab fa-line"></i> LINE ID：@deepvape</li>
+                    <li><i class="fas fa-envelope"></i> Email：service@deepvape.com</li>
+                    <li><i class="fas fa-clock"></i> 服務時間：週一至週五 10:00-18:00</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>關注我們</h3>
+                <p>追蹤最新優惠與新品資訊</p>
+                <div style="margin-top: 1rem;">
+                    <a href="#" style="margin-right: 1rem;"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="#" style="margin-right: 1rem;"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="#"><i class="fab fa-telegram fa-2x"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Deepvape. All rights reserved. | 本網站僅供18歲以上成年人瀏覽</p>
+            <p>警告：吸菸有害健康</p>
+        </div>
+    </footer>
 
     <!-- VFX.js 故障效果腳本 -->
     <script type="module">
