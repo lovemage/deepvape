@@ -229,9 +229,6 @@
             } else {
                 // 立即檢查 7-11 API 回調
                 if (!handle711Callback()) {
-                    // 如果不是 7-11 回調，檢查全家回調
-                    handleFamilyCallback();
-                    
                     // 給一點時間讓 POST 資料載入
                     setTimeout(() => {
                         // 如果還是沒有資料，顯示錯誤訊息
@@ -426,27 +423,6 @@
             return false;
         }
 
-        // 處理全家 API 的回調格式
-        function handleFamilyCallback() {
-            // 全家 API 可能會使用不同的參數名稱
-            const url = window.location.href;
-            
-            // 檢查是否包含全家的回調參數
-            if (url.includes('shopid') || url.includes('shopname') || url.includes('shopaddr')) {
-                const params = new URLSearchParams(window.location.search);
-                
-                processStoreSelection({
-                    storeId: params.get('shopid') || params.get('ShopID') || params.get('storeId'),
-                    storeName: params.get('shopname') || params.get('ShopName') || params.get('storeName'),
-                    storeAddress: params.get('shopaddr') || params.get('ShopAddr') || params.get('storeAddress'),
-                    storePhone: params.get('shoptel') || params.get('ShopTel') || params.get('storePhone')
-                });
-            }
-        }
-        
-        // 檢查全家回調
-        handleFamilyCallback();
-        
         // 測試門市選擇功能
         function testStoreSelection() {
             console.log('執行測試門市選擇');
