@@ -2512,5 +2512,19 @@
 
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
+    
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "https://deepvape.netlify.app/admin/";
+            });
+          }
+        });
+      }
+    </script>
 </body>
 </html>
