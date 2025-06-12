@@ -1,0 +1,93 @@
+# 7-11 超商取貨 API 整合說明
+
+## 功能概述
+
+此功能整合了 7-11 官方的電子地圖 API，讓使用者可以直接在地圖上選擇取貨門市，系統會自動接收並填入門市資訊。
+
+## 實作內容
+
+### 1. 修改的檔案
+
+- **cart.html** - 購物車頁面
+  - 更新 `openIbonStoreMap()` 函數以使用 7-11 官方 API
+  - 新增 `window.addEventListener('message')` 監聽回調資料
+
+- **cvs_callback.html** - 回調處理頁面
+  - 優化 POST 資料接收邏輯
+  - 改進 7-11 API 參數解析
+  - 加強安全性處理
+
+### 2. API 整合流程
+
+```
+1. 使用者點擊 "7-ELEVEN ibon門市查詢" 按鈕
+2. 開啟 7-11 電子地圖 API 視窗
+3. 使用者選擇門市後，API 以 POST 方式回傳資料到 cvs_callback.html
+4. cvs_callback.html 解析資料並透過 postMessage 傳回購物車頁面
+5. 購物車頁面自動填入門市資訊
+```
+
+### 3. API 參數說明
+
+**API URL 格式：**
+```
+https://emap.presco.com.tw/c2cemap.ashx?eshopid={廠商代碼}&servicetype={服務類型}&url={回調URL}
+```
+
+**參數說明：**
+- `eshopid`: 廠商代碼（目前使用 870）
+- `servicetype`: 服務類型（1=取貨付款）
+- `url`: 回調 URL（需要 URL encode）
+
+**回傳參數：**
+- `CVSStoreID`: 門市店號
+- `CVSStoreName`: 門市名稱
+- `CVSAddress`: 門市地址
+- `CVSTelephone`: 門市電話
+
+## 測試方式
+
+### 1. 本機測試
+
+```bash
+# 啟動本地伺服器
+npm start
+# 或
+python -m http.server 3000
+```
+
+訪問 `http://localhost:3000/deepvape-main/cart.html`
+
+### 2. 測試步驟
+
+1. 在購物車頁面加入商品
+2. 填寫客戶姓名和電話
+3. 點擊 "7-ELEVEN ibon門市查詢" 按鈕
+4. 在彈出的地圖視窗中選擇門市
+5. 確認後檢查門市資訊是否自動填入
+
+### 3. 除錯提示
+
+開啟瀏覽器開發者工具（F12）查看 Console 訊息：
+
+- 查看 API URL 是否正確
+- 檢查回調頁面是否收到 POST 資料
+- 確認 postMessage 是否成功傳送
+
+## 注意事項
+
+1. **跨域問題**：確保回調 URL 與主站在同一網域下
+2. **HTTPS 要求**：生產環境建議使用 HTTPS
+3. **瀏覽器設定**：需要允許彈出視窗
+4. **手動輸入**：保留手動輸入功能作為備案
+
+## 待優化項目
+
+1. 加入全家便利商店 API 整合
+2. 實作門市資料快取機制
+3. 優化錯誤處理和使用者提示
+4. 考慮將 Telegram Bot Token 移至後端
+
+## 聯絡支援
+
+如有問題請聯繫技術支援團隊。 
