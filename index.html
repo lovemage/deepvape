@@ -520,18 +520,33 @@
                 padding: 1rem 2rem;
             }
 
-            .dropdown {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                box-shadow: none;
-                background: rgba(0, 0, 0, 0.2);
-            }
+                    .dropdown {
+            position: static;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            box-shadow: none;
+            background: rgba(0, 0, 0, 0.2);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
 
-            .dropdown a {
-                padding-left: 3rem;
-            }
+        .dropdown.active {
+            max-height: 300px;
+        }
+
+        .dropdown a {
+            padding-left: 3rem;
+        }
+
+        .dropdown-toggle .fa-chevron-down {
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle.active .fa-chevron-down {
+            transform: rotate(180deg);
+        }
 
             .header-container {
                 flex-direction: row;
@@ -543,10 +558,20 @@
                 font-size: 1.3rem;
             }
 
-            .header-actions .pulse-button {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
+                    .header-actions .pulse-button {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .cart-button {
+            background: linear-gradient(45deg, var(--warning-color), #ff6b35) !important;
+            margin-right: 0.5rem;
+        }
+
+        .cart-button:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 5px 20px rgba(255, 171, 0, 0.4) !important;
+        }
         }
 
         /* Announcement Banner */
@@ -1406,35 +1431,42 @@
                 <li>
                     <a href="#home">首頁</a>
                 </li>
-                <li>
-                    <a href="#hosts">主機 <i class="fas fa-chevron-down"></i></a>
+                <li class="dropdown-item">
+                    <a href="#hosts" class="dropdown-toggle" onclick="toggleDropdown(this)">
+                        主機 <i class="fas fa-chevron-down"></i>
+                    </a>
                     <div class="dropdown">
-                        <a href="#sp2-gen1">SP2 一代</a>
-                        <a href="#ilia-gen1">ilia 一代</a>
-                        <a href="#leather">皮革款</a>
-                        <a href="#fabric">布紋款</a>
+                        <a href="sp2_product.html">SP2 一代</a>
+                        <a href="ilia_1_product.html">ilia 一代</a>
+                        <a href="ilia_leather_product.html">皮革款</a>
+                        <a href="ilia_fabric_product.html">布紋款</a>
+                        <a href="hta_vape_product.html">HTX 黑桃</a>
                     </div>
                 </li>
-                <li>
-                    <a href="#htx">HTX 黑桃</a>
-                </li>
-                <li>
-                    <a href="#pods">煙彈 <i class="fas fa-chevron-down"></i></a>
+                <li class="dropdown-item">
+                    <a href="#pods" class="dropdown-toggle" onclick="toggleDropdown(this)">
+                        煙彈 <i class="fas fa-chevron-down"></i>
+                    </a>
                     <div class="dropdown">
-                        <a href="#ilia-pods">ilia 一代煙彈</a>
-                        <a href="#sp2-pods">SP2 一代煙彈</a>
-                        <a href="#lana-pods">LANA 煙彈</a>
+                        <a href="ilia_pods_product.html">ilia 一代煙彈</a>
+                        <a href="sp2_pods_product.html">SP2 一代煙彈</a>
+                        <a href="lana_pods_product.html">LANA 煙彈</a>
                     </div>
                 </li>
-                <li>
-                    <a href="#disposable">拋棄式 <i class="fas fa-chevron-down"></i></a>
+                <li class="dropdown-item">
+                    <a href="#disposable" class="dropdown-toggle" onclick="toggleDropdown(this)">
+                        拋棄式 <i class="fas fa-chevron-down"></i>
+                    </a>
                     <div class="dropdown">
-                        <a href="#ilia-gen4">ilia 四代</a>
-                        <a href="#lana-disposable">LANA A8000</a>
+                        <a href="ilia_disposable_product.html">ilia 四代</a>
+                        <a href="lana_a8000_product.html">LANA A8000</a>
                     </div>
                 </li>
             </ul>
             <div class="header-actions">
+                <button class="pulse-button cart-button" onclick="window.location.href='cart.html'">
+                    <i class="fas fa-shopping-cart"></i> 購物車
+                </button>
                 <button class="pulse-button pulsing" onclick="showContact()">
                     <i class="fas fa-phone"></i> 聯絡客服
                 </button>
@@ -1941,6 +1973,30 @@
             }
         }
 
+        // Dropdown toggle for mobile menu
+        function toggleDropdown(element) {
+            // 防止事件冒泡
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const dropdown = element.nextElementSibling;
+            const isActive = dropdown.classList.contains('active');
+            
+            // 關閉所有其他下拉選單
+            document.querySelectorAll('.dropdown.active').forEach(dd => {
+                dd.classList.remove('active');
+            });
+            document.querySelectorAll('.dropdown-toggle.active').forEach(toggle => {
+                toggle.classList.remove('active');
+            });
+            
+            // 切換當前下拉選單
+            if (!isActive) {
+                dropdown.classList.add('active');
+                element.classList.add('active');
+            }
+        }
+
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
             const navMenu = document.getElementById('navMenu');
@@ -1950,6 +2006,14 @@
                 navMenu.classList.remove('active');
                 document.querySelector('.hamburger i').classList.remove('fa-times');
                 document.querySelector('.hamburger i').classList.add('fa-bars');
+                
+                // 同時關閉所有下拉選單
+                document.querySelectorAll('.dropdown.active').forEach(dd => {
+                    dd.classList.remove('active');
+                });
+                document.querySelectorAll('.dropdown-toggle.active').forEach(toggle => {
+                    toggle.classList.remove('active');
+                });
             }
         });
 
