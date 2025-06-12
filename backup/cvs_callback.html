@@ -368,64 +368,8 @@
             }
         }
         
-        // 解析全家HTML格式的門市資訊
-        function parseFamilyHTML() {
-            console.log('嘗試解析全家HTML格式資料');
-            
-            // 檢查是否有全家特定的HTML元素
-            const layers = document.querySelectorAll('div[id^="Layer"]');
-            if (layers.length >= 4) {
-                console.log('發現全家門市資訊HTML格式');
-                
-                try {
-                    // Layer1: 店號
-                    const storeId = document.getElementById('Layer1')?.textContent?.trim() || '';
-                    // Layer2: 服務代號（紅色粗體）
-                    const serviceId = document.getElementById('Layer2')?.textContent?.trim() || '';
-                    // Layer3: 地址
-                    const storeAddress = document.getElementById('Layer3')?.textContent?.trim() || '';
-                    // Layer4: 電話
-                    const storePhone = document.getElementById('Layer4')?.textContent?.trim() || '';
-                    
-                    console.log('解析到的門市資訊:', {
-                        storeId,
-                        serviceId,
-                        storeAddress,
-                        storePhone
-                    });
-                    
-                    if (storeId && storeAddress) {
-                        // 根據地址推測門市名稱（通常包含路名）
-                        const roadMatch = storeAddress.match(/([^市區鄉鎮]+路)/);
-                        const storeName = roadMatch ? `全家${roadMatch[1]}店` : '全家便利商店';
-                        
-                        processStoreSelection({
-                            storeId: storeId,
-                            storeName: storeName,
-                            storeAddress: storeAddress,
-                            storePhone: storePhone,
-                            serviceId: serviceId // 額外的服務代號
-                        });
-                        
-                        return true;
-                    }
-                } catch (error) {
-                    console.error('解析全家HTML時發生錯誤:', error);
-                }
-            }
-            
-            return false;
-        }
-        
         // 檢查全家回調
         handleFamilyCallback();
-        
-        // 延遲執行HTML解析，確保頁面完全載入
-        setTimeout(() => {
-            if (!selectedStoreData) {
-                parseFamilyHTML();
-            }
-        }, 500);
         
         // 測試門市選擇功能
         function testStoreSelection() {

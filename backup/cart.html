@@ -3,12 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>購物車 | Image Vape</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" href="deepvape_logo_main.png">
-    <link rel="apple-touch-icon" href="deepvape_logo_main.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>您的購物車 - Deepvape 頂級電子菸專賣店</title>
+    <meta name="description" content="查看您在 Deepvape 的購物車。在這裡管理您選擇的電子菸主機、煙彈和拋棄式產品，完成您的訂單。">
+    <meta name="keywords" content="購物車, Deepvape, VAPE, 電子菸, 訂單, 結帳">
+    <link rel="canonical" href="https://deepvape.org/cart.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://deepvape.netlify.app/cart.html">
+    <meta property="og:title" content="您的購物車 - Deepvape 頂級電子菸專賣店">
+    <meta property="og:description" content="查看您在 Deepvape 的購物車。在這裡管理您選擇的電子菸主機、煙彈和拋棄式產品，完成您的訂單。">
+    <meta property="og:image" content="https://deepvape.netlify.app/deepvape_main.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://deepvape.netlify.app/cart.html">
+    <meta property="twitter:title" content="您的購物車 - Deepvape 頂級電子菸專賣店">
+    <meta property="twitter:description" content="查看您在 Deepvape 的購物車。在這裡管理您選擇的電子菸主機、煙彈和拋棄式產品，完成您的訂單。">
+    <meta property="twitter:image" content="https://deepvape.org/deepvape_main.png">
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -38,7 +57,6 @@
             font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: var(--text-color);
-            min-height: 100vh;
             line-height: 1.6;
         }
 
@@ -92,6 +110,58 @@
             object-fit: contain;
             border-radius: 10px;
             border: 1px solid rgba(26, 254, 73, 0.3);
+        }
+
+        /* 炫酷Logo按鈕樣式 */
+        .logo-button {
+            all: unset;
+            background-color: #040a1a;
+            background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='40' patternTransform='scale(2) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(224, 73%, 6%, 1)'/><path d='M0 30h20L10 50zm-10-20h20L0 30zm20 0h20L20 30zM0-10h20L10 10z'  stroke-width='2' stroke='hsla(224, 59%, 18%, 0.6)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+            border: 3px solid #252e45;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-family: "Arial", sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 0.4rem 0.8rem;
+            text-transform: uppercase;
+            transform: skewX(-10deg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logo-button:hover {
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 15px rgba(26, 254, 73, 0.5);
+            transform: skewX(-10deg) scale(1.05);
+        }
+
+        .logo-button:focus {
+            outline: 2px solid var(--highlight-color);
+            outline-offset: 2px;
+        }
+
+        .logo-button:active {
+            transform: skewX(-10deg) scale(0.98);
+        }
+
+        /* Logo文字樣式 */
+        .logo-text {
+            background: linear-gradient(45deg, var(--highlight-color), var(--tech-cyan), var(--highlight-color));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .header-actions {
@@ -175,7 +245,8 @@
             border-radius: 30px;
             padding: 1.5rem;
             margin-bottom: 1rem;
-            display: flex;
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
             align-items: center;
             gap: 1rem;
             transition: all 0.3s ease;
@@ -191,7 +262,7 @@
             width: 80px;
             height: 80px;
             object-fit: cover;
-            border-radius: 30px;
+            border-radius: 20px;
             border: 2px solid var(--border-color);
         }
 
@@ -489,14 +560,16 @@
         .store-buttons {
             display: flex;
             justify-content: center;
+            gap: 1rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .store-btn {
             background: var(--accent-color);
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -505,6 +578,11 @@
             justify-content: center;
             gap: 0.5rem;
             font-weight: 500;
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .store-btn:hover {
@@ -701,7 +779,15 @@
             }
 
             .store-buttons {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .store-btn {
+                min-width: 280px;
+                max-width: 320px;
+                width: 100%;
             }
 
             .location-selection {
@@ -994,10 +1080,83 @@
             text-align: center;
         }
 
+        /* Footer */
+        footer {
+            background: #000000;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            border: 2px solid transparent;
+            animation: footerBorderMove 3s infinite linear;
+        }
+
+        @keyframes footerBorderMove {
+            0% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+            25% {
+                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
+            }
+            50% {
+                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
+            }
+            75% {
+                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
+            }
+            100% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--highlight-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
         /* 響應式設計 */
         @media (max-width: 768px) {
             .shipping-methods-section {
                 padding: 3rem 0;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
             }
 
             .shipping-title {
@@ -1064,8 +1223,8 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="index.html">
-                    <img src="deepvape_logo_main.png" alt="Logo">
+                <a href="index.html" class="logo-button" id="navLogo">
+                    <span class="logo-text">DeepVape</span>
                 </a>
             </div>
             <div class="header-actions">
@@ -1079,16 +1238,16 @@
     <!-- Main Content -->
     <div class="main-content">
         <!-- Cart Items Section -->
-        <div class="cart-items-section">
-            <h2 class="section-title">
+        <section class="cart-items-section">
+            <h1 class="section-title">
                 <i class="fas fa-shopping-cart"></i>
-                購物車
-            </h2>
-            
-            <div id="cartItems">
+                您的購物車
+            </h1>
+
+            <div id="cartItemsContainer">
                 <!-- Cart items will be populated by JavaScript -->
             </div>
-            
+
             <div class="empty-cart" id="emptyCart" style="display: none;">
                 <i class="fas fa-shopping-cart"></i>
                 <h3>購物車是空的</h3>
@@ -1097,25 +1256,25 @@
                     <i class="fas fa-arrow-left"></i> 繼續購物
                 </a>
             </div>
-        </div>
+        </section>
 
         <!-- Order Summary Section -->
-        <div class="order-summary">
-            <h3 class="section-title">
-                <i class="fas fa-receipt"></i>
+        <aside class="order-summary-section">
+            <h2 class="section-title">
+                <i class="fas fa-file-invoice-dollar"></i>
                 訂單摘要
-            </h3>
-            
+            </h2>
+
             <div class="summary-row">
                 <span class="summary-label">商品小計</span>
                 <span class="summary-value" id="subtotal">NT$ 0</span>
             </div>
-            
+
             <div class="summary-row">
                 <span class="summary-label">運費</span>
                 <span class="summary-value">NT$ 60</span>
             </div>
-            
+
             <div class="summary-row">
                 <span class="summary-label">總計</span>
                 <span class="summary-value" id="total">NT$ 60</span>
@@ -1127,12 +1286,12 @@
                     <i class="fas fa-user"></i>
                     收件人資訊
                 </h4>
-                
+
                 <div class="form-group">
                     <label class="form-label" for="customerName">姓名 *</label>
                     <input type="text" id="customerName" class="form-input" placeholder="請輸入收件人姓名" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label" for="customerPhone">電話 *</label>
                     <input type="tel" id="customerPhone" class="form-input" placeholder="請輸入聯絡電話" required>
@@ -1141,20 +1300,13 @@
                 <!-- Store Selection -->
                 <div class="store-selection">
                     <label class="form-label">選擇取貨門市 *</label>
-                    <p class="store-instruction">
-                        <strong>7-ELEVEN</strong>：點擊藍色按鈕，選擇門市後可能自動帶入資訊<br>
-                        <strong>全家</strong>：點擊綠色按鈕，查詢門市後需手動填入資訊
-                    </p>
-                    
+                    <p class="store-instruction">使用ibon門市查詢系統查詢7-ELEVEN門市，或直接手動輸入門市資訊</p>
+
                     <!-- Store Search Button -->
                     <div class="store-buttons">
-                        <button class="store-btn smart-search" onclick="open711OfficialMap()">
+                        <button class="store-btn smart-search" onclick="openIbonStoreMap()">
                             <i class="fas fa-map-marker-alt"></i>
-                            7-ELEVEN 官方門市選擇
-                        </button>
-                        <button class="store-btn smart-search" onclick="openFamilyOfficialMap()" style="background: #25a147;">
-                            <i class="fas fa-store"></i>
-                            全家官方門市選擇
+                            7-ELEVEN ibon門市查詢
                         </button>
                     </div>
 
@@ -1166,7 +1318,6 @@
                                 <select id="storeTypeSelect" class="form-input" required>
                                     <option value="">請選擇門市類型</option>
                                     <option value="711">7-ELEVEN</option>
-                                    <option value="family">全家便利商店</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -1174,22 +1325,22 @@
                                 <input type="text" id="storeIdInput" class="form-input" placeholder="例如：250094" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="form-label">門市名稱 *</label>
                             <input type="text" id="storeNameInput" class="form-input" placeholder="例如：京達門市" required>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label class="form-label">門市地址 *</label>
-                            <input type="text" id="storeAddressInput" class="form-input" placeholder="例如：台中市豐原區中正路805號" required>
+                            <label class="form-label">門市地址 (選填)</label>
+                            <input type="text" id="storeAddressInput" class="form-input" placeholder="例如：台中市豐原區中正路805號（選填）">
                         </div>
-                        
+
                         <button class="confirm-store-btn" onclick="confirmStoreSelection()">
                             <i class="fas fa-check"></i> 確認門市選擇
                         </button>
                     </div>
-                    
+
                     <div class="selected-store" id="selectedStore">
                         <div class="store-info">
                             <div class="store-name" id="storeName">請選擇門市</div>
@@ -1223,7 +1374,7 @@
                     <i class="fas fa-arrow-left"></i> 繼續購物
                 </a>
             </div>
-        </div>
+        </aside>
     </div>
 
     <!-- Store Search Modal removed - no longer needed -->
@@ -1289,7 +1440,7 @@
                     // 顯示成功訊息
                     setTimeout(() => {
                         alert('✅ 門市資訊已自動載入！\n\n' +
-                              `門市類型：${store.storeType === '711' ? '7-ELEVEN' : '全家便利商店'}\n` +
+                              `門市類型：7-ELEVEN\n` +
                               `店號：${store.storeId}\n` +
                               `門市名稱：${store.storeName}\n` +
                               `地址：${store.storeAddress}`);
@@ -1304,7 +1455,7 @@
 
         // Render cart items
         function renderCart() {
-            const cartItemsContainer = document.getElementById('cartItems');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
             const emptyCart = document.getElementById('emptyCart');
             
             if (cart.length === 0) {
@@ -1370,192 +1521,43 @@
             document.getElementById('total').textContent = `NT$ ${total}`;
         }
 
-        // Open smart store selector
-        function openSmartStoreSelector() {
-            // 直接跳轉到門市選擇頁面
-            window.location.href = 'store_selector.html?from=cart';
-        }
-
-        // 開啟7-11官方門市選擇系統
-        function open711OfficialMap() {
-            // 檢查是否在本地檔案系統運行
-            if (window.location.protocol === 'file:') {
-                alert('⚠️ 偵測到您在本地檔案系統運行網站\n\n' + 
-                      '由於7-11官方系統需要有效的網址回調，建議您：\n\n' +
-                      '1. 將網站部署到實際伺服器\n' +
-                      '2. 或直接前往7-11官網查詢門市後，手動輸入門市資訊\n\n' +
-                      '點擊確定將開啟7-11官方門市查詢頁面');
-                
-                // 直接開啟7-11官方門市查詢頁面（不帶回調參數）
-                window.open('https://emap.pcsc.com.tw/ecmap/default.aspx', '711StoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
-                
-                // 提示手動輸入
-                setTimeout(() => {
-                    alert('📍 請在7-11官方地圖選擇門市後\n\n' +
-                          '記下以下資訊並手動填入：\n' +
-                          '• 門市店號（通常為5-6位數字）\n' +
-                          '• 門市名稱\n' +
-                          '• 門市地址\n\n' +
-                          '填寫完成後點擊「確認門市選擇」');
-                }, 1000);
-                
-                return;
-            }
+        // 開啟ibon門市查詢系統
+        function openIbonStoreMap() {
+            // 開啟ibon門市查詢頁面
+            const ibonUrl = 'https://www.ibon.com.tw/mobile/retail_inquiry.aspx#gsc.tab=0';
             
-            // 原本的邏輯（用於正式環境）
-            const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-            const callbackUrl = baseUrl + '/cvs_callback.html';
-            
-            // 7-11官方電子地圖URL
-            const mapUrl = 'https://emap.pcsc.com.tw/ecmap/default.aspx';
-            
-            // 構建完整的URL，包含callback參數
-            const fullUrl = `${mapUrl}?BackURL=${encodeURIComponent(callbackUrl)}`;
-            
-            console.log('開啟7-11官方門市地圖:', fullUrl);
-            console.log('Callback URL:', callbackUrl);
+            console.log('開啟ibon門市查詢系統:', ibonUrl);
             
             // 開啟新視窗
-            const mapWindow = window.open(fullUrl, '711StoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+            const mapWindow = window.open(ibonUrl, 'IbonStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
             
             if (!mapWindow) {
-                alert('無法開啟門市選擇視窗，請檢查瀏覽器的彈出視窗設定。');
+                alert('無法開啟門市查詢視窗，請檢查瀏覽器的彈出視窗設定。');
                 return;
             }
             
-            // 監聽來自回調頁面的訊息
-            window.addEventListener('message', function(event) {
-                console.log('收到訊息:', event.data);
-                
-                // 檢查訊息是否來自我們的回調頁面
-                if (event.data && event.data.type === 'storeSelected') {
-                    const storeInfo = event.data.storeInfo;
-                    console.log('收到門市資訊:', storeInfo);
-                    
-                    // 填入門市資訊
-                    document.getElementById('storeTypeSelect').value = '711';
-                    document.getElementById('storeIdInput').value = storeInfo.storeId;
-                    document.getElementById('storeNameInput').value = storeInfo.storeName;
-                    document.getElementById('storeAddressInput').value = storeInfo.storeAddress;
-                    
-                    // 自動確認門市選擇
-                    confirmStoreSelection();
-                    
-                    // 顯示成功訊息
-                    alert('✅ 7-ELEVEN門市選擇成功！\n\n' +
-                          `店號：${storeInfo.storeId}\n` +
-                          `門市名稱：${storeInfo.storeName}\n` +
-                          `地址：${storeInfo.storeAddress}`);
-                }
-            });
+            // 顯示使用指引
+            alert('📍 ibon門市查詢系統使用說明：\n\n' +
+                  '1. 選擇您要的縣市（如：台北市、新北市等）\n' +
+                  '2. 選擇行政區（如：中正區、大安區等）\n' +
+                  '3. 輸入地址關鍵字進行搜尋\n' +
+                  '4. 找到合適門市後，記下以下資訊：\n' +
+                  '   • 門市店號\n' +
+                  '   • 門市名稱\n' +
+                  '   • 門市地址\n\n' +
+                  '5. 回到本頁面手動填入門市資訊\n' +
+                  '6. 點擊「確認門市選擇」完成');
             
-            // 顯示提示
-            alert('已開啟7-ELEVEN官方門市查詢系統\n\n請在新視窗中選擇您要的門市，選擇完成後會自動回傳門市資訊。');
-        }
-
-        // 開啟全家官方門市選擇系統
-        function openFamilyOfficialMap() {
-            // 全家的系統需要先查詢才能選擇，所以提供詳細說明
-            alert('🏪 全家門市查詢說明\n\n' + 
-                  '全家的門市查詢系統需要您先輸入查詢條件：\n\n' +
-                  '1. 店號查詢：輸入6位數店號\n' +
-                  '2. 地址查詢：選擇縣市區域後查詢\n\n' +
-                  '點擊確定後將開啟全家官方查詢頁面');
-            
-            // 檢查是否在本地檔案系統運行
-            if (window.location.protocol === 'file:') {
-                // 開啟全家官方門市查詢頁面
-                window.open('https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp', 'FamilyStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
-                
-                // 提供查詢步驟指引
-                setTimeout(() => {
-                    alert('📝 全家門市查詢步驟：\n\n' +
-                          '1. 在「店號」欄位輸入門市編號\n' +
-                          '   或在「地址」選擇縣市區域\n\n' +
-                          '2. 點擊查詢按鈕\n\n' +
-                          '3. 從查詢結果中選擇門市\n\n' +
-                          '4. 記下門市資訊：\n' +
-                          '   • 店號（6位數字）\n' +
-                          '   • 門市名稱\n' +
-                          '   • 門市地址\n\n' +
-                          '5. 返回此頁面手動填入資訊');
-                }, 1500);
-                
-                // 本地環境的額外提示
-                setTimeout(() => {
-                    alert('💡 提示：\n\n' +
-                          '由於您在本地環境運行，\n' +
-                          '全家系統無法自動回傳門市資訊。\n\n' +
-                          '請手動將查詢到的門市資訊填入表單，\n' +
-                          '然後點擊「確認門市選擇」。');
-                }, 3000);
-                
-                return;
-            }
-            
-            // 正式環境的邏輯
-            const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-            // 使用專門的全家回調頁面
-            const callbackUrl = baseUrl + '/family_callback.html';
-            
-            // 全家官方門市查詢URL - 嘗試加入回調參數
-            const mapUrl = 'https://family.map.com.tw/ShopSpaceQuery/ShopSpaceQuery.asp';
-            // 嘗試不同的參數名稱
-            const fullUrl = `${mapUrl}?ReturnURL=${encodeURIComponent(callbackUrl)}&BackURL=${encodeURIComponent(callbackUrl)}&callbackUrl=${encodeURIComponent(callbackUrl)}`;
-            
-            console.log('開啟全家官方門市查詢:', fullUrl);
-            console.log('Callback URL:', callbackUrl);
-            
-            // 開啟新視窗
-            const mapWindow = window.open(fullUrl, 'FamilyStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
-            
-            if (!mapWindow) {
-                alert('無法開啟門市選擇視窗，請檢查瀏覽器的彈出視窗設定。');
-                return;
-            }
-            
-            // 監聽來自回調頁面的訊息
-            const messageHandler = function(event) {
-                console.log('收到訊息:', event.data);
-                
-                // 檢查訊息是否來自我們的回調頁面
-                if (event.data && event.data.type === 'storeSelected') {
-                    const storeInfo = event.data.storeInfo;
-                    console.log('收到門市資訊:', storeInfo);
-                    
-                    // 填入門市資訊
-                    document.getElementById('storeTypeSelect').value = 'family';
-                    document.getElementById('storeIdInput').value = storeInfo.storeId;
-                    document.getElementById('storeNameInput').value = storeInfo.storeName;
-                    document.getElementById('storeAddressInput').value = storeInfo.storeAddress;
-                    
-                    // 自動確認門市選擇
-                    confirmStoreSelection();
-                    
-                    // 顯示成功訊息
-                    alert('✅ 全家門市選擇成功！\n\n' +
-                          `店號：${storeInfo.storeId}\n` +
-                          `門市名稱：${storeInfo.storeName}\n` +
-                          `地址：${storeInfo.storeAddress}`);
-                    
-                    // 移除事件監聽器
-                    window.removeEventListener('message', messageHandler);
-                }
-            };
-            
-            window.addEventListener('message', messageHandler);
-            
-            // 提供查詢步驟指引
+            // 延遲提示用戶手動填入資訊
             setTimeout(() => {
-                alert('📝 全家門市查詢步驟：\n\n' +
-                      '1. 在「店號」欄位輸入門市編號\n' +
-                      '   或在「地址」選擇縣市區域\n\n' +
-                      '2. 點擊查詢按鈕\n\n' +
-                      '3. 點擊查詢結果中的門市\n\n' +
-                      '如果系統能自動回傳，會自動填入門市資訊。\n' +
-                      '否則請手動記下並填入。');
-            }, 1500);
+                alert('💡 提醒：\n\n查詢完門市後，請回到本頁面手動填入：\n• 門市類型\n• 門市店號\n• 門市名稱\n• 門市地址（選填）\n\n然後點擊「確認門市選擇」完成設定。');
+            }, 3000);
         }
+
+
+
+
+
 
         // Confirm store selection
         function confirmStoreSelection() {
@@ -1564,9 +1566,9 @@
             const storeName = document.getElementById('storeNameInput').value.trim();
             const storeAddress = document.getElementById('storeAddressInput').value.trim();
                     
-            // 驗證必填欄位
-            if (!storeType || !storeId || !storeName || !storeAddress) {
-                alert('請填寫所有必填欄位');
+            // 驗證必填欄位（地址為選填）
+            if (!storeType || !storeId || !storeName) {
+                alert('請填寫所有必填欄位（門市類型、店號、門市名稱）');
                 return;
         }
 
@@ -1580,9 +1582,9 @@
             };
             
             // 更新顯示
-            const storeTypeText = storeType === '711' ? '7-ELEVEN' : '全家便利商店';
+            const storeTypeText = '7-ELEVEN';
             document.getElementById('storeName').textContent = `${storeTypeText} - ${storeName}`;
-            document.getElementById('storeAddress').textContent = storeAddress;
+            document.getElementById('storeAddress').textContent = storeAddress || '地址未提供';
             document.getElementById('storeId').textContent = `店號：${storeId}`;
             document.getElementById('selectedStore').classList.add('show');
             
@@ -1591,6 +1593,12 @@
             
             alert('門市選擇完成！');
         }
+
+        // Removed old store data loading function - no longer needed
+
+        // Removed old store selection functions - no longer needed
+
+        // Removed old store search functions - no longer needed
 
         // Generate captcha
         function generateCaptcha() {
@@ -1641,7 +1649,7 @@
 
 🏪 **取貨門市**:
 • ${orderData.store.name}
-• ${orderData.store.address}
+• ${orderData.store.address || '地址未提供'}
 • 店號: ${orderData.store.id}
 
 🛍️ **訂購商品**:
@@ -1761,15 +1769,74 @@ ${orderData.items.map(item =>
             document.getElementById('checkoutModal').style.display = 'none';
         }
 
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCart();
-            generateCaptcha();
-        });
+
         // 顯示聯絡方式
         function showContact() {
             window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
         }
+
+        // 測試Telegram機器人功能
+        async function testTelegramBot() {
+            console.log('🧪 開始測試Telegram機器人...');
+            
+            const testOrderData = {
+                orderId: 'TEST' + Date.now(),
+                orderDate: new Date().toISOString(),
+                customer: {
+                    name: '測試客戶',
+                    phone: '0912-345-678'
+                },
+                store: {
+                    id: 'TEST001',
+                    name: '統一超商測試門市',
+                    address: '台北市信義區信義路五段7號'
+                },
+                items: [
+                    {
+                        name: 'SP2 一代主機',
+                        quantity: 1,
+                        price: 650,
+                        flavor: '薄荷',
+                        color: '黑色'
+                    }
+                ],
+                subtotal: 650,
+                shipping: 60,
+                total: 710
+            };
+            
+            try {
+                await sendTelegramNotification(testOrderData);
+                alert('✅ Telegram機器人測試成功！\n請檢查Telegram群組是否收到測試訊息。');
+            } catch (error) {
+                alert('❌ Telegram機器人測試失敗！\n\n錯誤詳情：\n' + error.message + '\n\n請檢查：\n1. Bot Token是否正確\n2. Chat ID是否正確\n3. 機器人是否已加入群組\n4. 網路連線是否正常');
+                console.error('Telegram測試失敗:', error);
+            }
+        }
+
+        // 在頁面載入時添加測試按鈕（僅開發環境）
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            generateCaptcha();
+            
+            // 添加隱藏的測試功能（連續點擊logo 3次）
+            let logoClickCount = 0;
+            const logo = document.querySelector('.logo-button');
+            if (logo) {
+                logo.addEventListener('click', function() {
+                    logoClickCount++;
+                    if (logoClickCount === 3) {
+                        if (confirm('是否要測試Telegram機器人功能？')) {
+                            testTelegramBot();
+                        }
+                        logoClickCount = 0;
+                    }
+                    setTimeout(() => {
+                        logoClickCount = 0;
+                    }, 2000);
+                });
+            }
+        });
     </script>
 
     <!-- 物流方式展示區域 -->
@@ -1780,7 +1847,7 @@ ${orderData.items.map(item =>
                 安全可靠的物流配送
             </h2>
             <div class="shipping-image-container">
-                <img src="cart_image/sell.png" alt="物流配送方式" class="shipping-image">
+                <img src="7-11_tklogo.jpg" alt="7-ELEVEN 物流配送" class="shipping-image">
             </div>
             <div class="shipping-features">
                 <div class="shipping-feature">
@@ -1845,5 +1912,106 @@ ${orderData.items.map(item =>
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>關於 Deepvape</h3>
+                <ul>
+                    <li><a href="brand_story.html">品牌故事</a></li>
+                    <li><a href="#">最新消息</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>客戶服務</h3>
+                <ul>
+                    <li><a href="shopping_guide.html">購物說明</a></li>
+                    <li><a href="shipping_info.html">運送方式</a></li>
+                    <li><a href="return_policy.html">退換貨政策</a></li>
+                    <li><a href="faq.html">常見問題</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>聯絡我們</h3>
+                <ul>
+                    <li><i class="fab fa-line"></i> LINE ID：@deepvape</li>
+                    <li><i class="fas fa-envelope"></i> Email：service@deepvape.com</li>
+                    <li><i class="fas fa-clock"></i> 服務時間：週一至週五 10:00-18:00</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>關注我們</h3>
+                <p>追蹤最新優惠與新品資訊</p>
+                <div style="margin-top: 1rem;">
+                    <a href="#" style="margin-right: 1rem;"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="#" style="margin-right: 1rem;"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="#"><i class="fab fa-telegram fa-2x"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Deepvape. All rights reserved. | 本網站僅供18歲以上成年人瀏覽</p>
+            <p>警告：吸菸有害健康</p>
+        </div>
+    </footer>
+
+    <!-- VFX.js 故障效果腳本 -->
+    <script type="module">
+        import { VFX } from "https://esm.sh/@vfx-js/core";
+        
+        class LogoButtonEffect {
+            constructor(button) {
+                this.vfx = new VFX();
+                
+                button.addEventListener("mouseenter", (e) => {
+                    this.vfx.add(button, { 
+                        shader: "glitch", 
+                        overflow: 50,
+                        uniforms: {
+                            uTime: 0,
+                            uIntensity: 0.3
+                        }
+                    });
+                });
+
+                button.addEventListener("mouseleave", (e) => {
+                    this.vfx.remove(button);
+                });
+
+                // 點擊效果
+                button.addEventListener("click", (e) => {
+                    console.log("DeepVape Logo clicked!");
+                    
+                    // 點擊反饋動畫
+                    button.style.transform = "skewX(-10deg) scale(0.95)";
+                    setTimeout(() => {
+                        button.style.transform = "skewX(-10deg) scale(1)";
+                    }, 150);
+                });
+            }
+        }
+
+        // 初始化Logo按鈕效果
+        document.addEventListener("DOMContentLoaded", () => {
+            const logoButton = document.getElementById("navLogo");
+            if (logoButton) {
+                new LogoButtonEffect(logoButton);
+                
+                // 添加無障礙支援
+                logoButton.setAttribute("tabindex", "0");
+                logoButton.setAttribute("role", "button");
+                logoButton.setAttribute("aria-label", "DeepVape 主頁連結");
+                
+                // 鍵盤支援
+                logoButton.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        logoButton.click();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
