@@ -6,7 +6,7 @@
 
   <!-- 首頁 -->
   <url>
-    <loc>https://deepvape.com/</loc>
+    <loc>https://deepvape.org/</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -14,35 +14,35 @@
 
   <!-- 主機系列 -->
   <url>
-    <loc>https://deepvape.com/sp2_product.html</loc>
+    <loc>https://deepvape.org/sp2_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/ilia_1_product.html</loc>
+    <loc>https://deepvape.org/ilia_1_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/ilia_leather_product.html</loc>
+    <loc>https://deepvape.org/ilia_leather_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/ilia_fabric_product.html</loc>
+    <loc>https://deepvape.org/ilia_fabric_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/hta_vape_product.html</loc>
+    <loc>https://deepvape.org/hta_vape_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -50,28 +50,28 @@
 
   <!-- 煙彈系列 -->
   <url>
-    <loc>https://deepvape.com/ilia_pods_product.html</loc>
+    <loc>https://deepvape.org/ilia_pods_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/sp2_pods_product.html</loc>
+    <loc>https://deepvape.org/sp2_pods_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/hta_pods_product.html</loc>
+    <loc>https://deepvape.org/hta_pods_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/lana_pods_product.html</loc>
+    <loc>https://deepvape.org/lana_pods_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -79,14 +79,14 @@
 
   <!-- 拋棄式系列 -->
   <url>
-    <loc>https://deepvape.com/ilia_disposable_product.html</loc>
+    <loc>https://deepvape.org/ilia_disposable_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/lana_a8000_product.html</loc>
+    <loc>https://deepvape.org/lana_a8000_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -94,21 +94,21 @@
 
   <!-- 功能頁面 -->
   <url>
-    <loc>https://deepvape.com/cart.html</loc>
+    <loc>https://deepvape.org/cart.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/order_confirmation.html</loc>
+    <loc>https://deepvape.org/order_confirmation.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/shopping_guide.html</loc>
+    <loc>https://deepvape.org/shopping_guide.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -116,28 +116,28 @@
 
   <!-- 資訊頁面 -->
   <url>
-    <loc>https://deepvape.com/brand_story.html</loc>
+    <loc>https://deepvape.org/brand_story.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/faq.html</loc>
+    <loc>https://deepvape.org/faq.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/shipping_info.html</loc>
+    <loc>https://deepvape.org/shipping_info.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/return_policy.html</loc>
+    <loc>https://deepvape.org/return_policy.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -145,14 +145,14 @@
 
   <!-- 工具頁面 -->
   <url>
-    <loc>https://deepvape.com/store_search_demo.html</loc>
+    <loc>https://deepvape.org/store_search_demo.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://deepvape.com/cvs_callback.html</loc>
+    <loc>https://deepvape.org/cvs_callback.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

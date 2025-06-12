@@ -3,12 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>購物車 | Image Vape</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" href="deepvape_logo_main.png">
-    <link rel="apple-touch-icon" href="deepvape_logo_main.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>您的購物車 - Deepvape 頂級電子菸專賣店</title>
+    <meta name="description" content="查看您在 Deepvape 的購物車。在這裡管理您選擇的電子菸主機、煙彈和拋棄式產品，完成您的訂單。">
+    <meta name="keywords" content="購物車, Deepvape, VAPE, 電子菸, 訂單, 結帳">
+    <link rel="canonical" href="https://deepvape.org/cart.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://deepvape.netlify.app/cart.html">
+    <meta property="og:title" content="您的購物車 - Deepvape 頂級電子菸專賣店">
+    <meta property="og:description" content="查看您在 Deepvape 的購物車。在這裡管理您選擇的電子菸主機、煙彈和拋棄式產品，完成您的訂單。">
+    <meta property="og:image" content="https://deepvape.netlify.app/deepvape_main.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://deepvape.netlify.app/cart.html">
+    <meta property="twitter:title" content="您的購物車 - Deepvape 頂級電子菸專賣店">
+    <meta property="twitter:description" content="查看您在 Deepvape 的購物車。在這裡管理您選擇的電子菸主機、煙彈和拋棄式產品，完成您的訂單。">
+    <meta property="twitter:image" content="https://deepvape.org/deepvape_main.png">
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -226,7 +245,8 @@
             border-radius: 30px;
             padding: 1.5rem;
             margin-bottom: 1rem;
-            display: flex;
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
             align-items: center;
             gap: 1rem;
             transition: all 0.3s ease;
@@ -242,7 +262,7 @@
             width: 80px;
             height: 80px;
             object-fit: cover;
-            border-radius: 30px;
+            border-radius: 20px;
             border: 2px solid var(--border-color);
         }
 
@@ -1218,16 +1238,16 @@
     <!-- Main Content -->
     <div class="main-content">
         <!-- Cart Items Section -->
-        <div class="cart-items-section">
-            <h2 class="section-title">
+        <section class="cart-items-section">
+            <h1 class="section-title">
                 <i class="fas fa-shopping-cart"></i>
-                購物車
-            </h2>
-            
-            <div id="cartItems">
+                您的購物車
+            </h1>
+
+            <div id="cartItemsContainer">
                 <!-- Cart items will be populated by JavaScript -->
             </div>
-            
+
             <div class="empty-cart" id="emptyCart" style="display: none;">
                 <i class="fas fa-shopping-cart"></i>
                 <h3>購物車是空的</h3>
@@ -1236,25 +1256,25 @@
                     <i class="fas fa-arrow-left"></i> 繼續購物
                 </a>
             </div>
-        </div>
+        </section>
 
         <!-- Order Summary Section -->
-        <div class="order-summary">
-            <h3 class="section-title">
-                <i class="fas fa-receipt"></i>
+        <aside class="order-summary-section">
+            <h2 class="section-title">
+                <i class="fas fa-file-invoice-dollar"></i>
                 訂單摘要
-            </h3>
-            
+            </h2>
+
             <div class="summary-row">
                 <span class="summary-label">商品小計</span>
                 <span class="summary-value" id="subtotal">NT$ 0</span>
             </div>
-            
+
             <div class="summary-row">
                 <span class="summary-label">運費</span>
                 <span class="summary-value">NT$ 60</span>
             </div>
-            
+
             <div class="summary-row">
                 <span class="summary-label">總計</span>
                 <span class="summary-value" id="total">NT$ 60</span>
@@ -1266,12 +1286,12 @@
                     <i class="fas fa-user"></i>
                     收件人資訊
                 </h4>
-                
+
                 <div class="form-group">
                     <label class="form-label" for="customerName">姓名 *</label>
                     <input type="text" id="customerName" class="form-input" placeholder="請輸入收件人姓名" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label" for="customerPhone">電話 *</label>
                     <input type="tel" id="customerPhone" class="form-input" placeholder="請輸入聯絡電話" required>
@@ -1281,7 +1301,7 @@
                 <div class="store-selection">
                     <label class="form-label">選擇取貨門市 *</label>
                     <p class="store-instruction">使用ibon門市查詢系統查詢7-ELEVEN門市，或直接手動輸入門市資訊</p>
-                    
+
                     <!-- Store Search Button -->
                     <div class="store-buttons">
                         <button class="store-btn smart-search" onclick="openIbonStoreMap()">
@@ -1305,22 +1325,22 @@
                                 <input type="text" id="storeIdInput" class="form-input" placeholder="例如：250094" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="form-label">門市名稱 *</label>
                             <input type="text" id="storeNameInput" class="form-input" placeholder="例如：京達門市" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="form-label">門市地址 (選填)</label>
                             <input type="text" id="storeAddressInput" class="form-input" placeholder="例如：台中市豐原區中正路805號（選填）">
                         </div>
-                        
+
                         <button class="confirm-store-btn" onclick="confirmStoreSelection()">
                             <i class="fas fa-check"></i> 確認門市選擇
                         </button>
                     </div>
-                    
+
                     <div class="selected-store" id="selectedStore">
                         <div class="store-info">
                             <div class="store-name" id="storeName">請選擇門市</div>
@@ -1354,7 +1374,7 @@
                     <i class="fas fa-arrow-left"></i> 繼續購物
                 </a>
             </div>
-        </div>
+        </aside>
     </div>
 
     <!-- Store Search Modal removed - no longer needed -->
@@ -1435,7 +1455,7 @@
 
         // Render cart items
         function renderCart() {
-            const cartItemsContainer = document.getElementById('cartItems');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
             const emptyCart = document.getElementById('emptyCart');
             
             if (cart.length === 0) {

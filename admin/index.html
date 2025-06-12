@@ -11,22 +11,22 @@
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   
   <script>
-    // 設置正確的網站 URL
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.init({
-        APIUrl: "https://deepvape.netlify.app/.netlify/identity"
-      });
-      
+      const user = netlifyIdentity.currentUser();
+      if (user && user.app_metadata && user.app_metadata.roles.indexOf('admin') == -1) {
+        document.location.href = "https://deepvape.org/";
+      }
+
       window.netlifyIdentity.on("init", user => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
-            document.location.href = "https://deepvape.netlify.app/admin/";
+            document.location.href = "https://deepvape.org/admin/";
           });
         }
       });
       
       window.netlifyIdentity.on("logout", () => {
-        document.location.href = "https://deepvape.netlify.app/";
+        document.location.href = "https://deepvape.org/";
       });
     }
   </script>

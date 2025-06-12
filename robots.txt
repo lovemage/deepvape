@@ -25,7 +25,4 @@ Disallow: /cvs_callback.html
 Disallow: /store_search_demo.html
 
 # Sitemap 位置
-Sitemap: https://deepvape.com/sitemap.xml
-
-# 爬取延遲 (建議每個請求間隔1秒)
-Crawl-delay: 1 
+Sitemap: https://deepvape.org/sitemap.xml 
