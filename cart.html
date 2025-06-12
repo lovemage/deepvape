@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="js/store-selector.js"></script>
     <style>
         :root {
             --primary-color: #083e12;
@@ -1409,10 +1410,13 @@
         let selectedStoreType = '';
         let selectedStoreInfo = null;
         let currentCaptcha = '';
+        let storeSelector = null;
 
         // Telegram Bot Configuration
         const TELEGRAM_BOT_TOKEN = '7449471878:AAH3ItIHYrNrJLT2xp9h_O85mdbjBuFvK48'; // 您的 Bot Token
         const TELEGRAM_CHAT_ID = '-1002666651546'; // DeepVape 訂單通知超級群組 Chat ID
+
+
 
         // Load cart from localStorage
         function loadCart() {
@@ -1536,55 +1540,12 @@
 
         // 開啟ibon門市查詢系統 - 使用7-11官方API
         function openIbonStoreMap() {
-            // 建構回調URL
-            const currentProtocol = window.location.protocol;
-            const currentHost = window.location.host;
-            
-            // 判斷是否為本地開發環境
-            const isLocalhost = currentHost.includes('localhost') || currentHost.includes('127.0.0.1');
-            
-            // 如果是本地開發環境，顯示警告
-            if (isLocalhost) {
-                alert('⚠️ 注意：您目前在本地開發環境。\n\n7-11門市選擇API需要有效的線上callback URL才能正常運作。\n\n建議將網站部署到線上環境進行測試。');
-            }
-            
-            // 使用簡潔的 API 路徑（避免 .netlify 字樣）
-            let callbackUrl;
-            if (isLocalhost) {
-                // 開發環境：使用實際部署的網址
-                callbackUrl = 'https://deepvape.org/api/cvs-callback';
-                console.warn('開發環境偵測：使用生產環境 API URL');
+            if (storeSelector) {
+                storeSelector.openStoreMap();
             } else {
-                // 生產環境：使用當前網址的 API 路徑
-                callbackUrl = `${currentProtocol}//${currentHost}/api/cvs-callback`;
+                console.error('門市選擇器尚未初始化');
+                alert('系統載入中，請稍後再試');
             }
-            
-            // 7-11 電子地圖 API URL
-            const eshopId = '870'; // 您的廠商代碼
-            const serviceType = '1'; // 服務類型：1=取貨付款
-            const apiUrl = `https://emap.presco.com.tw/c2cemap.ashx?eshopid=${eshopId}&servicetype=${serviceType}&url=${encodeURIComponent(callbackUrl)}`;
-            
-            console.log('開啟7-11電子地圖API:', apiUrl);
-            console.log('回調URL:', callbackUrl);
-            console.log('環境:', isLocalhost ? '開發環境' : '生產環境');
-            
-            // 開啟新視窗
-            const mapWindow = window.open(apiUrl, 'SevenElevenStoreMap', 'width=1000,height=700,scrollbars=yes,resizable=yes');
-            
-            if (!mapWindow) {
-                alert('無法開啟門市查詢視窗，請檢查瀏覽器的彈出視窗設定。');
-                return;
-            }
-            
-            // 顯示使用指引
-            alert('📍 7-ELEVEN 門市查詢說明：\n\n' +
-                  '1. 在地圖上選擇您要取貨的門市\n' +
-                  '2. 點擊「確認」按鈕\n' +
-                  '3. 系統將自動回傳門市資訊\n\n' +
-                  '⚠️ 注意事項：\n' +
-                  '- 請確保允許彈出視窗\n' +
-                  '- 選擇門市後系統會自動填入資訊\n' +
-                  '- 如果自動填入失敗，您仍可手動輸入門市資訊');
         }
 
 
@@ -1847,40 +1808,29 @@ ${orderData.items.map(item =>
             }
         }
 
-        // 監聽來自 cvs_callback.html 的門市選擇回調
-        window.addEventListener('message', function(event) {
-            console.log('收到訊息:', event);
-            
-            // 檢查訊息來源和類型
-            if (event.data && event.data.type === 'storeSelected' && event.data.storeInfo) {
-                console.log('收到門市選擇資訊:', event.data.storeInfo);
-                
-                const storeInfo = event.data.storeInfo;
-                
-                // 自動填入門市資訊
-                document.getElementById('storeTypeSelect').value = '711';
-                document.getElementById('storeIdInput').value = storeInfo.storeId || '';
-                document.getElementById('storeNameInput').value = storeInfo.storeName || '';
-                document.getElementById('storeAddressInput').value = storeInfo.storeAddress || '';
-                
-                // 自動確認門市選擇
-                if (storeInfo.storeId && storeInfo.storeName) {
-                    confirmStoreSelection();
-                    
-                    // 顯示成功訊息
-                    setTimeout(() => {
-                        alert('✅ 門市資訊已自動載入！\n\n' +
-                              `門市類型：7-ELEVEN\n` +
-                              `店號：${storeInfo.storeId}\n` +
-                              `門市名稱：${storeInfo.storeName}\n` +
-                              `地址：${storeInfo.storeAddress || '未提供'}`);
-                    }, 500);
-                }
-            }
-        });
+        // 門市選擇訊息監聽已由 StoreSelector 處理
 
         // 在頁面載入時添加測試按鈕（僅開發環境）
         document.addEventListener('DOMContentLoaded', function() {
+            // 初始化門市選擇器（如果尚未初始化）
+            if (!storeSelector && window.StoreSelector) {
+                storeSelector = new StoreSelector();
+                
+                // 覆寫門市選擇完成的回調
+                storeSelector.onStoreSelected = function(storeInfo) {
+                    console.log('門市選擇完成:', storeInfo);
+                    
+                    // 自動填入表單
+                    document.getElementById('storeTypeSelect').value = '711';
+                    document.getElementById('storeIdInput').value = storeInfo.storeId || '';
+                    document.getElementById('storeNameInput').value = storeInfo.storeName || '';
+                    document.getElementById('storeAddressInput').value = storeInfo.storeAddress || '';
+                    
+                    // 自動確認選擇
+                    confirmStoreSelection();
+                };
+            }
+            
             loadCart();
             generateCaptcha();
             
