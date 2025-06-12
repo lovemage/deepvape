@@ -1,0 +1,84 @@
+{
+  "products": [
+    {
+      "id": "sp2_device",
+      "name": "SP2 一代主機",
+      "price": 650,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_gen1",
+      "name": "ilia 一代主機",
+      "price": 650,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_leather",
+      "name": "皮革款主機",
+      "price": 900,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_fabric",
+      "name": "ILIA 哩亞布紋主機",
+      "price": 650,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "hta_spade",
+      "name": "HTA 黑桃主機",
+      "price": 450,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_pods",
+      "name": "ILIA 發光煙彈",
+      "price": 300,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "sp2_pods",
+      "name": "思博瑞 SP2 煙彈",
+      "price": 350,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "hta_pods",
+      "name": "HTA 黑桃煙彈",
+      "price": 260,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_disposable",
+      "name": "ilia 四代拋棄式",
+      "price": 350,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "lana_a8000",
+      "name": "LANA A8000",
+      "price": 350,
+      "originalPrice": null,
+      "discount": null,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    }
+  ]
+} 

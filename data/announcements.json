@@ -1,0 +1,18 @@
+{
+  "announcements": [
+    {
+      "text": "🎉 新品上市！HTA 黑桃系列限時優惠中",
+      "priority": "high",
+      "active": true,
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-12-31T23:59:59.000Z"
+    },
+    {
+      "text": "📦 全館滿千免運，7-11 取貨付款",
+      "priority": "medium",
+      "active": true,
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": null
+    }
+  ]
+} 
