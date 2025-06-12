@@ -1,32 +1,35 @@
 [build]
-  publish = "."
-  functions = "netlify/functions"
+  command = "echo 'No build required'"
+  publish = "deepvape-main"
 
 [build.environment]
   NODE_VERSION = "18"
 
-# 重定向規則
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-# 環境變數（在Netlify控制台設定）
-# GOOGLE_MAPS_API_KEY = "你的Google Maps API金鑰"
+[[redirects]]
+  from = "/cvs-callback"
+  to = "/.netlify/functions/cvs-callback"
+  status = 200
 
-# Headers for security
+[[redirects]]
+  from = "/api/cvs-callback"
+  to = "/.netlify/functions/cvs-callback"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-XSS-Protection = "1; mode=block"
 
-# Headers for API endpoints
 [[headers]]
-  for = "/.netlify/functions/*"
+  for = "/api/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type"
-    Access-Control-Allow-Methods = "GET, POST, OPTIONS" 
