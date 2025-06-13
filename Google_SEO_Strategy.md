@@ -4,7 +4,7 @@
 
 ### 網站基本信息
 - **網站名稱**: DeepVape - 頂級電子菸專賣店
-- **主域名**: https://deepvape.com
+- **主域名**: https://deepvape.org
 - **目標市場**: 台灣地區電子煙用戶
 - **主要產品**: VAPE主機、煙彈、拋棄式電子煙
 - **核心品牌**: ILIA、SP2、HTA、LANA
@@ -82,7 +82,7 @@
   "@type": "Product",
   "name": "SP2 思博瑞主機",
   "image": [
-    "https://deepvape.com/sp2_v/SP2-主機.webp"
+    "https://deepvape.org/sp2_v/SP2-主機.webp"
   ],
   "description": "SP2 思博瑞主機，智能溫控技術，650元正品保證",
   "sku": "SP2-001",
@@ -93,7 +93,7 @@
   },
   "offers": {
     "@type": "Offer",
-    "url": "https://deepvape.com/sp2_product.html",
+    "url": "https://deepvape.org/sp2_product.html",
     "priceCurrency": "TWD",
     "price": "650",
     "priceValidUntil": "2025-12-31",
@@ -113,8 +113,8 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "DeepVape",
-  "url": "https://deepvape.com",
-  "logo": "https://deepvape.com/logo.png",
+  "url": "https://deepvape.org",
+  "logo": "https://deepvape.org/logo.png",
   "description": "台灣頂級電子煙專賣店，提供ILIA、SP2、HTA、LANA等知名品牌",
   "contactPoint": {
     "@type": "ContactPoint",
@@ -132,11 +132,11 @@
 
 #### URL結構優化
 ```
-現在: https://deepvape.com/sp2_product.html
-建議: https://deepvape.com/products/sp2-主機/
-      https://deepvape.com/products/ilia-煙彈/
-      https://deepvape.com/categories/主機/
-      https://deepvape.com/categories/煙彈/
+現在: https://deepvape.org/sp2_product.html
+建議: https://deepvape.org/products/sp2-主機/
+      https://deepvape.org/products/ilia-煙彈/
+      https://deepvape.org/categories/主機/
+      https://deepvape.org/categories/煙彈/
 ```
 
 #### 內部連結策略
@@ -238,7 +238,7 @@
   "category": "電子煙店",
   "address": "[實體店面地址]",
   "phone": "[聯絡電話]",
-  "website": "https://deepvape.com",
+  "website": "https://deepvape.org",
   "hours": {
     "monday": "10:00-22:00",
     "tuesday": "10:00-22:00",
@@ -257,7 +257,7 @@
   "@context": "https://schema.org",
   "@type": "Store",
   "name": "DeepVape",
-  "image": "https://deepvape.com/store-front.jpg",
+  "image": "https://deepvape.org/store-front.jpg",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "[街道地址]",

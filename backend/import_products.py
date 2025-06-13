@@ -172,7 +172,7 @@ def import_products():
                 'price': 350,
                 'stock_quantity': 80,
                 'category_id': pods_category.id,
-                'main_image': 'sp2_d/S__24518868.jpg',
+                'main_image': 'sp2_d/sp2_pods_cartridge_collection.jpg',
                 'is_active': True,
                 'is_featured': False,
                 'badge_type': 'new',

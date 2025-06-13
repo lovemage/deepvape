@@ -68,7 +68,7 @@ async def send_update_notification():
 ✅ 客服系統全面升級
 ✅ 服務頁面內容完善
 
-🌐 **網站地址：** https://deepvape.com
+🌐 **網站地址：** https://deepvape.org
 📱 **Line客服：** @deepvape
 
 感謝您的支持！🙏
@@ -141,7 +141,7 @@ async def send_price_table_notification():
 🚚 **運費：** 全台 NT$ 60 (7-11/全家/萊爾富店到店)
 
 📱 **訂購方式：**
-• 🌐 官網：https://deepvape.com
+• 🌐 官網：https://deepvape.org
 • 📱 Line：@deepvape
 
 ⚠️ **注意事項：**

@@ -622,9 +622,9 @@
         <div class="product-images">
             <img src="sp2_v/sp2_device_main_showcase.jpg" alt="SP2 一代主機" class="main-image" id="mainImage">
             <div class="image-gallery">
-                <img src="sp2_v/sp2_device_galaxy_blue.jpg" alt="SP2 一代主機 - 星河藍" class="gallery-image active" onclick="changeImage('sp2_v/sp2_device_galaxy_blue.jpg', this)">
-                <img src="sp2_v/sp2_device_samurai_black.jpg" alt="SP2 一代主機 - 武士黑" class="gallery-image" onclick="changeImage('sp2_v/sp2_device_samurai_black.jpg', this)">
-                <img src="sp2_v/sp2_device_deep_sea_green.jpg" alt="SP2 一代主機 - 深海綠" class="gallery-image" onclick="changeImage('sp2_v/sp2_device_deep_sea_green.jpg', this)">
+                <img src="sp2_v/sp2_device_main_showcase.jpg" alt="SP2 一代主機 - 主要展示" class="gallery-image active" onclick="changeMainImage(this)">
+                <img src="sp2_v/sp2_device_color_options.webp" alt="SP2 一代主機 - 顏色選擇" class="gallery-image" onclick="changeMainImage(this)">
+                <img src="sp2_d/sp2_pods_cartridge_collection.jpg" alt="SP2 系列 - 煙彈搭配" class="gallery-image" onclick="changeMainImage(this)">
             </div>
         </div>
 
@@ -803,6 +803,7 @@
             const galleryImages = document.querySelectorAll('.gallery-image');
             
             mainImage.src = img.src;
+            mainImage.alt = img.alt;
             
             galleryImages.forEach(image => image.classList.remove('active'));
             img.classList.add('active');

@@ -9,12 +9,12 @@
 
   <!-- 首頁 - 最高優先級 -->
   <url>
-    <loc>https://deepvape.com/</loc>
+    <loc>https://deepvape.org/</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://deepvape.com/logo1.png</image:loc>
+      <image:loc>https://deepvape.org/logo1.png</image:loc>
       <image:title>DeepVape - 電子煙專門店</image:title>
     </image:image>
   </url>
@@ -23,60 +23,60 @@
   
   <!-- SP2 思博瑞主機 -->
   <url>
-    <loc>https://deepvape.com/sp2_product.html</loc>
+    <loc>https://deepvape.org/sp2_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://deepvape.com/sp2_v/SP2-主機.webp</image:loc>
+      <image:loc>https://deepvape.org/sp2_v/SP2-主機.webp</image:loc>
       <image:title>SP2 思博瑞主機 - 650元</image:title>
     </image:image>
   </url>
 
   <!-- ILIA 哩亞一代主機 -->
   <url>
-    <loc>https://deepvape.com/ilia_1_product.html</loc>
+    <loc>https://deepvape.org/ilia_1_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://deepvape.com/ilia_1/ilia_1_主機.webp</image:loc>
+      <image:loc>https://deepvape.org/ilia_1/ilia_1_主機.webp</image:loc>
       <image:title>ILIA 哩亞一代主機 - 650元</image:title>
     </image:image>
   </url>
 
   <!-- ILIA 皮革主機 -->
   <url>
-    <loc>https://deepvape.com/ilia_leather_product.html</loc>
+    <loc>https://deepvape.org/ilia_leather_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://deepvape.com/ilia_L/ILIA主機-皮革圖.jpg</image:loc>
+      <image:loc>https://deepvape.org/ilia_L/ILIA主機-皮革圖.jpg</image:loc>
       <image:title>ILIA 皮革主機 - 奢華質感 - 650元</image:title>
     </image:image>
   </url>
 
   <!-- ILIA 布紋主機 -->
   <url>
-    <loc>https://deepvape.com/ilia_fabric_product.html</loc>
+    <loc>https://deepvape.org/ilia_fabric_product.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://deepvape.com/ilia_Bu/ilia_fabric_device_main.png</image:loc>
+      <image:loc>https://deepvape.org/ilia_Bu/ilia_fabric_device_main.png</image:loc>
       <image:title>ILIA 布紋主機 - 時尚設計 - 650元</image:title>
     </image:image>
   </url>
 
   <!-- HTA 黑桃主機 -->
   <url>
-    <loc>https://deepvape.com/hta_vape_product.html</loc>
+    <loc>https://deepvape.org/hta_vape_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://deepvape.com/hta_vape/HTA_c6c0aa3c-79d3-4484-a99c-6fe03e67cb54.webp</image:loc>
+      <image:loc>https://deepvape.org/hta_vape/HTA_c6c0aa3c-79d3-4484-a99c-6fe03e67cb54.webp</image:loc>
       <image:title>HTA 黑桃主機 - 450元</image:title>
     </image:image>
   </url>
@@ -85,48 +85,48 @@
   
   <!-- ILIA 發光煙彈 -->
   <url>
-    <loc>https://deepvape.com/ilia_pods_product.html</loc>
+    <loc>https://deepvape.org/ilia_pods_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://deepvape.com/illa_d/哩亞-ILIA煙彈.webp</image:loc>
+      <image:loc>https://deepvape.org/illa_d/哩亞-ILIA煙彈.webp</image:loc>
       <image:title>ILIA 發光煙彈 - 25種口味 - 300元</image:title>
     </image:image>
   </url>
 
   <!-- SP2 煙彈 -->
   <url>
-    <loc>https://deepvape.com/sp2_pods_product.html</loc>
+    <loc>https://deepvape.org/sp2_pods_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://deepvape.com/sp2_d/S__24518868.jpg</image:loc>
+      <image:loc>https://deepvape.org/sp2_d/sp2_pods_cartridge_collection.jpg</image:loc>
       <image:title>SP2 煙彈 - 32種口味 - 350元</image:title>
     </image:image>
   </url>
 
   <!-- HTA 黑桃煙彈 -->
   <url>
-    <loc>https://deepvape.com/hta_pods_product.html</loc>
+    <loc>https://deepvape.org/hta_pods_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://deepvape.com/hta_pods/HTA_pods.webp</image:loc>
+      <image:loc>https://deepvape.org/hta_pods/HTA_pods.webp</image:loc>
       <image:title>HTA 黑桃煙彈 - 15種口味 - 260元</image:title>
     </image:image>
   </url>
 
   <!-- LANA 煙彈 -->
   <url>
-    <loc>https://deepvape.com/lana_pods_product.html</loc>
+    <loc>https://deepvape.org/lana_pods_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://deepvape.com/lana_pods/LANA煙彈.webp</image:loc>
+      <image:loc>https://deepvape.org/lana_pods/LANA煙彈.webp</image:loc>
       <image:title>LANA 煙彈 - 12種口味 - 280元</image:title>
     </image:image>
   </url>
@@ -135,24 +135,24 @@
   
   <!-- ILIA 拋棄式四代 -->
   <url>
-    <loc>https://deepvape.com/ilia_disposable_product.html</loc>
+    <loc>https://deepvape.org/ilia_disposable_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://deepvape.com/ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp</image:loc>
+      <image:loc>https://deepvape.org/ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp</image:loc>
       <image:title>ILIA 拋棄式四代 - 6500口 - 320元</image:title>
     </image:image>
   </url>
 
   <!-- LANA A8000 拋棄式 -->
   <url>
-    <loc>https://deepvape.com/lana_a8000_product.html</loc>
+    <loc>https://deepvape.org/lana_a8000_product.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://deepvape.com/lana_a8000.webp</image:loc>
+      <image:loc>https://deepvape.org/lana_a8000.webp</image:loc>
       <image:title>LANA A8000 拋棄式 - 8000口 - 320元</image:title>
     </image:image>
   </url>
@@ -161,7 +161,7 @@
   
   <!-- 購物車 -->
   <url>
-    <loc>https://deepvape.com/cart.html</loc>
+    <loc>https://deepvape.org/cart.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
@@ -169,7 +169,7 @@
 
   <!-- 訂單確認頁面 -->
   <url>
-    <loc>https://deepvape.com/order_confirmation.html</loc>
+    <loc>https://deepvape.org/order_confirmation.html</loc>
     <lastmod>2024-12-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -177,7 +177,7 @@
 
   <!-- 購物指南 -->
   <url>
-    <loc>https://deepvape.com/shopping_guide.html</loc>
+    <loc>https://deepvape.org/shopping_guide.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -187,7 +187,7 @@
   
   <!-- 品牌故事 -->
   <url>
-    <loc>https://deepvape.com/brand_story.html</loc>
+    <loc>https://deepvape.org/brand_story.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -195,7 +195,7 @@
 
   <!-- 常見問題 -->
   <url>
-    <loc>https://deepvape.com/faq.html</loc>
+    <loc>https://deepvape.org/faq.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -203,7 +203,7 @@
 
   <!-- 運送資訊 -->
   <url>
-    <loc>https://deepvape.com/shipping_info.html</loc>
+    <loc>https://deepvape.org/shipping_info.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -211,7 +211,7 @@
 
   <!-- 退換貨政策 -->
   <url>
-    <loc>https://deepvape.com/return_policy.html</loc>
+    <loc>https://deepvape.org/return_policy.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -221,7 +221,7 @@
   
   <!-- 門市搜尋 -->
   <url>
-    <loc>https://deepvape.com/store_search_demo.html</loc>
+    <loc>https://deepvape.org/store_search_demo.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -229,7 +229,7 @@
 
   <!-- CVS 回調 -->
   <url>
-    <loc>https://deepvape.com/cvs_callback.html</loc>
+    <loc>https://deepvape.org/cvs_callback.html</loc>
     <lastmod>2024-12-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
