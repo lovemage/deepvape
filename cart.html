@@ -24,6 +24,15 @@
 
     <link rel="icon" type="image/png" href="logo.png">
 
+    <!-- Google Ads 全域網站代碼 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-879825412"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-879825412');
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -1731,6 +1740,9 @@ ${orderData.items.map(item =>
                 orderId: 'ORD' + Date.now()
             };
             
+            // 追蹤開始結帳事件 - Google Ads
+            trackBeginCheckoutConversion(cart);
+            
             // Show loading
             const confirmBtn = document.querySelector('#checkoutModal .modal-btn.confirm');
             const originalText = confirmBtn.textContent;
@@ -1759,14 +1771,49 @@ ${orderData.items.map(item =>
             }
         }
 
+        // 轉換追蹤函數
+        function trackBeginCheckoutConversion(cartData) {
+            const totalValue = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Google Ads 開始結帳轉換追蹤
+            gtag('event', 'conversion', {
+                'send_to': 'AW-879825412/BEGIN_CHECKOUT_LABEL', // 需要在Google Ads中設置實際的轉換標籤
+                'value': totalValue,
+                'currency': 'TWD',
+                'custom_parameters': {
+                    'num_items': cartData.length,
+                    'cart_value': totalValue
+                }
+            });
+            
+            console.log('🎯 追蹤開始結帳轉換:', {
+                value: totalValue,
+                items: cartData.length
+            });
+        }
+
         function closeCheckoutModal() {
             document.getElementById('checkoutModal').style.display = 'none';
         }
 
 
-        // 顯示聯絡方式
+        // 顯示聯絡方式 (整合轉換追蹤)
         function showContact() {
-            window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
+            // 追蹤 Line 聯繫轉換 (使用現有的轉換標籤)
+            gtag('event', 'conversion', {
+                'send_to': 'AW-879825412/fZR-COz-itkaEISkxKMD',
+                'value': 5.0,
+                'currency': 'TWD',
+                'custom_parameters': {
+                    'contact_method': 'line',
+                    'page_location': window.location.href
+                },
+                'event_callback': function() {
+                    window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
+                }
+            });
+            
+            console.log('🎯 追蹤Line聯繫轉換');
         }
 
         // 測試Telegram機器人功能
