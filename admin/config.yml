@@ -81,20 +81,7 @@ collections:
               - {name: "instagram", label: "Instagram", widget: "string"}
               - {name: "facebook", label: "Facebook", widget: "string"}
       
-      - name: "prices"
-        label: "價格管理"
-        file: "data/prices.json"
-        fields:
-          - name: "products"
-            label: "產品價格"
-            widget: "list"
-            fields:
-              - {name: "id", label: "產品ID", widget: "string"}
-              - {name: "name", label: "產品名稱", widget: "string"}
-              - {name: "price", label: "價格", widget: "number"}
-              - {name: "originalPrice", label: "原價", widget: "number", required: false}
-              - {name: "discount", label: "折扣", widget: "string", required: false}
-              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
 
   - name: "orders"
     label: "訂單管理"
@@ -456,7 +443,7 @@ collections:
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
   - name: "site_settings"
-    label: "網站設定"
+    label: "聯絡資訊設定"
     files:
       - name: "contact"
         label: "聯絡資訊"
