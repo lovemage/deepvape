@@ -1426,16 +1426,20 @@
 
                 /* 重要通知下拉區塊 - Cyberpunk 風格 */
         .notice-dropdown-section {
-            position: relative;
-            z-index: 5;
-            margin: 2rem 0;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            z-index: 15;
+            pointer-events: none;
         }
 
         .notice-dropdown-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1rem 2rem;
             position: relative;
+            pointer-events: auto;
         }
 
         /* 觸發按鈕 */
@@ -1512,10 +1516,11 @@
             max-height: 0;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10;
+            z-index: 20;
             box-shadow: 
                 0 10px 30px rgba(255, 0, 255, 0.2),
                 0 20px 60px rgba(0, 255, 255, 0.1);
+            pointer-events: auto;
         }
 
         .notice-dropdown-content.active {
@@ -1728,11 +1733,11 @@
             }
 
             .notice-dropdown-section {
-                margin: 1.5rem 0;
+                top: 70px;
             }
 
             .notice-dropdown-container {
-                padding: 0 1rem;
+                padding: 0.5rem 1rem;
             }
 
             .notice-trigger-btn {
@@ -1813,6 +1818,41 @@
 
         /* 小螢幕手機優化 */
         @media (max-width: 480px) {
+            .notice-dropdown-section {
+                top: 60px;
+            }
+
+            .notice-dropdown-container {
+                padding: 0.5rem;
+            }
+
+            .notice-trigger-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .notice-trigger-icon {
+                font-size: 1rem;
+            }
+
+            .notice-dropdown-content.active {
+                padding: 1rem;
+            }
+
+            .notice-dropdown-title {
+                font-size: 1.2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .notice-dropdown-message {
+                font-size: 0.85rem;
+            }
+
+            .notice-dropdown-message p {
+                padding: 0.6rem;
+                margin-bottom: 0.8rem;
+            }
+
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.8rem;
@@ -3153,8 +3193,16 @@
         // 點擊外部關閉下拉選單
         document.addEventListener('click', function(event) {
             const noticeSection = document.getElementById('noticeDropdownSection');
+            const triggerBtn = document.getElementById('noticeTriggerBtn');
+            
+            // 如果點擊的不是通知區塊內的元素，且下拉選單是開啟的，則關閉它
             if (noticeSection && !noticeSection.contains(event.target) && isNoticeDropdownOpen) {
                 toggleNoticeDropdown();
+            }
+            
+            // 如果點擊的是觸發按鈕，不要執行外部點擊邏輯
+            if (triggerBtn && triggerBtn.contains(event.target)) {
+                event.stopPropagation();
             }
         });
 
