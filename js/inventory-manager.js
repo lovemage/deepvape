@@ -30,17 +30,20 @@ class InventoryManager {
      */
     async loadData() {
         try {
-            const [productsResponse, pricesResponse, ordersResponse, movementsResponse] = await Promise.all([
-                fetch('/data/products.json'),
-                fetch('/data/prices.json'),
-                fetch('/data/orders.json'),
-                fetch('/data/stock_movements.json')
+            // 只載入存在的數據文件
+            const [ordersResponse, movementsResponse] = await Promise.all([
+                fetch('/data/orders.json').catch(() => ({ json: () => ({ orders: [] }) })),
+                fetch('/data/stock_movements.json').catch(() => ({ json: () => ({ movements: [] }) }))
             ]);
 
-            this.products = (await productsResponse.json()).products || [];
-            this.prices = (await pricesResponse.json()).products || [];
             this.orders = (await ordersResponse.json()).orders || [];
             this.stockMovements = (await movementsResponse.json()).movements || [];
+            
+            // 產品和價格數據現在由 ProductManager 管理
+            this.products = [];
+            this.prices = [];
+            
+            console.log('InventoryManager 數據載入完成');
         } catch (error) {
             console.error('載入數據失敗:', error);
             // 使用預設空數據

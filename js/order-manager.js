@@ -28,10 +28,16 @@ class OrderManager {
     async loadOrders() {
         try {
             const response = await fetch('/data/orders.json');
-            const data = await response.json();
-            this.orders = data.orders || [];
+            if (response.ok) {
+                const data = await response.json();
+                this.orders = data.orders || [];
+                console.log('OrderManager 訂單數據載入完成');
+            } else {
+                console.log('訂單數據文件不存在，使用空數據');
+                this.orders = [];
+            }
         } catch (error) {
-            console.error('載入訂單數據失敗:', error);
+            console.warn('載入訂單數據失敗，使用空數據:', error);
             this.orders = [];
         }
     }
