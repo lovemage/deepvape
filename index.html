@@ -1210,60 +1210,21 @@
             color: var(--success-color);
         }
 
-        /* Hero Section */
-        .hero {
+        /* 標題區塊樣式 */
+        .hero-title-section {
+            padding: 120px 0 60px 0;
+            text-align: center;
             position: relative;
-            min-height: 80vh;
-            overflow: hidden;
-            margin-top: 80px;
-            z-index: 10;
+            background: linear-gradient(135deg, rgba(8, 62, 18, 0.1), rgba(4, 19, 72, 0.1));
         }
 
-        .hero-carousel {
-            position: relative;
-            width: 100%;
-            height: 80vh;
-            overflow: hidden;
-            z-index: 11;
-        }
-
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            display: flex;
-            align-items: center;
-            padding: 6rem 0 4rem;
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-        }
-
-        .hero-container {
-            max-width: 1200px;
+        .hero-title-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 2rem;
-            width: 100%;
         }
 
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            min-height: 60vh;
-        }
-
-        .hero-text {
-            z-index: 2;
-        }
-
-        .hero-title {
+        .main-title {
             font-size: 4rem;
             font-weight: 900;
             background: linear-gradient(135deg, var(--highlight-color), var(--tech-cyan));
@@ -1274,7 +1235,7 @@
             animation: fadeInUp 1s ease-out;
         }
 
-        .hero-subtitle {
+        .main-subtitle {
             font-size: 2rem;
             font-weight: 600;
             color: var(--text-color);
@@ -1283,20 +1244,56 @@
             animation: fadeInUp 1s ease-out 0.2s both;
         }
 
-        .hero-description {
+        .main-description {
             font-size: 1.2rem;
             color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: 3rem;
-            max-width: 500px;
             animation: fadeInUp 1s ease-out 0.4s both;
         }
 
         .hero-buttons {
             display: flex;
             gap: 1.5rem;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
             animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* 輪播圖區塊樣式 */
+        .image-carousel-section {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 60px;
+        }
+
+        .image-carousel {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
         .hero-btn-primary {
@@ -1375,7 +1372,7 @@
         }
 
         /* 輪播指示器 */
-        .hero-indicators {
+        .carousel-indicators {
             position: absolute;
             bottom: 30px;
             left: 50%;
@@ -1385,7 +1382,7 @@
             z-index: 3;
         }
 
-        .hero-indicator {
+        .carousel-indicator {
             width: 12px;
             height: 12px;
             border-radius: 50%;
@@ -1395,14 +1392,14 @@
             border: 2px solid transparent;
         }
 
-        .hero-indicator.active {
+        .carousel-indicator.active {
             background: var(--highlight-color);
             transform: scale(1.2);
             border-color: white;
         }
 
         /* 輪播導航按鈕 */
-        .hero-nav {
+        .carousel-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -1419,16 +1416,16 @@
             font-size: 1.2rem;
         }
 
-        .hero-nav:hover {
+        .carousel-nav:hover {
             background: rgba(26, 254, 73, 0.3);
             transform: translateY(-50%) scale(1.1);
         }
 
-        .hero-nav-prev {
+        .carousel-nav-prev {
             left: 30px;
         }
 
-        .hero-nav-next {
+        .carousel-nav-next {
             right: 30px;
         }
 
@@ -1740,55 +1737,25 @@
                 justify-content: space-between;
             }
 
-            .hero {
-                min-height: auto;
-                height: auto;
+            .hero-title-section {
+                padding: 80px 0 40px 0;
             }
 
-            .hero-carousel {
-                height: auto;
-                min-height: 70vh;
-            }
-
-            .hero-slide {
-                padding: 2rem 0;
-                height: auto;
-                position: relative;
-            }
-
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
-                min-height: auto;
-            }
-
-            .hero-image {
-                order: -1;
-            }
-
-            .hero-main-image {
-                max-width: 90%;
-                height: auto;
-                max-height: 300px;
-                object-fit: contain;
-            }
-
-            .hero-title {
+            .main-title {
                 font-size: 2.5rem;
             }
 
-            .hero-subtitle {
+            .main-subtitle {
                 font-size: 1.5rem;
             }
 
-            .hero-description {
+            .main-description {
                 font-size: 1rem;
-                max-width: none;
             }
 
             .hero-buttons {
                 justify-content: center;
+                flex-wrap: wrap;
             }
 
             .hero-btn-primary {
@@ -1797,21 +1764,26 @@
                 width: 180px !important;
             }
 
-            .hero-nav {
+            .image-carousel-section {
+                height: 300px;
+                margin-bottom: 40px;
+            }
+
+            .carousel-nav {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
             }
 
-            .hero-nav-prev {
+            .carousel-nav-prev {
                 left: 15px;
             }
 
-            .hero-nav-next {
+            .carousel-nav-next {
                 right: 15px;
             }
 
-            .hero-indicators {
+            .carousel-indicators {
                 bottom: 20px;
             }
 
@@ -1830,11 +1802,52 @@
                 width: 180px !important;
             }
 
-            .cyberpunk-notice-btn-inline {
-                padding: 0.8rem 1.5rem !important;
-                font-size: 1rem !important;
-                width: 180px !important;
-            }
+                    .cyberpunk-notice-btn-inline {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 87, 34, 0.2));
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ffc107, #ff5722) 1;
+            color: #ffc107;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 200px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .cyberpunk-notice-btn-inline:hover {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.4), rgba(255, 87, 34, 0.4));
+            box-shadow: 
+                0 0 20px rgba(255, 193, 7, 0.5),
+                0 0 40px rgba(255, 87, 34, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .cyberpunk-notice-btn-inline .btn-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cyberpunk-notice-btn-inline:hover .btn-glow {
+            left: 100%;
+        }
 
             .notice-modal {
                 width: 95%;
@@ -1882,20 +1895,20 @@
 
         /* 中等螢幕優化 */
         @media (max-width: 1024px) and (min-width: 769px) {
-            .hero-content {
-                gap: 3rem;
+            .hero-title-section {
+                padding: 100px 0 50px 0;
             }
 
-            .hero-title {
+            .main-title {
                 font-size: 3rem;
             }
 
-            .hero-subtitle {
+            .main-subtitle {
                 font-size: 1.8rem;
             }
 
-            .hero-main-image {
-                max-height: 400px;
+            .image-carousel-section {
+                height: 400px;
             }
 
             .hero-btn-primary {
@@ -1953,36 +1966,24 @@
 
         /* 小螢幕手機優化 */
         @media (max-width: 480px) {
-            .hero {
-                margin-top: 70px;
+            .hero-title-section {
+                padding: 60px 0 30px 0;
             }
 
-            .hero-carousel {
-                min-height: 60vh;
-            }
-
-            .hero-slide {
-                padding: 1.5rem 0;
-            }
-
-            .hero-container {
+            .hero-title-container {
                 padding: 0 1rem;
             }
 
-            .hero-content {
-                gap: 1.5rem;
-            }
-
-            .hero-title {
+            .main-title {
                 font-size: 2rem;
                 line-height: 1.2;
             }
 
-            .hero-subtitle {
+            .main-subtitle {
                 font-size: 1.2rem;
             }
 
-            .hero-description {
+            .main-description {
                 font-size: 0.9rem;
                 margin-bottom: 2rem;
             }
@@ -2011,31 +2012,31 @@
                 width: 160px !important;
             }
 
-            .hero-main-image {
-                max-width: 85%;
-                max-height: 250px;
+            .image-carousel-section {
+                height: 250px;
+                margin-bottom: 30px;
             }
 
-            .hero-indicators {
+            .carousel-indicators {
                 bottom: 15px;
             }
 
-            .hero-indicator {
+            .carousel-indicator {
                 width: 10px;
                 height: 10px;
             }
 
-            .hero-nav {
+            .carousel-nav {
                 width: 35px;
                 height: 35px;
                 font-size: 0.9rem;
             }
 
-            .hero-nav-prev {
+            .carousel-nav-prev {
                 left: 10px;
             }
 
-            .hero-nav-next {
+            .carousel-nav-next {
                 right: 10px;
             }
 
@@ -2167,42 +2168,57 @@
         </div>
     </nav>
 
-    <!-- Announcement Banner -->
+    <!-- 1. 打字樣式的公告區塊 -->
     <div class="announcement" id="announcement" style="display: none;">
         <i class="fas fa-bullhorn"></i>
-            <span class="announcement-text" id="announcementText"></span>
+        <span class="announcement-text" id="announcementText"></span>
         <button class="announcement-close" onclick="closeAnnouncement()">
             <i class="fas fa-times"></i>
         </button>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-carousel" id="heroCarousel">
+    <!-- 2. 標題區塊 含 立即探索按鈕及重要通知按鈕 -->
+    <section class="hero-title-section">
+        <div class="hero-title-container">
+            <h1 class="main-title">Deepvape - 頂級電子菸專賣店</h1>
+            <h2 class="main-subtitle">VAPE煙彈、主機、拋棄式</h2>
+            <p class="main-description">探索最新科技與極致品味的完美結合，為您帶來前所未有的電子菸體驗</p>
+            
+            <div class="hero-buttons">
+                <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
+                    立即探索
+                    <div class="btn-glow"></div>
+                </button>
+                
+                <div class="notice-button-inline" id="noticeButtonInline" style="display: none;">
+                    <button class="cyberpunk-notice-btn-inline" onclick="toggleNoticeModal()">
+                        <span>重要通知</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 輪播圖區塊（固定高度）沒有文字 只需要圖片 -->
+    <section class="image-carousel-section">
+        <div class="image-carousel" id="imageCarousel">
             <!-- 輪播項目將由 JavaScript 動態生成 -->
         </div>
         
         <!-- 輪播指示器 -->
-        <div class="hero-indicators" id="heroIndicators">
+        <div class="carousel-indicators" id="carouselIndicators">
             <!-- 指示器將由 JavaScript 動態生成 -->
         </div>
         
         <!-- 輪播導航按鈕 -->
-        <button class="hero-nav hero-nav-prev" id="heroPrev" onclick="changeHeroSlide(-1)">
+        <button class="carousel-nav carousel-nav-prev" id="carouselPrev" onclick="changeCarouselSlide(-1)">
             <i class="fas fa-chevron-left"></i>
-                        </button>
-        <button class="hero-nav hero-nav-next" id="heroNext" onclick="changeHeroSlide(1)">
-            <i class="fas fa-chevron-right"></i>
-                        </button>
-    </section>
-
-    <!-- 重要通知按鈕 -->
-    <div class="notice-button-container" id="noticeButtonContainer" style="display: none;">
-        <button class="cyberpunk-notice-btn" id="noticeButton" onclick="toggleNoticeModal()">
-            <span>重要通知</span>
-            <div class="btn-glow"></div>
         </button>
-    </div>
+        <button class="carousel-nav carousel-nav-next" id="carouselNext" onclick="changeCarouselSlide(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </section>
 
     <!-- 重要通知彈窗 -->
     <div class="notice-modal-overlay" id="noticeModalOverlay" onclick="closeNoticeModal()">
@@ -3194,40 +3210,40 @@
             });
         }
 
-        // Hero 輪播功能
-        let currentHeroSlide = 0;
-        let heroSlides = [];
-        let heroData = null;
-        let heroInterval = null;
+        // 圖片輪播功能
+        let currentCarouselSlide = 0;
+        let carouselSlides = [];
+        let carouselData = null;
+        let carouselInterval = null;
 
-        // 載入 Hero 數據
-        async function loadHeroData() {
+        // 載入輪播圖數據
+        async function loadCarouselData() {
             try {
                 const response = await fetch('/.netlify/functions/hero');
                 if (!response.ok) {
-                    throw new Error('無法載入 Hero 數據');
+                    throw new Error('無法載入輪播圖數據');
                 }
                 
                 const data = await response.json();
-                heroData = data.hero;
+                carouselData = data.hero;
                 
-                if (heroData && heroData.images && heroData.images.length > 0) {
-                    renderHeroSlides();
-                    initHeroCarousel();
+                if (carouselData && carouselData.images && carouselData.images.length > 0) {
+                    renderCarouselSlides();
+                    initImageCarousel();
                 } else {
-                    console.warn('沒有找到 Hero 圖片數據');
-                    renderDefaultHero();
+                    console.warn('沒有找到輪播圖數據');
+                    renderDefaultCarousel();
                 }
             } catch (error) {
-                console.error('載入 Hero 數據時發生錯誤:', error);
-                renderDefaultHero();
+                console.error('載入輪播圖數據時發生錯誤:', error);
+                renderDefaultCarousel();
             }
         }
 
-        // 渲染 Hero 輪播項目
-        function renderHeroSlides() {
-            const carousel = document.getElementById('heroCarousel');
-            const indicators = document.getElementById('heroIndicators');
+        // 渲染輪播圖項目
+        function renderCarouselSlides() {
+            const carousel = document.getElementById('imageCarousel');
+            const indicators = document.getElementById('carouselIndicators');
             
             if (!carousel || !indicators) return;
 
@@ -3235,111 +3251,65 @@
             carousel.innerHTML = '';
             indicators.innerHTML = '';
 
-            heroData.images.forEach((image, index) => {
-                // 創建輪播項目
+            carouselData.images.forEach((image, index) => {
+                // 創建輪播項目（只有圖片）
                 const slide = document.createElement('div');
-                slide.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+                slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
                 slide.innerHTML = `
-                    <div class="hero-container">
-                        <div class="hero-content">
-                            <div class="hero-text">
-                                <h1 class="hero-title">${image.title}</h1>
-                                <h2 class="hero-subtitle">${image.subtitle}</h2>
-                                <p class="hero-description">${image.description}</p>
-                                <div class="hero-buttons">
-                                    <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
-                                        立即探索
-                                        <div class="btn-glow"></div>
-                                    </button>
-                                    <div class="notice-button-inline" id="noticeButtonInline" style="display: none;">
-                                        <button class="cyberpunk-notice-btn-inline" onclick="toggleNoticeModal()">
-                                            <span>重要通知</span>
-                                            <div class="btn-glow"></div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hero-image">
-                                <img src="${image.url}" alt="${image.alt}" class="hero-main-image">
-                            </div>
-                        </div>
-                    </div>
+                    <img src="${image.url}" alt="${image.alt}" class="carousel-image">
                 `;
                 carousel.appendChild(slide);
 
                 // 創建指示器
                 const indicator = document.createElement('div');
-                indicator.className = `hero-indicator ${index === 0 ? 'active' : ''}`;
-                indicator.onclick = () => goToHeroSlide(index);
+                indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
+                indicator.onclick = () => goToCarouselSlide(index);
                 indicators.appendChild(indicator);
             });
 
-            heroSlides = carousel.querySelectorAll('.hero-slide');
+            carouselSlides = carousel.querySelectorAll('.carousel-slide');
         }
 
-        // 渲染默認 Hero
-        function renderDefaultHero() {
-            const carousel = document.getElementById('heroCarousel');
-            const indicators = document.getElementById('heroIndicators');
+        // 渲染默認輪播圖
+        function renderDefaultCarousel() {
+            const carousel = document.getElementById('imageCarousel');
+            const indicators = document.getElementById('carouselIndicators');
             
             if (!carousel || !indicators) return;
 
             carousel.innerHTML = `
-                <div class="hero-slide active">
-                    <div class="hero-container">
-                        <div class="hero-content">
-                            <div class="hero-text">
-                                <h1 class="hero-title">Deepvape - 頂級電子菸專賣店</h1>
-                                <h2 class="hero-subtitle">VAPE煙彈、主機、拋棄式</h2>
-                                <p class="hero-description">探索最新科技與極致品味的完美結合，為您帶來前所未有的電子菸體驗</p>
-                                <div class="hero-buttons">
-                                    <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
-                                        立即探索
-                                        <div class="btn-glow"></div>
-                                    </button>
-                                    <div class="notice-button-inline" id="noticeButtonInlineDefault" style="display: none;">
-                                        <button class="cyberpunk-notice-btn-inline" onclick="toggleNoticeModal()">
-                                            <span>重要通知</span>
-                                            <div class="btn-glow"></div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hero-image">
-                                <img src="deepvape_main.png" alt="Deepvape 電子菸主機與煙彈" class="hero-main-image">
-                            </div>
-                        </div>
-                    </div>
+                <div class="carousel-slide active">
+                    <img src="deepvape_main.png" alt="Deepvape 電子菸主機與煙彈" class="carousel-image">
                 </div>
             `;
 
-            indicators.innerHTML = '<div class="hero-indicator active"></div>';
-            heroSlides = carousel.querySelectorAll('.hero-slide');
+            indicators.innerHTML = '<div class="carousel-indicator active"></div>';
+            carouselSlides = carousel.querySelectorAll('.carousel-slide');
         }
 
-        // 初始化輪播
-        function initHeroCarousel() {
-            if (!heroData || !heroData.autoplay || heroData.images.length <= 1) return;
+        // 初始化圖片輪播
+        function initImageCarousel() {
+            if (!carouselData || !carouselData.autoplay || carouselData.images.length <= 1) return;
 
-            const interval = heroData.interval || 5000;
-            heroInterval = setInterval(() => {
-                nextHeroSlide();
+            const interval = carouselData.interval || 5000;
+            carouselInterval = setInterval(() => {
+                nextCarouselSlide();
             }, interval);
 
             // 滑鼠懸停時暫停自動播放
-            const heroSection = document.querySelector('.hero');
-            if (heroSection) {
-                heroSection.addEventListener('mouseenter', () => {
-                    if (heroInterval) {
-                        clearInterval(heroInterval);
-                        heroInterval = null;
+            const carouselSection = document.querySelector('.image-carousel-section');
+            if (carouselSection) {
+                carouselSection.addEventListener('mouseenter', () => {
+                    if (carouselInterval) {
+                        clearInterval(carouselInterval);
+                        carouselInterval = null;
                     }
                 });
 
-                heroSection.addEventListener('mouseleave', () => {
-                    if (heroData.autoplay && !heroInterval) {
-                        heroInterval = setInterval(() => {
-                            nextHeroSlide();
+                carouselSection.addEventListener('mouseleave', () => {
+                    if (carouselData.autoplay && !carouselInterval) {
+                        carouselInterval = setInterval(() => {
+                            nextCarouselSlide();
                         }, interval);
                     }
                 });
@@ -3347,40 +3317,40 @@
         }
 
         // 切換到指定輪播項目
-        function goToHeroSlide(index) {
-            if (!heroSlides || index < 0 || index >= heroSlides.length) return;
+        function goToCarouselSlide(index) {
+            if (!carouselSlides || index < 0 || index >= carouselSlides.length) return;
 
             // 移除所有活躍狀態
-            heroSlides.forEach(slide => slide.classList.remove('active'));
-            document.querySelectorAll('.hero-indicator').forEach(indicator => 
+            carouselSlides.forEach(slide => slide.classList.remove('active'));
+            document.querySelectorAll('.carousel-indicator').forEach(indicator => 
                 indicator.classList.remove('active')
             );
 
             // 設置新的活躍項目
-            heroSlides[index].classList.add('active');
-            document.querySelectorAll('.hero-indicator')[index].classList.add('active');
+            carouselSlides[index].classList.add('active');
+            document.querySelectorAll('.carousel-indicator')[index].classList.add('active');
 
-            currentHeroSlide = index;
+            currentCarouselSlide = index;
         }
 
         // 下一張輪播
-        function nextHeroSlide() {
-            const nextIndex = (currentHeroSlide + 1) % heroSlides.length;
-            goToHeroSlide(nextIndex);
+        function nextCarouselSlide() {
+            const nextIndex = (currentCarouselSlide + 1) % carouselSlides.length;
+            goToCarouselSlide(nextIndex);
         }
 
         // 上一張輪播
-        function prevHeroSlide() {
-            const prevIndex = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
-            goToHeroSlide(prevIndex);
+        function prevCarouselSlide() {
+            const prevIndex = (currentCarouselSlide - 1 + carouselSlides.length) % carouselSlides.length;
+            goToCarouselSlide(prevIndex);
         }
 
         // 輪播導航按鈕
-        function changeHeroSlide(direction) {
+        function changeCarouselSlide(direction) {
             if (direction > 0) {
-                nextHeroSlide();
+                nextCarouselSlide();
             } else {
-                prevHeroSlide();
+                prevCarouselSlide();
             }
         }
 
@@ -3476,7 +3446,7 @@
             }
             
             // 載入 Hero 輪播數據
-            loadHeroData();
+            loadCarouselData();
             
             // 載入重要通知數據
             loadNoticeData();

@@ -34,14 +34,11 @@ collections:
               - name: "images"
                 label: "輪播圖片"
                 widget: "list"
-                max: 3
+                max: 5
                 fields:
                   - {name: "id", label: "ID", widget: "number"}
                   - {name: "url", label: "圖片網址", widget: "image"}
                   - {name: "alt", label: "圖片描述", widget: "string"}
-                  - {name: "title", label: "主標題", widget: "string"}
-                  - {name: "subtitle", label: "副標題", widget: "string"}
-                  - {name: "description", label: "描述文字", widget: "text"}
                   - {name: "active", label: "啟用", widget: "boolean", default: true}
               - {name: "autoplay", label: "自動播放", widget: "boolean", default: true}
               - {name: "interval", label: "切換間隔(毫秒)", widget: "number", default: 5000}
