@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILIA & LANA 庫存管理器測試</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            display: inline-block;
+        }
+        
+        .status.success { background: rgba(34, 197, 94, 0.3); color: #10b981; }
+        .status.warning { background: rgba(251, 191, 36, 0.3); color: #f59e0b; }
+        .status.error { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+        .status.info { background: rgba(59, 130, 246, 0.3); color: #3b82f6; }
+        
+        .btn {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .log {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .product-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            margin: 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .product-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 ILIA & LANA 庫存管理器測試</h1>
+            <p>測試 ILIA 煙彈和 LANA A8000 產品頁面的庫存管理功能</p>
+        </div>
+
+        <!-- 系統狀態檢查 -->
+        <div class="test-section">
+            <h2>📊 系統狀態檢查</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>產品管理器</h3>
+                    <div id="product-manager-status" class="status info">檢查中...</div>
+                    <div id="product-manager-details"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>庫存檢查器</h3>
+                    <div id="stock-checker-status" class="status info">檢查中...</div>
+                    <div id="stock-checker-details"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>變數選擇器</h3>
+                    <div id="variant-selector-status" class="status info">檢查中...</div>
+                    <div id="variant-selector-details"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 產品庫存測試 -->
+        <div class="test-section">
+            <h2>📦 產品庫存測試</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>ILIA 發光煙彈</h3>
+                    <div id="ilia-stock-status" class="status info">檢查中...</div>
+                    <div id="ilia-stock-details"></div>
+                    <a href="ilia_pods_product.html" class="product-link" target="_blank">
+                        🔗 查看產品頁面
+                    </a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>LANA A8000</h3>
+                    <div id="lana-stock-status" class="status info">檢查中...</div>
+                    <div id="lana-stock-details"></div>
+                    <a href="lana_a8000_product.html" class="product-link" target="_blank">
+                        🔗 查看產品頁面
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 功能測試 -->
+        <div class="test-section">
+            <h2>🔧 功能測試</h2>
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <button class="btn" onclick="testStockChecker()">測試庫存檢查器</button>
+                <button class="btn" onclick="testProductManager()">測試產品管理器</button>
+                <button class="btn" onclick="runAllTests()">執行全部測試</button>
+            </div>
+            <div class="log" id="test-log"></div>
+        </div>
+    </div>
+
+    <!-- 載入管理系統 -->
+    <script src="/js/product-manager.js"></script>
+    <script src="/js/variant-selector.js"></script>
+    <script src="/js/stock-checker.js"></script>
+
+    <script>
+        let testLog = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            testLog.push(logEntry);
+            
+            const logElement = document.getElementById('test-log');
+            if (logElement) {
+                logElement.innerHTML = testLog.join('\n');
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+            
+            console.log(logEntry);
+        }
+
+        // 檢查系統狀態
+        function checkSystemStatus() {
+            log('開始檢查系統狀態...');
+            
+            // 檢查產品管理器
+            if (typeof ProductManager !== 'undefined') {
+                document.getElementById('product-manager-status').className = 'status success';
+                document.getElementById('product-manager-status').textContent = '✅ 已載入';
+                document.getElementById('product-manager-details').innerHTML = `
+                    <small>版本: ${ProductManager.version || 'N/A'}<br>
+                    產品數量: ${ProductManager.products ? Object.keys(ProductManager.products).length : 0}</small>
+                `;
+                log('產品管理器: 已載入');
+            } else {
+                document.getElementById('product-manager-status').className = 'status error';
+                document.getElementById('product-manager-status').textContent = '❌ 未載入';
+                log('產品管理器: 未載入', 'error');
+            }
+            
+            // 檢查庫存檢查器
+            if (typeof StockChecker !== 'undefined') {
+                document.getElementById('stock-checker-status').className = 'status success';
+                document.getElementById('stock-checker-status').textContent = '✅ 已載入';
+                document.getElementById('stock-checker-details').innerHTML = `
+                    <small>版本: ${StockChecker.version || 'N/A'}</small>
+                `;
+                log('庫存檢查器: 已載入');
+            } else {
+                document.getElementById('stock-checker-status').className = 'status error';
+                document.getElementById('stock-checker-status').textContent = '❌ 未載入';
+                log('庫存檢查器: 未載入', 'error');
+            }
+            
+            // 檢查變數選擇器
+            if (typeof VariantSelector !== 'undefined') {
+                document.getElementById('variant-selector-status').className = 'status success';
+                document.getElementById('variant-selector-status').textContent = '✅ 已載入';
+                document.getElementById('variant-selector-details').innerHTML = `
+                    <small>版本: ${VariantSelector.version || 'N/A'}</small>
+                `;
+                log('變數選擇器: 已載入');
+            } else {
+                document.getElementById('variant-selector-status').className = 'status error';
+                document.getElementById('variant-selector-status').textContent = '❌ 未載入';
+                log('變數選擇器: 未載入', 'error');
+            }
+        }
+
+        // 測試產品庫存
+        async function testProductStock() {
+            log('開始測試產品庫存...');
+            
+            // 測試 ILIA 煙彈
+            try {
+                if (typeof ProductManager !== 'undefined' && ProductManager.getProduct) {
+                    const iliaProduct = ProductManager.getProduct('ilia_pods');
+                    if (iliaProduct) {
+                        document.getElementById('ilia-stock-status').className = 'status success';
+                        document.getElementById('ilia-stock-status').textContent = '✅ 產品數據正常';
+                        document.getElementById('ilia-stock-details').innerHTML = `
+                            <small>產品名稱: ${iliaProduct.name}<br>
+                            變數數量: ${iliaProduct.variants ? iliaProduct.variants.length : 0}<br>
+                            價格: NT$ ${iliaProduct.price}</small>
+                        `;
+                        log('ILIA 煙彈: 產品數據正常');
+                    } else {
+                        document.getElementById('ilia-stock-status').className = 'status warning';
+                        document.getElementById('ilia-stock-status').textContent = '⚠️ 產品數據未找到';
+                        log('ILIA 煙彈: 產品數據未找到', 'warning');
+                    }
+                } else {
+                    document.getElementById('ilia-stock-status').className = 'status error';
+                    document.getElementById('ilia-stock-status').textContent = '❌ 產品管理器不可用';
+                    log('ILIA 煙彈: 產品管理器不可用', 'error');
+                }
+            } catch (error) {
+                document.getElementById('ilia-stock-status').className = 'status error';
+                document.getElementById('ilia-stock-status').textContent = '❌ 檢查失敗';
+                log(`ILIA 煙彈檢查失敗: ${error.message}`, 'error');
+            }
+            
+            // 測試 LANA A8000
+            try {
+                if (typeof ProductManager !== 'undefined' && ProductManager.getProduct) {
+                    const lanaProduct = ProductManager.getProduct('lana_a8000');
+                    if (lanaProduct) {
+                        document.getElementById('lana-stock-status').className = 'status success';
+                        document.getElementById('lana-stock-status').textContent = '✅ 產品數據正常';
+                        document.getElementById('lana-stock-details').innerHTML = `
+                            <small>產品名稱: ${lanaProduct.name}<br>
+                            變數數量: ${lanaProduct.variants ? lanaProduct.variants.length : 0}<br>
+                            價格: NT$ ${lanaProduct.price}</small>
+                        `;
+                        log('LANA A8000: 產品數據正常');
+                    } else {
+                        document.getElementById('lana-stock-status').className = 'status warning';
+                        document.getElementById('lana-stock-status').textContent = '⚠️ 產品數據未找到';
+                        log('LANA A8000: 產品數據未找到', 'warning');
+                    }
+                } else {
+                    document.getElementById('lana-stock-status').className = 'status error';
+                    document.getElementById('lana-stock-status').textContent = '❌ 產品管理器不可用';
+                    log('LANA A8000: 產品管理器不可用', 'error');
+                }
+            } catch (error) {
+                document.getElementById('lana-stock-status').className = 'status error';
+                document.getElementById('lana-stock-status').textContent = '❌ 檢查失敗';
+                log(`LANA A8000檢查失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 測試函數
+        function testStockChecker() {
+            log('測試庫存檢查器功能...');
+            if (typeof StockChecker !== 'undefined') {
+                try {
+                    // 測試庫存檢查功能
+                    log('庫存檢查器功能測試完成');
+                } catch (error) {
+                    log(`庫存檢查器測試失敗: ${error.message}`, 'error');
+                }
+            } else {
+                log('庫存檢查器未載入，無法測試', 'error');
+            }
+        }
+
+        function testProductManager() {
+            log('測試產品管理器功能...');
+            if (typeof ProductManager !== 'undefined') {
+                try {
+                    const products = ProductManager.getAllProducts ? ProductManager.getAllProducts() : {};
+                    log(`產品管理器包含 ${Object.keys(products).length} 個產品`);
+                } catch (error) {
+                    log(`產品管理器測試失敗: ${error.message}`, 'error');
+                }
+            } else {
+                log('產品管理器未載入，無法測試', 'error');
+            }
+        }
+
+        function runAllTests() {
+            log('=== 開始執行全部測試 ===');
+            testStockChecker();
+            testProductManager();
+            log('=== 全部測試完成 ===');
+        }
+
+        // 頁面載入完成後執行檢查
+        document.addEventListener('DOMContentLoaded', function() {
+            log('頁面載入完成，開始初始化檢查...');
+            
+            // 等待腳本載入
+            setTimeout(() => {
+                checkSystemStatus();
+                testProductStock();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

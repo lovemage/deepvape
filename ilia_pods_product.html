@@ -551,6 +551,40 @@
             animation: glow 2s ease-in-out infinite alternate;
         }
 
+        /* Stock Status */
+        .stock-status {
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .stock-status.in-stock {
+            background: rgba(34, 197, 94, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .stock-status.low-stock {
+            background: rgba(251, 191, 36, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .stock-status.critical-low {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .stock-status.out-of-stock {
+            background: rgba(107, 114, 128, 0.2);
+            color: #6b7280;
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .product-detail {
@@ -636,6 +670,11 @@
             <h1 class="product-title">ILIA 發光煙彈</h1>
             
             <div class="product-price">NT$ 300</div>
+            
+            <div class="stock-status in-stock" id="stock-status">
+                <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+                現貨供應
+            </div>
             
             <div class="product-description">
                 ILIA 發光煙彈採用獨特的透明外殼設計，內建炫彩發光系統，
@@ -959,6 +998,9 @@
     
     <!-- 變數選擇器 -->
     <script src="/js/variant-selector.js"></script>
+    
+    <!-- 庫存檢查器 -->
+    <script src="/js/stock-checker.js"></script>
     
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>

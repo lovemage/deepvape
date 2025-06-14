@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂單保存診斷工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .warning { background-color: #fff3cd; color: #856404; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .test-result {
+            border-left: 4px solid #007bff;
+            padding-left: 15px;
+            margin: 10px 0;
+        }
+        .solution-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 訂單保存診斷工具</h1>
+    
+    <div class="test-container">
+        <h2>環境檢查</h2>
+        <div id="environmentStatus"></div>
+        <button onclick="checkEnvironment()">檢查環境</button>
+    </div>
+    
+    <div class="test-container">
+        <h2>Netlify Functions 測試</h2>
+        <div id="functionsStatus"></div>
+        <button onclick="testNetlifyFunctions()">測試 Functions</button>
+    </div>
+    
+    <div class="test-container">
+        <h2>訂單保存測試</h2>
+        <div id="orderSaveStatus"></div>
+        <button onclick="testOrderSave()">測試訂單保存</button>
+    </div>
+    
+    <div class="test-container">
+        <h2>數據驗證</h2>
+        <div id="dataVerificationStatus"></div>
+        <button onclick="verifyOrderData()">驗證訂單數據</button>
+    </div>
+
+    <div class="test-container">
+        <h2>🛠️ 解決方案指南</h2>
+        <div class="solution-box">
+            <h3>如果您在本地環境測試：</h3>
+            <div class="step">
+                <strong>步驟 1:</strong> 本地環境無法使用 Netlify Functions，需要部署到 Netlify 才能測試
+            </div>
+            <div class="step">
+                <strong>步驟 2:</strong> 推送代碼到 GitHub 後，Netlify 會自動部署
+            </div>
+            <div class="step">
+                <strong>步驟 3:</strong> 在 Netlify 生產環境中測試此頁面
+            </div>
+        </div>
+
+        <div class="solution-box">
+            <h3>Netlify 控制台設定檢查清單：</h3>
+            <div class="step">
+                <strong>✅ Site settings → Identity:</strong> 
+                <br>• Enable Identity service
+                <br>• Registration preferences: Invite only
+                <br>• Git Gateway: Enable
+            </div>
+            <div class="step">
+                <strong>✅ Site settings → Functions:</strong>
+                <br>• Functions directory: netlify/functions
+                <br>• 確認 save-order 函數已部署
+            </div>
+            <div class="step">
+                <strong>✅ Site settings → Build & deploy:</strong>
+                <br>• Build command: echo 'No build required'
+                <br>• Publish directory: .
+                <br>• Node.js version: 18.x
+            </div>
+        </div>
+
+        <div class="solution-box">
+            <h3>如果訂單保存失敗：</h3>
+            <div class="step">
+                <strong>檢查 1:</strong> 確認在 Netlify 生產環境中測試（不是本地）
+            </div>
+            <div class="step">
+                <strong>檢查 2:</strong> 查看 Netlify 控制台的 Functions 日誌
+            </div>
+            <div class="step">
+                <strong>檢查 3:</strong> 確認 Git Gateway 已啟用且正常工作
+            </div>
+            <div class="step">
+                <strong>檢查 4:</strong> 檢查 GitHub 倉庫是否有新的提交記錄
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 檢查環境
+        function checkEnvironment() {
+            const statusDiv = document.getElementById('environmentStatus');
+            statusDiv.innerHTML = '<div class="status info"><span class="loading"></span> 正在檢查環境...</div>';
+            
+            let html = '<h3>環境檢查結果:</h3>';
+            
+            const currentUrl = window.location.href;
+            const isLocalhost = currentUrl.includes('localhost') || currentUrl.includes('127.0.0.1') || currentUrl.includes('file://');
+            const isNetlify = currentUrl.includes('.netlify.app') || currentUrl.includes('.netlify.com');
+            
+            html += `<div class="status info">
+                <strong>當前 URL:</strong> ${currentUrl}
+            </div>`;
+            
+            if (isLocalhost) {
+                html += `<div class="status warning">
+                    <strong>⚠️ 本地開發環境</strong>
+                    <br>Netlify Functions 在本地環境無法正常工作
+                    <br><strong>解決方案:</strong> 請將代碼推送到 GitHub，然後在 Netlify 生產環境中測試
+                </div>`;
+            } else if (isNetlify) {
+                html += `<div class="status success">
+                    <strong>✅ Netlify 生產環境</strong>
+                    <br>Functions 應該可以正常工作
+                </div>`;
+            } else {
+                html += `<div class="status error">
+                    <strong>❌ 未知環境</strong>
+                    <br>建議在 Netlify 生產環境中測試
+                </div>`;
+            }
+            
+            // 檢查瀏覽器支援
+            const hasLocalStorage = typeof(Storage) !== "undefined";
+            const hasFetch = typeof(fetch) !== "undefined";
+            
+            html += `<div class="status ${hasLocalStorage ? 'success' : 'error'}">
+                <strong>LocalStorage:</strong> ${hasLocalStorage ? '✅ 支援' : '❌ 不支援'}
+            </div>`;
+            
+            html += `<div class="status ${hasFetch ? 'success' : 'error'}">
+                <strong>Fetch API:</strong> ${hasFetch ? '✅ 支援' : '❌ 不支援'}
+            </div>`;
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // 測試 Netlify Functions
+        async function testNetlifyFunctions() {
+            const statusDiv = document.getElementById('functionsStatus');
+            statusDiv.innerHTML = '<div class="status info"><span class="loading"></span> 正在測試 Netlify Functions...</div>';
+            
+            let html = '<h3>Netlify Functions 測試結果:</h3>';
+            
+            // 檢查是否在本地環境
+            const isLocalhost = window.location.href.includes('localhost') || 
+                               window.location.href.includes('127.0.0.1') || 
+                               window.location.href.includes('file://');
+            
+            if (isLocalhost) {
+                html += `<div class="status warning">
+                    <strong>⚠️ 本地環境限制</strong>
+                    <br>Netlify Functions 只能在 Netlify 生產環境中運行
+                    <br>請推送代碼到 GitHub 並在 Netlify 部署後測試
+                </div>`;
+                statusDiv.innerHTML = html;
+                return;
+            }
+            
+            try {
+                const response = await fetch('/.netlify/functions/save-order', {
+                    method: 'OPTIONS'
+                });
+                
+                html += `<div class="status ${response.ok ? 'success' : 'error'}">
+                    <strong>save-order Function:</strong> 
+                    ${response.ok ? '✅ 可訪問' : '❌ 無法訪問'} 
+                    (狀態碼: ${response.status})
+                </div>`;
+                
+                if (response.ok) {
+                    html += `<div class="status success">
+                        ✅ Netlify Functions 正常運行，可以進行訂單保存測試
+                    </div>`;
+                } else {
+                    html += `<div class="status error">
+                        ❌ Functions 無法訪問，請檢查：
+                        <br>1. 確認代碼已推送到 GitHub
+                        <br>2. 確認 Netlify 部署成功
+                        <br>3. 檢查 netlify/functions 目錄是否存在
+                    </div>`;
+                }
+                
+            } catch (error) {
+                html += `<div class="status error">
+                    <strong>save-order Function:</strong> ❌ 連接失敗
+                    <br>錯誤: ${error.message}
+                    <br><strong>可能原因:</strong>
+                    <br>• Functions 未正確部署
+                    <br>• 網路連接問題
+                    <br>• Netlify 服務異常
+                </div>`;
+            }
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // 測試訂單保存
+        async function testOrderSave() {
+            const statusDiv = document.getElementById('orderSaveStatus');
+            statusDiv.innerHTML = '<div class="status info"><span class="loading"></span> 正在測試訂單保存...</div>';
+            
+            let html = '<h3>訂單保存測試結果:</h3>';
+            
+            // 檢查是否在本地環境
+            const isLocalhost = window.location.href.includes('localhost') || 
+                               window.location.href.includes('127.0.0.1') || 
+                               window.location.href.includes('file://');
+            
+            if (isLocalhost) {
+                html += `<div class="status warning">
+                    <strong>⚠️ 無法在本地環境測試</strong>
+                    <br>請在 Netlify 生產環境中測試此功能
+                </div>`;
+                statusDiv.innerHTML = html;
+                return;
+            }
+            
+            const testOrder = {
+                orderId: 'DIAGNOSIS_TEST_' + Date.now(),
+                orderDate: new Date().toISOString(),
+                status: 'pending',
+                customer: {
+                    name: '診斷測試客戶',
+                    phone: '0912345678',
+                    email: 'test@example.com'
+                },
+                store: {
+                    id: '250094',
+                    name: '測試門市',
+                    address: '測試地址'
+                },
+                items: [
+                    {
+                        productId: 'test-product',
+                        productName: '診斷測試產品',
+                        variant: '黑色',
+                        quantity: 1,
+                        unitPrice: 100,
+                        totalPrice: 100
+                    }
+                ],
+                subtotal: 100,
+                shipping: 60,
+                total: 160,
+                paymentMethod: 'cash_on_delivery',
+                shippingMethod: 'convenience_store',
+                lastUpdated: new Date().toISOString()
+            };
+            
+            html += `<div class="status info">
+                <strong>測試訂單 ID:</strong> ${testOrder.orderId}
+            </div>`;
+            
+            try {
+                const response = await fetch('/.netlify/functions/save-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testOrder)
+                });
+                
+                const responseText = await response.text();
+                let responseData;
+                
+                try {
+                    responseData = JSON.parse(responseText);
+                } catch (e) {
+                    responseData = { rawResponse: responseText };
+                }
+                
+                html += `<div class="status ${response.ok ? 'success' : 'error'}">
+                    <strong>API 回應:</strong> 
+                    ${response.ok ? '✅ 成功' : '❌ 失敗'} 
+                    (狀態碼: ${response.status})
+                </div>`;
+                
+                if (response.ok && responseData.success) {
+                    html += `<div class="status success">
+                        🎉 <strong>訂單保存成功！</strong>
+                        <br>訂單 ID: ${testOrder.orderId}
+                        <br><strong>重要:</strong> 請等待 1-5 分鐘後：
+                        <br>1. 點擊下方「驗證訂單數據」按鈕
+                        <br>2. 檢查 GitHub 倉庫是否有新的提交記錄
+                    </div>`;
+                } else {
+                    html += `<div class="status error">
+                        ❌ <strong>訂單保存失敗</strong>
+                        <br>錯誤訊息: ${responseData.error || responseData.message || '未知錯誤'}
+                        <br><strong>建議檢查:</strong>
+                        <br>• Netlify Functions 日誌
+                        <br>• Git Gateway 設定
+                        <br>• 文件權限設定
+                    </div>`;
+                }
+                
+                html += `<div class="status info">
+                    <strong>詳細回應:</strong>
+                    <pre>${JSON.stringify(responseData, null, 2)}</pre>
+                </div>`;
+                
+            } catch (error) {
+                html += `<div class="status error">
+                    <strong>請求失敗:</strong> ${error.message}
+                    <br><strong>可能原因:</strong>
+                    <br>• 網路連接問題
+                    <br>• Functions 服務異常
+                    <br>• CORS 設定問題
+                </div>`;
+            }
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // 驗證訂單數據
+        async function verifyOrderData() {
+            const statusDiv = document.getElementById('dataVerificationStatus');
+            statusDiv.innerHTML = '<div class="status info"><span class="loading"></span> 正在驗證訂單數據...</div>';
+            
+            let html = '<h3>數據驗證結果:</h3>';
+            
+            try {
+                const response = await fetch('/data/orders.json?t=' + Date.now()); // 添加時間戳避免緩存
+                
+                if (response.ok) {
+                    const ordersData = await response.json();
+                    
+                    html += `<div class="status success">
+                        <strong>orders.json:</strong> ✅ 文件存在且可讀取
+                    </div>`;
+                    
+                    html += `<div class="status info">
+                        <strong>訂單數量:</strong> ${ordersData.orders?.length || 0} 筆
+                    </div>`;
+                    
+                    if (ordersData.orders && ordersData.orders.length > 0) {
+                        const recentOrders = ordersData.orders.slice(-3);
+                        html += `<div class="status info">
+                            <strong>最近 3 筆訂單:</strong>
+                            <pre>${JSON.stringify(recentOrders.map(order => ({
+                                orderId: order.orderId,
+                                orderDate: order.orderDate,
+                                customer: order.customer?.name,
+                                total: order.total,
+                                status: order.status
+                            })), null, 2)}</pre>
+                        </div>`;
+                        
+                        const testOrders = ordersData.orders.filter(order => 
+                            order.orderId.includes('TEST') || order.orderId.includes('DIAGNOSIS')
+                        );
+                        
+                        if (testOrders.length > 0) {
+                            html += `<div class="status success">
+                                <strong>測試訂單:</strong> ✅ 找到 ${testOrders.length} 筆測試訂單
+                                <br>這表示訂單保存功能正常工作！
+                            </div>`;
+                        } else {
+                            html += `<div class="status warning">
+                                <strong>測試訂單:</strong> ⚠️ 沒有找到測試訂單
+                                <br>請先執行「測試訂單保存」功能
+                            </div>`;
+                        }
+                    } else {
+                        html += `<div class="status warning">
+                            <strong>訂單數據:</strong> ⚠️ 沒有訂單記錄
+                            <br>這可能表示：
+                            <br>• 還沒有成功保存過訂單
+                            <br>• Git Gateway 沒有正確同步數據
+                        </div>`;
+                    }
+                    
+                } else {
+                    html += `<div class="status error">
+                        <strong>orders.json:</strong> ❌ 無法讀取 (狀態碼: ${response.status})
+                        <br>這可能表示文件不存在或權限問題
+                    </div>`;
+                }
+                
+                // 檢查統計文件
+                try {
+                    const statsResponse = await fetch('/data/order_stats.json?t=' + Date.now());
+                    if (statsResponse.ok) {
+                        const statsData = await statsResponse.json();
+                        html += `<div class="status success">
+                            <strong>order_stats.json:</strong> ✅ 統計文件存在
+                        </div>`;
+                        
+                        if (statsData.stats) {
+                            html += `<div class="status info">
+                                <strong>統計數據:</strong>
+                                <br>總訂單數: ${statsData.stats.totalOrders || 0}
+                                <br>總收入: NT$ ${statsData.stats.totalRevenue || 0}
+                                <br>最後更新: ${statsData.stats.lastUpdated || 'N/A'}
+                            </div>`;
+                        }
+                    }
+                } catch (e) {
+                    html += `<div class="status warning">
+                        <strong>order_stats.json:</strong> ⚠️ 統計文件無法讀取
+                    </div>`;
+                }
+                
+            } catch (error) {
+                html += `<div class="status error">
+                    <strong>驗證失敗:</strong> ${error.message}
+                </div>`;
+            }
+            
+            // 添加 Git 檢查提醒
+            html += `<div class="status info">
+                <strong>📋 Git 提交檢查:</strong>
+                <br>如果上述測試成功，請檢查 GitHub 倉庫：
+                <br>1. 前往: <a href="https://github.com/lovemage/deepvape/commits" target="_blank">GitHub 提交歷史</a>
+                <br>2. 尋找包含 "orders.json" 的自動提交
+                <br>3. 提交者應該是 "Netlify CMS" 或類似的自動化帳戶
+                <br>4. 提交時間應該在測試後的 1-5 分鐘內
+            </div>`;
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // 頁面載入時自動檢查環境
+        document.addEventListener('DOMContentLoaded', () => {
+            checkEnvironment();
+        });
+    </script>
+</body>
+</html> 

@@ -148,6 +148,9 @@ class VariantSelector {
         option.addEventListener('click', () => {
             if (variant.stock > 0) {
                 this.selectVariant(variant);
+            } else {
+                // 顯示缺貨提示
+                alert(`很抱歉，${variant.value} 目前缺貨，請選擇其他選項`);
             }
         });
 
