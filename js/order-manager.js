@@ -88,6 +88,11 @@ class OrderManager {
                     address: shippingInfo.address || '',
                     notes: customerInfo.notes || ''
                 },
+                store: shippingInfo.store || {
+                    id: 'unknown',
+                    name: '未指定門市',
+                    address: '未指定地址'
+                },
                 items: orderItems,
                 subtotal: subtotal,
                 shipping: shipping,

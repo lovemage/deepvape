@@ -1860,7 +1860,18 @@ ${orderData.items.map(item =>
                     }
                     
                     // 保存訂單到 localStorage 用於確認頁面
+                    console.log('💾 保存訂單到 localStorage:', result.order);
                     localStorage.setItem('currentOrder', JSON.stringify(result.order));
+                    
+                    // 驗證保存是否成功
+                    const savedOrder = JSON.parse(localStorage.getItem('currentOrder'));
+                    console.log('✅ 驗證保存的訂單:', savedOrder);
+                    
+                    if (!savedOrder || !savedOrder.orderId) {
+                        console.error('❌ 訂單保存失敗或缺少 orderId');
+                        alert('訂單保存失敗，請重試');
+                        return;
+                    }
                     
                     // 清空購物車
                     localStorage.removeItem('cart');
@@ -1942,7 +1953,7 @@ ${orderData.items.map(item =>
                 // 生成訂單ID
                 const orderId = 'DV' + Date.now().toString();
 
-                // 創建訂單數據
+                // 創建訂單數據（確保與 OrderManager 結構一致）
                 const order = {
                     orderId: orderId,
                     orderDate: new Date().toISOString(),
@@ -1953,6 +1964,11 @@ ${orderData.items.map(item =>
                         email: customerInfo.email || '',
                         address: shippingInfo.address || '',
                         notes: customerInfo.notes || ''
+                    },
+                    store: selectedStoreInfo || {
+                        id: 'unknown',
+                        name: '未指定門市',
+                        address: '未指定地址'
                     },
                     items: orderItems,
                     subtotal: subtotal,
