@@ -23,6 +23,21 @@ collections:
               - {name: "startDate", label: "開始日期", widget: "datetime", required: false}
               - {name: "endDate", label: "結束日期", widget: "datetime", required: false}
       
+      - name: "contact"
+        label: "聯繫信息管理"
+        file: "data/contact.json"
+        fields:
+          - name: "contact"
+            label: "聯繫信息"
+            widget: "object"
+            fields:
+              - {name: "email", label: "Email", widget: "string"}
+              - {name: "line_id", label: "LINE ID", widget: "string"}
+              - {name: "service_hours", label: "服務時間", widget: "string"}
+              - {name: "telegram", label: "Telegram", widget: "string"}
+              - {name: "instagram", label: "Instagram", widget: "string"}
+              - {name: "facebook", label: "Facebook", widget: "string"}
+      
       - name: "prices"
         label: "價格管理"
         file: "data/prices.json"
