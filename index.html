@@ -839,7 +839,7 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
-            width: 100%;
+            width: auto;
             text-align: center;
         }
 
@@ -1300,21 +1300,54 @@
         }
 
         .hero-btn-primary {
-            background: linear-gradient(135deg, var(--highlight-color), var(--success-color));
-            color: white;
+            position: relative;
+            background: linear-gradient(135deg, rgba(26, 254, 73, 0.2), rgba(0, 255, 255, 0.2));
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #1afe49, #00ffff) 1;
+            color: #1afe49;
             padding: 1rem 2rem;
             font-size: 1.1rem;
             font-weight: 600;
-            border: none;
-            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(26, 254, 73, 0.3);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 200px;
+            text-align: center;
+            justify-content: center;
         }
 
         .hero-btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(26, 254, 73, 0.4);
+            background: linear-gradient(135deg, rgba(26, 254, 73, 0.4), rgba(0, 255, 255, 0.4));
+            box-shadow: 
+                0 0 20px rgba(26, 254, 73, 0.5),
+                0 0 40px rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .hero-btn-primary i {
+            animation: cyberpunkPulse 2s infinite alternate;
+        }
+
+        .hero-btn-primary .btn-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .hero-btn-primary:hover .btn-glow {
+            left: 100%;
         }
 
         .hero-image {
@@ -1325,7 +1358,10 @@
 
         .hero-main-image {
             max-width: 100%;
+            width: 100%;
             height: auto;
+            max-height: 500px;
+            object-fit: contain;
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
@@ -1424,125 +1460,177 @@
             }
         }
 
-                /* 重要通知下拉區塊 - Cyberpunk 風格 */
-        .notice-dropdown-section {
+        /* Cyberpunk 重要通知按鈕 */
+        .notice-button-container {
             position: fixed;
-            top: 80px;
-            left: 0;
-            right: 0;
-            z-index: 15;
-            pointer-events: none;
+            top: 140px; /* 在公告橫幅下方 */
+            right: 20px;
+            z-index: 998;
+            transition: all 0.3s ease;
         }
 
-        .notice-dropdown-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
+        .cyberpunk-notice-btn {
             position: relative;
-            pointer-events: auto;
-        }
-
-        /* 觸發按鈕 */
-        .notice-trigger-btn {
-            width: 100%;
-            background: rgba(26, 26, 46, 0.8);
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
             border: 2px solid transparent;
-            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff0080, #8000ff) 1;
-            color: #e0e0e0;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            color: #00ffff;
             padding: 1rem 2rem;
             font-size: 1.1rem;
             font-weight: 600;
             font-family: 'Courier New', monospace;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             text-transform: uppercase;
             letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 200px;
+            text-align: center;
+            justify-content: center;
         }
 
-        .notice-trigger-btn:hover {
-            background: rgba(26, 26, 46, 0.95);
+        .cyberpunk-notice-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.4));
             box-shadow: 
-                0 0 20px rgba(255, 0, 255, 0.4),
+                0 0 20px rgba(255, 0, 255, 0.5),
                 0 0 40px rgba(0, 255, 255, 0.3);
-            border-image: linear-gradient(45deg, #ff0080, #8000ff, #ff00ff, #00ffff) 1;
             transform: translateY(-2px);
         }
 
-        .notice-trigger-btn:active {
-            transform: translateY(0);
-        }
-
-        .notice-trigger-icon {
-            font-size: 1.3rem;
-            color: #ff00ff;
+        .cyberpunk-notice-btn i {
             animation: cyberpunkPulse 2s infinite alternate;
         }
 
-        .notice-trigger-text {
-            flex: 1;
-            text-align: center;
-            background: linear-gradient(135deg, #ff00ff, #00ffff, #ff0080);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .notice-trigger-arrow {
-            font-size: 0.9rem;
-            color: #00ffff;
-            transition: transform 0.3s ease;
-        }
-
-        .notice-trigger-btn.active .notice-trigger-arrow {
-            transform: rotate(180deg);
-        }
-
-        /* 下拉內容 */
-        .notice-dropdown-content {
+        .cyberpunk-notice-btn .btn-glow {
             position: absolute;
-            top: 100%;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cyberpunk-notice-btn:hover .btn-glow {
+            left: 100%;
+        }
+
+        /* 當公告顯示時調整重要通知按鈕位置 */
+        .notice-button-container.with-announcement {
+            top: 190px; /* 公告橫幅高度 + 間距 */
+        }
+
+        @keyframes cyberpunkPulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .notice-button-inline {
+            margin-top: 1rem;
+        }
+
+        .cyberpunk-notice-btn-inline {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            color: #00ffff;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            width: 200px;
+            text-align: center;
+        }
+
+        .cyberpunk-notice-btn-inline:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.4));
+            box-shadow: 
+                0 0 20px rgba(255, 0, 255, 0.5),
+                0 0 40px rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .cyberpunk-notice-btn-inline i {
+            margin-right: 0.5rem;
+            animation: cyberpunkPulse 2s infinite alternate;
+        }
+
+        .btn-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cyberpunk-notice-btn-inline:hover .btn-glow {
+            left: 100%;
+        }
+
+        /* 重要通知彈窗 */
+        .notice-modal-overlay {
+            position: fixed;
+            top: 0;
             left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .notice-modal-overlay.active {
+            display: flex;
+        }
+
+        .notice-modal {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(26, 26, 46, 0.95));
             border: 2px solid transparent;
             border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff0080, #8000ff) 1;
-            border-top: none;
-            backdrop-filter: blur(15px);
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 20;
+            border-radius: 0;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
             box-shadow: 
-                0 10px 30px rgba(255, 0, 255, 0.2),
-                0 20px 60px rgba(0, 255, 255, 0.1);
-            pointer-events: auto;
+                0 0 30px rgba(255, 0, 255, 0.5),
+                0 0 60px rgba(0, 255, 255, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            animation: modalSlideIn 0.4s ease;
+            position: relative;
         }
 
-        .notice-dropdown-content.active {
-            max-height: 500px;
-            padding: 2rem;
+        .notice-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+            background: linear-gradient(90deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
         }
 
-        .notice-dropdown-inner {
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.3s ease 0.1s;
-        }
-
-        .notice-dropdown-content.active .notice-dropdown-inner {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .notice-dropdown-title {
-            font-size: 1.6rem;
+        .notice-modal-title {
+            font-size: 1.5rem;
             font-weight: 900;
-            margin-bottom: 1.5rem;
             background: linear-gradient(135deg, #ff00ff, #00ffff, #ff0080);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1550,103 +1638,81 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             font-family: 'Courier New', monospace;
-            position: relative;
+            margin: 0;
         }
 
-        .notice-dropdown-title::after {
-            content: '█';
-            animation: cyberpunkBlink 1s infinite;
-            color: #00ffff;
+        .notice-close-btn {
+            background: none;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
-        .notice-dropdown-message {
+        .notice-close-btn:hover {
+            background: #ff00ff;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+        }
+
+        .notice-modal-content {
+            padding: 2rem;
+        }
+
+        .notice-message {
             line-height: 1.8;
             color: #e0e0e0;
             font-family: 'Courier New', monospace;
         }
 
-        .notice-dropdown-message p {
+        .notice-message p {
             margin-bottom: 1.2rem;
             padding: 1rem;
             border-left: 3px solid #ff00ff;
-            background: rgba(255, 0, 255, 0.08);
-            border-radius: 0 8px 8px 0;
-            position: relative;
+            background: linear-gradient(90deg, rgba(255, 0, 255, 0.1), transparent);
+            border-radius: 0 5px 5px 0;
         }
 
-        .notice-dropdown-message p:last-child {
+        .notice-message p:last-child {
             margin-bottom: 0;
         }
 
-        .notice-dropdown-message p::before {
-            content: '>';
-            color: #00ffff;
-            font-weight: bold;
-            margin-right: 0.5rem;
+        /* Cyberpunk 動畫效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* Cyberpunk 動畫效果 */
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
 
         @keyframes cyberpunkPulse {
             0% { 
-                box-shadow: 
-                    0 0 20px rgba(255, 0, 255, 0.6),
-                    0 0 40px rgba(0, 255, 255, 0.4);
+                text-shadow: 0 0 5px rgba(255, 0, 255, 0.6);
             }
             100% { 
-                box-shadow: 
-                    0 0 30px rgba(255, 0, 255, 0.8),
-                    0 0 60px rgba(0, 255, 255, 0.6);
+                text-shadow: 0 0 15px rgba(255, 0, 255, 1), 0 0 25px rgba(0, 255, 255, 0.8);
             }
         }
-
-
 
         @keyframes cyberpunkBlink {
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0; }
-        }
-
-        /* 通知類型樣式 - Cyberpunk 版本 */
-        .notice-type-info .notice-content {
-            border-image: linear-gradient(45deg, #00ffff, #0080ff, #00ff80, #80ff00) 1;
-        }
-
-        .notice-type-info .notice-icon {
-            background: linear-gradient(135deg, #00ffff, #0080ff);
-        }
-
-        .notice-type-warning .notice-content {
-            border-image: linear-gradient(45deg, #ffff00, #ff8000, #ff4000, #ff0040) 1;
-        }
-
-        .notice-type-warning .notice-icon {
-            background: linear-gradient(135deg, #ffff00, #ff8000);
-            box-shadow: 
-                0 0 20px rgba(255, 255, 0, 0.6),
-                0 0 40px rgba(255, 128, 0, 0.4);
-        }
-
-        .notice-type-success .notice-content {
-            border-image: linear-gradient(45deg, #00ff00, #00ff80, #80ff00, #40ff40) 1;
-        }
-
-        .notice-type-success .notice-icon {
-            background: linear-gradient(135deg, #00ff00, #00ff80);
-            box-shadow: 
-                0 0 20px rgba(0, 255, 0, 0.6),
-                0 0 40px rgba(0, 255, 128, 0.4);
-        }
-
-        .notice-type-error .notice-content {
-            border-image: linear-gradient(45deg, #ff0000, #ff0080, #ff4000, #ff8000) 1;
-        }
-
-        .notice-type-error .notice-icon {
-            background: linear-gradient(135deg, #ff0000, #ff0080);
-            box-shadow: 
-                0 0 20px rgba(255, 0, 0, 0.6),
-                0 0 40px rgba(255, 0, 128, 0.4);
         }
 
         /* Category Section */
@@ -1675,21 +1741,37 @@
             }
 
             .hero {
-                min-height: 60vh;
+                min-height: auto;
+                height: auto;
             }
 
             .hero-carousel {
-                height: 60vh;
+                height: auto;
+                min-height: 70vh;
             }
 
             .hero-slide {
-                padding: 4rem 0 2rem;
+                padding: 2rem 0;
+                height: auto;
+                position: relative;
             }
 
             .hero-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
                 text-align: center;
+                min-height: auto;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .hero-main-image {
+                max-width: 90%;
+                height: auto;
+                max-height: 300px;
+                object-fit: contain;
             }
 
             .hero-title {
@@ -1710,8 +1792,9 @@
             }
 
             .hero-btn-primary {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
+                padding: 0.8rem 1.5rem !important;
+                font-size: 1rem !important;
+                width: 180px !important;
             }
 
             .hero-nav {
@@ -1732,40 +1815,55 @@
                 bottom: 20px;
             }
 
-            .notice-dropdown-section {
-                top: 70px;
+            .notice-button-container {
+                top: 120px; /* 在移動端調整位置 */
+                right: 10px;
             }
 
-            .notice-dropdown-container {
-                padding: 0.5rem 1rem;
+            .notice-button-container.with-announcement {
+                top: 170px; /* 移動端公告顯示時的位置 */
             }
 
-            .notice-trigger-btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
+            .cyberpunk-notice-btn {
+                padding: 0.8rem 1.5rem !important;
+                font-size: 1rem !important;
+                width: 180px !important;
             }
 
-            .notice-trigger-icon {
-                font-size: 1.1rem;
+            .cyberpunk-notice-btn-inline {
+                padding: 0.8rem 1.5rem !important;
+                font-size: 1rem !important;
+                width: 180px !important;
             }
 
-            .notice-dropdown-content.active {
+            .notice-modal {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .notice-modal-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .notice-modal-title {
+                font-size: 1.2rem;
+            }
+
+            .notice-modal-content {
                 padding: 1.5rem;
             }
 
-            .notice-dropdown-title {
+            .notice-title {
                 font-size: 1.4rem;
                 letter-spacing: 1px;
-                margin-bottom: 1rem;
             }
 
-            .notice-dropdown-message {
+            .notice-message {
                 font-size: 0.9rem;
             }
 
-            .notice-dropdown-message p {
-                padding: 0.8rem;
-                margin-bottom: 1rem;
+            .notice-message p {
+                padding: 0.6rem 0.8rem;
             }
 
             .product-grid {
@@ -1779,6 +1877,43 @@
 
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        /* 中等螢幕優化 */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .hero-content {
+                gap: 3rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.8rem;
+            }
+
+            .hero-main-image {
+                max-height: 400px;
+            }
+
+            .hero-btn-primary {
+                padding: 1rem 2rem !important;
+                font-size: 1.1rem !important;
+                width: 200px !important;
+            }
+
+            .cyberpunk-notice-btn {
+                padding: 1rem 2rem !important;
+                font-size: 1.1rem !important;
+                width: 200px !important;
+            }
+
+            .cyberpunk-notice-btn-inline {
+                padding: 1rem 2rem !important;
+                font-size: 1.1rem !important;
+                width: 200px !important;
             }
         }
 
@@ -1818,39 +1953,90 @@
 
         /* 小螢幕手機優化 */
         @media (max-width: 480px) {
-            .notice-dropdown-section {
-                top: 60px;
+            .hero {
+                margin-top: 70px;
             }
 
-            .notice-dropdown-container {
-                padding: 0.5rem;
+            .hero-carousel {
+                min-height: 60vh;
             }
 
-            .notice-trigger-btn {
-                padding: 0.6rem 1rem;
+            .hero-slide {
+                padding: 1.5rem 0;
+            }
+
+            .hero-container {
+                padding: 0 1rem;
+            }
+
+            .hero-content {
+                gap: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 0.9rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero-btn-primary {
+                padding: 0.7rem 1.2rem !important;
+                font-size: 0.9rem !important;
+                width: 160px !important;
+            }
+
+            .cyberpunk-notice-btn {
+                padding: 0.7rem 1.2rem !important;
+                font-size: 0.9rem !important;
+                width: 160px !important;
+            }
+
+            .cyberpunk-notice-btn-inline {
+                padding: 0.7rem 1.2rem !important;
+                font-size: 0.9rem !important;
+                width: 160px !important;
+            }
+
+            .hero-main-image {
+                max-width: 85%;
+                max-height: 250px;
+            }
+
+            .hero-indicators {
+                bottom: 15px;
+            }
+
+            .hero-indicator {
+                width: 10px;
+                height: 10px;
+            }
+
+            .hero-nav {
+                width: 35px;
+                height: 35px;
                 font-size: 0.9rem;
             }
 
-            .notice-trigger-icon {
-                font-size: 1rem;
+            .hero-nav-prev {
+                left: 10px;
             }
 
-            .notice-dropdown-content.active {
-                padding: 1rem;
-            }
-
-            .notice-dropdown-title {
-                font-size: 1.2rem;
-                margin-bottom: 0.8rem;
-            }
-
-            .notice-dropdown-message {
-                font-size: 0.85rem;
-            }
-
-            .notice-dropdown-message p {
-                padding: 0.6rem;
-                margin-bottom: 0.8rem;
+            .hero-nav-next {
+                right: 10px;
             }
 
             .product-grid {
@@ -1887,6 +2073,7 @@
             .pulse-button {
                 padding: 0.6rem 1rem;
                 font-size: 0.9rem;
+                width: auto;
             }
         }
     </style>
@@ -2009,28 +2196,31 @@
                         </button>
     </section>
 
-    <!-- 重要通知區塊 -->
-    <section class="notice-dropdown-section" id="noticeDropdownSection" style="display: none;">
-        <div class="notice-dropdown-container">
-            <!-- 通知觸發按鈕 -->
-            <button class="notice-trigger-btn" id="noticeTriggerBtn" onclick="toggleNoticeDropdown()">
-                <span class="notice-trigger-icon">⚠</span>
-                <span class="notice-trigger-text" id="noticeTriggerText">重要通知</span>
-                <span class="notice-trigger-arrow" id="noticeTriggerArrow">▼</span>
-            </button>
-            
-            <!-- 下拉內容 -->
-            <div class="notice-dropdown-content" id="noticeDropdownContent">
-                <div class="notice-dropdown-inner">
-                    <h3 class="notice-dropdown-title" id="noticeDropdownTitle">DeepVape 重要通知：</h3>
-                    <div class="notice-dropdown-message" id="noticeDropdownMessage">
-                        <p>受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。</p>
-                        <p>商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。</p>
-                    </div>
+    <!-- 重要通知按鈕 -->
+    <div class="notice-button-container" id="noticeButtonContainer" style="display: none;">
+        <button class="cyberpunk-notice-btn" id="noticeButton" onclick="toggleNoticeModal()">
+            <span>重要通知</span>
+            <div class="btn-glow"></div>
+        </button>
+    </div>
+
+    <!-- 重要通知彈窗 -->
+    <div class="notice-modal-overlay" id="noticeModalOverlay" onclick="closeNoticeModal()">
+        <div class="notice-modal" id="noticeModal" onclick="event.stopPropagation()">
+            <div class="notice-modal-header">
+                <h3 class="notice-modal-title" id="noticeTitle">DeepVape 重要通知</h3>
+                <button class="notice-close-btn" onclick="closeNoticeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="notice-modal-content">
+                <div class="notice-message" id="noticeMessage">
+                    <p>受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。</p>
+                    <p>商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Main Content -->
     <main>
@@ -2683,6 +2873,7 @@
         function displayAnnouncement(announcement) {
             const announcementEl = document.getElementById('announcement');
             const announcementText = document.getElementById('announcementText');
+            const noticeButtonContainer = document.getElementById('noticeButtonContainer');
             
             if (announcement && announcement.content) {
                 // 根據優先級設定樣式
@@ -2699,6 +2890,11 @@
                 const closedAnnouncements = JSON.parse(localStorage.getItem('closedAnnouncements') || '[]');
                 if (!closedAnnouncements.includes(announcement.id)) {
                     announcementEl.style.display = 'block';
+                    
+                    // 調整重要通知按鈕位置
+                    if (noticeButtonContainer) {
+                        noticeButtonContainer.classList.add('with-announcement');
+                    }
                     
                     // 啟動打字效果
                     startTypewriterEffect(announcementText, announcement.content);
@@ -2742,7 +2938,14 @@
         // 關閉公告
         function closeAnnouncement() {
             const announcementEl = document.getElementById('announcement');
+            const noticeButtonContainer = document.getElementById('noticeButtonContainer');
+            
             announcementEl.style.display = 'none';
+            
+            // 恢復重要通知按鈕位置
+            if (noticeButtonContainer) {
+                noticeButtonContainer.classList.remove('with-announcement');
+            }
             
             // 記住已關閉的公告（如果有 ID）
             const announcementId = announcementEl.dataset.id;
@@ -3045,8 +3248,15 @@
                                 <p class="hero-description">${image.description}</p>
                                 <div class="hero-buttons">
                                     <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
-                                        <i class="fas fa-rocket"></i> 立即探索
+                                        立即探索
+                                        <div class="btn-glow"></div>
                                     </button>
+                                    <div class="notice-button-inline" id="noticeButtonInline" style="display: none;">
+                                        <button class="cyberpunk-notice-btn-inline" onclick="toggleNoticeModal()">
+                                            <span>重要通知</span>
+                                            <div class="btn-glow"></div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="hero-image">
@@ -3084,8 +3294,15 @@
                                 <p class="hero-description">探索最新科技與極致品味的完美結合，為您帶來前所未有的電子菸體驗</p>
                                 <div class="hero-buttons">
                                     <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
-                                        <i class="fas fa-rocket"></i> 立即探索
+                                        立即探索
+                                        <div class="btn-glow"></div>
                                     </button>
+                                    <div class="notice-button-inline" id="noticeButtonInlineDefault" style="display: none;">
+                                        <button class="cyberpunk-notice-btn-inline" onclick="toggleNoticeModal()">
+                                            <span>重要通知</span>
+                                            <div class="btn-glow"></div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="hero-image">
@@ -3167,45 +3384,6 @@
             }
         }
 
-        // 重要通知下拉功能
-        let isNoticeDropdownOpen = false;
-
-        function toggleNoticeDropdown() {
-            const triggerBtn = document.getElementById('noticeTriggerBtn');
-            const dropdownContent = document.getElementById('noticeDropdownContent');
-            
-            if (!triggerBtn || !dropdownContent) return;
-
-            isNoticeDropdownOpen = !isNoticeDropdownOpen;
-            
-            if (isNoticeDropdownOpen) {
-                triggerBtn.classList.add('active');
-                dropdownContent.classList.add('active');
-            } else {
-                triggerBtn.classList.remove('active');
-                dropdownContent.classList.remove('active');
-            }
-        }
-
-        // 將函數添加到全域範圍
-        window.toggleNoticeDropdown = toggleNoticeDropdown;
-
-        // 點擊外部關閉下拉選單
-        document.addEventListener('click', function(event) {
-            const noticeSection = document.getElementById('noticeDropdownSection');
-            const triggerBtn = document.getElementById('noticeTriggerBtn');
-            
-            // 如果點擊的不是通知區塊內的元素，且下拉選單是開啟的，則關閉它
-            if (noticeSection && !noticeSection.contains(event.target) && isNoticeDropdownOpen) {
-                toggleNoticeDropdown();
-            }
-            
-            // 如果點擊的是觸發按鈕，不要執行外部點擊邏輯
-            if (triggerBtn && triggerBtn.contains(event.target)) {
-                event.stopPropagation();
-            }
-        });
-
         // 重要通知功能
         async function loadNoticeData() {
             try {
@@ -3218,69 +3396,75 @@
                 const notice = data.notice;
                 
                 if (notice && notice.enabled) {
-                    renderNoticeDropdown(notice);
+                    renderNotice(notice);
                 } else {
                     console.log('通知已停用或無數據');
                 }
             } catch (error) {
                 console.error('載入通知數據時發生錯誤:', error);
                 // 顯示默認通知
-                renderDefaultNoticeDropdown();
+                renderDefaultNotice();
             }
         }
 
-        // 渲染下拉通知
-        function renderNoticeDropdown(notice) {
-            const noticeSection = document.getElementById('noticeDropdownSection');
-            const triggerText = document.getElementById('noticeTriggerText');
-            const dropdownTitle = document.getElementById('noticeDropdownTitle');
-            const dropdownMessage = document.getElementById('noticeDropdownMessage');
+        // 渲染通知
+        function renderNotice(notice) {
+            const noticeButtonInline = document.getElementById('noticeButtonInline');
+            const noticeButtonInlineDefault = document.getElementById('noticeButtonInlineDefault');
+            const noticeTitle = document.getElementById('noticeTitle');
+            const noticeMessage = document.getElementById('noticeMessage');
             
-            if (!noticeSection || !triggerText || !dropdownTitle || !dropdownMessage) return;
+            if (!noticeTitle || !noticeMessage) return;
 
-            // 設置觸發按鈕文字
-            triggerText.textContent = notice.triggerText || '重要通知';
-            
-            // 設置下拉內容
-            dropdownTitle.textContent = notice.title || 'DeepVape 重要通知：';
+            // 設置通知內容
+            noticeTitle.textContent = notice.title || 'DeepVape 重要通知';
             
             // 處理換行符號
             const content = notice.content || '';
             const paragraphs = content.split('\n\n').filter(p => p.trim());
-            dropdownMessage.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+            noticeMessage.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
 
-            // 設置樣式類型
-            noticeSection.className = `notice-dropdown-section notice-type-${notice.type || 'info'}`;
-            
-            // 自定義顏色
-            const triggerBtn = document.getElementById('noticeTriggerBtn');
-            const dropdownContent = document.getElementById('noticeDropdownContent');
-            
-            if (notice.backgroundColor && dropdownContent) {
-                dropdownContent.style.backgroundColor = notice.backgroundColor;
+            // 顯示通知按鈕
+            if (noticeButtonInline) {
+                noticeButtonInline.style.display = 'block';
             }
-            if (notice.borderColor && triggerBtn) {
-                triggerBtn.style.borderColor = notice.borderColor;
+            if (noticeButtonInlineDefault) {
+                noticeButtonInlineDefault.style.display = 'block';
             }
-            if (notice.textColor) {
-                if (dropdownTitle) dropdownTitle.style.color = notice.textColor;
-                if (dropdownMessage) dropdownMessage.style.color = notice.textColor;
-            }
-
-            // 顯示通知區塊
-            noticeSection.style.display = 'block';
         }
 
-        // 渲染默認下拉通知
-        function renderDefaultNoticeDropdown() {
+        // 切換通知彈窗
+        function toggleNoticeModal() {
+            const overlay = document.getElementById('noticeModalOverlay');
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
+        }
+
+        // 關閉通知彈窗
+        function closeNoticeModal() {
+            const overlay = document.getElementById('noticeModalOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        }
+
+        // ESC 鍵關閉彈窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeNoticeModal();
+            }
+        });
+
+        // 渲染默認通知
+        function renderDefaultNotice() {
             const defaultNotice = {
                 enabled: true,
-                triggerText: "重要通知",
                 title: "DeepVape 重要通知：",
                 content: "受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。\n\n商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。",
                 type: "info"
             };
-            renderNoticeDropdown(defaultNotice);
+            renderNotice(defaultNotice);
         }
 
         // 為logo添加點擊事件

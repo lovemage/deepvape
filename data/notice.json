@@ -1,12 +1,12 @@
 {
   "notice": {
     "enabled": true,
-    "triggerText": "重要通知",
     "title": "DeepVape 重要通知：",
     "content": "受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。\n\n商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。",
     "type": "info",
-    "backgroundColor": "rgba(10, 10, 10, 0.95)",
-    "textColor": "#e0e0e0",
-    "borderColor": "#ff00ff"
+    "showIcon": true,
+    "backgroundColor": "#f8f9fa",
+    "textColor": "#495057",
+    "borderColor": "#dee2e6"
   }
 } 
