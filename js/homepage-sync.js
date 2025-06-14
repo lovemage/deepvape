@@ -29,7 +29,15 @@ class HomepageSync {
 
     async init() {
         try {
-            await this.syncAllProducts();
+            // 等待產品管理器初始化完成
+            if (window.ProductManager && window.ProductManager.initialized) {
+                await this.syncAllProducts();
+            } else {
+                // 監聽產品數據載入事件
+                window.addEventListener('productsLoaded', async () => {
+                    await this.syncAllProducts();
+                });
+            }
             console.log('首頁商品卡片同步完成');
         } catch (error) {
             console.error('首頁商品卡片同步失敗:', error);
@@ -47,7 +55,11 @@ class HomepageSync {
 
     async syncProductCard(productId, dataPath) {
         try {
-            const productData = await this.loadProductData(dataPath);
+            // 使用新的產品管理器獲取數據
+            const productData = window.ProductManager ? 
+                window.ProductManager.getProduct(productId) : 
+                await this.loadProductData(dataPath);
+                
             if (!productData) return;
 
             const card = document.querySelector(`[data-product-id="${productId}"]`);

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>變數功能測試 - DeepVape</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .test-title {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .product-test {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        
+        .variant-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .variant-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .variant-item.out-of-stock {
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+        
+        .variant-item.low-stock {
+            border-left-color: #ffc107;
+            background: #fffbf0;
+        }
+        
+        .variant-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .variant-details {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .refresh-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        
+        .refresh-btn:hover {
+            background: #218838;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .test-actions {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .variant-selector-demo {
+            border: 2px dashed #007bff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+        
+        .variant-group {
+            margin-bottom: 20px;
+        }
+        
+        .variant-group-title {
+            color: #007bff;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .variant-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .variant-option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .variant-option:hover {
+            border-color: #007bff;
+            background: #f8f9fa;
+        }
+        
+        .variant-option.selected {
+            border-color: #007bff;
+            background: #007bff;
+            color: white;
+        }
+        
+        .variant-option.out-of-stock {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+        
+        .color-swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+        }
+        
+        .variant-stock {
+            font-size: 11px;
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        .selected .variant-stock {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🧪 後台變數功能測試</h1>
+        <p>此頁面用於測試後台新增變數功能是否能正確在前台更新。</p>
+        
+        <div class="test-actions">
+            <button class="refresh-btn" onclick="refreshAllData()">🔄 重新載入所有數據</button>
+            <button class="refresh-btn" onclick="validateAllProducts()">✅ 驗證數據完整性</button>
+            <button class="refresh-btn" onclick="showProductStats()">📊 顯示統計信息</button>
+        </div>
+        
+        <div id="loading" class="loading">
+            <p>⏳ 載入產品數據中...</p>
+        </div>
+        
+        <div id="results" style="display: none;"></div>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">🎯 變數選擇器演示</h2>
+        <p>選擇一個產品來測試變數選擇器功能：</p>
+        
+        <select id="productSelector" onchange="loadProductDemo()">
+            <option value="">請選擇產品...</option>
+            <option value="hta_spade">HTA 黑桃主機</option>
+            <option value="sp2_device">SP2 一代主機</option>
+            <option value="ilia_gen1">ILIA 一代主機</option>
+            <option value="sp2_pods">SP2 煙彈</option>
+            <option value="ilia_pods">ILIA 煙彈</option>
+            <option value="lana_pods">LANA 煙彈</option>
+            <option value="ilia_disposable">ILIA 拋棄式四代</option>
+            <option value="lana_a8000">LANA A8000 拋棄式</option>
+        </select>
+        
+        <div id="variant-selector-demo" class="variant-selector-demo">
+            <p>請先選擇一個產品</p>
+        </div>
+        
+        <div id="selected-variant-info" style="display: none;">
+            <h4>選中的變數信息：</h4>
+            <div id="variant-details"></div>
+        </div>
+    </div>
+
+    <!-- 產品管理系統 -->
+    <script src="/js/product-manager.js"></script>
+    
+    <!-- 變數選擇器 -->
+    <script src="/js/variant-selector.js"></script>
+
+    <script>
+        let currentDemo = null;
+        
+        // 等待產品數據載入
+        window.addEventListener('productsLoaded', () => {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            loadTestResults();
+        });
+
+        // 載入測試結果
+        function loadTestResults() {
+            const resultsContainer = document.getElementById('results');
+            const products = window.ProductManager.getAllProducts();
+            
+            let html = '<h3>📋 產品變數測試結果</h3>';
+            
+            products.forEach(product => {
+                const validation = window.ProductManager.validateProductData(product.id);
+                const stats = window.ProductManager.getProductStats(product.id);
+                
+                html += `
+                    <div class="product-test">
+                        <div class="product-name">
+                            ${product.name} 
+                            <span style="color: ${validation.valid ? '#28a745' : '#dc3545'}">
+                                ${validation.valid ? '✅' : '❌'}
+                            </span>
+                        </div>
+                        
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <div class="stat-number">${stats.totalVariants}</div>
+                                <div class="stat-label">總變數</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">${stats.inStockVariants}</div>
+                                <div class="stat-label">有庫存</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">${stats.outOfStockVariants}</div>
+                                <div class="stat-label">缺貨</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">${stats.totalStock}</div>
+                                <div class="stat-label">總庫存</div>
+                            </div>
+                        </div>
+                        
+                        ${!validation.valid ? `
+                            <div class="error">
+                                <strong>數據驗證錯誤：</strong>
+                                <ul>
+                                    ${validation.errors.map(error => `<li>${error}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="variant-info">
+                            ${product.variants.map(variant => `
+                                <div class="variant-item ${variant.stock === 0 ? 'out-of-stock' : variant.stock <= 5 ? 'low-stock' : ''}">
+                                    <div class="variant-name">${variant.value}</div>
+                                    <div class="variant-details">
+                                        ID: ${variant.id}<br>
+                                        類型: ${variant.type || 'default'}<br>
+                                        庫存: ${variant.stock}<br>
+                                        SKU: ${variant.sku || '未設定'}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="test-actions">
+                            <button class="refresh-btn" onclick="refreshProduct('${product.id}')">
+                                🔄 重新載入此產品
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            resultsContainer.innerHTML = html;
+        }
+
+        // 重新載入所有數據
+        async function refreshAllData() {
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            
+            try {
+                await window.ProductManager.reloadAllProducts();
+                loading.style.display = 'none';
+                results.style.display = 'block';
+                loadTestResults();
+                
+                showMessage('✅ 所有產品數據已重新載入', 'success');
+            } catch (error) {
+                console.error('重新載入失敗:', error);
+                showMessage('❌ 重新載入失敗: ' + error.message, 'error');
+            }
+        }
+
+        // 重新載入特定產品
+        async function refreshProduct(productId) {
+            try {
+                await window.ProductManager.reloadProduct(productId);
+                loadTestResults();
+                showMessage(`✅ 產品 ${productId} 已重新載入`, 'success');
+            } catch (error) {
+                console.error('重新載入產品失敗:', error);
+                showMessage(`❌ 重新載入產品失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 驗證所有產品
+        function validateAllProducts() {
+            const products = window.ProductManager.getAllProducts();
+            let validCount = 0;
+            let totalErrors = [];
+            
+            products.forEach(product => {
+                const validation = window.ProductManager.validateProductData(product.id);
+                if (validation.valid) {
+                    validCount++;
+                } else {
+                    totalErrors.push(`${product.name}: ${validation.errors.join(', ')}`);
+                }
+            });
+            
+            const message = `驗證完成：${validCount}/${products.length} 個產品通過驗證`;
+            
+            if (totalErrors.length > 0) {
+                showMessage(message + '\n錯誤詳情:\n' + totalErrors.join('\n'), 'error');
+            } else {
+                showMessage(message, 'success');
+            }
+        }
+
+        // 顯示統計信息
+        function showProductStats() {
+            const products = window.ProductManager.getAllProducts();
+            let totalVariants = 0;
+            let totalStock = 0;
+            let inStockProducts = 0;
+            
+            products.forEach(product => {
+                totalVariants += product.variants.length;
+                totalStock += product.totalStock;
+                if (product.totalStock > 0) inStockProducts++;
+            });
+            
+            const stats = `
+                📊 系統統計信息：
+                • 總產品數：${products.length}
+                • 有庫存產品：${inStockProducts}
+                • 總變數數量：${totalVariants}
+                • 總庫存數量：${totalStock}
+                • 平均每產品變數：${Math.round(totalVariants / products.length)}
+            `;
+            
+            showMessage(stats, 'success');
+        }
+
+        // 載入產品演示
+        function loadProductDemo() {
+            const productId = document.getElementById('productSelector').value;
+            const demoContainer = document.getElementById('variant-selector-demo');
+            const infoContainer = document.getElementById('selected-variant-info');
+            
+            if (!productId) {
+                demoContainer.innerHTML = '<p>請先選擇一個產品</p>';
+                infoContainer.style.display = 'none';
+                return;
+            }
+            
+            // 清理之前的演示
+            if (currentDemo) {
+                currentDemo.destroy();
+            }
+            
+            // 創建新的變數選擇器
+            demoContainer.innerHTML = '<div id="demo-variant-selector"></div>';
+            currentDemo = new VariantSelector(productId, 'demo-variant-selector');
+            
+            // 監聽變數變更
+            currentDemo.setOnVariantChange((variant) => {
+                const detailsContainer = document.getElementById('variant-details');
+                detailsContainer.innerHTML = `
+                    <p><strong>變數ID：</strong>${variant.id}</p>
+                    <p><strong>名稱：</strong>${variant.name}</p>
+                    <p><strong>值：</strong>${variant.value}</p>
+                    <p><strong>類型：</strong>${variant.type}</p>
+                    <p><strong>庫存：</strong>${variant.stock}</p>
+                    <p><strong>價格調整：</strong>${variant.priceModifier || 0}</p>
+                    <p><strong>SKU：</strong>${variant.sku || '未設定'}</p>
+                `;
+                infoContainer.style.display = 'block';
+            });
+        }
+
+        // 顯示訊息
+        function showMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type;
+            messageDiv.innerHTML = message.replace(/\n/g, '<br>');
+            
+            document.body.insertBefore(messageDiv, document.body.firstChild);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // 頁面載入完成後的初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 如果產品管理器已經初始化，直接載入結果
+            if (window.ProductManager && window.ProductManager.initialized) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+                loadTestResults();
+            }
+        });
+    </script>
+</body>
+</html> 
