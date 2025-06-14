@@ -1931,6 +1931,8 @@ ${orderData.items.map(item =>
             document.getElementById('storeAddressInput').value = '台中市豐原區中正路805號';
             confirmStoreSelection();
         }
+
+
     </script>
 
     <!-- 物流方式展示區域 -->
@@ -2028,19 +2030,19 @@ ${orderData.items.map(item =>
             </div>
             <div class="footer-section">
                 <h3>聯絡我們</h3>
-                <ul>
-                    <li><i class="fab fa-line"></i> LINE ID：@deepvape</li>
-                    <li><i class="fas fa-envelope"></i> Email：service@deepvape.com</li>
-                    <li><i class="fas fa-clock"></i> 服務時間：週一至週五 10:00-18:00</li>
+                <ul id="contactInfo">
+                    <li><i class="fab fa-line"></i> LINE ID：<span id="lineId">@deepvape</span></li>
+                    <li><i class="fas fa-envelope"></i> Email：<span id="email">service@deepvape.com</span></li>
+                    <li><i class="fas fa-clock"></i> 服務時間：<span id="serviceHours">週一至週五 10:00-18:00</span></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>關注我們</h3>
                 <p>追蹤最新優惠與新品資訊</p>
                 <div style="margin-top: 1rem;">
-                    <a href="#" style="margin-right: 1rem;"><i class="fab fa-facebook fa-2x"></i></a>
-                    <a href="#" style="margin-right: 1rem;"><i class="fab fa-instagram fa-2x"></i></a>
-                    <a href="#"><i class="fab fa-telegram fa-2x"></i></a>
+                    <a href="#" id="facebookLink" style="margin-right: 1rem;"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="#" id="instagramLink" style="margin-right: 1rem;"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="#" id="telegramLink"><i class="fab fa-telegram fa-2x"></i></a>
                 </div>
             </div>
         </div>
@@ -2049,6 +2051,9 @@ ${orderData.items.map(item =>
             <p>警告：吸菸有害健康</p>
         </div>
     </footer>
+
+    <!-- 聯繫信息載入器 -->
+    <script src="/js/contact-loader.js"></script>
 
     <!-- VFX.js 故障效果腳本 -->
     <script type="module">

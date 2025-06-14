@@ -721,19 +721,19 @@
                 
                 <div class="footer-section">
                     <h3>聯絡我們</h3>
-                    <ul>
-                        <li>LINE ID: @deepvape</li>
-                        <li>Email: service@deepvape.com</li>
-                        <li>服務時間: 週一至週五 10:00-18:00</li>
+                    <ul id="contactInfo">
+                        <li>LINE ID: <span id="lineId">@deepvape</span></li>
+                        <li>Email: <span id="email">service@deepvape.com</span></li>
+                        <li>服務時間: <span id="serviceHours">週一至週五 10:00-18:00</span></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h3>關注我們</h3>
                     <ul>
-                        <li><a href="#" target="_blank">Facebook</a></li>
-                        <li><a href="#" target="_blank">Instagram</a></li>
-                        <li><a href="#" target="_blank">YouTube</a></li>
+                        <li><a href="#" id="facebookLink" target="_blank">Facebook</a></li>
+                        <li><a href="#" id="instagramLink" target="_blank">Instagram</a></li>
+                        <li><a href="#" id="telegramLink" target="_blank">Telegram</a></li>
                     </ul>
                 </div>
             </div>
@@ -855,6 +855,8 @@
             }
         }
 
+
+
         // 初始化Logo按鈕效果
         document.addEventListener("DOMContentLoaded", () => {
             const logoButton = document.getElementById("navLogo");
@@ -877,6 +879,9 @@
         });
     </script>
 
+    <!-- 聯繫信息載入器 -->
+    <script src="/js/contact-loader.js"></script>
+    
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
 </body>

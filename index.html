@@ -2438,29 +2438,7 @@
             return urlMap[product.name] || '#';
         }
 
-        // 載入聯繫信息
-        async function loadContactInfo() {
-            try {
-                const response = await fetch('/.netlify/functions/contact');
-                if (response.ok) {
-                    const data = await response.json();
-                    const contact = data.contact;
-                    
-                    // 更新聯繫信息
-                    document.getElementById('lineId').textContent = contact.line_id;
-                    document.getElementById('email').textContent = contact.email;
-                    document.getElementById('serviceHours').textContent = contact.service_hours;
-                    
-                    // 更新社交媒體連結
-                    document.getElementById('facebookLink').href = contact.facebook;
-                    document.getElementById('instagramLink').href = contact.instagram;
-                    document.getElementById('telegramLink').href = contact.telegram;
-                }
-            } catch (error) {
-                console.log('無法載入聯繫信息:', error);
-                // 保持默認值
-            }
-        }
+
 
         // 頁面載入時載入公告和產品
         window.addEventListener('load', function() {
@@ -2468,7 +2446,6 @@
                 document.getElementById('loading').classList.add('hidden');
                 loadAnnouncements(); // 載入公告
                 loadProducts(); // 載入產品
-                loadContactInfo(); // 載入聯繫信息
             }, 1500);
         });
 
@@ -2622,6 +2599,9 @@
         });
     </script>
 
+    <!-- 聯繫信息載入器 -->
+    <script src="/js/contact-loader.js"></script>
+    
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
     
