@@ -1474,10 +1474,10 @@
 
         .cyberpunk-notice-btn {
             position: relative;
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            background: linear-gradient(135deg, rgba(26, 254, 73, 0.2), rgba(0, 255, 255, 0.2));
             border: 2px solid transparent;
-            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
-            color: #00ffff;
+            border-image: linear-gradient(45deg, #1afe49, #00ffff) 1;
+            color: #1afe49;
             padding: 1rem 2rem;
             font-size: 1.1rem;
             font-weight: 600;
@@ -1498,9 +1498,9 @@
         }
 
         .cyberpunk-notice-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.4));
+            background: linear-gradient(135deg, rgba(26, 254, 73, 0.4), rgba(0, 255, 255, 0.4));
             box-shadow: 
-                0 0 20px rgba(255, 0, 255, 0.5),
+                0 0 20px rgba(26, 254, 73, 0.5),
                 0 0 40px rgba(0, 255, 255, 0.3);
             transform: translateY(-2px);
         }
@@ -1539,10 +1539,10 @@
 
         .cyberpunk-notice-btn-inline {
             position: relative;
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            background: linear-gradient(135deg, rgba(26, 254, 73, 0.2), rgba(0, 255, 255, 0.2));
             border: 2px solid transparent;
-            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
-            color: #00ffff;
+            border-image: linear-gradient(45deg, #1afe49, #00ffff) 1;
+            color: #1afe49;
             padding: 1rem 2rem;
             font-size: 1.1rem;
             font-weight: 600;
@@ -1553,14 +1553,19 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             overflow: hidden;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             width: 200px;
             text-align: center;
+            justify-content: center;
         }
 
         .cyberpunk-notice-btn-inline:hover {
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.4));
+            background: linear-gradient(135deg, rgba(26, 254, 73, 0.4), rgba(0, 255, 255, 0.4));
             box-shadow: 
-                0 0 20px rgba(255, 0, 255, 0.5),
+                0 0 20px rgba(26, 254, 73, 0.5),
                 0 0 40px rgba(0, 255, 255, 0.3);
             transform: translateY(-2px);
         }
@@ -1812,52 +1817,13 @@
                 width: 180px !important;
             }
 
-                    .cyberpunk-notice-btn-inline {
-            position: relative;
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 87, 34, 0.2));
-            border: 2px solid transparent;
-            border-image: linear-gradient(45deg, #ffc107, #ff5722) 1;
-            color: #ffc107;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: 200px;
-            text-align: center;
-            justify-content: center;
-        }
+            .cyberpunk-notice-btn-inline {
+                padding: 0.8rem 1.5rem !important;
+                font-size: 1rem !important;
+                width: 180px !important;
+            }
 
-        .cyberpunk-notice-btn-inline:hover {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.4), rgba(255, 87, 34, 0.4));
-            box-shadow: 
-                0 0 20px rgba(255, 193, 7, 0.5),
-                0 0 40px rgba(255, 87, 34, 0.3);
-            transform: translateY(-2px);
-        }
 
-        .cyberpunk-notice-btn-inline .btn-glow {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .cyberpunk-notice-btn-inline:hover .btn-glow {
-            left: 100%;
-        }
 
             .notice-modal {
                 width: 95%;
