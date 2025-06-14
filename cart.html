@@ -1790,17 +1790,24 @@ ${orderData.items.map(item =>
                 // 檢查並等待 OrderManager 初始化（更寬鬆的檢查）
                 if (!window.OrderManager) {
                     console.warn('⚠️ OrderManager 未載入，嘗試等待...');
-                    // 等待一段時間讓腳本載入
-                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // 等待最多3秒
+                    for (let i = 0; i < 30; i++) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                        if (window.OrderManager) {
+                            console.log('✅ OrderManager 載入成功');
+                            break;
+                        }
+                    }
                     
                     if (!window.OrderManager) {
-                        console.error('❌ OrderManager 仍未載入');
-                        throw new Error('系統載入中，請稍後再試或重新整理頁面');
+                        console.warn('⚠️ OrderManager 仍未載入，將使用備用方法');
+                        // 不拋出錯誤，繼續使用備用方法
                     }
                 }
                 
-                // 嘗試初始化 OrderManager（如果需要）
-                if (!window.OrderManager.initialized) {
+                // 嘗試初始化 OrderManager（如果存在且需要）
+                if (window.OrderManager && !window.OrderManager.initialized) {
                     console.log('⏳ 初始化 OrderManager...');
                     try {
                         await window.OrderManager.init();
@@ -1811,23 +1818,22 @@ ${orderData.items.map(item =>
                     }
                 }
                 
-                // 檢查關鍵功能（更寬鬆的檢查）
-                if (typeof window.OrderManager.createOrderFromCart !== 'function') {
-                    console.error('❌ OrderManager 功能不完整');
-                    throw new Error('系統功能載入中，請稍後再試');
-                }
-                
-                // 使用 OrderManager 創建訂單
+                // 使用 OrderManager 創建訂單（如果可用）
                 let result;
-                try {
-                    result = await window.OrderManager.createOrderFromCart(
-                        customerInfo,
-                        shippingInfo,
-                        paymentInfo
-                    );
-                } catch (orderError) {
-                    console.warn('⚠️ OrderManager 創建訂單失敗，使用備用方法:', orderError);
-                    // 使用備用的簡化訂單創建方法
+                if (window.OrderManager && typeof window.OrderManager.createOrderFromCart === 'function') {
+                    try {
+                        console.log('📋 使用 OrderManager 創建訂單...');
+                        result = await window.OrderManager.createOrderFromCart(
+                            customerInfo,
+                            shippingInfo,
+                            paymentInfo
+                        );
+                    } catch (orderError) {
+                        console.warn('⚠️ OrderManager 創建訂單失敗，使用備用方法:', orderError);
+                        result = await createOrderFallback(customerInfo, shippingInfo, paymentInfo);
+                    }
+                } else {
+                    console.log('📋 OrderManager 不可用，直接使用備用方法...');
                     result = await createOrderFallback(customerInfo, shippingInfo, paymentInfo);
                 }
                 
@@ -2284,14 +2290,27 @@ ${orderData.items.map(item =>
         // 等待所有管理器載入完成
         function waitForManagers() {
             return new Promise((resolve) => {
+                let attempts = 0;
+                const maxAttempts = 50; // 最多等待5秒
+                
                 const checkManagers = () => {
+                    attempts++;
+                    
+                    console.log(`檢查管理器載入狀態 (${attempts}/${maxAttempts}):`, {
+                        ProductManager: !!window.ProductManager,
+                        InventoryManager: !!window.InventoryManager,
+                        OrderManager: !!window.OrderManager
+                    });
+                    
                     if (window.ProductManager && 
                         window.InventoryManager && 
                         window.OrderManager) {
-                        console.log('所有管理器已載入完成');
-                        resolve();
+                        console.log('✅ 所有管理器已載入完成');
+                        resolve(true);
+                    } else if (attempts >= maxAttempts) {
+                        console.warn('⚠️ 管理器載入超時，但繼續執行');
+                        resolve(false);
                     } else {
-                        console.log('等待管理器載入中...');
                         setTimeout(checkManagers, 100);
                     }
                 };
@@ -2302,21 +2321,26 @@ ${orderData.items.map(item =>
         // 初始化系統
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                await waitForManagers();
-                console.log('系統初始化完成');
+                const managersLoaded = await waitForManagers();
                 
-                // 確保 OrderManager 已初始化
-                if (window.OrderManager && !window.OrderManager.initialized) {
-                    await window.OrderManager.init();
+                if (managersLoaded) {
+                    console.log('✅ 系統初始化完成');
+                    
+                    // 確保 OrderManager 已初始化
+                    if (window.OrderManager && !window.OrderManager.initialized) {
+                        await window.OrderManager.init();
+                    }
+                    
+                    console.log('OrderManager 狀態:', {
+                        exists: !!window.OrderManager,
+                        initialized: window.OrderManager?.initialized
+                    });
+                } else {
+                    console.warn('⚠️ 部分管理器未載入，但系統將繼續運行');
                 }
                 
-                console.log('OrderManager 狀態:', {
-                    exists: !!window.OrderManager,
-                    initialized: window.OrderManager?.initialized
-                });
-                
             } catch (error) {
-                console.error('系統初始化失敗:', error);
+                console.error('❌ 系統初始化失敗:', error);
             }
         });
     </script>
