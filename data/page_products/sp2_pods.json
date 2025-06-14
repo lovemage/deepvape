@@ -260,7 +260,7 @@
       "name": "口味",
       "type": "flavor",
       "value": "茉莉",
-      "stock": 40,
+      "stock": 9,
       "priceModifier": 0,
       "image": "sp2_pods/sp2_pods_main.webp",
       "sku": "SP2-PODS-JASMINE"
@@ -300,7 +300,7 @@
       "name": "口味",
       "type": "flavor",
       "value": "檸檬茶",
-      "stock": 65,
+      "stock": 9,
       "priceModifier": 0,
       "image": "sp2_pods/sp2_pods_main.webp",
       "sku": "SP2-PODS-LEMON-TEA"
@@ -320,7 +320,7 @@
       "name": "口味",
       "type": "flavor",
       "value": "茉莉綠茶",
-      "stock": 90,
+      "stock": 5,
       "priceModifier": 0,
       "image": "sp2_pods/sp2_pods_main.webp",
       "sku": "SP2-PODS-JASMINE-GREEN"
@@ -328,4 +328,4 @@
   ],
   "status": "active",
   "lastUpdated": "2024-01-15T10:00:00.000Z"
-} 
+}
