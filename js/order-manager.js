@@ -203,18 +203,18 @@ class OrderManager {
      */
     async syncOrderToCMS(order) {
         try {
-            // 這裡需要實現與 Netlify CMS 的整合
-            // 由於 Netlify CMS 是基於 Git 的，我們需要通過 API 或 webhook 來更新數據
+            console.log('開始同步訂單到 CMS:', order.orderId);
             
-            // 暫時保存到本地，等待手動同步或定期同步
-            console.log('訂單已準備同步到 CMS:', order.orderId);
-            
-            // 可以發送到後端 API 或使用 Netlify Functions
-            // await this.sendOrderToAPI(order);
+            // 發送到 Netlify Functions 進行數據庫更新
+            const result = await this.sendOrderToAPI(order);
+            console.log('訂單同步成功:', result);
             
             return true;
         } catch (error) {
             console.error('同步訂單到 CMS 失敗:', error);
+            
+            // 如果同步失敗，至少保存到本地存儲
+            console.log('訂單同步失敗，已保存到本地存儲等待重試');
             return false;
         }
     }

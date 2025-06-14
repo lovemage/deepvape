@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂單同步測試 - Deepvape</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #083e12 0%, #041348 100%);
+            color: white;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(4, 19, 72, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(26, 254, 73, 0.2);
+        }
+        h1 {
+            color: #1afe49;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(26, 254, 73, 0.1);
+        }
+        .test-button {
+            background: #1afe49;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: #15d63f;
+            transform: translateY(-2px);
+        }
+        .test-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: rgba(26, 254, 73, 0.1);
+            border: 1px solid #1afe49;
+        }
+        .error {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid #e74c3c;
+        }
+        .info {
+            background: rgba(131, 134, 245, 0.1);
+            border: 1px solid #8386f5;
+        }
+        .loading {
+            color: #ffab00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 訂單同步功能測試</h1>
+        
+        <div class="test-section">
+            <h3>📋 系統狀態檢查</h3>
+            <button class="test-button" onclick="checkSystemStatus()">檢查系統狀態</button>
+            <div id="systemStatus" class="result info">點擊按鈕檢查系統狀態...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🛒 創建測試訂單</h3>
+            <button class="test-button" onclick="createTestOrder()">創建測試訂單</button>
+            <button class="test-button" onclick="createMultipleTestOrders()">創建多個測試訂單</button>
+            <div id="orderResult" class="result info">點擊按鈕創建測試訂單...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 檢查訂單數據</h3>
+            <button class="test-button" onclick="checkOrdersData()">檢查 orders.json</button>
+            <button class="test-button" onclick="checkOrderStats()">檢查訂單統計</button>
+            <div id="dataResult" class="result info">點擊按鈕檢查數據...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔄 同步測試</h3>
+            <button class="test-button" onclick="testNetlifyFunction()">測試 Netlify Function</button>
+            <button class="test-button" onclick="testDirectSync()">測試直接同步</button>
+            <div id="syncResult" class="result info">點擊按鈕測試同步...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧹 清理測試數據</h3>
+            <button class="test-button" onclick="clearTestData()" style="background: #e74c3c;">清理測試數據</button>
+            <div id="cleanResult" class="result info">點擊按鈕清理測試數據...</div>
+        </div>
+    </div>
+
+    <!-- 載入必要的腳本 -->
+    <script src="js/product-manager.js"></script>
+    <script src="js/inventory-manager.js"></script>
+    <script src="js/order-manager.js"></script>
+
+    <script>
+        // 系統狀態檢查
+        async function checkSystemStatus() {
+            const statusDiv = document.getElementById('systemStatus');
+            statusDiv.className = 'result loading';
+            statusDiv.textContent = '🔍 檢查系統狀態中...';
+
+            try {
+                const status = {
+                    productManager: !!window.ProductManager,
+                    inventoryManager: !!window.InventoryManager,
+                    orderManager: !!window.OrderManager,
+                    productManagerInit: window.ProductManager?.initialized || false,
+                    inventoryManagerInit: window.InventoryManager?.initialized || false,
+                    orderManagerInit: window.OrderManager?.initialized || false
+                };
+
+                // 等待初始化
+                if (!window.OrderManager.initialized) {
+                    statusDiv.textContent = '⏳ 等待 OrderManager 初始化...';
+                    await window.OrderManager.init();
+                    status.orderManagerInit = true;
+                }
+
+                if (!window.InventoryManager.initialized) {
+                    statusDiv.textContent = '⏳ 等待 InventoryManager 初始化...';
+                    await window.InventoryManager.init();
+                    status.inventoryManagerInit = true;
+                }
+
+                if (!window.ProductManager.initialized) {
+                    statusDiv.textContent = '⏳ 等待 ProductManager 初始化...';
+                    await window.ProductManager.init();
+                    status.productManagerInit = true;
+                }
+
+                statusDiv.className = 'result success';
+                statusDiv.textContent = `✅ 系統狀態檢查完成：
+
+📦 ProductManager: ${status.productManager ? '✅ 已載入' : '❌ 未載入'} (初始化: ${status.productManagerInit ? '✅' : '❌'})
+📊 InventoryManager: ${status.inventoryManager ? '✅ 已載入' : '❌ 未載入'} (初始化: ${status.inventoryManagerInit ? '✅' : '❌'})
+🛒 OrderManager: ${status.orderManager ? '✅ 已載入' : '❌ 未載入'} (初始化: ${status.orderManagerInit ? '✅' : '❌'})
+
+產品數量: ${window.ProductManager?.products?.size || 0}
+庫存記錄: ${window.InventoryManager?.products?.size || 0}
+訂單記錄: ${window.OrderManager?.orders?.length || 0}`;
+
+            } catch (error) {
+                statusDiv.className = 'result error';
+                statusDiv.textContent = `❌ 系統狀態檢查失敗：\n${error.message}`;
+            }
+        }
+
+        // 創建測試訂單
+        async function createTestOrder() {
+            const resultDiv = document.getElementById('orderResult');
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '🛒 創建測試訂單中...';
+
+            try {
+                // 準備測試數據
+                const testCart = [
+                    {
+                        id: 'hta_vape_product',
+                        productId: 'hta_vape_product',
+                        name: 'HTA 黑桃主機',
+                        price: 450,
+                        quantity: 1,
+                        color: '黑',
+                        image: 'hta_vape/hta_spade_device.webp'
+                    }
+                ];
+
+                // 模擬購物車
+                localStorage.setItem('cart', JSON.stringify(testCart));
+
+                const customerInfo = {
+                    name: '測試客戶',
+                    phone: '0912345678'
+                };
+
+                const shippingInfo = {
+                    method: 'convenience_store',
+                    store: {
+                        id: 'TEST001',
+                        name: '測試門市',
+                        address: '台北市信義區測試路123號'
+                    },
+                    notes: '測試訂單'
+                };
+
+                const paymentInfo = {
+                    method: 'cash_on_delivery'
+                };
+
+                // 創建訂單
+                const result = await window.OrderManager.createOrderFromCart(
+                    customerInfo,
+                    shippingInfo,
+                    paymentInfo
+                );
+
+                if (result.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ 測試訂單創建成功！
+
+訂單編號: ${result.order.orderId}
+客戶姓名: ${result.order.customer.name}
+客戶電話: ${result.order.customer.phone}
+訂單金額: NT$ ${result.order.total}
+訂單狀態: ${result.order.status}
+創建時間: ${new Date(result.order.orderDate).toLocaleString('zh-TW')}
+
+商品明細:
+${result.order.items.map(item => 
+    `• ${item.productName} x${item.quantity} - NT$ ${item.totalPrice}`
+).join('\n')}`;
+                } else {
+                    throw new Error(result.error);
+                }
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ 測試訂單創建失敗：\n${error.message}`;
+            }
+        }
+
+        // 創建多個測試訂單
+        async function createMultipleTestOrders() {
+            const resultDiv = document.getElementById('orderResult');
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '🛒 創建多個測試訂單中...';
+
+            try {
+                const testOrders = [
+                    {
+                        cart: [{ id: 'hta_vape_product', productId: 'hta_vape_product', name: 'HTA 黑桃主機', price: 450, quantity: 1, color: '黑' }],
+                        customer: { name: '張三', phone: '0912345678' }
+                    },
+                    {
+                        cart: [{ id: 'sp2_device_product', productId: 'sp2_device_product', name: 'SP2 一代主機', price: 650, quantity: 1, color: '白' }],
+                        customer: { name: '李四', phone: '0923456789' }
+                    },
+                    {
+                        cart: [{ id: 'ilia_1_product', productId: 'ilia_1_product', name: 'ILIA 一代主機', price: 650, quantity: 2, color: '黑色白' }],
+                        customer: { name: '王五', phone: '0934567890' }
+                    }
+                ];
+
+                const results = [];
+                for (let i = 0; i < testOrders.length; i++) {
+                    const testData = testOrders[i];
+                    
+                    // 模擬購物車
+                    localStorage.setItem('cart', JSON.stringify(testData.cart));
+
+                    const shippingInfo = {
+                        method: 'convenience_store',
+                        store: {
+                            id: `TEST00${i + 1}`,
+                            name: `測試門市${i + 1}`,
+                            address: `台北市信義區測試路${(i + 1) * 100}號`
+                        },
+                        notes: `測試訂單 ${i + 1}`
+                    };
+
+                    const paymentInfo = { method: 'cash_on_delivery' };
+
+                    const result = await window.OrderManager.createOrderFromCart(
+                        testData.customer,
+                        shippingInfo,
+                        paymentInfo
+                    );
+
+                    results.push(result);
+                    
+                    // 短暫延遲避免訂單編號重複
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+
+                const successCount = results.filter(r => r.success).length;
+                const failCount = results.length - successCount;
+
+                resultDiv.className = successCount === results.length ? 'result success' : 'result error';
+                resultDiv.textContent = `📊 批量測試訂單結果：
+
+✅ 成功創建: ${successCount} 個訂單
+❌ 創建失敗: ${failCount} 個訂單
+
+詳細結果:
+${results.map((result, index) => 
+    result.success 
+        ? `${index + 1}. ✅ ${result.order.orderId} - ${result.order.customer.name}`
+        : `${index + 1}. ❌ 失敗: ${result.error}`
+).join('\n')}`;
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ 批量測試訂單失敗：\n${error.message}`;
+            }
+        }
+
+        // 檢查訂單數據
+        async function checkOrdersData() {
+            const resultDiv = document.getElementById('dataResult');
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '📊 檢查訂單數據中...';
+
+            try {
+                const response = await fetch('/data/orders.json');
+                const data = await response.json();
+
+                resultDiv.className = 'result info';
+                resultDiv.textContent = `📋 orders.json 數據：
+
+總訂單數: ${data.orders?.length || 0}
+
+${data.orders?.length > 0 ? 
+    `最近訂單:\n${data.orders.slice(-5).map(order => 
+        `• ${order.orderId} - ${order.customer?.name} - NT$ ${order.total} (${order.status})`
+    ).join('\n')}` 
+    : '暫無訂單數據'}
+
+完整數據:
+${JSON.stringify(data, null, 2)}`;
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ 檢查訂單數據失敗：\n${error.message}`;
+            }
+        }
+
+        // 檢查訂單統計
+        async function checkOrderStats() {
+            const resultDiv = document.getElementById('dataResult');
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '📈 檢查訂單統計中...';
+
+            try {
+                const response = await fetch('/data/order_stats.json');
+                const data = await response.json();
+
+                resultDiv.className = 'result info';
+                resultDiv.textContent = `📈 order_stats.json 統計：
+
+總訂單數: ${data.stats?.totalOrders || 0}
+總營收: NT$ ${data.stats?.totalRevenue || 0}
+平均訂單金額: NT$ ${data.stats?.averageOrderValue || 0}
+最後更新: ${data.stats?.lastUpdated ? new Date(data.stats.lastUpdated).toLocaleString('zh-TW') : '未知'}
+
+月度統計: ${data.stats?.monthlyStats?.length || 0} 筆
+產品統計: ${data.stats?.productStats?.length || 0} 筆
+
+完整數據:
+${JSON.stringify(data, null, 2)}`;
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ 檢查訂單統計失敗：\n${error.message}`;
+            }
+        }
+
+        // 測試 Netlify Function
+        async function testNetlifyFunction() {
+            const resultDiv = document.getElementById('syncResult');
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '🔄 測試 Netlify Function 中...';
+
+            try {
+                const testOrder = {
+                    orderId: 'TEST' + Date.now(),
+                    orderDate: new Date().toISOString(),
+                    status: 'pending',
+                    customer: {
+                        name: 'Function 測試客戶',
+                        phone: '0987654321'
+                    },
+                    items: [{
+                        productId: 'test_product',
+                        productName: '測試商品',
+                        quantity: 1,
+                        unitPrice: 100,
+                        totalPrice: 100
+                    }],
+                    subtotal: 100,
+                    shipping: 60,
+                    total: 160,
+                    paymentMethod: 'cash_on_delivery',
+                    shippingMethod: 'convenience_store',
+                    notes: 'Netlify Function 測試',
+                    lastUpdated: new Date().toISOString()
+                };
+
+                const response = await fetch('/.netlify/functions/save-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testOrder)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ Netlify Function 測試成功！
+
+狀態碼: ${response.status}
+回應: ${JSON.stringify(result, null, 2)}
+
+測試訂單已成功保存到數據庫。`;
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${result.error || result.message}`);
+                }
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Netlify Function 測試失敗：\n${error.message}
+
+可能原因：
+1. Netlify Functions 未部署或配置錯誤
+2. 網路連線問題
+3. 服務器錯誤
+4. 權限問題`;
+            }
+        }
+
+        // 測試直接同步
+        async function testDirectSync() {
+            const resultDiv = document.getElementById('syncResult');
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '🔄 測試直接同步中...';
+
+            try {
+                const testOrder = {
+                    orderId: 'DIRECT' + Date.now(),
+                    orderDate: new Date().toISOString(),
+                    status: 'pending',
+                    customer: {
+                        name: '直接同步測試客戶',
+                        phone: '0976543210'
+                    },
+                    items: [{
+                        productId: 'direct_test_product',
+                        productName: '直接同步測試商品',
+                        quantity: 1,
+                        unitPrice: 200,
+                        totalPrice: 200
+                    }],
+                    subtotal: 200,
+                    shipping: 60,
+                    total: 260,
+                    paymentMethod: 'cash_on_delivery',
+                    shippingMethod: 'convenience_store',
+                    notes: '直接同步測試',
+                    lastUpdated: new Date().toISOString()
+                };
+
+                const success = await window.OrderManager.syncOrderToCMS(testOrder);
+
+                if (success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ 直接同步測試成功！
+
+訂單編號: ${testOrder.orderId}
+同步狀態: 成功
+同步時間: ${new Date().toLocaleString('zh-TW')}
+
+訂單已通過 OrderManager 成功同步到 CMS。`;
+                } else {
+                    throw new Error('同步返回失敗狀態');
+                }
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ 直接同步測試失敗：\n${error.message}`;
+            }
+        }
+
+        // 清理測試數據
+        async function clearTestData() {
+            const resultDiv = document.getElementById('cleanResult');
+            
+            if (!confirm('⚠️ 確定要清理所有測試數據嗎？\n\n這將會：\n1. 清空本地存儲的測試數據\n2. 重置系統狀態\n\n注意：這不會影響已同步到 CMS 的數據。')) {
+                return;
+            }
+
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '🧹 清理測試數據中...';
+
+            try {
+                // 清理本地存儲
+                localStorage.removeItem('cart');
+                localStorage.removeItem('currentOrder');
+                localStorage.removeItem('pending_orders');
+
+                // 重置系統狀態
+                if (window.OrderManager) {
+                    window.OrderManager.orders = [];
+                }
+
+                resultDiv.className = 'result success';
+                resultDiv.textContent = `✅ 測試數據清理完成！
+
+已清理：
+• 購物車數據 (cart)
+• 當前訂單 (currentOrder)  
+• 待同步訂單 (pending_orders)
+• OrderManager 訂單緩存
+
+注意：已同步到 CMS 的數據需要手動在後台管理系統中刪除。`;
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ 清理測試數據失敗：\n${error.message}`;
+            }
+        }
+
+        // 頁面載入時自動檢查系統狀態
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkSystemStatus, 1000);
+        });
+    </script>
+</body>
+</html> 

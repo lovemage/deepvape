@@ -40,6 +40,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="js/store-selector.js"></script>
+    <script src="js/product-manager.js"></script>
+    <script src="js/inventory-manager.js"></script>
+    <script src="js/order-manager.js"></script>
     <style>
         :root {
             --primary-color: #083e12;
@@ -1724,20 +1727,23 @@ ${orderData.items.map(item =>
         async function confirmCheckout() {
             const storeType = document.getElementById('storeTypeSelect').value;
             const shipping = storeType === '711-outlying' ? 140 : 60;
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            const orderData = {
-                items: cart,
-                customer: {
-                    name: document.getElementById('customerName').value,
-                    phone: document.getElementById('customerPhone').value
-                },
+            // 準備客戶信息
+            const customerInfo = {
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value
+            };
+            
+            // 準備配送信息
+            const shippingInfo = {
+                method: 'convenience_store',
                 store: selectedStoreInfo,
-                subtotal: subtotal,
-                shipping: shipping,
-                total: subtotal + shipping,
-                orderDate: new Date().toISOString(),
-                orderId: 'ORD' + Date.now()
+                notes: `取貨門市：${selectedStoreInfo.name} (店號：${selectedStoreInfo.id})`
+            };
+            
+            // 準備付款信息
+            const paymentInfo = {
+                method: 'cash_on_delivery'
             };
             
             // 追蹤開始結帳事件 - Google Ads
@@ -1750,20 +1756,58 @@ ${orderData.items.map(item =>
             confirmBtn.disabled = true;
 
             try {
-                // Send Telegram notification
-                await sendTelegramNotification(orderData);
+                console.log('🛒 開始處理訂單...');
                 
-                // Save order to localStorage
-                localStorage.setItem('currentOrder', JSON.stringify(orderData));
+                // 等待 OrderManager 初始化
+                if (!window.OrderManager.initialized) {
+                    console.log('⏳ 等待 OrderManager 初始化...');
+                    await window.OrderManager.init();
+                }
                 
-                // Clear cart
-                localStorage.removeItem('cart');
+                // 使用 OrderManager 創建訂單
+                const result = await window.OrderManager.createOrderFromCart(
+                    customerInfo,
+                    shippingInfo,
+                    paymentInfo
+                );
                 
-                // Redirect to confirmation page
-                window.location.href = 'order_confirmation.html';
+                if (result.success) {
+                    console.log('✅ 訂單創建成功:', result.order);
+                    
+                    // 發送 Telegram 通知（使用舊格式以保持兼容性）
+                    const telegramOrderData = {
+                        orderId: result.order.orderId,
+                        orderDate: result.order.orderDate,
+                        customer: result.order.customer,
+                        store: selectedStoreInfo,
+                        items: cart,
+                        subtotal: result.order.subtotal,
+                        shipping: result.order.shipping,
+                        total: result.order.total
+                    };
+                    
+                    try {
+                        await sendTelegramNotification(telegramOrderData);
+                        console.log('📱 Telegram 通知發送成功');
+                    } catch (telegramError) {
+                        console.warn('⚠️ Telegram 通知發送失敗，但訂單已成功創建:', telegramError);
+                    }
+                    
+                    // 保存訂單到 localStorage 用於確認頁面
+                    localStorage.setItem('currentOrder', JSON.stringify(result.order));
+                    
+                    // 清空購物車
+                    localStorage.removeItem('cart');
+                    
+                    // 跳轉到確認頁面
+                    window.location.href = 'order_confirmation.html';
+                } else {
+                    throw new Error(result.error || '訂單創建失敗');
+                }
+                
             } catch (error) {
-                console.error('Order processing error:', error);
-                alert('訂單處理失敗，請稍後再試！');
+                console.error('❌ 訂單處理失敗:', error);
+                alert(`訂單處理失敗：${error.message}\n\n請檢查：\n1. 商品庫存是否充足\n2. 網路連線是否正常\n3. 稍後再試或聯繫客服`);
                 
                 // Reset button
                 confirmBtn.textContent = originalText;
