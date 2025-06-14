@@ -144,25 +144,6 @@ collections:
               - {name: "images", label: "產品圖片", widget: "list", field: {label: "圖片", name: "image", widget: "image"}}
               - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
-      - name: "prices"
-        label: "價格管理"
-        file: "data/prices.json"
-        fields:
-          - name: "products"
-            label: "產品價格"
-            widget: "list"
-            fields:
-              - {name: "id", label: "產品ID", widget: "string"}
-              - {name: "name", label: "產品名稱", widget: "string"}
-              - {name: "price", label: "價格", widget: "number"}
-              - {name: "originalPrice", label: "原價", widget: "number", required: false}
-              - {name: "discount", label: "折扣", widget: "string", required: false}
-              - {name: "bulkPricing", label: "批量價格", widget: "list", required: false, fields: [
-                  {name: "minQuantity", label: "最小數量", widget: "number"},
-                  {name: "price", label: "批量價格", widget: "number"}
-                ]}
-              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
-
   - name: "orders"
     label: "訂單管理"
     files:
@@ -522,7 +503,7 @@ collections:
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
-  - name: "settings"
+  - name: "site_settings"
     label: "網站設定"
     files:
       - name: "contact"
