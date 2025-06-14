@@ -1,14 +1,10 @@
 {
   "products": [
     {
-      "id": "hta_spade",
-      "name": "HTA 黑桃主機",
-      "category": "host",
-      "brand": "HTA",
-      "basePrice": 450,
-      "originalPrice": null,
       "discount": null,
-      "status": "active",
+      "lastUpdated": "2024-01-15T10:00:00.000Z",
+      "brand": "HTA",
+      "name": "HTA 黑桃主機",
       "variants": [
         {
           "id": "hta_spade_black",
@@ -78,6 +74,13 @@
         "material": "高品質鋁合金",
         "warranty": "購買起三天內非人為損壞"
       },
+      "status": "active",
+      "basePrice": 450,
+      "originalPrice": 650,
+      "images": [
+        "hta_vape/hta_spade_device.webp"
+      ],
+      "id": "hta_spade",
       "description": "HTA 黑桃主機是頂級電子菸主機的代表作品，採用一代與二代通用設計，實現真正的跨世代相容性。精工製造，品質卓越，為您帶來尊貴的電子菸體驗。CP值極高的主力產品，是電子菸愛好者的首選。",
       "features": [
         "HTA 黑桃頂級品牌，尊貴象徵",
@@ -89,20 +92,13 @@
         "6W~8W 功率範圍，穩定輸出",
         "高品質鋁合金材質，堅固耐用"
       ],
-      "images": [
-        "hta_vape/hta_spade_device.webp"
-      ],
-      "lastUpdated": "2024-01-15T10:00:00.000Z"
+      "category": "host"
     },
     {
-      "id": "hta_pods",
-      "name": "HTA 黑桃煙彈",
-      "category": "pods",
-      "brand": "HTA",
-      "basePrice": 260,
-      "originalPrice": null,
       "discount": null,
-      "status": "active",
+      "lastUpdated": "2024-01-15T10:00:00.000Z",
+      "brand": "HTA",
+      "name": "HTA 黑桃煙彈",
       "variants": [
         {
           "id": "hta_pods_cola",
@@ -151,6 +147,13 @@
         "material": "一盒三入",
         "warranty": "適用 HTA 一代、二代主機"
       },
+      "status": "active",
+      "basePrice": 260,
+      "originalPrice": null,
+      "images": [
+        "hta_pods/hta_spade_pods.webp"
+      ],
+      "id": "hta_pods",
       "description": "HTA 黑桃煙彈採用頂級煙油配方，提供 15 種精選口味選擇。每顆煙彈都經過嚴格品質控制，確保最佳的口感體驗和穩定的霧化效果。適用於 HTA 一代和二代主機，為您帶來尊貴的電子菸體驗。",
       "features": [
         "HTA 黑桃頂級品牌，品質保證",
@@ -160,20 +163,13 @@
         "適用 HTA 一代、二代主機",
         "一盒三入，經濟實惠"
       ],
-      "images": [
-        "hta_pods/hta_spade_pods.webp"
-      ],
-      "lastUpdated": "2024-01-15T10:00:00.000Z"
+      "category": "pods"
     },
     {
-      "id": "ilia_gen1",
-      "name": "ILIA 一代主機",
-      "category": "host",
-      "brand": "ILIA",
-      "basePrice": 650,
-      "originalPrice": null,
       "discount": null,
-      "status": "active",
+      "lastUpdated": "2024-01-15T10:00:00.000Z",
+      "brand": "ILIA",
+      "name": "ILIA 一代主機",
       "variants": [
         {
           "id": "ilia_gen1_black_white",
@@ -213,6 +209,15 @@
         "material": "通用一代煙彈產品",
         "warranty": "購買起三天內非人為損壞"
       },
+      "status": "active",
+      "basePrice": 650,
+      "originalPrice": null,
+      "images": [
+        "ilia_1/ilia_gen1_main_device.jpg",
+        "ilia_1/ilia_gen1_device_details.jpg",
+        "ilia_1/ilia_gen1_compact.webp"
+      ],
+      "id": "ilia_gen1",
       "description": "ILIA 一代主機以其優異的建構設計與功能性能著稱，是您理想的電子菸選擇。擁有 9 種顏色選擇，內建優質功能設計，提供絕佳的電子菸體驗。",
       "features": [
         "優質建構設計與功能性能",
@@ -222,22 +227,13 @@
         "450mAH 大容量電池，持久續航",
         "智能功率調節 7W~8W"
       ],
-      "images": [
-        "ilia_1/ilia_gen1_main_device.jpg",
-        "ilia_1/ilia_gen1_device_details.jpg",
-        "ilia_1/ilia_gen1_compact.webp"
-      ],
-      "lastUpdated": "2024-01-15T10:00:00.000Z"
+      "category": "host"
     },
     {
-      "id": "ilia_disposable",
-      "name": "ILIA 拋棄式四代",
-      "category": "disposable",
-      "brand": "ILIA",
-      "basePrice": 320,
-      "originalPrice": null,
       "discount": null,
-      "status": "active",
+      "lastUpdated": "2024-01-15T10:00:00.000Z",
+      "brand": "ILIA",
+      "name": "ILIA 拋棄式四代",
       "variants": [
         {
           "id": "ilia_disp_blueberry",
@@ -277,6 +273,15 @@
         "charging": "TYPE-C 快速充電",
         "nicotine": "3.5%"
       },
+      "status": "active",
+      "basePrice": 320,
+      "originalPrice": null,
+      "images": [
+        "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+        "ilia_a_4/Bar-4-6500-Puffs一次性電子煙.webp",
+        "ilia_a_4/image.webp"
+      ],
+      "id": "ilia_disposable",
       "description": "ILIA 拋棄式四代以其超大容量和豐富口味選擇，成為市場上的熱門產品。6500口大容量設計，13ML煙油，650mAh電池，TYPE-C充電，為您帶來持久的使用體驗。",
       "features": [
         "超大容量 - 6500口持久使用",
@@ -288,22 +293,13 @@
         "安全保護 - 多重安全機制",
         "精美外觀 - 時尚設計，舒適握感"
       ],
-      "images": [
-        "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
-        "ilia_a_4/Bar-4-6500-Puffs一次性電子煙.webp",
-        "ilia_a_4/image.webp"
-      ],
-      "lastUpdated": "2024-01-15T10:00:00.000Z"
+      "category": "disposable"
     },
     {
-      "id": "ilia_fabric",
-      "name": "ILIA 哩亞布紋主機",
-      "category": "host",
-      "brand": "ILIA",
-      "basePrice": 650,
-      "originalPrice": null,
       "discount": null,
-      "status": "active",
+      "lastUpdated": "2024-01-15T10:00:00.000Z",
+      "brand": "ILIA",
+      "name": "ILIA 哩亞布紋主機",
       "variants": [
         {
           "id": "ilia_fabric_black",
@@ -373,6 +369,14 @@
         "material": "高級布紋質感",
         "warranty": "適配 ILIA 系列煙彈"
       },
+      "status": "active",
+      "basePrice": 650,
+      "originalPrice": null,
+      "images": [
+        "ilia_Bu/ilia_fabric_device_main.png",
+        "ilia_Bu/ilia_fabric_compact.webp"
+      ],
+      "id": "ilia_fabric",
       "description": "ILIA 哩亞布紋主機採用獨特的布紋外觀設計，結合現代工藝與經典美學。8W-10W可調功率，400mAh大容量電池，為您帶來卓越的使用體驗。精緻的布紋質感，舒適的握感，是品味與性能的完美結合。",
       "features": [
         "布紋質感 - 獨特的布紋外觀設計",
@@ -382,11 +386,7 @@
         "多重保護 - 全方位安全保護",
         "舒適握感 - 人體工學設計"
       ],
-      "images": [
-        "ilia_Bu/ilia_fabric_device_main.png",
-        "ilia_Bu/ilia_fabric_compact.webp"
-      ],
-      "lastUpdated": "2024-01-15T10:00:00.000Z"
+      "category": "host"
     }
   ]
-} 
+}
