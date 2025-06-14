@@ -567,6 +567,8 @@
             transform: rotate(180deg);
         }
 
+
+
             .header-container {
                 flex-direction: row;
                 gap: 1rem;
@@ -597,6 +599,8 @@
             box-shadow: 0 6px 25px rgba(255, 20, 147, 0.5), 0 0 20px rgba(138, 43, 226, 0.4) !important;
             background: linear-gradient(45deg, #ff69b4, #9370db) !important;
         }
+
+
         }
 
         /* Announcement Banner */
@@ -1359,8 +1363,8 @@
             }
 
             .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1.5rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
             }
 
             .modal-content {
@@ -1403,6 +1407,45 @@
 
             .guarantee-desc {
                 font-size: 0.85rem;
+            }
+        }
+
+        /* 小螢幕手機優化 */
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .product-card {
+                border-radius: 20px;
+            }
+
+            .product-image {
+                height: 180px;
+            }
+
+            .product-info {
+                padding: 1rem;
+            }
+
+            .product-name {
+                font-size: 1rem;
+            }
+
+            .product-description {
+                font-size: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .product-price {
+                font-size: 1.2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .pulse-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -1516,9 +1559,6 @@
                     <div class="hero-buttons">
                         <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
                             <i class="fas fa-rocket"></i> 立即探索
-                        </button>
-                        <button class="pulse-button hero-btn-secondary" onclick="showContact()">
-                            <i class="fas fa-phone"></i> 聯絡我們
                         </button>
                     </div>
                 </div>
