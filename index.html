@@ -1511,20 +1511,7 @@
                 0 0 20px rgba(255, 0, 255, 0.6),
                 0 0 40px rgba(0, 255, 255, 0.4);
             border: 2px solid #fff;
-            position: relative;
             animation: cyberpunkPulse 2s infinite alternate;
-        }
-
-        .notice-icon::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff0080, #8000ff);
-            z-index: -1;
-            animation: cyberpunkRotate 4s linear infinite;
         }
 
         .notice-text {
@@ -1541,7 +1528,6 @@
             background-clip: text;
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
             font-family: 'Courier New', monospace;
             position: relative;
         }
@@ -1556,7 +1542,6 @@
             line-height: 1.8;
             color: #e0e0e0;
             font-family: 'Courier New', monospace;
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
         }
 
         .notice-message p {
@@ -1591,10 +1576,7 @@
             }
         }
 
-        @keyframes cyberpunkRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+
 
         @keyframes cyberpunkBlink {
             0%, 50% { opacity: 1; }
@@ -1934,14 +1916,14 @@
         </div>
     </nav>
 
-            <!-- Announcement Banner -->
-        <div class="announcement" id="announcement" style="display: none;">
-            <i class="fas fa-bullhorn"></i>
+    <!-- Announcement Banner -->
+    <div class="announcement" id="announcement" style="display: none;">
+        <i class="fas fa-bullhorn"></i>
             <span class="announcement-text" id="announcementText"></span>
-            <button class="announcement-close" onclick="closeAnnouncement()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+        <button class="announcement-close" onclick="closeAnnouncement()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -1957,10 +1939,10 @@
         <!-- 輪播導航按鈕 -->
         <button class="hero-nav hero-nav-prev" id="heroPrev" onclick="changeHeroSlide(-1)">
             <i class="fas fa-chevron-left"></i>
-        </button>
+                        </button>
         <button class="hero-nav hero-nav-next" id="heroNext" onclick="changeHeroSlide(1)">
             <i class="fas fa-chevron-right"></i>
-        </button>
+                        </button>
     </section>
 
     <!-- 重要通知區塊 -->
@@ -1969,13 +1951,13 @@
             <div class="notice-content">
                 <div class="notice-icon" id="noticeIcon">
                     <i class="fas fa-info-circle"></i>
-                </div>
+                    </div>
                 <div class="notice-text">
                     <h3 class="notice-title" id="noticeTitle">DeepVape 重要通知：</h3>
                     <div class="notice-message" id="noticeMessage">
                         <p>受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。</p>
                         <p>商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。</p>
-                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -3284,7 +3266,7 @@
 
     <!-- 聯繫信息載入器 -->
     <script src="/js/contact-loader.js"></script>
-    
+
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
     
