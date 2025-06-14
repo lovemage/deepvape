@@ -1216,6 +1216,12 @@
             text-align: center;
             position: relative;
             background: linear-gradient(135deg, rgba(8, 62, 18, 0.1), rgba(4, 19, 72, 0.1));
+            transition: padding-top 0.3s ease;
+        }
+
+        /* 當有公告顯示時，增加額外的 padding */
+        .hero-title-section.with-announcement {
+            padding-top: 180px; /* 120px + 60px (公告高度) */
         }
 
         .hero-title-container {
@@ -1738,7 +1744,11 @@
             }
 
             .hero-title-section {
-                padding: 80px 0 40px 0;
+                padding: 140px 0 40px 0; /* 增加 top padding 避免被導航列遮擋 */
+            }
+
+            .hero-title-section.with-announcement {
+                padding-top: 200px; /* 140px + 60px (公告高度) */
             }
 
             .main-title {
@@ -1967,7 +1977,11 @@
         /* 小螢幕手機優化 */
         @media (max-width: 480px) {
             .hero-title-section {
-                padding: 60px 0 30px 0;
+                padding: 120px 0 30px 0; /* 增加 top padding 避免被導航列遮擋 */
+            }
+
+            .hero-title-section.with-announcement {
+                padding-top: 180px; /* 120px + 60px (公告高度) */
             }
 
             .hero-title-container {
@@ -2890,6 +2904,7 @@
             const announcementEl = document.getElementById('announcement');
             const announcementText = document.getElementById('announcementText');
             const noticeButtonContainer = document.getElementById('noticeButtonContainer');
+            const heroTitleSection = document.querySelector('.hero-title-section');
             
             if (announcement && announcement.content) {
                 // 根據優先級設定樣式
@@ -2910,6 +2925,11 @@
                     // 調整重要通知按鈕位置
                     if (noticeButtonContainer) {
                         noticeButtonContainer.classList.add('with-announcement');
+                    }
+                    
+                    // 調整標題區塊位置，避免被公告遮擋
+                    if (heroTitleSection) {
+                        heroTitleSection.classList.add('with-announcement');
                     }
                     
                     // 啟動打字效果
@@ -2955,12 +2975,18 @@
         function closeAnnouncement() {
             const announcementEl = document.getElementById('announcement');
             const noticeButtonContainer = document.getElementById('noticeButtonContainer');
+            const heroTitleSection = document.querySelector('.hero-title-section');
             
             announcementEl.style.display = 'none';
             
             // 恢復重要通知按鈕位置
             if (noticeButtonContainer) {
                 noticeButtonContainer.classList.remove('with-announcement');
+            }
+            
+            // 恢復標題區塊位置
+            if (heroTitleSection) {
+                heroTitleSection.classList.remove('with-announcement');
             }
             
             // 記住已關閉的公告（如果有 ID）
