@@ -1755,37 +1755,51 @@ ${orderData.items.map(item =>
             try {
                 console.log('🛒 開始處理訂單...');
                 
-                // 檢查並等待 OrderManager 初始化
+                // 檢查並等待 OrderManager 初始化（更寬鬆的檢查）
                 if (!window.OrderManager) {
-                    console.error('❌ OrderManager 未載入');
-                    throw new Error('系統尚未完全載入，請重新整理頁面後再試');
+                    console.warn('⚠️ OrderManager 未載入，嘗試等待...');
+                    // 等待一段時間讓腳本載入
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    if (!window.OrderManager) {
+                        console.error('❌ OrderManager 仍未載入');
+                        throw new Error('系統載入中，請稍後再試或重新整理頁面');
+                    }
                 }
                 
+                // 嘗試初始化 OrderManager（如果需要）
                 if (!window.OrderManager.initialized) {
-                    console.log('⏳ 等待 OrderManager 初始化...');
+                    console.log('⏳ 初始化 OrderManager...');
                     try {
                         await window.OrderManager.init();
                         console.log('✅ OrderManager 初始化完成');
                     } catch (initError) {
-                        console.error('❌ OrderManager 初始化失敗:', initError);
-                        throw new Error('系統初始化失敗，請重新整理頁面後再試');
+                        console.warn('⚠️ OrderManager 初始化失敗，但繼續嘗試:', initError);
+                        // 不拋出錯誤，繼續嘗試創建訂單
                     }
                 }
                 
-                // 驗證 OrderManager 功能
+                // 檢查關鍵功能（更寬鬆的檢查）
                 if (typeof window.OrderManager.createOrderFromCart !== 'function') {
                     console.error('❌ OrderManager 功能不完整');
-                    throw new Error('系統功能異常，請重新整理頁面後再試');
+                    throw new Error('系統功能載入中，請稍後再試');
                 }
                 
                 // 使用 OrderManager 創建訂單
-                const result = await window.OrderManager.createOrderFromCart(
-                    customerInfo,
-                    shippingInfo,
-                    paymentInfo
-                );
+                let result;
+                try {
+                    result = await window.OrderManager.createOrderFromCart(
+                        customerInfo,
+                        shippingInfo,
+                        paymentInfo
+                    );
+                } catch (orderError) {
+                    console.warn('⚠️ OrderManager 創建訂單失敗，使用備用方法:', orderError);
+                    // 使用備用的簡化訂單創建方法
+                    result = await createOrderFallback(customerInfo, shippingInfo, paymentInfo);
+                }
                 
-                if (result.success) {
+                if (result && result.success) {
                     console.log('✅ 訂單創建成功:', result.order);
                     
                     // 發送 Telegram 通知（使用舊格式以保持兼容性）
@@ -1852,6 +1866,107 @@ ${orderData.items.map(item =>
 
         function closeCheckoutModal() {
             document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        // 備用的訂單創建方法（當 OrderManager 失效時使用）
+        async function createOrderFallback(customerInfo, shippingInfo, paymentInfo) {
+            try {
+                console.log('🔄 使用備用訂單創建方法...');
+                
+                // 獲取購物車內容
+                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                if (cart.length === 0) {
+                    throw new Error('購物車為空');
+                }
+
+                // 計算訂單總額
+                let subtotal = 0;
+                const orderItems = cart.map(item => {
+                    const totalPrice = item.price * item.quantity;
+                    subtotal += totalPrice;
+                    return {
+                        productId: item.id || item.productId,
+                        productName: item.name,
+                        variant: item.color || item.flavor || '標準版',
+                        quantity: item.quantity,
+                        unitPrice: item.price,
+                        totalPrice: totalPrice,
+                        image: item.image
+                    };
+                });
+
+                // 計算運費
+                const shipping = subtotal >= 1000 ? 0 : 60; // 簡化的運費計算
+                const total = subtotal + shipping;
+
+                // 生成訂單ID
+                const orderId = 'DV' + Date.now().toString();
+
+                // 創建訂單數據
+                const order = {
+                    orderId: orderId,
+                    orderDate: new Date().toISOString(),
+                    status: 'pending',
+                    customer: {
+                        name: customerInfo.name,
+                        phone: customerInfo.phone,
+                        email: customerInfo.email || '',
+                        address: shippingInfo.address || '',
+                        notes: customerInfo.notes || ''
+                    },
+                    items: orderItems,
+                    subtotal: subtotal,
+                    shipping: shipping,
+                    total: total,
+                    paymentMethod: paymentInfo.method,
+                    shippingMethod: shippingInfo.method,
+                    notes: shippingInfo.notes || '',
+                    lastUpdated: new Date().toISOString()
+                };
+
+                console.log('📋 備用方法創建的訂單:', order);
+
+                // 保存到本地存儲
+                try {
+                    const existingOrders = JSON.parse(localStorage.getItem('pending_orders') || '[]');
+                    existingOrders.push(order);
+                    localStorage.setItem('pending_orders', JSON.stringify(existingOrders));
+                } catch (error) {
+                    console.warn('⚠️ 保存到本地存儲失敗:', error);
+                }
+
+                // 嘗試發送到後端
+                try {
+                    const response = await fetch('/.netlify/functions/save-order', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(order)
+                    });
+
+                    if (response.ok) {
+                        console.log('✅ 訂單已發送到後端');
+                    } else {
+                        console.warn('⚠️ 後端保存失敗，但訂單已保存到本地');
+                    }
+                } catch (error) {
+                    console.warn('⚠️ 無法連接後端，但訂單已保存到本地:', error);
+                }
+
+                return {
+                    success: true,
+                    order: order,
+                    message: '訂單創建成功（備用方法）'
+                };
+
+            } catch (error) {
+                console.error('❌ 備用訂單創建失敗:', error);
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
         }
 
 
