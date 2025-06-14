@@ -23,6 +23,31 @@ collections:
               - {name: "startDate", label: "開始日期", widget: "datetime", required: false}
               - {name: "endDate", label: "結束日期", widget: "datetime", required: false}
       
+      - name: "hero"
+        label: "首頁輪播圖管理"
+        file: "data/hero.json"
+        fields:
+          - name: "hero"
+            label: "輪播圖設定"
+            widget: "object"
+            fields:
+              - name: "images"
+                label: "輪播圖片"
+                widget: "list"
+                max: 3
+                fields:
+                  - {name: "id", label: "ID", widget: "number"}
+                  - {name: "url", label: "圖片網址", widget: "image"}
+                  - {name: "alt", label: "圖片描述", widget: "string"}
+                  - {name: "title", label: "主標題", widget: "string"}
+                  - {name: "subtitle", label: "副標題", widget: "string"}
+                  - {name: "description", label: "描述文字", widget: "text"}
+                  - {name: "active", label: "啟用", widget: "boolean", default: true}
+              - {name: "autoplay", label: "自動播放", widget: "boolean", default: true}
+              - {name: "interval", label: "切換間隔(毫秒)", widget: "number", default: 5000}
+              - {name: "showIndicators", label: "顯示指示器", widget: "boolean", default: true}
+              - {name: "showNavigation", label: "顯示導航按鈕", widget: "boolean", default: true}
+
       - name: "contact"
         label: "聯繫信息管理"
         file: "data/contact.json"

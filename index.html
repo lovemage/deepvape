@@ -1212,16 +1212,41 @@
 
         /* Hero Section */
         .hero {
-            padding: 6rem 0 4rem;
             position: relative;
+            min-height: 80vh;
             overflow: hidden;
             margin-top: 80px;
+        }
+
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            padding: 6rem 0 4rem;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
         }
 
         .hero-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
+            width: 100%;
         }
 
         .hero-content {
@@ -1244,6 +1269,7 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             line-height: 1.1;
+            animation: fadeInUp 1s ease-out;
         }
 
         .hero-subtitle {
@@ -1252,6 +1278,7 @@
             color: var(--text-color);
             margin-bottom: 1.5rem;
             opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
 
         .hero-description {
@@ -1260,12 +1287,14 @@
             line-height: 1.6;
             margin-bottom: 3rem;
             max-width: 500px;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
         .hero-buttons {
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s both;
         }
 
         .hero-btn-primary {
@@ -1286,29 +1315,10 @@
             box-shadow: 0 15px 40px rgba(26, 254, 73, 0.4);
         }
 
-        .hero-btn-secondary {
-            background: transparent;
-            color: var(--text-color);
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: 2px solid var(--border-color);
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-btn-secondary:hover {
-            border-color: var(--highlight-color);
-            color: var(--highlight-color);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(26, 254, 73, 0.2);
-        }
-
         .hero-image {
             text-align: center;
             position: relative;
+            z-index: 2;
         }
 
         .hero-main-image {
@@ -1318,6 +1328,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             filter: drop-shadow(0 0 20px rgba(26, 254, 73, 0.3));
+            animation: heroFloat 3s ease-in-out infinite, fadeInRight 1s ease-out;
         }
 
         .hero-main-image:hover {
@@ -1325,18 +1336,90 @@
             filter: drop-shadow(0 0 30px rgba(26, 254, 73, 0.5));
         }
 
-        /* Hero 動畫效果 */
+        /* 輪播指示器 */
+        .hero-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .hero-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .hero-indicator.active {
+            background: var(--highlight-color);
+            transform: scale(1.2);
+            border-color: white;
+        }
+
+        /* 輪播導航按鈕 */
+        .hero-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 3;
+            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
+        }
+
+        .hero-nav:hover {
+            background: rgba(26, 254, 73, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .hero-nav-prev {
+            left: 30px;
+        }
+
+        .hero-nav-next {
+            right: 30px;
+        }
+
+        /* 動畫效果 */
         @keyframes heroFloat {
-            0%, 100% {
-                transform: translateY(0px);
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            50% {
-                transform: translateY(-10px);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .hero-main-image {
-            animation: heroFloat 3s ease-in-out infinite;
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         /* Category Section */
@@ -1365,6 +1448,14 @@
             }
 
             .hero {
+                min-height: 60vh;
+            }
+
+            .hero-carousel {
+                height: 60vh;
+            }
+
+            .hero-slide {
                 padding: 4rem 0 2rem;
             }
 
@@ -1391,10 +1482,27 @@
                 justify-content: center;
             }
 
-            .hero-btn-primary,
-            .hero-btn-secondary {
+            .hero-btn-primary {
                 padding: 0.8rem 1.5rem;
                 font-size: 1rem;
+            }
+
+            .hero-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .hero-nav-prev {
+                left: 15px;
+            }
+
+            .hero-nav-next {
+                right: 15px;
+            }
+
+            .hero-indicators {
+                bottom: 20px;
             }
 
             .product-grid {
@@ -1585,23 +1693,22 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">Deepvape - 頂級電子菸專賣店</h1>
-                    <h2 class="hero-subtitle">VAPE煙彈、主機、拋棄式</h2>
-                    <p class="hero-description">探索最新科技與極致品味的完美結合，為您帶來前所未有的電子菸體驗</p>
-                    <div class="hero-buttons">
-                        <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
-                            <i class="fas fa-rocket"></i> 立即探索
-                        </button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="deepvape_main.png" alt="Deepvape 電子菸主機與煙彈" class="hero-main-image">
-                </div>
-            </div>
+        <div class="hero-carousel" id="heroCarousel">
+            <!-- 輪播項目將由 JavaScript 動態生成 -->
         </div>
+        
+        <!-- 輪播指示器 -->
+        <div class="hero-indicators" id="heroIndicators">
+            <!-- 指示器將由 JavaScript 動態生成 -->
+        </div>
+        
+        <!-- 輪播導航按鈕 -->
+        <button class="hero-nav hero-nav-prev" id="heroPrev" onclick="changeHeroSlide(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="hero-nav hero-nav-next" id="heroNext" onclick="changeHeroSlide(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </section>
 
     <!-- Main Content -->
@@ -2563,6 +2670,182 @@
             });
         }
 
+        // Hero 輪播功能
+        let currentHeroSlide = 0;
+        let heroSlides = [];
+        let heroData = null;
+        let heroInterval = null;
+
+        // 載入 Hero 數據
+        async function loadHeroData() {
+            try {
+                const response = await fetch('/.netlify/functions/hero');
+                if (!response.ok) {
+                    throw new Error('無法載入 Hero 數據');
+                }
+                
+                const data = await response.json();
+                heroData = data.hero;
+                
+                if (heroData && heroData.images && heroData.images.length > 0) {
+                    renderHeroSlides();
+                    initHeroCarousel();
+                } else {
+                    console.warn('沒有找到 Hero 圖片數據');
+                    renderDefaultHero();
+                }
+            } catch (error) {
+                console.error('載入 Hero 數據時發生錯誤:', error);
+                renderDefaultHero();
+            }
+        }
+
+        // 渲染 Hero 輪播項目
+        function renderHeroSlides() {
+            const carousel = document.getElementById('heroCarousel');
+            const indicators = document.getElementById('heroIndicators');
+            
+            if (!carousel || !indicators) return;
+
+            // 清空現有內容
+            carousel.innerHTML = '';
+            indicators.innerHTML = '';
+
+            heroData.images.forEach((image, index) => {
+                // 創建輪播項目
+                const slide = document.createElement('div');
+                slide.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+                slide.innerHTML = `
+                    <div class="hero-container">
+                        <div class="hero-content">
+                            <div class="hero-text">
+                                <h1 class="hero-title">${image.title}</h1>
+                                <h2 class="hero-subtitle">${image.subtitle}</h2>
+                                <p class="hero-description">${image.description}</p>
+                                <div class="hero-buttons">
+                                    <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
+                                        <i class="fas fa-rocket"></i> 立即探索
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="hero-image">
+                                <img src="${image.url}" alt="${image.alt}" class="hero-main-image">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                carousel.appendChild(slide);
+
+                // 創建指示器
+                const indicator = document.createElement('div');
+                indicator.className = `hero-indicator ${index === 0 ? 'active' : ''}`;
+                indicator.onclick = () => goToHeroSlide(index);
+                indicators.appendChild(indicator);
+            });
+
+            heroSlides = carousel.querySelectorAll('.hero-slide');
+        }
+
+        // 渲染默認 Hero
+        function renderDefaultHero() {
+            const carousel = document.getElementById('heroCarousel');
+            const indicators = document.getElementById('heroIndicators');
+            
+            if (!carousel || !indicators) return;
+
+            carousel.innerHTML = `
+                <div class="hero-slide active">
+                    <div class="hero-container">
+                        <div class="hero-content">
+                            <div class="hero-text">
+                                <h1 class="hero-title">Deepvape - 頂級電子菸專賣店</h1>
+                                <h2 class="hero-subtitle">VAPE煙彈、主機、拋棄式</h2>
+                                <p class="hero-description">探索最新科技與極致品味的完美結合，為您帶來前所未有的電子菸體驗</p>
+                                <div class="hero-buttons">
+                                    <button class="pulse-button hero-btn-primary" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'})">
+                                        <i class="fas fa-rocket"></i> 立即探索
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="hero-image">
+                                <img src="deepvape_main.png" alt="Deepvape 電子菸主機與煙彈" class="hero-main-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            indicators.innerHTML = '<div class="hero-indicator active"></div>';
+            heroSlides = carousel.querySelectorAll('.hero-slide');
+        }
+
+        // 初始化輪播
+        function initHeroCarousel() {
+            if (!heroData || !heroData.autoplay || heroData.images.length <= 1) return;
+
+            const interval = heroData.interval || 5000;
+            heroInterval = setInterval(() => {
+                nextHeroSlide();
+            }, interval);
+
+            // 滑鼠懸停時暫停自動播放
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                heroSection.addEventListener('mouseenter', () => {
+                    if (heroInterval) {
+                        clearInterval(heroInterval);
+                        heroInterval = null;
+                    }
+                });
+
+                heroSection.addEventListener('mouseleave', () => {
+                    if (heroData.autoplay && !heroInterval) {
+                        heroInterval = setInterval(() => {
+                            nextHeroSlide();
+                        }, interval);
+                    }
+                });
+            }
+        }
+
+        // 切換到指定輪播項目
+        function goToHeroSlide(index) {
+            if (!heroSlides || index < 0 || index >= heroSlides.length) return;
+
+            // 移除所有活躍狀態
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            document.querySelectorAll('.hero-indicator').forEach(indicator => 
+                indicator.classList.remove('active')
+            );
+
+            // 設置新的活躍項目
+            heroSlides[index].classList.add('active');
+            document.querySelectorAll('.hero-indicator')[index].classList.add('active');
+
+            currentHeroSlide = index;
+        }
+
+        // 下一張輪播
+        function nextHeroSlide() {
+            const nextIndex = (currentHeroSlide + 1) % heroSlides.length;
+            goToHeroSlide(nextIndex);
+        }
+
+        // 上一張輪播
+        function prevHeroSlide() {
+            const prevIndex = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
+            goToHeroSlide(prevIndex);
+        }
+
+        // 輪播導航按鈕
+        function changeHeroSlide(direction) {
+            if (direction > 0) {
+                nextHeroSlide();
+            } else {
+                prevHeroSlide();
+            }
+        }
+
         // 為logo添加點擊事件
         document.addEventListener('DOMContentLoaded', function() {
             const logo = document.querySelector('.logo');
@@ -2570,6 +2853,9 @@
                 logo.style.cursor = 'pointer';
                 logo.addEventListener('click', handleLogoClick);
             }
+            
+            // 載入 Hero 輪播數據
+            loadHeroData();
             
             // 生成隨機售出數量
             generateRandomSoldCount();

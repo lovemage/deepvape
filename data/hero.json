@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "images": [
+      {
+        "id": 1,
+        "url": "deepvape_main.png",
+        "alt": "Deepvape 電子菸主機與煙彈",
+        "title": "Deepvape - 頂級電子菸專賣店",
+        "subtitle": "VAPE煙彈、主機、拋棄式",
+        "description": "探索最新科技與極致品味的完美結合，為您帶來前所未有的電子菸體驗",
+        "active": true
+      },
+      {
+        "id": 2,
+        "url": "product_showcase.jpg",
+        "alt": "最新電子菸產品系列",
+        "title": "全新產品系列上市",
+        "subtitle": "創新設計、極致體驗",
+        "description": "體驗最新科技帶來的卓越品質，每一口都是完美的享受",
+        "active": true
+      },
+      {
+        "id": 3,
+        "url": "deepvape_logo_main.png",
+        "alt": "專業電子菸配件",
+        "title": "專業配件齊全",
+        "subtitle": "品質保證、服務至上",
+        "description": "提供最完整的電子菸解決方案，滿足您的所有需求",
+        "active": true
+      }
+    ],
+    "autoplay": true,
+    "interval": 5000,
+    "showIndicators": true,
+    "showNavigation": true
+  }
+} 
