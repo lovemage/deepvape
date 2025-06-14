@@ -100,16 +100,22 @@
         }
 
         /* Loading Screen */
+        body {
+            background: #000;
+        }
+
         .loading {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #141414;
+            width: 100%;
+            height: 100%;
+            background: #000000;
             z-index: 10000;
-            transition: opacity 0.5s ease;
-            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
         }
 
         .loading.hidden {
@@ -117,147 +123,178 @@
             pointer-events: none;
         }
 
-        .loading-content {
+        #load {
             position: absolute;
-            top: 0;
-            left: 0;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .loading-content::before {
-            position: absolute;
-            top: 50%;
+            width: 600px;
+            height: 36px;
             left: 50%;
-            z-index: 2;
-            display: block;
-            width: 150%;
-            height: 140%;
-            background: radial-gradient(ellipse at 50% 55%, transparent 10%, black 50%);
-            transform: translate3d(-50%, -50%, 0);
-            content: "";
+            top: 40%;
+            margin-left: -300px;
+            overflow: visible;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
         }
 
-        .loading-content::after {
+        #load div {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 5;
-            display: block;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 50% 75%, #a900ff 20%, transparent 75%);
-            mix-blend-mode: overlay;
-            transform: translate3d(-50%, -50%, 0);
-            content: "";
+            width: 20px;
+            height: 36px;
+            opacity: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            animation: move 2s linear infinite;
+            -o-animation: move 2s linear infinite;
+            -moz-animation: move 2s linear infinite;
+            -webkit-animation: move 2s linear infinite;
+            transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            color: #35C4F0;
         }
 
-        @keyframes aura-glow {
+        #load div:nth-child(2) {
+            animation-delay: 0.2s;
+            -o-animation-delay: 0.2s;
+            -moz-animation-delay: 0.2s;
+            -webkit-animation-delay: 0.2s;
+        }
+        #load div:nth-child(3) {
+            animation-delay: 0.4s;
+            -o-animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+        }
+        #load div:nth-child(4) {
+            animation-delay: 0.6s;
+            -o-animation-delay: 0.6s;
+            -moz-animation-delay: 0.6s;
+            -webkit-animation-delay: 0.6s;
+        }
+        #load div:nth-child(5) {
+            animation-delay: 0.8s;
+            -o-animation-delay: 0.8s;
+            -moz-animation-delay: 0.8s;
+            -webkit-animation-delay: 0.8s;
+        }
+        #load div:nth-child(6) {
+            animation-delay: 1s;
+            -o-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            -webkit-animation-delay: 1s;
+        }
+        #load div:nth-child(7) {
+            animation-delay: 1.2s;
+            -o-animation-delay: 1.2s;
+            -moz-animation-delay: 1.2s;
+            -webkit-animation-delay: 1.2s;
+        }
+
+        @keyframes move {
             0% {
-                background-position: 0 100%;
+                left: 0;
+                opacity: 0;
+            }
+            35% {
+                left: 41%; 
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+            65% {
+                left: 59%; 
+                -moz-transform: rotate(0deg); 
+                -webkit-transform: rotate(0deg); 
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg); 
+                opacity: 1;
             }
             100% {
-                background-position: 0 300%;
+                left: 100%; 
+                -moz-transform: rotate(-180deg); 
+                -webkit-transform: rotate(-180deg); 
+                -o-transform: rotate(-180deg); 
+                transform: rotate(-180deg);
+                opacity: 0;
             }
         }
 
-        .aura {
-            position: absolute;
-            top: -71.5%;
-            left: 50%;
-            z-index: 3;
-            width: 30%;
-            height: 140%;
-            background: linear-gradient(
-                20deg,
-                #00f8f1,
-                #ffbd1e20 16.5%,
-                #fe848f 33%,
-                #fe848f20 49.5%,
-                #00f8f1 66%,
-                #00f8f160 85.5%,
-                #ffbd1e 100%
-            ) 0 100% / 100% 200%;
-            border-radius: 0 0 100% 100%;
-            filter: blur(50px);
-            mix-blend-mode: plus-lighter;
-            opacity: 0.75;
-            transform: translate3d(-50%, 0, 0);
-            animation: aura-glow 5s infinite linear;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                transparent,
-                transparent 1px,
-                white 1px,
-                white 2px
-            );
-            mix-blend-mode: overlay;
-            opacity: 0.5;
-        }
-
-        .loading-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 15;
-            transform: translate(-50%, -50%);
-            font-size: 4rem;
-            font-family: "Pixelify Sans", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: 700;
-            font-style: normal;
-            color: #ffffff;
-            letter-spacing: 8px;
-            text-shadow: 
-                2px 2px 0px #000000,
-                4px 4px 0px #333333,
-                0 0 20px #00f8f1,
-                0 0 40px #fe848f,
-                0 0 60px #ffbd1e;
-            animation: pixelPulse 2s infinite ease-in-out;
-        }
-
-        @keyframes pixelPulse {
-            0% { 
-                opacity: 0.7;
-                transform: translate(-50%, -50%) scale(0.95);
-                text-shadow: 
-                    2px 2px 0px #000000,
-                    4px 4px 0px #333333,
-                    0 0 10px #00f8f1,
-                    0 0 20px #fe848f,
-                    0 0 30px #ffbd1e;
+        @-moz-keyframes move {
+            0% {
+                left: 0; 
+                opacity: 0;
             }
-            50% { 
+            35% {
+                left: 41%; 
+                -moz-transform: rotate(0deg); 
+                transform: rotate(0deg);
                 opacity: 1;
-                transform: translate(-50%, -50%) scale(1.05);
-                text-shadow: 
-                    2px 2px 0px #000000,
-                    4px 4px 0px #333333,
-                    0 0 30px #00f8f1,
-                    0 0 50px #fe848f,
-                    0 0 70px #ffbd1e;
             }
-            100% { 
-                opacity: 0.7;
-                transform: translate(-50%, -50%) scale(0.95);
-                text-shadow: 
-                    2px 2px 0px #000000,
-                    4px 4px 0px #333333,
-                    0 0 10px #00f8f1,
-                    0 0 20px #fe848f,
-                    0 0 30px #ffbd1e;
+            65% {
+                left: 59%; 
+                -moz-transform: rotate(0deg); 
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                left: 100%; 
+                -moz-transform: rotate(-180deg); 
+                transform: rotate(-180deg);
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes move {
+            0% {
+                left: 0; 
+                opacity: 0;
+            }
+            35% {
+                left: 41%; 
+                -webkit-transform: rotate(0deg); 
+                transform: rotate(0deg); 
+                opacity: 1;
+            }
+            65% {
+                left: 59%; 
+                -webkit-transform: rotate(0deg); 
+                transform: rotate(0deg); 
+                opacity: 1;
+            }
+            100% {
+                left: 100%;
+                -webkit-transform: rotate(-180deg); 
+                transform: rotate(-180deg); 
+                opacity: 0;
+            }
+        }
+
+        @-o-keyframes move {
+            0% {
+                left: 0; 
+                opacity: 0;
+            }
+            35% {
+                left: 41%; 
+                -o-transform: rotate(0deg); 
+                transform: rotate(0deg); 
+                opacity: 1;
+            }
+            65% {
+                left: 59%; 
+                -o-transform: rotate(0deg); 
+                transform: rotate(0deg); 
+                opacity: 1;
+            }
+            100% {
+                left: 100%; 
+                -o-transform: rotate(-180deg); 
+                transform: rotate(-180deg); 
+                opacity: 0;
             }
         }
 
@@ -2073,10 +2110,15 @@
 
     <!-- Loading Screen -->
     <div class="loading" id="loading">
-        <div class="loading-content">
-            <div class="aura"></div>
-            <div class="overlay"></div>
-            <div class="loading-text">LOADING</div>
+        <div id="load">
+            <div>D</div>
+            <div>E</div>
+            <div>E</div>
+            <div>P</div>
+            <div>V</div>
+            <div>A</div>
+            <div>P</div>
+            <div>E</div>
         </div>
     </div>
 
