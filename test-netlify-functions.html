@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netlify Functions 測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Netlify Functions 測試</h1>
+    
+    <div class="test-section">
+        <h2>🔗 連接測試</h2>
+        <div id="connectionStatus"></div>
+        <button onclick="testConnection()">測試連接</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📦 訂單保存測試</h2>
+        <div id="orderTestStatus"></div>
+        <button onclick="testOrderSave()">測試訂單保存</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 庫存異動測試</h2>
+        <div id="stockTestStatus"></div>
+        <button onclick="testStockMovement()">測試庫存異動</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 詳細日誌</h2>
+        <pre id="detailLog"></pre>
+        <button onclick="clearLog()">清除日誌</button>
+    </div>
+
+    <script>
+        let logMessages = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logMessages.push(logEntry);
+            console.log(logEntry);
+            updateLogDisplay();
+        }
+
+        function updateLogDisplay() {
+            document.getElementById('detailLog').textContent = logMessages.join('\n');
+        }
+
+        function clearLog() {
+            logMessages = [];
+            updateLogDisplay();
+        }
+
+        async function testConnection() {
+            const statusDiv = document.getElementById('connectionStatus');
+            statusDiv.innerHTML = '<div class="info"><span class="loading"></span> 測試連接中...</div>';
+            
+            try {
+                log('開始測試 Netlify Functions 連接...');
+                
+                const response = await fetch('/.netlify/functions/test-connection', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                log(`連接響應狀態: ${response.status}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                log('連接測試成功');
+
+                statusDiv.innerHTML = `
+                    <div class="status success">✅ Netlify Functions 連接正常</div>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+
+            } catch (error) {
+                log(`連接測試失敗: ${error.message}`, 'error');
+                statusDiv.innerHTML = `
+                    <div class="status error">❌ 連接失敗: ${error.message}</div>
+                    <p>可能的原因：</p>
+                    <ul>
+                        <li>Netlify Functions 未正確部署</li>
+                        <li>函數路徑錯誤</li>
+                        <li>CORS 設定問題</li>
+                        <li>網路連線問題</li>
+                    </ul>
+                `;
+            }
+        }
+
+        async function testOrderSave() {
+            const statusDiv = document.getElementById('orderTestStatus');
+            statusDiv.innerHTML = '<div class="info"><span class="loading"></span> 測試訂單保存中...</div>';
+            
+            try {
+                log('開始測試訂單保存功能...');
+                
+                const testOrder = {
+                    orderId: 'TEST' + Date.now(),
+                    orderDate: new Date().toISOString(),
+                    status: 'pending',
+                    customer: {
+                        name: '測試客戶',
+                        phone: '0912345678',
+                        email: 'test@example.com'
+                    },
+                    items: [
+                        {
+                            productId: 'sp2_host',
+                            productName: 'SP2 一代主機',
+                            variantId: 'sp2_host_black',
+                            variant: '黑色',
+                            quantity: 1,
+                            unitPrice: 650,
+                            totalPrice: 650
+                        }
+                    ],
+                    subtotal: 650,
+                    shipping: 60,
+                    total: 710,
+                    paymentMethod: 'cash_on_delivery',
+                    shippingMethod: 'convenience_store'
+                };
+
+                log('發送測試訂單數據...');
+
+                const response = await fetch('/.netlify/functions/save-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testOrder)
+                });
+
+                log(`訂單保存響應狀態: ${response.status}`);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const result = await response.json();
+                log('訂單保存測試成功');
+
+                statusDiv.innerHTML = `
+                    <div class="status success">✅ 訂單保存功能正常</div>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+
+            } catch (error) {
+                log(`訂單保存測試失敗: ${error.message}`, 'error');
+                statusDiv.innerHTML = `
+                    <div class="status error">❌ 訂單保存失敗: ${error.message}</div>
+                    <p>可能的原因：</p>
+                    <ul>
+                        <li>save-order Function 未正確部署</li>
+                        <li>數據格式錯誤</li>
+                        <li>文件系統權限問題</li>
+                        <li>服務器內部錯誤</li>
+                    </ul>
+                `;
+            }
+        }
+
+        async function testStockMovement() {
+            const statusDiv = document.getElementById('stockTestStatus');
+            statusDiv.innerHTML = '<div class="info"><span class="loading"></span> 測試庫存異動中...</div>';
+            
+            try {
+                log('開始測試庫存異動功能...');
+                
+                const testMovement = {
+                    id: 'TEST_MOVEMENT_' + Date.now(),
+                    productId: 'sp2_host',
+                    variantId: 'sp2_host_black',
+                    productName: 'SP2 一代主機',
+                    variantName: '黑色',
+                    type: 'out',
+                    quantity: 1,
+                    reason: '測試訂單',
+                    orderId: 'TEST' + Date.now(),
+                    timestamp: new Date().toISOString(),
+                    operator: '系統測試'
+                };
+
+                log('發送測試庫存異動數據...');
+
+                const response = await fetch('/.netlify/functions/save-stock-movement', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testMovement)
+                });
+
+                log(`庫存異動響應狀態: ${response.status}`);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const result = await response.json();
+                log('庫存異動測試成功');
+
+                statusDiv.innerHTML = `
+                    <div class="status success">✅ 庫存異動功能正常</div>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+
+            } catch (error) {
+                log(`庫存異動測試失敗: ${error.message}`, 'error');
+                statusDiv.innerHTML = `
+                    <div class="status error">❌ 庫存異動失敗: ${error.message}</div>
+                    <p>可能的原因：</p>
+                    <ul>
+                        <li>save-stock-movement Function 未正確部署</li>
+                        <li>數據格式錯誤</li>
+                        <li>文件系統權限問題</li>
+                        <li>服務器內部錯誤</li>
+                    </ul>
+                `;
+            }
+        }
+
+        // 頁面載入時自動測試連接
+        document.addEventListener('DOMContentLoaded', () => {
+            log('頁面載入完成，準備進行測試...');
+            setTimeout(() => {
+                testConnection();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

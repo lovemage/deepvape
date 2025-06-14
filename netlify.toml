@@ -7,7 +7,16 @@
 
 [functions]
   directory = "netlify/functions"
-  included_files = ["data/announcements.json", "data/prices.json", "data/contact.json", "data/hero.json", "data/notice.json"]
+  included_files = [
+    "data/announcements.json", 
+    "data/contact.json", 
+    "data/hero.json", 
+    "data/notice.json",
+    "data/orders.json",
+    "data/order_stats.json",
+    "data/stock_movements.json",
+    "data/page_products/*.json"
+  ]
 
 [[redirects]]
   from = "/api/*"
