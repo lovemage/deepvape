@@ -1722,13 +1722,45 @@ ${orderData.items.map(item =>
         }
 
         async function confirmCheckout() {
+            console.log('🛒 開始結帳流程...');
+            
+            // 驗證必要信息
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            
+            if (!customerName) {
+                alert('請輸入客戶姓名');
+                return;
+            }
+            
+            if (!customerPhone) {
+                alert('請輸入客戶電話');
+                return;
+            }
+            
+            if (!selectedStoreInfo) {
+                alert('請選擇取貨門市');
+                return;
+            }
+            
+            // 檢查購物車
+            const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+            if (currentCart.length === 0) {
+                alert('購物車為空，請先添加商品');
+                return;
+            }
+            
+            console.log('📋 驗證通過，準備訂單數據...');
+            console.log('購物車內容:', currentCart);
+            console.log('選擇的門市:', selectedStoreInfo);
+            
             const storeType = document.getElementById('storeTypeSelect').value;
             const shipping = storeType === '711-outlying' ? 140 : 60;
             
             // 準備客戶信息
             const customerInfo = {
-                name: document.getElementById('customerName').value,
-                phone: document.getElementById('customerPhone').value
+                name: customerName,
+                phone: customerPhone
             };
             
             // 準備配送信息
@@ -1744,7 +1776,7 @@ ${orderData.items.map(item =>
             };
             
             // 追蹤開始結帳事件 - Google Ads
-            trackBeginCheckoutConversion(cart);
+            trackBeginCheckoutConversion(currentCart);
             
             // Show loading
             const confirmBtn = document.querySelector('#checkoutModal .modal-btn.confirm');
@@ -1808,7 +1840,7 @@ ${orderData.items.map(item =>
                         orderDate: result.order.orderDate,
                         customer: result.order.customer,
                         store: selectedStoreInfo,
-                        items: cart,
+                        items: currentCart,
                         subtotal: result.order.subtotal,
                         shipping: result.order.shipping,
                         total: result.order.total
@@ -1874,14 +1906,16 @@ ${orderData.items.map(item =>
                 console.log('🔄 使用備用訂單創建方法...');
                 
                 // 獲取購物車內容
-                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-                if (cart.length === 0) {
+                const fallbackCart = JSON.parse(localStorage.getItem('cart') || '[]');
+                if (fallbackCart.length === 0) {
                     throw new Error('購物車為空');
                 }
+                
+                console.log('📦 備用方法處理購物車:', fallbackCart);
 
                 // 計算訂單總額
                 let subtotal = 0;
-                const orderItems = cart.map(item => {
+                const orderItems = fallbackCart.map(item => {
                     const totalPrice = item.price * item.quantity;
                     subtotal += totalPrice;
                     return {
@@ -2029,6 +2063,17 @@ ${orderData.items.map(item =>
         }
 
         // 門市選擇訊息監聽已由 StoreSelector 處理
+
+        // 診斷函數
+        function debugCheckout() {
+            console.log('🔍 診斷結帳狀態...');
+            console.log('購物車:', JSON.parse(localStorage.getItem('cart') || '[]'));
+            console.log('選擇的門市:', selectedStoreInfo);
+            console.log('客戶姓名:', document.getElementById('customerName').value);
+            console.log('客戶電話:', document.getElementById('customerPhone').value);
+            console.log('OrderManager 存在:', !!window.OrderManager);
+            console.log('OrderManager 初始化:', window.OrderManager?.initialized);
+        }
 
         // 在頁面載入時添加測試按鈕（僅開發環境）
         document.addEventListener('DOMContentLoaded', function() {
