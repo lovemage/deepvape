@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車診斷工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛒 購物車診斷工具</h1>
+    
+    <div class="section">
+        <h2>📋 系統狀態檢查</h2>
+        <div id="systemStatus"></div>
+        <button onclick="checkSystem()">檢查系統狀態</button>
+    </div>
+
+    <div class="section">
+        <h2>🛍️ 購物車測試</h2>
+        <div id="cartStatus"></div>
+        <button onclick="setupTestCart()">設置測試購物車</button>
+        <button onclick="testOrderCreation()">測試訂單創建</button>
+        <button onclick="clearCart()">清空購物車</button>
+    </div>
+
+    <div class="section">
+        <h2>📊 詳細日誌</h2>
+        <pre id="logOutput"></pre>
+        <button onclick="clearLog()">清除日誌</button>
+    </div>
+
+    <!-- 載入必要腳本 -->
+    <script src="js/product-manager.js"></script>
+    <script src="js/inventory-manager.js"></script>
+    <script src="js/order-manager.js"></script>
+
+    <script>
+        let logs = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] ${message}`;
+            logs.push(entry);
+            console.log(entry);
+            updateLogDisplay();
+        }
+
+        function updateLogDisplay() {
+            document.getElementById('logOutput').textContent = logs.join('\n');
+        }
+
+        function clearLog() {
+            logs = [];
+            updateLogDisplay();
+        }
+
+        async function checkSystem() {
+            const statusDiv = document.getElementById('systemStatus');
+            statusDiv.innerHTML = '<div class="info">檢查中...</div>';
+            
+            let html = '';
+            
+            // 檢查腳本載入
+            html += `<div class="status ${window.ProductManager ? 'success' : 'error'}">
+                ProductManager: ${window.ProductManager ? '✅ 已載入' : '❌ 未載入'}
+            </div>`;
+            
+            html += `<div class="status ${window.InventoryManager ? 'success' : 'error'}">
+                InventoryManager: ${window.InventoryManager ? '✅ 已載入' : '❌ 未載入'}
+            </div>`;
+            
+            html += `<div class="status ${window.OrderManager ? 'success' : 'error'}">
+                OrderManager: ${window.OrderManager ? '✅ 已載入' : '❌ 未載入'}
+            </div>`;
+
+            // 檢查初始化狀態
+            if (window.InventoryManager) {
+                try {
+                    if (!window.InventoryManager.initialized) {
+                        log('InventoryManager 未初始化，嘗試初始化...');
+                        await window.InventoryManager.init();
+                    }
+                    
+                    html += `<div class="status ${window.InventoryManager.initialized ? 'success' : 'warning'}">
+                        InventoryManager 初始化: ${window.InventoryManager.initialized ? '✅ 已完成' : '⚠️ 未完成'}
+                    </div>`;
+                    
+                    // 檢查關鍵方法
+                    const hasCreateOrder = typeof window.InventoryManager.createOrder === 'function';
+                    html += `<div class="status ${hasCreateOrder ? 'success' : 'error'}">
+                        createOrder 方法: ${hasCreateOrder ? '✅ 可用' : '❌ 不可用'}
+                    </div>`;
+                    
+                } catch (error) {
+                    html += `<div class="status error">
+                        InventoryManager 初始化錯誤: ${error.message}
+                    </div>`;
+                    log(`InventoryManager 初始化失敗: ${error.message}`, 'error');
+                }
+            }
+
+            if (window.OrderManager) {
+                try {
+                    if (!window.OrderManager.initialized) {
+                        log('OrderManager 未初始化，嘗試初始化...');
+                        await window.OrderManager.init();
+                    }
+                    
+                    html += `<div class="status ${window.OrderManager.initialized ? 'success' : 'warning'}">
+                        OrderManager 初始化: ${window.OrderManager.initialized ? '✅ 已完成' : '⚠️ 未完成'}
+                    </div>`;
+                    
+                } catch (error) {
+                    html += `<div class="status error">
+                        OrderManager 初始化錯誤: ${error.message}
+                    </div>`;
+                    log(`OrderManager 初始化失敗: ${error.message}`, 'error');
+                }
+            }
+
+            statusDiv.innerHTML = html;
+            log('系統狀態檢查完成');
+        }
+
+        function setupTestCart() {
+            const testCart = [
+                {
+                    id: 'sp2_host',
+                    productId: 'sp2_host',
+                    name: 'SP2 一代主機',
+                    price: 650,
+                    quantity: 1,
+                    color: '黑色',
+                    image: 'sp2_host_black.jpg'
+                }
+            ];
+            
+            localStorage.setItem('cart', JSON.stringify(testCart));
+            
+            document.getElementById('cartStatus').innerHTML = `
+                <div class="status success">✅ 測試購物車已設置</div>
+                <pre>${JSON.stringify(testCart, null, 2)}</pre>
+            `;
+            
+            log('測試購物車設置完成');
+        }
+
+        async function testOrderCreation() {
+            const statusDiv = document.getElementById('cartStatus');
+            
+            try {
+                log('開始測試訂單創建...');
+                
+                // 檢查購物車
+                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                if (cart.length === 0) {
+                    throw new Error('購物車為空，請先設置測試購物車');
+                }
+                
+                log(`購物車內容: ${cart.length} 個商品`);
+                
+                // 檢查系統狀態
+                if (!window.OrderManager || !window.OrderManager.initialized) {
+                    throw new Error('OrderManager 未初始化');
+                }
+                
+                if (!window.InventoryManager || !window.InventoryManager.initialized) {
+                    throw new Error('InventoryManager 未初始化');
+                }
+                
+                // 準備測試數據
+                const customerInfo = {
+                    name: '測試客戶',
+                    phone: '0912345678',
+                    email: 'test@example.com'
+                };
+
+                const shippingInfo = {
+                    method: 'convenience_store',
+                    store: {
+                        id: 'TEST001',
+                        name: '測試門市',
+                        address: '台北市測試區測試路123號'
+                    },
+                    notes: '測試訂單'
+                };
+
+                const paymentInfo = {
+                    method: 'cash_on_delivery'
+                };
+
+                log('呼叫 OrderManager.createOrderFromCart...');
+                
+                // 直接測試 InventoryManager.createOrder
+                log('測試 InventoryManager.createOrder...');
+                const orderData = {
+                    customer: customerInfo,
+                    items: cart.map(item => ({
+                        productId: item.id || item.productId,
+                        productName: item.name,
+                        quantity: item.quantity,
+                        unitPrice: item.price,
+                        totalPrice: item.price * item.quantity
+                    })),
+                    shipping: 60,
+                    paymentMethod: paymentInfo.method,
+                    shippingMethod: shippingInfo.method,
+                    notes: shippingInfo.notes
+                };
+                
+                const inventoryResult = window.InventoryManager.createOrder(orderData);
+                log(`InventoryManager.createOrder 結果: ${JSON.stringify(inventoryResult)}`);
+                
+                if (inventoryResult.success) {
+                    statusDiv.innerHTML = `
+                        <div class="status success">✅ 訂單創建成功（直接測試）</div>
+                        <pre>${JSON.stringify(inventoryResult, null, 2)}</pre>
+                    `;
+                    log('直接測試訂單創建成功');
+                } else {
+                    throw new Error(`InventoryManager.createOrder 失敗: ${inventoryResult.error}`);
+                }
+
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="status error">❌ 訂單創建失敗: ${error.message}</div>
+                `;
+                log(`訂單創建失敗: ${error.message}`, 'error');
+            }
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cart');
+            document.getElementById('cartStatus').innerHTML = `
+                <div class="status info">ℹ️ 購物車已清空</div>
+            `;
+            log('購物車已清空');
+        }
+
+        // 頁面載入時自動檢查
+        document.addEventListener('DOMContentLoaded', async () => {
+            log('頁面載入完成，開始系統檢查...');
+            setTimeout(async () => {
+                await checkSystem();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

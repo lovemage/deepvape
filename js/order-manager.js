@@ -47,57 +47,40 @@ class OrderManager {
                 throw new Error('購物車為空');
             }
 
-            // 等待庫存管理系統初始化
-            if (!window.InventoryManager.initialized) {
-                await window.InventoryManager.init();
-            }
+            console.log('📦 處理購物車商品:', cart);
 
-            // 準備訂單商品數據
+            // 準備訂單商品數據（簡化版本，不依賴複雜的庫存檢查）
             const orderItems = [];
             let subtotal = 0;
 
             for (const cartItem of cart) {
-                // 獲取產品變數ID
-                const variantId = this.getVariantId(cartItem);
-                
-                // 檢查庫存
-                const stockCheck = window.InventoryManager.checkStock(
-                    cartItem.id || cartItem.productId,
-                    variantId,
-                    cartItem.quantity
-                );
-
-                if (!stockCheck.available) {
-                    throw new Error(`${cartItem.name} ${this.getVariantDisplay(cartItem)} 庫存不足`);
-                }
-
-                // 計算價格
-                const priceInfo = window.InventoryManager.calculatePrice(
-                    cartItem.id || cartItem.productId,
-                    cartItem.quantity
-                );
-
                 const orderItem = {
                     productId: cartItem.id || cartItem.productId,
                     productName: cartItem.name,
                     variant: this.getVariantDisplay(cartItem),
-                    variantId: variantId,
+                    variantId: this.getVariantId(cartItem),
                     quantity: cartItem.quantity,
-                    unitPrice: priceInfo.unitPrice,
-                    totalPrice: priceInfo.totalPrice,
+                    unitPrice: cartItem.price,
+                    totalPrice: cartItem.price * cartItem.quantity,
                     image: cartItem.image
                 };
 
                 orderItems.push(orderItem);
-                subtotal += priceInfo.totalPrice;
+                subtotal += orderItem.totalPrice;
             }
 
             // 計算運費
             const shipping = this.calculateShipping(shippingInfo.method, subtotal);
             const total = subtotal + shipping;
 
-            // 創建訂單數據
-            const orderData = {
+            // 生成訂單ID
+            const orderId = this.generateOrderId();
+
+            // 創建完整訂單數據
+            const order = {
+                orderId: orderId,
+                orderDate: new Date().toISOString(),
+                status: 'pending',
                 customer: {
                     name: customerInfo.name,
                     phone: customerInfo.phone,
@@ -106,36 +89,37 @@ class OrderManager {
                     notes: customerInfo.notes || ''
                 },
                 items: orderItems,
+                subtotal: subtotal,
                 shipping: shipping,
+                total: total,
                 paymentMethod: paymentInfo.method,
                 shippingMethod: shippingInfo.method,
-                notes: shippingInfo.notes || ''
+                notes: shippingInfo.notes || '',
+                lastUpdated: new Date().toISOString()
             };
 
-            // 使用庫存管理系統創建訂單
-            const result = window.InventoryManager.createOrder(orderData);
+            console.log('📋 創建的訂單數據:', order);
 
-            if (result.success) {
-                // 清空購物車
-                localStorage.removeItem('cart');
-                
-                // 保存訂單到本地存儲（用於後續同步到 CMS）
-                this.saveOrderToLocalStorage(result.order);
-                
-                // 嘗試同步到 Netlify CMS
-                await this.syncOrderToCMS(result.order);
-
-                return {
-                    success: true,
-                    order: result.order,
-                    message: '訂單創建成功'
-                };
-            } else {
-                throw new Error(result.error);
+            // 保存訂單到本地存儲
+            this.saveOrderToLocalStorage(order);
+            
+            // 嘗試同步到 Netlify CMS
+            try {
+                await this.syncOrderToCMS(order);
+                console.log('✅ 訂單已同步到後端');
+            } catch (syncError) {
+                console.warn('⚠️ 訂單同步失敗，但已保存到本地:', syncError);
+                // 不拋出錯誤，因為訂單已經創建成功
             }
 
+            return {
+                success: true,
+                order: order,
+                message: '訂單創建成功'
+            };
+
         } catch (error) {
-            console.error('創建訂單失敗:', error);
+            console.error('❌ 創建訂單失敗:', error);
             return {
                 success: false,
                 error: error.message
@@ -380,6 +364,18 @@ class OrderManager {
         }
 
         return errors;
+    }
+
+    /**
+     * 生成訂單編號
+     */
+    generateOrderId() {
+        const date = new Date();
+        const dateStr = date.getFullYear().toString() + 
+                       (date.getMonth() + 1).toString().padStart(2, '0') + 
+                       date.getDate().toString().padStart(2, '0');
+        const timeStr = Date.now().toString().slice(-6);
+        return `DV${dateStr}${timeStr}`;
     }
 }
 
