@@ -689,40 +689,92 @@
             }
         }
 
-        // Add to Cart
-        function addToCart() {
+        // Add to Cart with Inventory Management
+        async function addToCart() {
             const selectedColor = document.querySelector('.color-option.selected').dataset.color;
-            const quantity = document.getElementById('quantity').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
             
-            // 添加到購物車邏輯
-            const product = {
-                name: 'HTA 黑桃主機',
-                color: selectedColor,
-                price: 450,
-                quantity: parseInt(quantity),
-                image: 'hta_vape/hta_spade_device.webp'
-            };
+            try {
+                // 等待庫存管理系統初始化
+                if (!window.InventoryManager || !window.InventoryManager.initialized) {
+                    // 載入庫存管理系統
+                    if (!document.querySelector('script[src*="inventory-manager"]')) {
+                        const script = document.createElement('script');
+                        script.src = '/js/inventory-manager.js';
+                        document.head.appendChild(script);
+                        await new Promise(resolve => script.onload = resolve);
+                    }
+                    await window.InventoryManager.init();
+                }
 
-            // 獲取現有購物車
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            
-            // 檢查是否已存在相同產品和顏色
-            const existingIndex = cart.findIndex(item => 
-                item.name === product.name && item.color === product.color
-            );
+                // 生成變數ID
+                const variantId = `hta_spade_${selectedColor.toLowerCase()}`;
+                
+                // 檢查庫存
+                const stockCheck = window.InventoryManager.checkStock('hta_spade', variantId, quantity);
+                if (!stockCheck.available) {
+                    alert(`庫存不足！${stockCheck.message}`);
+                    return;
+                }
 
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity += product.quantity;
-            } else {
-                cart.push(product);
-            }
+                // 計算價格（包含批量折扣）
+                const priceInfo = window.InventoryManager.calculatePrice('hta_spade', quantity);
+                
+                // 添加到購物車邏輯
+                const product = {
+                    id: 'hta_spade',
+                    name: 'HTA 黑桃主機',
+                    color: selectedColor,
+                    price: priceInfo.unitPrice,
+                    originalPrice: priceInfo.discount ? priceInfo.discount.originalPrice : null,
+                    quantity: quantity,
+                    image: 'hta_vape/hta_spade_device.webp',
+                    variantId: variantId
+                };
 
-            // 保存到 localStorage
-            localStorage.setItem('cart', JSON.stringify(cart));
+                // 獲取現有購物車
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                
+                // 檢查是否已存在相同產品和顏色
+                const existingIndex = cart.findIndex(item => 
+                    item.id === product.id && item.color === product.color
+                );
 
-            // 詢問是否前往購物車
-            if (confirm(`已將 ${quantity} 個 HTA 黑桃主機 (${selectedColor}色) 加入購物車！\n\n是否前往購物車結帳？`)) {
-                window.location.href = 'cart.html';
+                if (existingIndex > -1) {
+                    const newQuantity = cart[existingIndex].quantity + product.quantity;
+                    
+                    // 再次檢查庫存
+                    const newStockCheck = window.InventoryManager.checkStock('hta_spade', variantId, newQuantity);
+                    if (!newStockCheck.available) {
+                        alert(`庫存不足！目前庫存：${newStockCheck.stock}，購物車已有：${cart[existingIndex].quantity}`);
+                        return;
+                    }
+                    
+                    cart[existingIndex].quantity = newQuantity;
+                    // 重新計算價格
+                    const newPriceInfo = window.InventoryManager.calculatePrice('hta_spade', newQuantity);
+                    cart[existingIndex].price = newPriceInfo.unitPrice;
+                } else {
+                    cart.push(product);
+                }
+
+                // 保存到 localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // 顯示成功訊息
+                let message = `已將 ${quantity} 個 HTA 黑桃主機 (${selectedColor}色) 加入購物車！`;
+                if (priceInfo.discount) {
+                    message += `\n🎉 批量優惠：單價 NT$ ${priceInfo.discount.originalPrice} → NT$ ${priceInfo.unitPrice}`;
+                }
+                message += `\n\n是否前往購物車結帳？`;
+
+                if (confirm(message)) {
+                    window.location.href = 'cart.html';
+                }
+
+            } catch (error) {
+                console.error('加入購物車失敗:', error);
+                alert('加入購物車失敗，請稍後再試');
             }
         }
 
@@ -787,6 +839,9 @@
         });
     </script>
 
+    <!-- 庫存管理系統 -->
+    <script src="/js/inventory-manager.js"></script>
+    
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
 </body>

@@ -1,0 +1,51 @@
+{
+  "pageId": "ilia_pods_product",
+  "productName": "ILIA 發光煙彈",
+  "price": 300,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "ilia_pods_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "薄荷",
+      "stock": 120,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-MINT"
+    },
+    {
+      "id": "ilia_pods_blueberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "藍莓",
+      "stock": 100,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-BLUE"
+    },
+    {
+      "id": "ilia_pods_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "葡萄",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-GRAPE"
+    },
+    {
+      "id": "ilia_pods_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "芒果",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-MANGO"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

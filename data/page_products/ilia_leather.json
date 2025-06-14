@@ -1,0 +1,41 @@
+{
+  "pageId": "ilia_leather_product",
+  "productName": "皮革款主機",
+  "price": 650,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "ilia_leather_black",
+      "name": "顏色",
+      "type": "color",
+      "value": "皮革黑",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "ilia_leather/ilia_leather_main.webp",
+      "sku": "ILIA-LEATHER-BLK"
+    },
+    {
+      "id": "ilia_leather_brown",
+      "name": "顏色",
+      "type": "color",
+      "value": "皮革棕",
+      "stock": 25,
+      "priceModifier": 0,
+      "image": "ilia_leather/ilia_leather_main.webp",
+      "sku": "ILIA-LEATHER-BRN"
+    },
+    {
+      "id": "ilia_leather_red",
+      "name": "顏色",
+      "type": "color",
+      "value": "皮革紅",
+      "stock": 20,
+      "priceModifier": 0,
+      "image": "ilia_leather/ilia_leather_main.webp",
+      "sku": "ILIA-LEATHER-RED"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

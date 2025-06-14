@@ -1,0 +1,41 @@
+{
+  "pageId": "sp2_device_product",
+  "productName": "SP2 一代主機",
+  "price": 650,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "sp2_device_black",
+      "name": "顏色",
+      "type": "color",
+      "value": "黑色",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-BLK"
+    },
+    {
+      "id": "sp2_device_white",
+      "name": "顏色",
+      "type": "color",
+      "value": "白色",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-WHT"
+    },
+    {
+      "id": "sp2_device_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "藍色",
+      "stock": 25,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-BLU"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

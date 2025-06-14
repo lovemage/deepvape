@@ -1,0 +1,51 @@
+{
+  "pageId": "lana_pods_product",
+  "productName": "LANA 煙彈",
+  "price": 280,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "lana_pods_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "薄荷",
+      "stock": 120,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-MINT"
+    },
+    {
+      "id": "lana_pods_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "葡萄",
+      "stock": 100,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-GRAPE"
+    },
+    {
+      "id": "lana_pods_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "芒果",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-MANGO"
+    },
+    {
+      "id": "lana_pods_watermelon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "西瓜",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-WATER"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

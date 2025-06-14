@@ -1,0 +1,141 @@
+{
+  "pageId": "hta_pods_product",
+  "productName": "HTA 黑桃煙彈",
+  "price": 260,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "hta_pods_cola",
+      "name": "口味",
+      "type": "flavor",
+      "value": "清涼可樂",
+      "stock": 100,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-COLA"
+    },
+    {
+      "id": "hta_pods_peach_oolong",
+      "name": "口味",
+      "type": "flavor",
+      "value": "白桃烏龍",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-PEACH"
+    },
+    {
+      "id": "hta_pods_blueberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰釀藍莓",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-BLUE"
+    },
+    {
+      "id": "hta_pods_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "清涼薄荷",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-MINT"
+    },
+    {
+      "id": "hta_pods_kiwi",
+      "name": "口味",
+      "type": "flavor",
+      "value": "獼猴桃",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-KIWI"
+    },
+    {
+      "id": "hta_pods_green_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "綠茶薄荷",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-GREEN"
+    },
+    {
+      "id": "hta_pods_chocolate",
+      "name": "口味",
+      "type": "flavor",
+      "value": "巧克力薄荷",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-CHOC"
+    },
+    {
+      "id": "hta_pods_canada_blue",
+      "name": "口味",
+      "type": "flavor",
+      "value": "加拿大藍莓",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-CANADA"
+    },
+    {
+      "id": "hta_pods_original_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "原味茶葉",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-TEA"
+    },
+    {
+      "id": "hta_pods_blueberry_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "藍莓薄荷",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-BLUE-MINT"
+    },
+    {
+      "id": "hta_pods_cool_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "酷涼薄荷",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-COOL"
+    },
+    {
+      "id": "hta_pods_jasmine",
+      "name": "口味",
+      "type": "flavor",
+      "value": "慕文茶味",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-JASMINE"
+    },
+    {
+      "id": "hta_pods_rose",
+      "name": "口味",
+      "type": "flavor",
+      "value": "玫瑰茶味",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "hta_pods/hta_spade_pods.webp",
+      "sku": "HTA-PODS-ROSE"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

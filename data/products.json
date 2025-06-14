@@ -1,0 +1,392 @@
+{
+  "products": [
+    {
+      "id": "hta_spade",
+      "name": "HTA 黑桃主機",
+      "category": "host",
+      "brand": "HTA",
+      "basePrice": 450,
+      "originalPrice": null,
+      "discount": null,
+      "status": "active",
+      "variants": [
+        {
+          "id": "hta_spade_black",
+          "name": "顏色",
+          "type": "color",
+          "value": "黑",
+          "priceModifier": 0,
+          "stock": 50,
+          "sku": "HTA-SPADE-BLK",
+          "image": "hta_vape/hta_spade_device.webp"
+        },
+        {
+          "id": "hta_spade_white",
+          "name": "顏色",
+          "type": "color",
+          "value": "白",
+          "priceModifier": 0,
+          "stock": 30,
+          "sku": "HTA-SPADE-WHT",
+          "image": "hta_vape/hta_spade_device.webp"
+        },
+        {
+          "id": "hta_spade_orange",
+          "name": "顏色",
+          "type": "color",
+          "value": "橙",
+          "priceModifier": 0,
+          "stock": 25,
+          "sku": "HTA-SPADE-ORG",
+          "image": "hta_vape/hta_spade_device.webp"
+        },
+        {
+          "id": "hta_spade_red",
+          "name": "顏色",
+          "type": "color",
+          "value": "紅",
+          "priceModifier": 0,
+          "stock": 20,
+          "sku": "HTA-SPADE-RED",
+          "image": "hta_vape/hta_spade_device.webp"
+        },
+        {
+          "id": "hta_spade_green",
+          "name": "顏色",
+          "type": "color",
+          "value": "綠",
+          "priceModifier": 0,
+          "stock": 15,
+          "sku": "HTA-SPADE-GRN",
+          "image": "hta_vape/hta_spade_device.webp"
+        },
+        {
+          "id": "hta_spade_blue",
+          "name": "顏色",
+          "type": "color",
+          "value": "藍",
+          "priceModifier": 0,
+          "stock": 18,
+          "sku": "HTA-SPADE-BLU",
+          "image": "hta_vape/hta_spade_device.webp"
+        }
+      ],
+      "specifications": {
+        "battery": "350mAH",
+        "power": "6W~8W",
+        "charging": "TYPE-C 5V/1A",
+        "material": "高品質鋁合金",
+        "warranty": "購買起三天內非人為損壞"
+      },
+      "description": "HTA 黑桃主機是頂級電子菸主機的代表作品，採用一代與二代通用設計，實現真正的跨世代相容性。精工製造，品質卓越，為您帶來尊貴的電子菸體驗。CP值極高的主力產品，是電子菸愛好者的首選。",
+      "features": [
+        "HTA 黑桃頂級品牌，尊貴象徵",
+        "一代二代通用設計，跨世代相容",
+        "CP值極高的主力產品",
+        "350mAH 大容量電池，持久續航",
+        "TYPE-C 快速充電技術",
+        "7 種經典顏色選擇",
+        "6W~8W 功率範圍，穩定輸出",
+        "高品質鋁合金材質，堅固耐用"
+      ],
+      "images": [
+        "hta_vape/hta_spade_device.webp"
+      ],
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "hta_pods",
+      "name": "HTA 黑桃煙彈",
+      "category": "pods",
+      "brand": "HTA",
+      "basePrice": 260,
+      "originalPrice": null,
+      "discount": null,
+      "status": "active",
+      "variants": [
+        {
+          "id": "hta_pods_cola",
+          "name": "口味",
+          "type": "flavor",
+          "value": "清涼可樂",
+          "priceModifier": 0,
+          "stock": 100,
+          "sku": "HTA-PODS-COLA",
+          "image": "hta_pods/hta_spade_pods.webp"
+        },
+        {
+          "id": "hta_pods_peach_oolong",
+          "name": "口味",
+          "type": "flavor",
+          "value": "白桃烏龍",
+          "priceModifier": 0,
+          "stock": 80,
+          "sku": "HTA-PODS-PEACH",
+          "image": "hta_pods/hta_spade_pods.webp"
+        },
+        {
+          "id": "hta_pods_blueberry",
+          "name": "口味",
+          "type": "flavor",
+          "value": "冰釀藍莓",
+          "priceModifier": 0,
+          "stock": 90,
+          "sku": "HTA-PODS-BLUE",
+          "image": "hta_pods/hta_spade_pods.webp"
+        },
+        {
+          "id": "hta_pods_mint",
+          "name": "口味",
+          "type": "flavor",
+          "value": "清涼薄荷",
+          "priceModifier": 0,
+          "stock": 75,
+          "sku": "HTA-PODS-MINT",
+          "image": "hta_pods/hta_spade_pods.webp"
+        }
+      ],
+      "specifications": {
+        "capacity": "2.0ML",
+        "nicotine": "3%",
+        "material": "一盒三入",
+        "warranty": "適用 HTA 一代、二代主機"
+      },
+      "description": "HTA 黑桃煙彈採用頂級煙油配方，提供 15 種精選口味選擇。每顆煙彈都經過嚴格品質控制，確保最佳的口感體驗和穩定的霧化效果。適用於 HTA 一代和二代主機，為您帶來尊貴的電子菸體驗。",
+      "features": [
+        "HTA 黑桃頂級品牌，品質保證",
+        "15 種精選口味，滿足不同喜好",
+        "頂級煙油配方，純正口感",
+        "嚴格品質控制，安全可靠",
+        "適用 HTA 一代、二代主機",
+        "一盒三入，經濟實惠"
+      ],
+      "images": [
+        "hta_pods/hta_spade_pods.webp"
+      ],
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_gen1",
+      "name": "ILIA 一代主機",
+      "category": "host",
+      "brand": "ILIA",
+      "basePrice": 650,
+      "originalPrice": null,
+      "discount": null,
+      "status": "active",
+      "variants": [
+        {
+          "id": "ilia_gen1_black_white",
+          "name": "顏色",
+          "type": "color",
+          "value": "黑色白",
+          "priceModifier": 0,
+          "stock": 40,
+          "sku": "ILIA-GEN1-BW",
+          "image": "ilia_1/ilia_gen1_main_device.jpg"
+        },
+        {
+          "id": "ilia_gen1_blue_silver",
+          "name": "顏色",
+          "type": "color",
+          "value": "藍色銀灰",
+          "priceModifier": 0,
+          "stock": 35,
+          "sku": "ILIA-GEN1-BS",
+          "image": "ilia_1/ilia_gen1_main_device.jpg"
+        },
+        {
+          "id": "ilia_gen1_sky_blue",
+          "name": "顏色",
+          "type": "color",
+          "value": "天空之藍",
+          "priceModifier": 0,
+          "stock": 30,
+          "sku": "ILIA-GEN1-SKY",
+          "image": "ilia_1/ilia_gen1_main_device.jpg"
+        }
+      ],
+      "specifications": {
+        "battery": "450mAH",
+        "power": "7W~8W",
+        "charging": "TYPE-C 5V/1A",
+        "material": "通用一代煙彈產品",
+        "warranty": "購買起三天內非人為損壞"
+      },
+      "description": "ILIA 一代主機以其優異的建構設計與功能性能著稱，是您理想的電子菸選擇。擁有 9 種顏色選擇，內建優質功能設計，提供絕佳的電子菸體驗。",
+      "features": [
+        "優質建構設計與功能性能",
+        "9 種顏色選擇，滿足個人喜好",
+        "通用一代煙彈產品，相容性佳",
+        "TYPE-C 快速充電，便利實用",
+        "450mAH 大容量電池，持久續航",
+        "智能功率調節 7W~8W"
+      ],
+      "images": [
+        "ilia_1/ilia_gen1_main_device.jpg",
+        "ilia_1/ilia_gen1_device_details.jpg",
+        "ilia_1/ilia_gen1_compact.webp"
+      ],
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_disposable",
+      "name": "ILIA 拋棄式四代",
+      "category": "disposable",
+      "brand": "ILIA",
+      "basePrice": 320,
+      "originalPrice": null,
+      "discount": null,
+      "status": "active",
+      "variants": [
+        {
+          "id": "ilia_disp_blueberry",
+          "name": "口味",
+          "type": "flavor",
+          "value": "冰釀藍莓",
+          "priceModifier": 0,
+          "stock": 200,
+          "sku": "ILIA-DISP-BLUE",
+          "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp"
+        },
+        {
+          "id": "ilia_disp_lemon",
+          "name": "口味",
+          "type": "flavor",
+          "value": "冰釀檸檬",
+          "priceModifier": 0,
+          "stock": 180,
+          "sku": "ILIA-DISP-LEMON",
+          "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp"
+        },
+        {
+          "id": "ilia_disp_mint",
+          "name": "口味",
+          "type": "flavor",
+          "value": "清涼薄荷",
+          "priceModifier": 0,
+          "stock": 150,
+          "sku": "ILIA-DISP-MINT",
+          "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp"
+        }
+      ],
+      "specifications": {
+        "puffs": "約 6500 口",
+        "capacity": "13ML",
+        "battery": "650mAh",
+        "charging": "TYPE-C 快速充電",
+        "nicotine": "3.5%"
+      },
+      "description": "ILIA 拋棄式四代以其超大容量和豐富口味選擇，成為市場上的熱門產品。6500口大容量設計，13ML煙油，650mAh電池，TYPE-C充電，為您帶來持久的使用體驗。",
+      "features": [
+        "超大容量 - 6500口持久使用",
+        "大容量煙油 - 13ML充足容量",
+        "TYPE-C充電 - 快速充電設計",
+        "Mesh霧化器 - 0.8Ω優質體驗",
+        "21種口味 - 豐富選擇滿足需求",
+        "一次性設計 - 開箱即用，方便攜帶",
+        "安全保護 - 多重安全機制",
+        "精美外觀 - 時尚設計，舒適握感"
+      ],
+      "images": [
+        "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+        "ilia_a_4/Bar-4-6500-Puffs一次性電子煙.webp",
+        "ilia_a_4/image.webp"
+      ],
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "ilia_fabric",
+      "name": "ILIA 哩亞布紋主機",
+      "category": "host",
+      "brand": "ILIA",
+      "basePrice": 650,
+      "originalPrice": null,
+      "discount": null,
+      "status": "active",
+      "variants": [
+        {
+          "id": "ilia_fabric_black",
+          "name": "顏色",
+          "type": "color",
+          "value": "布紋黑色",
+          "priceModifier": 0,
+          "stock": 25,
+          "sku": "ILIA-FAB-BLK",
+          "image": "ilia_Bu/ilia_fabric_device_main.png"
+        },
+        {
+          "id": "ilia_fabric_gray",
+          "name": "顏色",
+          "type": "color",
+          "value": "布紋灰色",
+          "priceModifier": 0,
+          "stock": 20,
+          "sku": "ILIA-FAB-GRY",
+          "image": "ilia_Bu/ilia_fabric_device_main.png"
+        },
+        {
+          "id": "ilia_fabric_denim",
+          "name": "顏色",
+          "type": "color",
+          "value": "布紋牛仔藍",
+          "priceModifier": 0,
+          "stock": 15,
+          "sku": "ILIA-FAB-DEN",
+          "image": "ilia_Bu/ilia_fabric_device_main.png"
+        },
+        {
+          "id": "ilia_fabric_pink",
+          "name": "顏色",
+          "type": "color",
+          "value": "布紋粉色",
+          "priceModifier": 0,
+          "stock": 18,
+          "sku": "ILIA-FAB-PNK",
+          "image": "ilia_Bu/ilia_fabric_device_main.png"
+        },
+        {
+          "id": "ilia_fabric_green",
+          "name": "顏色",
+          "type": "color",
+          "value": "布紋綠色",
+          "priceModifier": 0,
+          "stock": 12,
+          "sku": "ILIA-FAB-GRN",
+          "image": "ilia_Bu/ilia_fabric_device_main.png"
+        },
+        {
+          "id": "ilia_fabric_blue",
+          "name": "顏色",
+          "type": "color",
+          "value": "布紋藍色",
+          "priceModifier": 0,
+          "stock": 22,
+          "sku": "ILIA-FAB-BLU",
+          "image": "ilia_Bu/ilia_fabric_device_main.png"
+        }
+      ],
+      "specifications": {
+        "battery": "400mAh",
+        "power": "8W~10W",
+        "charging": "TYPE-C",
+        "material": "高級布紋質感",
+        "warranty": "適配 ILIA 系列煙彈"
+      },
+      "description": "ILIA 哩亞布紋主機採用獨特的布紋外觀設計，結合現代工藝與經典美學。8W-10W可調功率，400mAh大容量電池，為您帶來卓越的使用體驗。精緻的布紋質感，舒適的握感，是品味與性能的完美結合。",
+      "features": [
+        "布紋質感 - 獨特的布紋外觀設計",
+        "大容量電池 - 400mAh長效續航",
+        "功率調節 - 8W-10W可調功率",
+        "快速充電 - TYPE-C快充介面",
+        "多重保護 - 全方位安全保護",
+        "舒適握感 - 人體工學設計"
+      ],
+      "images": [
+        "ilia_Bu/ilia_fabric_device_main.png",
+        "ilia_Bu/ilia_fabric_compact.webp"
+      ],
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    }
+  ]
+} 

@@ -94,4 +94,446 @@ collections:
               - {name: "price", label: "價格", widget: "number"}
               - {name: "originalPrice", label: "原價", widget: "number", required: false}
               - {name: "discount", label: "折扣", widget: "string", required: false}
-              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""} 
+              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+  - name: "inventory"
+    label: "庫存管理"
+    files:
+      - name: "products"
+        label: "產品庫存"
+        file: "data/products.json"
+        fields:
+          - name: "products"
+            label: "產品列表"
+            widget: "list"
+            fields:
+              - {name: "id", label: "產品ID", widget: "string"}
+              - {name: "name", label: "產品名稱", widget: "string"}
+              - {name: "category", label: "產品類別", widget: "select", options: ["host", "pods", "disposable"]}
+              - {name: "brand", label: "品牌", widget: "string"}
+              - {name: "basePrice", label: "基礎價格", widget: "number"}
+              - {name: "originalPrice", label: "原價", widget: "number", required: false}
+              - {name: "discount", label: "折扣", widget: "string", required: false}
+              - {name: "status", label: "狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+              - name: "variants"
+                label: "產品變數（品相）"
+                widget: "list"
+                fields:
+                  - {name: "id", label: "變數ID", widget: "string"}
+                  - {name: "name", label: "變數名稱", widget: "string"}
+                  - {name: "type", label: "變數類型", widget: "select", options: ["color", "flavor", "size", "material"]}
+                  - {name: "value", label: "變數值", widget: "string"}
+                  - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+                  - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+                  - {name: "sku", label: "SKU", widget: "string", required: false}
+                  - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - name: "specifications"
+                label: "產品規格"
+                widget: "object"
+                fields:
+                  - {name: "battery", label: "電池容量", widget: "string", required: false}
+                  - {name: "power", label: "功率範圍", widget: "string", required: false}
+                  - {name: "capacity", label: "容量", widget: "string", required: false}
+                  - {name: "nicotine", label: "尼古丁含量", widget: "string", required: false}
+                  - {name: "puffs", label: "使用口數", widget: "string", required: false}
+                  - {name: "charging", label: "充電規格", widget: "string", required: false}
+                  - {name: "material", label: "材質", widget: "string", required: false}
+                  - {name: "warranty", label: "保固", widget: "string", required: false}
+              - {name: "description", label: "產品描述", widget: "text"}
+              - {name: "features", label: "產品特色", widget: "list", field: {label: "特色", name: "feature", widget: "string"}}
+              - {name: "images", label: "產品圖片", widget: "list", field: {label: "圖片", name: "image", widget: "image"}}
+              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "prices"
+        label: "價格管理"
+        file: "data/prices.json"
+        fields:
+          - name: "products"
+            label: "產品價格"
+            widget: "list"
+            fields:
+              - {name: "id", label: "產品ID", widget: "string"}
+              - {name: "name", label: "產品名稱", widget: "string"}
+              - {name: "price", label: "價格", widget: "number"}
+              - {name: "originalPrice", label: "原價", widget: "number", required: false}
+              - {name: "discount", label: "折扣", widget: "string", required: false}
+              - {name: "bulkPricing", label: "批量價格", widget: "list", required: false, fields: [
+                  {name: "minQuantity", label: "最小數量", widget: "number"},
+                  {name: "price", label: "批量價格", widget: "number"}
+                ]}
+              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+  - name: "orders"
+    label: "訂單管理"
+    files:
+      - name: "orders"
+        label: "訂單記錄"
+        file: "data/orders.json"
+        fields:
+          - name: "orders"
+            label: "訂單列表"
+            widget: "list"
+            fields:
+              - {name: "orderId", label: "訂單編號", widget: "string"}
+              - {name: "orderDate", label: "訂單日期", widget: "datetime"}
+              - {name: "status", label: "訂單狀態", widget: "select", options: ["pending", "processing", "shipped", "delivered", "cancelled"]}
+              - name: "customer"
+                label: "客戶信息"
+                widget: "object"
+                fields:
+                  - {name: "name", label: "姓名", widget: "string"}
+                  - {name: "phone", label: "電話", widget: "string"}
+                  - {name: "email", label: "Email", widget: "string", required: false}
+                  - {name: "address", label: "地址", widget: "text", required: false}
+                  - {name: "notes", label: "備註", widget: "text", required: false}
+              - name: "items"
+                label: "訂單商品"
+                widget: "list"
+                fields:
+                  - {name: "productId", label: "產品ID", widget: "string"}
+                  - {name: "productName", label: "產品名稱", widget: "string"}
+                  - {name: "variant", label: "品相", widget: "string", required: false}
+                  - {name: "quantity", label: "數量", widget: "number"}
+                  - {name: "unitPrice", label: "單價", widget: "number"}
+                  - {name: "totalPrice", label: "小計", widget: "number"}
+              - {name: "subtotal", label: "小計", widget: "number"}
+              - {name: "shipping", label: "運費", widget: "number", default: 0}
+              - {name: "total", label: "總計", widget: "number"}
+              - {name: "paymentMethod", label: "付款方式", widget: "select", options: ["cash_on_delivery", "bank_transfer", "credit_card", "line_pay"]}
+              - {name: "shippingMethod", label: "配送方式", widget: "select", options: ["home_delivery", "convenience_store", "pickup"]}
+              - {name: "trackingNumber", label: "追蹤號碼", widget: "string", required: false}
+              - {name: "notes", label: "訂單備註", widget: "text", required: false}
+              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "order_stats"
+        label: "訂單統計"
+        file: "data/order_stats.json"
+        fields:
+          - name: "stats"
+            label: "統計數據"
+            widget: "object"
+            fields:
+              - {name: "totalOrders", label: "總訂單數", widget: "number", default: 0}
+              - {name: "totalRevenue", label: "總營收", widget: "number", default: 0}
+              - {name: "averageOrderValue", label: "平均訂單金額", widget: "number", default: 0}
+              - name: "monthlyStats"
+                label: "月度統計"
+                widget: "list"
+                fields:
+                  - {name: "month", label: "月份", widget: "string"}
+                  - {name: "orders", label: "訂單數", widget: "number"}
+                  - {name: "revenue", label: "營收", widget: "number"}
+              - name: "productStats"
+                label: "產品銷售統計"
+                widget: "list"
+                fields:
+                  - {name: "productId", label: "產品ID", widget: "string"}
+                  - {name: "productName", label: "產品名稱", widget: "string"}
+                  - {name: "totalSold", label: "總銷量", widget: "number"}
+                  - {name: "revenue", label: "營收", widget: "number"}
+              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+  - name: "inventory_logs"
+    label: "庫存記錄"
+    files:
+      - name: "stock_movements"
+        label: "庫存異動記錄"
+        file: "data/stock_movements.json"
+        fields:
+          - name: "movements"
+            label: "異動記錄"
+            widget: "list"
+            fields:
+              - {name: "id", label: "記錄ID", widget: "string"}
+              - {name: "productId", label: "產品ID", widget: "string"}
+              - {name: "variantId", label: "變數ID", widget: "string", required: false}
+              - {name: "type", label: "異動類型", widget: "select", options: ["in", "out", "adjustment", "return"]}
+              - {name: "quantity", label: "數量", widget: "number"}
+              - {name: "reason", label: "異動原因", widget: "string"}
+              - {name: "orderId", label: "關聯訂單", widget: "string", required: false}
+              - {name: "operator", label: "操作人員", widget: "string"}
+              - {name: "timestamp", label: "異動時間", widget: "datetime"}
+              - {name: "notes", label: "備註", widget: "text", required: false}
+
+  - name: "product_pages"
+    label: "產品頁面管理"
+    files:
+      - name: "hta_pods_product"
+        label: "HTA 黑桃煙彈頁面"
+        file: "data/page_products/hta_pods.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "hta_pods_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "HTA 黑桃煙彈"}
+          - {name: "price", label: "產品價格", widget: "number", default: 260}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
+              - {name: "value", label: "變數值（如：清涼可樂）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "hta_vape_product"
+        label: "HTA 黑桃主機頁面"
+        file: "data/page_products/hta_vape.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "hta_vape_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "HTA 黑桃主機"}
+          - {name: "price", label: "產品價格", widget: "number", default: 450}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "color"}
+              - {name: "value", label: "變數值（如：黑色）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "ilia_1_product"
+        label: "ILIA 一代主機頁面"
+        file: "data/page_products/ilia_1.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_1_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 一代主機"}
+          - {name: "price", label: "產品價格", widget: "number", default: 650}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "color"}
+              - {name: "value", label: "變數值（如：黑色白）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "ilia_disposable_product"
+        label: "ILIA 拋棄式四代頁面"
+        file: "data/page_products/ilia_disposable.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_disposable_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 拋棄式四代"}
+          - {name: "price", label: "產品價格", widget: "number", default: 320}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
+              - {name: "value", label: "變數值（如：冰釀藍莓）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "ilia_fabric_product"
+        label: "ILIA 布紋主機頁面"
+        file: "data/page_products/ilia_fabric.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_fabric_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 哩亞布紋主機"}
+          - {name: "price", label: "產品價格", widget: "number", default: 650}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "color"}
+              - {name: "value", label: "變數值（如：布紋黑色）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "ilia_pods_product"
+        label: "ILIA 發光煙彈頁面"
+        file: "data/page_products/ilia_pods.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_pods_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 發光煙彈"}
+          - {name: "price", label: "產品價格", widget: "number", default: 300}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
+              - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "ilia_leather_product"
+        label: "ILIA 皮革款主機頁面"
+        file: "data/page_products/ilia_leather.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_leather_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "皮革款主機"}
+          - {name: "price", label: "產品價格", widget: "number", default: 650}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "color"}
+              - {name: "value", label: "變數值（如：皮革黑）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "sp2_device_product"
+        label: "SP2 一代主機頁面"
+        file: "data/page_products/sp2_device.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "sp2_device_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "SP2 一代主機"}
+          - {name: "price", label: "產品價格", widget: "number", default: 650}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "color"}
+              - {name: "value", label: "變數值（如：黑色）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "sp2_pods_product"
+        label: "SP2 煙彈頁面"
+        file: "data/page_products/sp2_pods.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "sp2_pods_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "SP2 煙彈"}
+          - {name: "price", label: "產品價格", widget: "number", default: 350}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
+              - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "lana_pods_product"
+        label: "LANA 煙彈頁面"
+        file: "data/page_products/lana_pods.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "lana_pods_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "LANA 煙彈"}
+          - {name: "price", label: "產品價格", widget: "number", default: 280}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
+              - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "lana_a8000_product"
+        label: "LANA A8000 拋棄式頁面"
+        file: "data/page_products/lana_a8000.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "lana_a8000_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "LANA A8000 拋棄式"}
+          - {name: "price", label: "產品價格", widget: "number", default: 320}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
+              - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+  - name: "settings"
+    label: "網站設定"
+    files:
+      - name: "contact"
+        label: "聯絡資訊"
+        file: "data/contact.json"
+        fields:
+          - {name: "lineId", label: "LINE ID", widget: "string", default: "@deepvape"}
+          - {name: "email", label: "Email", widget: "string", default: "service@deepvape.com"}
+          - {name: "serviceHours", label: "服務時間", widget: "string", default: "週一至週五 10:00-18:00"}
+          - {name: "facebookLink", label: "Facebook 連結", widget: "string", default: "#"}
+          - {name: "instagramLink", label: "Instagram 連結", widget: "string", default: "#"}
+          - {name: "telegramLink", label: "Telegram 連結", widget: "string", default: "#"}
+
+ 

@@ -1,0 +1,41 @@
+{
+  "pageId": "sp2_pods_product",
+  "productName": "SP2 煙彈",
+  "price": 350,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "sp2_pods_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "薄荷",
+      "stock": 150,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-MINT"
+    },
+    {
+      "id": "sp2_pods_tobacco",
+      "name": "口味",
+      "type": "flavor",
+      "value": "煙草",
+      "stock": 120,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-TOB"
+    },
+    {
+      "id": "sp2_pods_fruit",
+      "name": "口味",
+      "type": "flavor",
+      "value": "水果",
+      "stock": 100,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-FRUIT"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

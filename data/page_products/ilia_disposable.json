@@ -1,0 +1,61 @@
+{
+  "pageId": "ilia_disposable_product",
+  "productName": "ILIA 拋棄式四代",
+  "price": 320,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "ilia_disp_blueberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰釀藍莓",
+      "stock": 200,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-BLUE"
+    },
+    {
+      "id": "ilia_disp_lemon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰釀檸檬",
+      "stock": 180,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-LEMON"
+    },
+    {
+      "id": "ilia_disp_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "清涼薄荷",
+      "stock": 150,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-MINT"
+    },
+    {
+      "id": "ilia_disp_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "葡萄",
+      "stock": 160,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-GRAPE"
+    },
+    {
+      "id": "ilia_disp_watermelon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "西瓜",
+      "stock": 140,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-WATER"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

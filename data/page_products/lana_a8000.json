@@ -1,0 +1,51 @@
+{
+  "pageId": "lana_a8000_product",
+  "productName": "LANA A8000 拋棄式",
+  "price": 320,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "lana_a8000_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "薄荷",
+      "stock": 150,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-MINT"
+    },
+    {
+      "id": "lana_a8000_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "葡萄",
+      "stock": 130,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-GRAPE"
+    },
+    {
+      "id": "lana_a8000_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "芒果",
+      "stock": 120,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-MANGO"
+    },
+    {
+      "id": "lana_a8000_watermelon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "西瓜",
+      "stock": 110,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-WATER"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

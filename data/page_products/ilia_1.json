@@ -1,0 +1,61 @@
+{
+  "pageId": "ilia_1_product",
+  "productName": "ILIA 一代主機",
+  "price": 650,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "ilia_gen1_black_white",
+      "name": "顏色",
+      "type": "color",
+      "value": "黑色白",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-BW"
+    },
+    {
+      "id": "ilia_gen1_blue_silver",
+      "name": "顏色",
+      "type": "color",
+      "value": "藍色銀灰",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-BS"
+    },
+    {
+      "id": "ilia_gen1_sky_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "天空之藍",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-SKY"
+    },
+    {
+      "id": "ilia_gen1_pink",
+      "name": "顏色",
+      "type": "color",
+      "value": "粉色",
+      "stock": 25,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-PINK"
+    },
+    {
+      "id": "ilia_gen1_green",
+      "name": "顏色",
+      "type": "color",
+      "value": "綠色",
+      "stock": 20,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-GREEN"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 

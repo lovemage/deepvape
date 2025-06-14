@@ -6,14 +6,34 @@
       "price": 650,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 5,
+          "price": 620
+        },
+        {
+          "minQuantity": 10,
+          "price": 590
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
       "id": "ilia_gen1",
-      "name": "ilia 一代主機",
+      "name": "ILIA 一代主機",
       "price": 650,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 5,
+          "price": 620
+        },
+        {
+          "minQuantity": 10,
+          "price": 590
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
@@ -22,6 +42,12 @@
       "price": 650,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 5,
+          "price": 620
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
@@ -30,6 +56,12 @@
       "price": 650,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 5,
+          "price": 620
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
@@ -38,6 +70,16 @@
       "price": 300,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 10,
+          "price": 280
+        },
+        {
+          "minQuantity": 20,
+          "price": 260
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
@@ -46,6 +88,16 @@
       "price": 450,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 5,
+          "price": 430
+        },
+        {
+          "minQuantity": 10,
+          "price": 410
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
@@ -54,6 +106,16 @@
       "price": 350,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 10,
+          "price": 330
+        },
+        {
+          "minQuantity": 20,
+          "price": 310
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
@@ -62,14 +124,34 @@
       "price": 260,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 10,
+          "price": 250
+        },
+        {
+          "minQuantity": 20,
+          "price": 240
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
       "id": "ilia_disposable",
-      "name": "ilia 四代拋棄式",
-      "price": 350,
+      "name": "ILIA 拋棄式四代",
+      "price": 320,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 20,
+          "price": 310
+        },
+        {
+          "minQuantity": 50,
+          "price": 300
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     },
     {
@@ -78,6 +160,34 @@
       "price": 350,
       "originalPrice": null,
       "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 20,
+          "price": 340
+        },
+        {
+          "minQuantity": 50,
+          "price": 330
+        }
+      ],
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "lana_pods",
+      "name": "LANA 煙彈",
+      "price": 280,
+      "originalPrice": null,
+      "discount": null,
+      "bulkPricing": [
+        {
+          "minQuantity": 10,
+          "price": 270
+        },
+        {
+          "minQuantity": 20,
+          "price": 260
+        }
+      ],
       "lastUpdated": "2024-01-15T10:00:00.000Z"
     }
   ]

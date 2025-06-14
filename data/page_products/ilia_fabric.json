@@ -1,0 +1,71 @@
+{
+  "pageId": "ilia_fabric_product",
+  "productName": "ILIA 哩亞布紋主機",
+  "price": 650,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "ilia_fabric_black",
+      "name": "顏色",
+      "type": "color",
+      "value": "布紋黑色",
+      "stock": 25,
+      "priceModifier": 0,
+      "image": "ilia_Bu/ilia_fabric_device_main.png",
+      "sku": "ILIA-FAB-BLK"
+    },
+    {
+      "id": "ilia_fabric_gray",
+      "name": "顏色",
+      "type": "color",
+      "value": "布紋灰色",
+      "stock": 20,
+      "priceModifier": 0,
+      "image": "ilia_Bu/ilia_fabric_device_main.png",
+      "sku": "ILIA-FAB-GRY"
+    },
+    {
+      "id": "ilia_fabric_denim",
+      "name": "顏色",
+      "type": "color",
+      "value": "布紋牛仔藍",
+      "stock": 15,
+      "priceModifier": 0,
+      "image": "ilia_Bu/ilia_fabric_device_main.png",
+      "sku": "ILIA-FAB-DEN"
+    },
+    {
+      "id": "ilia_fabric_pink",
+      "name": "顏色",
+      "type": "color",
+      "value": "布紋粉色",
+      "stock": 18,
+      "priceModifier": 0,
+      "image": "ilia_Bu/ilia_fabric_device_main.png",
+      "sku": "ILIA-FAB-PNK"
+    },
+    {
+      "id": "ilia_fabric_green",
+      "name": "顏色",
+      "type": "color",
+      "value": "布紋綠色",
+      "stock": 12,
+      "priceModifier": 0,
+      "image": "ilia_Bu/ilia_fabric_device_main.png",
+      "sku": "ILIA-FAB-GRN"
+    },
+    {
+      "id": "ilia_fabric_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "布紋藍色",
+      "stock": 22,
+      "priceModifier": 0,
+      "image": "ilia_Bu/ilia_fabric_device_main.png",
+      "sku": "ILIA-FAB-BLU"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2024-01-15T10:00:00.000Z"
+} 
