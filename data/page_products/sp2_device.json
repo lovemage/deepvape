@@ -20,7 +20,7 @@
       "name": "顏色",
       "type": "color",
       "value": "太空銀",
-      "stock": 30,
+      "stock": -2,
       "priceModifier": 0,
       "image": "sp2_device/sp2_main.webp",
       "sku": "SP2-DEV-SPACE-SLV"
