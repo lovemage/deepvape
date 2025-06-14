@@ -57,6 +57,7 @@ collections:
             widget: "object"
             fields:
               - {name: "enabled", label: "啟用通知", widget: "boolean", default: true}
+              - {name: "triggerText", label: "觸發按鈕文字", widget: "string", default: "重要通知"}
               - {name: "title", label: "通知標題", widget: "string"}
               - {name: "content", label: "通知內容", widget: "text"}
               - name: "type"
@@ -64,10 +65,9 @@ collections:
                 widget: "select"
                 options: ["info", "warning", "success", "error"]
                 default: "info"
-              - {name: "showIcon", label: "顯示圖標", widget: "boolean", default: true}
-              - {name: "backgroundColor", label: "背景顏色", widget: "string", default: "#f8f9fa"}
-              - {name: "textColor", label: "文字顏色", widget: "string", default: "#495057"}
-              - {name: "borderColor", label: "邊框顏色", widget: "string", default: "#dee2e6"}
+              - {name: "backgroundColor", label: "背景顏色", widget: "string", default: "rgba(10, 10, 10, 0.95)", required: false}
+              - {name: "textColor", label: "文字顏色", widget: "string", default: "#e0e0e0", required: false}
+              - {name: "borderColor", label: "邊框顏色", widget: "string", default: "#ff00ff", required: false}
 
       - name: "contact"
         label: "聯繫信息管理"

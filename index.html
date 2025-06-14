@@ -1424,59 +1424,120 @@
             }
         }
 
-        /* 重要通知區塊 - Cyberpunk 風格 */
-        .important-notice {
-            padding: 2rem 0;
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
-            border-bottom: 2px solid #ff00ff;
+                /* 重要通知下拉區塊 - Cyberpunk 風格 */
+        .notice-dropdown-section {
             position: relative;
-            z-index: 1;
+            z-index: 5;
+            margin: 2rem 0;
         }
 
-
-
-        .notice-container {
+        .notice-dropdown-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
             position: relative;
-            z-index: 2;
         }
 
-        .notice-content {
-            padding: 2rem;
-            border-radius: 0;
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(16, 33, 62, 0.9));
+        /* 觸發按鈕 */
+        .notice-trigger-btn {
+            width: 100%;
+            background: rgba(26, 26, 46, 0.8);
             border: 2px solid transparent;
             border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff0080, #8000ff) 1;
-            box-shadow: 
-                0 0 20px rgba(255, 0, 255, 0.3),
-                0 0 40px rgba(0, 255, 255, 0.2),
-                inset 0 0 20px rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            color: #e0e0e0;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-
-
-        .notice-content:hover {
-            transform: translateY(-3px);
+        .notice-trigger-btn:hover {
+            background: rgba(26, 26, 46, 0.95);
             box-shadow: 
-                0 0 30px rgba(255, 0, 255, 0.5),
-                0 0 60px rgba(0, 255, 255, 0.3),
-                inset 0 0 30px rgba(255, 255, 255, 0.1);
+                0 0 20px rgba(255, 0, 255, 0.4),
+                0 0 40px rgba(0, 255, 255, 0.3);
             border-image: linear-gradient(45deg, #ff0080, #8000ff, #ff00ff, #00ffff) 1;
+            transform: translateY(-2px);
         }
 
-        .notice-text {
-            width: 100%;
+        .notice-trigger-btn:active {
+            transform: translateY(0);
         }
 
-        .notice-title {
-            font-size: 1.8rem;
+        .notice-trigger-icon {
+            font-size: 1.3rem;
+            color: #ff00ff;
+            animation: cyberpunkPulse 2s infinite alternate;
+        }
+
+        .notice-trigger-text {
+            flex: 1;
+            text-align: center;
+            background: linear-gradient(135deg, #ff00ff, #00ffff, #ff0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .notice-trigger-arrow {
+            font-size: 0.9rem;
+            color: #00ffff;
+            transition: transform 0.3s ease;
+        }
+
+        .notice-trigger-btn.active .notice-trigger-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* 下拉內容 */
+        .notice-dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff0080, #8000ff) 1;
+            border-top: none;
+            backdrop-filter: blur(15px);
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            box-shadow: 
+                0 10px 30px rgba(255, 0, 255, 0.2),
+                0 20px 60px rgba(0, 255, 255, 0.1);
+        }
+
+        .notice-dropdown-content.active {
+            max-height: 500px;
+            padding: 2rem;
+        }
+
+        .notice-dropdown-inner {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease 0.1s;
+        }
+
+        .notice-dropdown-content.active .notice-dropdown-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notice-dropdown-title {
+            font-size: 1.6rem;
             font-weight: 900;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             background: linear-gradient(135deg, #ff00ff, #00ffff, #ff0080);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1487,29 +1548,36 @@
             position: relative;
         }
 
-        .notice-title::after {
+        .notice-dropdown-title::after {
             content: '█';
             animation: cyberpunkBlink 1s infinite;
             color: #00ffff;
         }
 
-        .notice-message {
+        .notice-dropdown-message {
             line-height: 1.8;
             color: #e0e0e0;
             font-family: 'Courier New', monospace;
         }
 
-        .notice-message p {
+        .notice-dropdown-message p {
             margin-bottom: 1.2rem;
-            padding-left: 1rem;
-            border-left: 2px solid #ff00ff;
-            background: rgba(255, 0, 255, 0.05);
-            padding: 0.8rem 1rem;
-            margin-bottom: 1rem;
+            padding: 1rem;
+            border-left: 3px solid #ff00ff;
+            background: rgba(255, 0, 255, 0.08);
+            border-radius: 0 8px 8px 0;
+            position: relative;
         }
 
-        .notice-message p:last-child {
+        .notice-dropdown-message p:last-child {
             margin-bottom: 0;
+        }
+
+        .notice-dropdown-message p::before {
+            content: '>';
+            color: #00ffff;
+            font-weight: bold;
+            margin-right: 0.5rem;
         }
 
         /* Cyberpunk 動畫效果 */
@@ -1659,26 +1727,40 @@
                 bottom: 20px;
             }
 
-            .important-notice {
-                padding: 1.5rem 0;
+            .notice-dropdown-section {
+                margin: 1.5rem 0;
             }
 
-            .notice-content {
+            .notice-dropdown-container {
+                padding: 0 1rem;
+            }
+
+            .notice-trigger-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .notice-trigger-icon {
+                font-size: 1.1rem;
+            }
+
+            .notice-dropdown-content.active {
                 padding: 1.5rem;
-                text-align: center;
             }
 
-            .notice-title {
+            .notice-dropdown-title {
                 font-size: 1.4rem;
                 letter-spacing: 1px;
+                margin-bottom: 1rem;
             }
 
-            .notice-message {
+            .notice-dropdown-message {
                 font-size: 0.9rem;
             }
 
-            .notice-message p {
-                padding: 0.6rem 0.8rem;
+            .notice-dropdown-message p {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
             }
 
             .product-grid {
@@ -1888,12 +1970,20 @@
     </section>
 
     <!-- 重要通知區塊 -->
-    <section class="important-notice" id="importantNotice" style="display: none;">
-        <div class="notice-container">
-            <div class="notice-content">
-                <div class="notice-text">
-                    <h3 class="notice-title" id="noticeTitle">DeepVape 重要通知：</h3>
-                    <div class="notice-message" id="noticeMessage">
+    <section class="notice-dropdown-section" id="noticeDropdownSection" style="display: none;">
+        <div class="notice-dropdown-container">
+            <!-- 通知觸發按鈕 -->
+            <button class="notice-trigger-btn" id="noticeTriggerBtn" onclick="toggleNoticeDropdown()">
+                <span class="notice-trigger-icon">⚠</span>
+                <span class="notice-trigger-text" id="noticeTriggerText">重要通知</span>
+                <span class="notice-trigger-arrow" id="noticeTriggerArrow">▼</span>
+            </button>
+            
+            <!-- 下拉內容 -->
+            <div class="notice-dropdown-content" id="noticeDropdownContent">
+                <div class="notice-dropdown-inner">
+                    <h3 class="notice-dropdown-title" id="noticeDropdownTitle">DeepVape 重要通知：</h3>
+                    <div class="notice-dropdown-message" id="noticeDropdownMessage">
                         <p>受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。</p>
                         <p>商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。</p>
                     </div>
@@ -3037,6 +3127,37 @@
             }
         }
 
+        // 重要通知下拉功能
+        let isNoticeDropdownOpen = false;
+
+        function toggleNoticeDropdown() {
+            const triggerBtn = document.getElementById('noticeTriggerBtn');
+            const dropdownContent = document.getElementById('noticeDropdownContent');
+            
+            if (!triggerBtn || !dropdownContent) return;
+
+            isNoticeDropdownOpen = !isNoticeDropdownOpen;
+            
+            if (isNoticeDropdownOpen) {
+                triggerBtn.classList.add('active');
+                dropdownContent.classList.add('active');
+            } else {
+                triggerBtn.classList.remove('active');
+                dropdownContent.classList.remove('active');
+            }
+        }
+
+        // 將函數添加到全域範圍
+        window.toggleNoticeDropdown = toggleNoticeDropdown;
+
+        // 點擊外部關閉下拉選單
+        document.addEventListener('click', function(event) {
+            const noticeSection = document.getElementById('noticeDropdownSection');
+            if (noticeSection && !noticeSection.contains(event.target) && isNoticeDropdownOpen) {
+                toggleNoticeDropdown();
+            }
+        });
+
         // 重要通知功能
         async function loadNoticeData() {
             try {
@@ -3049,65 +3170,69 @@
                 const notice = data.notice;
                 
                 if (notice && notice.enabled) {
-                    renderNotice(notice);
+                    renderNoticeDropdown(notice);
                 } else {
                     console.log('通知已停用或無數據');
                 }
             } catch (error) {
                 console.error('載入通知數據時發生錯誤:', error);
                 // 顯示默認通知
-                renderDefaultNotice();
+                renderDefaultNoticeDropdown();
             }
         }
 
-        // 渲染通知
-        function renderNotice(notice) {
-            const noticeSection = document.getElementById('importantNotice');
-            const noticeTitle = document.getElementById('noticeTitle');
-            const noticeMessage = document.getElementById('noticeMessage');
+        // 渲染下拉通知
+        function renderNoticeDropdown(notice) {
+            const noticeSection = document.getElementById('noticeDropdownSection');
+            const triggerText = document.getElementById('noticeTriggerText');
+            const dropdownTitle = document.getElementById('noticeDropdownTitle');
+            const dropdownMessage = document.getElementById('noticeDropdownMessage');
             
-            if (!noticeSection || !noticeTitle || !noticeMessage) return;
+            if (!noticeSection || !triggerText || !dropdownTitle || !dropdownMessage) return;
 
-            // 設置通知內容
-            noticeTitle.textContent = notice.title || 'DeepVape 重要通知：';
+            // 設置觸發按鈕文字
+            triggerText.textContent = notice.triggerText || '重要通知';
+            
+            // 設置下拉內容
+            dropdownTitle.textContent = notice.title || 'DeepVape 重要通知：';
             
             // 處理換行符號
             const content = notice.content || '';
             const paragraphs = content.split('\n\n').filter(p => p.trim());
-            noticeMessage.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+            dropdownMessage.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
 
-            // 設置樣式
-            noticeSection.className = `important-notice notice-type-${notice.type || 'info'}`;
+            // 設置樣式類型
+            noticeSection.className = `notice-dropdown-section notice-type-${notice.type || 'info'}`;
             
             // 自定義顏色
-            const noticeContent = noticeSection.querySelector('.notice-content');
-            if (noticeContent) {
-                if (notice.backgroundColor) {
-                    noticeContent.style.backgroundColor = notice.backgroundColor;
-                }
-                if (notice.borderColor) {
-                    noticeContent.style.borderColor = notice.borderColor;
-                }
-            }
+            const triggerBtn = document.getElementById('noticeTriggerBtn');
+            const dropdownContent = document.getElementById('noticeDropdownContent');
             
+            if (notice.backgroundColor && dropdownContent) {
+                dropdownContent.style.backgroundColor = notice.backgroundColor;
+            }
+            if (notice.borderColor && triggerBtn) {
+                triggerBtn.style.borderColor = notice.borderColor;
+            }
             if (notice.textColor) {
-                noticeTitle.style.color = notice.textColor;
-                noticeMessage.style.color = notice.textColor;
+                if (dropdownTitle) dropdownTitle.style.color = notice.textColor;
+                if (dropdownMessage) dropdownMessage.style.color = notice.textColor;
             }
 
-            // 顯示通知
+            // 顯示通知區塊
             noticeSection.style.display = 'block';
         }
 
-        // 渲染默認通知
-        function renderDefaultNotice() {
+        // 渲染默認下拉通知
+        function renderDefaultNoticeDropdown() {
             const defaultNotice = {
                 enabled: true,
+                triggerText: "重要通知",
                 title: "DeepVape 重要通知：",
                 content: "受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。\n\n商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。",
                 type: "info"
             };
-            renderNotice(defaultNotice);
+            renderNoticeDropdown(defaultNotice);
         }
 
         // 為logo添加點擊事件
