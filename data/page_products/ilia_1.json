@@ -36,24 +36,64 @@
       "sku": "ILIA-GEN1-SKY"
     },
     {
-      "id": "ilia_gen1_pink",
+      "id": "ilia_gen1_green_red",
       "name": "顏色",
       "type": "color",
-      "value": "粉色",
+      "value": "綠綠紅",
       "stock": 25,
       "priceModifier": 0,
       "image": "ilia_1/ilia_gen1_main_device.jpg",
-      "sku": "ILIA-GEN1-PINK"
+      "sku": "ILIA-GEN1-GR"
     },
     {
-      "id": "ilia_gen1_green",
+      "id": "ilia_gen1_green_green",
       "name": "顏色",
       "type": "color",
-      "value": "綠色",
+      "value": "綠綠綠",
       "stock": 20,
       "priceModifier": 0,
       "image": "ilia_1/ilia_gen1_main_device.jpg",
-      "sku": "ILIA-GEN1-GREEN"
+      "sku": "ILIA-GEN1-GGG"
+    },
+    {
+      "id": "ilia_gen1_purple_purple",
+      "name": "顏色",
+      "type": "color",
+      "value": "紫色紫色",
+      "stock": 22,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-PP"
+    },
+    {
+      "id": "ilia_gen1_orange_gray_red",
+      "name": "顏色",
+      "type": "color",
+      "value": "橙橙灰紅",
+      "stock": 18,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-OGR"
+    },
+    {
+      "id": "ilia_gen1_orange_purple_red",
+      "name": "顏色",
+      "type": "color",
+      "value": "橙色紫紅",
+      "stock": 15,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-OPR"
+    },
+    {
+      "id": "ilia_gen1_black_red",
+      "name": "顏色",
+      "type": "color",
+      "value": "黑色紅",
+      "stock": 28,
+      "priceModifier": 0,
+      "image": "ilia_1/ilia_gen1_main_device.jpg",
+      "sku": "ILIA-GEN1-BR"
     }
   ],
   "status": "active",

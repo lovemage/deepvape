@@ -6,54 +6,194 @@
   "discount": null,
   "variants": [
     {
-      "id": "ilia_disp_blueberry",
+      "id": "ilia_disp_ice_blueberry",
       "name": "口味",
       "type": "flavor",
       "value": "冰釀藍莓",
       "stock": 200,
       "priceModifier": 0,
       "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
-      "sku": "ILIA-DISP-BLUE"
+      "sku": "ILIA-DISP-ICE-BLUE"
     },
     {
-      "id": "ilia_disp_lemon",
+      "id": "ilia_disp_rich_red",
       "name": "口味",
       "type": "flavor",
-      "value": "冰釀檸檬",
+      "value": "濃郁紅",
       "stock": 180,
       "priceModifier": 0,
       "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
-      "sku": "ILIA-DISP-LEMON"
+      "sku": "ILIA-DISP-RICH-RED"
     },
     {
-      "id": "ilia_disp_mint",
+      "id": "ilia_disp_ice_lemon",
       "name": "口味",
       "type": "flavor",
-      "value": "清涼薄荷",
+      "value": "冰釀檸檬",
       "stock": 150,
       "priceModifier": 0,
       "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
-      "sku": "ILIA-DISP-MINT"
+      "sku": "ILIA-DISP-ICE-LEMON"
     },
     {
-      "id": "ilia_disp_grape",
+      "id": "ilia_disp_premium_blueberry",
       "name": "口味",
       "type": "flavor",
-      "value": "葡萄",
+      "value": "高級藍莓",
       "stock": 160,
       "priceModifier": 0,
       "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
-      "sku": "ILIA-DISP-GRAPE"
+      "sku": "ILIA-DISP-PREMIUM-BLUE"
     },
     {
-      "id": "ilia_disp_watermelon",
+      "id": "ilia_disp_cool_mint",
       "name": "口味",
       "type": "flavor",
-      "value": "西瓜",
+      "value": "清涼薄荷",
       "stock": 140,
       "priceModifier": 0,
       "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
-      "sku": "ILIA-DISP-WATER"
+      "sku": "ILIA-DISP-COOL-MINT"
+    },
+    {
+      "id": "ilia_disp_ice_apple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰釀蘋果",
+      "stock": 130,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-ICE-APPLE"
+    },
+    {
+      "id": "ilia_disp_stimulating_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "刺激薄荷",
+      "stock": 120,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-STIMULATING-MINT"
+    },
+    {
+      "id": "ilia_disp_vanilla_multi",
+      "name": "口味",
+      "type": "flavor",
+      "value": "香草多",
+      "stock": 110,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-VANILLA-MULTI"
+    },
+    {
+      "id": "ilia_disp_rich_cola",
+      "name": "口味",
+      "type": "flavor",
+      "value": "濃郁可樂",
+      "stock": 100,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-RICH-COLA"
+    },
+    {
+      "id": "ilia_disp_yellow_lemon_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "黃檸檬茶",
+      "stock": 95,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-YELLOW-LEMON-TEA"
+    },
+    {
+      "id": "ilia_disp_black_lemon_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "黑檸檬茶",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-BLACK-LEMON-TEA"
+    },
+    {
+      "id": "ilia_disp_peach_oolong",
+      "name": "口味",
+      "type": "flavor",
+      "value": "白桃烏龍",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-PEACH-OOLONG"
+    },
+    {
+      "id": "ilia_disp_red_bean_milk",
+      "name": "口味",
+      "type": "flavor",
+      "value": "紅豆牛奶",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-RED-BEAN-MILK"
+    },
+    {
+      "id": "ilia_disp_multi_strawberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "多重草莓",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-MULTI-STRAWBERRY"
+    },
+    {
+      "id": "ilia_disp_citrus_blueberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "柑橘藍莓",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-CITRUS-BLUEBERRY"
+    },
+    {
+      "id": "ilia_disp_peach_strawberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蜜桃草莓",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-PEACH-STRAWBERRY"
+    },
+    {
+      "id": "ilia_disp_lemon_salt",
+      "name": "口味",
+      "type": "flavor",
+      "value": "檸檬海鹽",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-LEMON-SALT"
+    },
+    {
+      "id": "ilia_disp_red_bean_taro",
+      "name": "口味",
+      "type": "flavor",
+      "value": "紅豆芋泥",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-RED-BEAN-TARO"
+    },
+    {
+      "id": "ilia_disp_kiwi",
+      "name": "口味",
+      "type": "flavor",
+      "value": "獼猴桃",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp",
+      "sku": "ILIA-DISP-KIWI"
     }
   ],
   "status": "active",

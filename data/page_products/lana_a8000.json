@@ -16,14 +16,14 @@
       "sku": "LANA-A8000-MINT"
     },
     {
-      "id": "lana_a8000_grape",
+      "id": "lana_a8000_strawberry",
       "name": "口味",
       "type": "flavor",
-      "value": "葡萄",
+      "value": "草莓",
       "stock": 130,
       "priceModifier": 0,
       "image": "lana_a8000/lana_a8000.webp",
-      "sku": "LANA-A8000-GRAPE"
+      "sku": "LANA-A8000-STRAWBERRY"
     },
     {
       "id": "lana_a8000_mango",
@@ -36,14 +36,54 @@
       "sku": "LANA-A8000-MANGO"
     },
     {
+      "id": "lana_a8000_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "葡萄",
+      "stock": 110,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-GRAPE"
+    },
+    {
+      "id": "lana_a8000_apple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "青蘋果",
+      "stock": 100,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-APPLE"
+    },
+    {
       "id": "lana_a8000_watermelon",
       "name": "口味",
       "type": "flavor",
       "value": "西瓜",
-      "stock": 110,
+      "stock": 95,
       "priceModifier": 0,
       "image": "lana_a8000/lana_a8000.webp",
-      "sku": "LANA-A8000-WATER"
+      "sku": "LANA-A8000-WATERMELON"
+    },
+    {
+      "id": "lana_a8000_banana",
+      "name": "口味",
+      "type": "flavor",
+      "value": "香蕉",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-BANANA"
+    },
+    {
+      "id": "lana_a8000_orange",
+      "name": "口味",
+      "type": "flavor",
+      "value": "橙子",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "lana_a8000/lana_a8000.webp",
+      "sku": "LANA-A8000-ORANGE"
     }
   ],
   "status": "active",

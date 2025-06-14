@@ -6,44 +6,244 @@
   "discount": null,
   "variants": [
     {
-      "id": "ilia_pods_mint",
+      "id": "ilia_pods_strawberry",
       "name": "口味",
       "type": "flavor",
-      "value": "薄荷",
+      "value": "傾心草莓",
       "stock": 120,
       "priceModifier": 0,
       "image": "ilia_pods/ilia_pods_main.webp",
-      "sku": "ILIA-PODS-MINT"
+      "sku": "ILIA-PODS-STRAWBERRY"
     },
     {
       "id": "ilia_pods_blueberry",
       "name": "口味",
       "type": "flavor",
-      "value": "藍莓",
+      "value": "冰釀藍莓",
       "stock": 100,
       "priceModifier": 0,
       "image": "ilia_pods/ilia_pods_main.webp",
-      "sku": "ILIA-PODS-BLUE"
+      "sku": "ILIA-PODS-BLUEBERRY"
     },
     {
-      "id": "ilia_pods_grape",
+      "id": "ilia_pods_pineapple",
       "name": "口味",
       "type": "flavor",
-      "value": "葡萄",
+      "value": "霸氣鳳梨",
       "stock": 90,
       "priceModifier": 0,
       "image": "ilia_pods/ilia_pods_main.webp",
-      "sku": "ILIA-PODS-GRAPE"
+      "sku": "ILIA-PODS-PINEAPPLE"
     },
     {
-      "id": "ilia_pods_mango",
+      "id": "ilia_pods_peach_oolong",
       "name": "口味",
       "type": "flavor",
-      "value": "芒果",
+      "value": "白桃烏龍",
       "stock": 85,
       "priceModifier": 0,
       "image": "ilia_pods/ilia_pods_main.webp",
-      "sku": "ILIA-PODS-MANGO"
+      "sku": "ILIA-PODS-PEACH-OOLONG"
+    },
+    {
+      "id": "ilia_pods_lychee",
+      "name": "口味",
+      "type": "flavor",
+      "value": "荔枝甘露",
+      "stock": 95,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-LYCHEE"
+    },
+    {
+      "id": "ilia_pods_passion_fruit",
+      "name": "口味",
+      "type": "flavor",
+      "value": "百香果汁",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-PASSION"
+    },
+    {
+      "id": "ilia_pods_melon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蜜瓜誘惑",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-MELON"
+    },
+    {
+      "id": "ilia_pods_salt_lemon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "海鹽檸檬",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-SALT-LEMON"
+    },
+    {
+      "id": "ilia_pods_zero_cola",
+      "name": "口味",
+      "type": "flavor",
+      "value": "零度可樂",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-ZERO-COLA"
+    },
+    {
+      "id": "ilia_pods_sprite",
+      "name": "口味",
+      "type": "flavor",
+      "value": "雪碧口味",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-SPRITE"
+    },
+    {
+      "id": "ilia_pods_calpis",
+      "name": "口味",
+      "type": "flavor",
+      "value": "可爾必思",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-CALPIS"
+    },
+    {
+      "id": "ilia_pods_pocari",
+      "name": "口味",
+      "type": "flavor",
+      "value": "寶礦力",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-POCARI"
+    },
+    {
+      "id": "ilia_pods_passion_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "激情薄荷",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-PASSION-MINT"
+    },
+    {
+      "id": "ilia_pods_deep_sea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "深海冰泉",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-DEEP-SEA"
+    },
+    {
+      "id": "ilia_pods_ice_watermelon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰鎮西瓜",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-ICE-WATERMELON"
+    },
+    {
+      "id": "ilia_pods_green_apple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "脆青蘋果",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-GREEN-APPLE"
+    },
+    {
+      "id": "ilia_pods_juicy_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "多肉芒果",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-JUICY-MANGO"
+    },
+    {
+      "id": "ilia_pods_juicy_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "多肉葡萄",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-JUICY-GRAPE"
+    },
+    {
+      "id": "ilia_pods_kiwi",
+      "name": "口味",
+      "type": "flavor",
+      "value": "奇異果",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-KIWI"
+    },
+    {
+      "id": "ilia_pods_guava",
+      "name": "口味",
+      "type": "flavor",
+      "value": "紅心芭樂",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-GUAVA"
+    },
+    {
+      "id": "ilia_pods_mung_bean",
+      "name": "口味",
+      "type": "flavor",
+      "value": "綠豆冰沙",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-MUNG-BEAN"
+    },
+    {
+      "id": "ilia_pods_old_popsicle",
+      "name": "口味",
+      "type": "flavor",
+      "value": "老冰棍",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-OLD-POPSICLE"
+    },
+    {
+      "id": "ilia_pods_tieguanyin",
+      "name": "口味",
+      "type": "flavor",
+      "value": "鐵觀音",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-TIEGUANYIN"
+    },
+    {
+      "id": "ilia_pods_lucky_tobacco",
+      "name": "口味",
+      "type": "flavor",
+      "value": "幸運煙草",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "ilia_pods/ilia_pods_main.webp",
+      "sku": "ILIA-PODS-LUCKY-TOBACCO"
     }
   ],
   "status": "active",

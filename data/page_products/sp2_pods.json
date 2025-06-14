@@ -16,24 +16,314 @@
       "sku": "SP2-PODS-MINT"
     },
     {
-      "id": "sp2_pods_tobacco",
+      "id": "sp2_pods_strawberry",
       "name": "口味",
       "type": "flavor",
-      "value": "煙草",
+      "value": "草莓",
       "stock": 120,
       "priceModifier": 0,
       "image": "sp2_pods/sp2_pods_main.webp",
-      "sku": "SP2-PODS-TOB"
+      "sku": "SP2-PODS-STRAWBERRY"
     },
     {
-      "id": "sp2_pods_fruit",
+      "id": "sp2_pods_blueberry",
       "name": "口味",
       "type": "flavor",
-      "value": "水果",
+      "value": "藍莓",
       "stock": 100,
       "priceModifier": 0,
       "image": "sp2_pods/sp2_pods_main.webp",
-      "sku": "SP2-PODS-FRUIT"
+      "sku": "SP2-PODS-BLUEBERRY"
+    },
+    {
+      "id": "sp2_pods_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "芒果",
+      "stock": 110,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-MANGO"
+    },
+    {
+      "id": "sp2_pods_watermelon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "西瓜",
+      "stock": 95,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-WATERMELON"
+    },
+    {
+      "id": "sp2_pods_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "葡萄",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-GRAPE"
+    },
+    {
+      "id": "sp2_pods_apple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蘋果",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-APPLE"
+    },
+    {
+      "id": "sp2_pods_lemon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "檸檬",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-LEMON"
+    },
+    {
+      "id": "sp2_pods_cola",
+      "name": "口味",
+      "type": "flavor",
+      "value": "可樂",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-COLA"
+    },
+    {
+      "id": "sp2_pods_sprite",
+      "name": "口味",
+      "type": "flavor",
+      "value": "雪碧",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-SPRITE"
+    },
+    {
+      "id": "sp2_pods_milk_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "奶茶",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-MILKTEA"
+    },
+    {
+      "id": "sp2_pods_coffee",
+      "name": "口味",
+      "type": "flavor",
+      "value": "咖啡",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-COFFEE"
+    },
+    {
+      "id": "sp2_pods_vanilla",
+      "name": "口味",
+      "type": "flavor",
+      "value": "香草",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-VANILLA"
+    },
+    {
+      "id": "sp2_pods_chocolate",
+      "name": "口味",
+      "type": "flavor",
+      "value": "巧克力",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-CHOCOLATE"
+    },
+    {
+      "id": "sp2_pods_coconut",
+      "name": "口味",
+      "type": "flavor",
+      "value": "椰子",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-COCONUT"
+    },
+    {
+      "id": "sp2_pods_lychee",
+      "name": "口味",
+      "type": "flavor",
+      "value": "荔枝",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-LYCHEE"
+    },
+    {
+      "id": "sp2_pods_peach",
+      "name": "口味",
+      "type": "flavor",
+      "value": "水蜜桃",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-PEACH"
+    },
+    {
+      "id": "sp2_pods_pineapple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "鳳梨",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-PINEAPPLE"
+    },
+    {
+      "id": "sp2_pods_cherry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "櫻桃",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-CHERRY"
+    },
+    {
+      "id": "sp2_pods_orange",
+      "name": "口味",
+      "type": "flavor",
+      "value": "柳橙",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-ORANGE"
+    },
+    {
+      "id": "sp2_pods_kiwi",
+      "name": "口味",
+      "type": "flavor",
+      "value": "奇異果",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-KIWI"
+    },
+    {
+      "id": "sp2_pods_passion_fruit",
+      "name": "口味",
+      "type": "flavor",
+      "value": "百香果",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-PASSION"
+    },
+    {
+      "id": "sp2_pods_honey",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蜂蜜",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-HONEY"
+    },
+    {
+      "id": "sp2_pods_lavender",
+      "name": "口味",
+      "type": "flavor",
+      "value": "薰衣草",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-LAVENDER"
+    },
+    {
+      "id": "sp2_pods_rose",
+      "name": "口味",
+      "type": "flavor",
+      "value": "玫瑰",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-ROSE"
+    },
+    {
+      "id": "sp2_pods_jasmine",
+      "name": "口味",
+      "type": "flavor",
+      "value": "茉莉",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-JASMINE"
+    },
+    {
+      "id": "sp2_pods_green_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "綠茶",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-GREEN-TEA"
+    },
+    {
+      "id": "sp2_pods_oolong_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "烏龍茶",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-OOLONG"
+    },
+    {
+      "id": "sp2_pods_black_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "紅茶",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-BLACK-TEA"
+    },
+    {
+      "id": "sp2_pods_lemon_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "檸檬茶",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-LEMON-TEA"
+    },
+    {
+      "id": "sp2_pods_peach_oolong",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蜜桃烏龍",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-PEACH-OOLONG"
+    },
+    {
+      "id": "sp2_pods_jasmine_green_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "茉莉綠茶",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "sp2_pods/sp2_pods_main.webp",
+      "sku": "SP2-PODS-JASMINE-GREEN"
     }
   ],
   "status": "active",

@@ -6,34 +6,164 @@
   "discount": null,
   "variants": [
     {
-      "id": "sp2_device_black",
+      "id": "sp2_device_classic_black",
       "name": "顏色",
       "type": "color",
-      "value": "黑色",
+      "value": "經典黑",
       "stock": 35,
       "priceModifier": 0,
       "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-BLK"
+      "sku": "SP2-DEV-CLASSIC-BLK"
     },
     {
-      "id": "sp2_device_white",
+      "id": "sp2_device_space_silver",
       "name": "顏色",
       "type": "color",
-      "value": "白色",
+      "value": "太空銀",
       "stock": 30,
       "priceModifier": 0,
       "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-WHT"
+      "sku": "SP2-DEV-SPACE-SLV"
     },
     {
-      "id": "sp2_device_blue",
+      "id": "sp2_device_deep_blue",
       "name": "顏色",
       "type": "color",
-      "value": "藍色",
+      "value": "深海藍",
       "stock": 25,
       "priceModifier": 0,
       "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-BLU"
+      "sku": "SP2-DEV-DEEP-BLU"
+    },
+    {
+      "id": "sp2_device_rose_gold",
+      "name": "顏色",
+      "type": "color",
+      "value": "玫瑰金",
+      "stock": 28,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-ROSE-GLD"
+    },
+    {
+      "id": "sp2_device_pearl_white",
+      "name": "顏色",
+      "type": "color",
+      "value": "珍珠白",
+      "stock": 32,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-PEARL-WHT"
+    },
+    {
+      "id": "sp2_device_dazzling_purple",
+      "name": "顏色",
+      "type": "color",
+      "value": "炫彩紫",
+      "stock": 20,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-DAZZLING-PUR"
+    },
+    {
+      "id": "sp2_device_forest_green",
+      "name": "顏色",
+      "type": "color",
+      "value": "森林綠",
+      "stock": 22,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-FOREST-GRN"
+    },
+    {
+      "id": "sp2_device_sunset_orange",
+      "name": "顏色",
+      "type": "color",
+      "value": "夕陽橙",
+      "stock": 18,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-SUNSET-ORG"
+    },
+    {
+      "id": "sp2_device_cherry_pink",
+      "name": "顏色",
+      "type": "color",
+      "value": "櫻花粉",
+      "stock": 24,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-CHERRY-PNK"
+    },
+    {
+      "id": "sp2_device_starry_gray",
+      "name": "顏色",
+      "type": "color",
+      "value": "星空灰",
+      "stock": 26,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-STARRY-GRY"
+    },
+    {
+      "id": "sp2_device_ocean_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "海洋藍",
+      "stock": 21,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-OCEAN-BLU"
+    },
+    {
+      "id": "sp2_device_champagne_gold",
+      "name": "顏色",
+      "type": "color",
+      "value": "香檳金",
+      "stock": 19,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-CHAMPAGNE-GLD"
+    },
+    {
+      "id": "sp2_device_mint_green",
+      "name": "顏色",
+      "type": "color",
+      "value": "薄荷綠",
+      "stock": 23,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-MINT-GRN"
+    },
+    {
+      "id": "sp2_device_wine_red",
+      "name": "顏色",
+      "type": "color",
+      "value": "酒紅色",
+      "stock": 17,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-WINE-RED"
+    },
+    {
+      "id": "sp2_device_titanium",
+      "name": "顏色",
+      "type": "color",
+      "value": "鈦金屬",
+      "stock": 15,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-TITANIUM"
+    },
+    {
+      "id": "sp2_device_aurora",
+      "name": "顏色",
+      "type": "color",
+      "value": "極光色",
+      "stock": 12,
+      "priceModifier": 0,
+      "image": "sp2_device/sp2_main.webp",
+      "sku": "SP2-DEV-AURORA"
     }
   ],
   "status": "active",
