@@ -442,18 +442,3 @@ collections:
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
-  - name: "site_settings"
-    label: "聯絡資訊設定"
-    files:
-      - name: "contact"
-        label: "聯絡資訊"
-        file: "data/contact.json"
-        fields:
-          - {name: "lineId", label: "LINE ID", widget: "string", default: "@deepvape"}
-          - {name: "email", label: "Email", widget: "string", default: "service@deepvape.com"}
-          - {name: "serviceHours", label: "服務時間", widget: "string", default: "週一至週五 10:00-18:00"}
-          - {name: "facebookLink", label: "Facebook 連結", widget: "string", default: "#"}
-          - {name: "instagramLink", label: "Instagram 連結", widget: "string", default: "#"}
-          - {name: "telegramLink", label: "Telegram 連結", widget: "string", default: "#"}
-
- 
