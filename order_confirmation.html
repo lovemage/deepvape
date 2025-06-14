@@ -871,9 +871,15 @@
             document.getElementById('customerPhone').textContent = orderData.customer.phone;
 
             // Display store information
-            document.getElementById('storeName').textContent = orderData.store.name;
-            document.getElementById('storeAddress').textContent = orderData.store.address;
-            document.getElementById('storeId').textContent = `店號: ${orderData.store.id}`;
+            if (orderData.store) {
+                document.getElementById('storeName').textContent = orderData.store.name || '未指定';
+                document.getElementById('storeAddress').textContent = orderData.store.address || '未指定';
+                document.getElementById('storeId').textContent = `店號: ${orderData.store.id || '未指定'}`;
+            } else {
+                document.getElementById('storeName').textContent = '未指定';
+                document.getElementById('storeAddress').textContent = '未指定';
+                document.getElementById('storeId').textContent = '店號: 未指定';
+            }
 
             // Display order items
             const itemsContainer = document.getElementById('orderItems');

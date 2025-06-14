@@ -195,7 +195,36 @@ class InventoryManager {
         };
 
         this.stockMovements.push(record);
+        
+        // 同步到 CMS
+        this.syncStockMovementToCMS(record);
+        
         return record;
+    }
+
+    /**
+     * 同步庫存異動記錄到 CMS
+     */
+    async syncStockMovementToCMS(movement) {
+        try {
+            const response = await fetch('/.netlify/functions/save-stock-movement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movement)
+            });
+
+            if (!response.ok) {
+                throw new Error('庫存異動記錄同步失敗');
+            }
+
+            console.log('庫存異動記錄已同步到 CMS:', movement.id);
+            return await response.json();
+        } catch (error) {
+            console.error('同步庫存異動記錄失敗:', error);
+            // 不拋出錯誤，避免影響主要業務流程
+        }
     }
 
     /**

@@ -1759,9 +1759,13 @@ ${orderData.items.map(item =>
                 console.log('🛒 開始處理訂單...');
                 
                 // 等待 OrderManager 初始化
-                if (!window.OrderManager.initialized) {
+                if (!window.OrderManager || !window.OrderManager.initialized) {
                     console.log('⏳ 等待 OrderManager 初始化...');
-                    await window.OrderManager.init();
+                    if (window.OrderManager) {
+                        await window.OrderManager.init();
+                    } else {
+                        throw new Error('OrderManager 未載入，請重新整理頁面');
+                    }
                 }
                 
                 // 使用 OrderManager 創建訂單
