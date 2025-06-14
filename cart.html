@@ -39,10 +39,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="js/store-selector.js"></script>
-    <script src="js/product-manager.js"></script>
-    <script src="js/inventory-manager.js"></script>
-    <script src="js/order-manager.js"></script>
+
     <style>
         :root {
             --primary-color: #083e12;
@@ -1758,14 +1755,27 @@ ${orderData.items.map(item =>
             try {
                 console.log('🛒 開始處理訂單...');
                 
-                // 等待 OrderManager 初始化
-                if (!window.OrderManager || !window.OrderManager.initialized) {
+                // 檢查並等待 OrderManager 初始化
+                if (!window.OrderManager) {
+                    console.error('❌ OrderManager 未載入');
+                    throw new Error('系統尚未完全載入，請重新整理頁面後再試');
+                }
+                
+                if (!window.OrderManager.initialized) {
                     console.log('⏳ 等待 OrderManager 初始化...');
-                    if (window.OrderManager) {
+                    try {
                         await window.OrderManager.init();
-                    } else {
-                        throw new Error('OrderManager 未載入，請重新整理頁面');
+                        console.log('✅ OrderManager 初始化完成');
+                    } catch (initError) {
+                        console.error('❌ OrderManager 初始化失敗:', initError);
+                        throw new Error('系統初始化失敗，請重新整理頁面後再試');
                     }
+                }
+                
+                // 驗證 OrderManager 功能
+                if (typeof window.OrderManager.createOrderFromCart !== 'function') {
+                    console.error('❌ OrderManager 功能不完整');
+                    throw new Error('系統功能異常，請重新整理頁面後再試');
                 }
                 
                 // 使用 OrderManager 創建訂單
@@ -2102,6 +2112,54 @@ ${orderData.items.map(item =>
 
     <!-- 聯繫信息載入器 -->
     <script src="/js/contact-loader.js"></script>
+
+    <!-- 核心管理系統腳本 -->
+    <script src="js/store-selector.js"></script>
+    <script src="js/product-manager.js"></script>
+    <script src="js/inventory-manager.js"></script>
+    <script src="js/order-manager.js"></script>
+
+    <!-- 初始化檢查腳本 -->
+    <script>
+        // 等待所有管理器載入完成
+        function waitForManagers() {
+            return new Promise((resolve) => {
+                const checkManagers = () => {
+                    if (window.ProductManager && 
+                        window.InventoryManager && 
+                        window.OrderManager) {
+                        console.log('所有管理器已載入完成');
+                        resolve();
+                    } else {
+                        console.log('等待管理器載入中...');
+                        setTimeout(checkManagers, 100);
+                    }
+                };
+                checkManagers();
+            });
+        }
+
+        // 初始化系統
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await waitForManagers();
+                console.log('系統初始化完成');
+                
+                // 確保 OrderManager 已初始化
+                if (window.OrderManager && !window.OrderManager.initialized) {
+                    await window.OrderManager.init();
+                }
+                
+                console.log('OrderManager 狀態:', {
+                    exists: !!window.OrderManager,
+                    initialized: window.OrderManager?.initialized
+                });
+                
+            } catch (error) {
+                console.error('系統初始化失敗:', error);
+            }
+        });
+    </script>
 
     <!-- VFX.js 故障效果腳本 -->
     <script type="module">
