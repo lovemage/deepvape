@@ -2199,7 +2199,7 @@
         // 載入公告
         async function loadAnnouncements() {
             try {
-                const response = await fetch('http://127.0.0.1:5001/api/announcements');
+                const response = await fetch('/.netlify/functions/announcements');
                 if (response.ok) {
                     const announcements = await response.json();
                     if (announcements.length > 0) {
@@ -2267,14 +2267,16 @@
         // 載入產品數據
         async function loadProducts() {
             try {
-                const response = await fetch('http://127.0.0.1:5001/api/products');
-                if (response.ok) {
-                    const products = await response.json();
-                    renderProducts(products);
-                } else {
-                    console.error('無法載入產品數據');
-                    // 保持現有的靜態產品顯示
-                }
+                // 暫時禁用產品 API 調用，使用靜態產品顯示
+                console.log('使用靜態產品顯示');
+                // const response = await fetch('/.netlify/functions/products');
+                // if (response.ok) {
+                //     const products = await response.json();
+                //     renderProducts(products);
+                // } else {
+                //     console.error('無法載入產品數據');
+                //     // 保持現有的靜態產品顯示
+                // }
             } catch (error) {
                 console.error('載入產品時發生錯誤:', error);
                 // 保持現有的靜態產品顯示

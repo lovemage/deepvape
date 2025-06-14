@@ -1282,7 +1282,7 @@
 
             <div class="summary-row">
                 <span class="summary-label">運費</span>
-                <span class="summary-value">NT$ 60</span>
+                <span class="summary-value" id="shipping">NT$ 60</span>
             </div>
 
             <div class="summary-row">
@@ -1310,7 +1310,7 @@
                 <!-- Store Selection -->
                 <div class="store-selection">
                     <label class="form-label">選擇取貨門市 *</label>
-                    <p class="store-instruction">使用ibon門市查詢系統查詢7-ELEVEN門市，或直接手動輸入門市資訊</p>
+                    <p class="store-instruction">使用ibon門市查詢系統查詢7-ELEVEN門市，查詢後請手動輸入門市資訊</p>
 
                     <!-- Store Selection Button -->
                     <div class="store-buttons">
@@ -1325,9 +1325,10 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">門市類型 *</label>
-                                <select id="storeTypeSelect" class="form-input" required>
+                                <select id="storeTypeSelect" class="form-input" required onchange="updateShippingFee()">
                                     <option value="">請選擇門市類型</option>
                                     <option value="711">7-ELEVEN</option>
+                                    <option value="711-outlying">外島7-11</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -1527,21 +1528,29 @@
         // Update order summary
         function updateSummary() {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = cart.length > 0 ? 60 : 0;
+            let shipping = 0;
+            
+            if (cart.length > 0) {
+                const storeType = document.getElementById('storeTypeSelect').value;
+                shipping = storeType === '711-outlying' ? 140 : 60;
+            }
+            
             const total = subtotal + shipping;
             
             document.getElementById('subtotal').textContent = `NT$ ${subtotal}`;
+            document.getElementById('shipping').textContent = `NT$ ${shipping}`;
             document.getElementById('total').textContent = `NT$ ${total}`;
         }
 
-        // 開啟ibon門市查詢系統 - 使用7-11官方API
+        // Update shipping fee when store type changes
+        function updateShippingFee() {
+            updateSummary();
+            validateForm();
+        }
+
+        // 開啟ibon門市查詢系統
         function openIbonStoreMap() {
-            if (storeSelector) {
-                storeSelector.openStoreMap();
-            } else {
-                console.error('門市選擇器尚未初始化');
-                alert('系統載入中，請稍後再試');
-            }
+            window.open('https://www.ibon.com.tw/mobile/retail_inquiry.aspx#gsc.tab=0', '_blank');
         }
 
 
@@ -1572,7 +1581,7 @@
             };
             
             // 更新顯示
-            const storeTypeText = '7-ELEVEN';
+            const storeTypeText = storeType === '711-outlying' ? '外島7-ELEVEN' : '7-ELEVEN';
             document.getElementById('storeName').textContent = `${storeTypeText} - ${storeName}`;
             document.getElementById('storeAddress').textContent = storeAddress || '地址未提供';
             document.getElementById('storeId').textContent = `店號：${storeId}`;
@@ -1713,6 +1722,10 @@ ${orderData.items.map(item =>
         }
 
         async function confirmCheckout() {
+            const storeType = document.getElementById('storeTypeSelect').value;
+            const shipping = storeType === '711-outlying' ? 140 : 60;
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
             const orderData = {
                 items: cart,
                 customer: {
@@ -1720,9 +1733,9 @@ ${orderData.items.map(item =>
                     phone: document.getElementById('customerPhone').value
                 },
                 store: selectedStoreInfo,
-                subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                shipping: 60,
-                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 60,
+                subtotal: subtotal,
+                shipping: shipping,
+                total: subtotal + shipping,
                 orderDate: new Date().toISOString(),
                 orderId: 'ORD' + Date.now()
             };
