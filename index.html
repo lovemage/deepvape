@@ -1422,17 +1422,32 @@
             }
         }
 
-        /* 重要通知區塊 */
+        /* 重要通知區塊 - Cyberpunk 風格 */
         .important-notice {
             padding: 2rem 0;
-            background: var(--bg-color);
-            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            border-bottom: 2px solid #ff00ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .important-notice::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            animation: cyberpunkScan 3s infinite;
         }
 
         .notice-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
+            position: relative;
+            z-index: 2;
         }
 
         .notice-content {
@@ -1440,29 +1455,76 @@
             align-items: flex-start;
             gap: 1.5rem;
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(16, 33, 62, 0.9));
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff0080, #8000ff) 1;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 255, 0.3),
+                0 0 40px rgba(0, 255, 255, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 255, 0.03) 2px,
+                    rgba(0, 255, 255, 0.03) 4px
+                );
+            pointer-events: none;
         }
 
         .notice-content:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.5),
+                0 0 60px rgba(0, 255, 255, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.1);
+            border-image: linear-gradient(45deg, #ff0080, #8000ff, #ff00ff, #00ffff) 1;
         }
 
         .notice-icon {
             flex-shrink: 0;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, var(--highlight-color), var(--tech-cyan));
-            color: white;
-            box-shadow: 0 4px 15px rgba(26, 254, 73, 0.3);
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            color: #000;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 255, 0.6),
+                0 0 40px rgba(0, 255, 255, 0.4);
+            border: 2px solid #fff;
+            position: relative;
+            animation: cyberpunkPulse 2s infinite alternate;
+        }
+
+        .notice-icon::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff0080, #8000ff);
+            z-index: -1;
+            animation: cyberpunkRotate 4s linear infinite;
         }
 
         .notice-text {
@@ -1470,21 +1532,39 @@
         }
 
         .notice-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 900;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--highlight-color), var(--tech-cyan));
+            background: linear-gradient(135deg, #ff00ff, #00ffff, #ff0080);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .notice-title::after {
+            content: '█';
+            animation: cyberpunkBlink 1s infinite;
+            color: #00ffff;
         }
 
         .notice-message {
-            line-height: 1.6;
-            color: var(--text-secondary);
+            line-height: 1.8;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
         }
 
         .notice-message p {
+            margin-bottom: 1.2rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ff00ff;
+            background: rgba(255, 0, 255, 0.05);
+            padding: 0.8rem 1rem;
             margin-bottom: 1rem;
         }
 
@@ -1492,40 +1572,75 @@
             margin-bottom: 0;
         }
 
-        /* 通知類型樣式 */
+        /* Cyberpunk 動畫效果 */
+        @keyframes cyberpunkScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes cyberpunkPulse {
+            0% { 
+                box-shadow: 
+                    0 0 20px rgba(255, 0, 255, 0.6),
+                    0 0 40px rgba(0, 255, 255, 0.4);
+            }
+            100% { 
+                box-shadow: 
+                    0 0 30px rgba(255, 0, 255, 0.8),
+                    0 0 60px rgba(0, 255, 255, 0.6);
+            }
+        }
+
+        @keyframes cyberpunkRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes cyberpunkBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* 通知類型樣式 - Cyberpunk 版本 */
         .notice-type-info .notice-content {
-            background: rgba(23, 162, 184, 0.1);
-            border: 1px solid rgba(23, 162, 184, 0.2);
+            border-image: linear-gradient(45deg, #00ffff, #0080ff, #00ff80, #80ff00) 1;
+        }
+
+        .notice-type-info .notice-icon {
+            background: linear-gradient(135deg, #00ffff, #0080ff);
         }
 
         .notice-type-warning .notice-content {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-image: linear-gradient(45deg, #ffff00, #ff8000, #ff4000, #ff0040) 1;
         }
 
         .notice-type-warning .notice-icon {
-            background: linear-gradient(135deg, #ffc107, #fd7e14);
-            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+            background: linear-gradient(135deg, #ffff00, #ff8000);
+            box-shadow: 
+                0 0 20px rgba(255, 255, 0, 0.6),
+                0 0 40px rgba(255, 128, 0, 0.4);
         }
 
         .notice-type-success .notice-content {
-            background: rgba(40, 167, 69, 0.1);
-            border: 1px solid rgba(40, 167, 69, 0.2);
+            border-image: linear-gradient(45deg, #00ff00, #00ff80, #80ff00, #40ff40) 1;
         }
 
         .notice-type-success .notice-icon {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            background: linear-gradient(135deg, #00ff00, #00ff80);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 0, 0.6),
+                0 0 40px rgba(0, 255, 128, 0.4);
         }
 
         .notice-type-error .notice-content {
-            background: rgba(220, 53, 69, 0.1);
-            border: 1px solid rgba(220, 53, 69, 0.2);
+            border-image: linear-gradient(45deg, #ff0000, #ff0080, #ff4000, #ff8000) 1;
         }
 
         .notice-type-error .notice-icon {
-            background: linear-gradient(135deg, #dc3545, #e83e8c);
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            background: linear-gradient(135deg, #ff0000, #ff0080);
+            box-shadow: 
+                0 0 20px rgba(255, 0, 0, 0.6),
+                0 0 40px rgba(255, 0, 128, 0.4);
         }
 
         /* Category Section */
@@ -1624,10 +1739,22 @@
 
             .notice-icon {
                 align-self: center;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
             }
 
             .notice-title {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
+                letter-spacing: 1px;
+            }
+
+            .notice-message {
+                font-size: 0.9rem;
+            }
+
+            .notice-message p {
+                padding: 0.6rem 0.8rem;
             }
 
             .product-grid {
