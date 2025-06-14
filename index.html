@@ -1422,6 +1422,112 @@
             }
         }
 
+        /* 重要通知區塊 */
+        .important-notice {
+            padding: 2rem 0;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .notice-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .notice-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .notice-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .notice-icon {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--highlight-color), var(--tech-cyan));
+            color: white;
+            box-shadow: 0 4px 15px rgba(26, 254, 73, 0.3);
+        }
+
+        .notice-text {
+            flex: 1;
+        }
+
+        .notice-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--highlight-color), var(--tech-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .notice-message {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .notice-message p {
+            margin-bottom: 1rem;
+        }
+
+        .notice-message p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 通知類型樣式 */
+        .notice-type-info .notice-content {
+            background: rgba(23, 162, 184, 0.1);
+            border: 1px solid rgba(23, 162, 184, 0.2);
+        }
+
+        .notice-type-warning .notice-content {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .notice-type-warning .notice-icon {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .notice-type-success .notice-content {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .notice-type-success .notice-icon {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .notice-type-error .notice-content {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        .notice-type-error .notice-icon {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
         /* Category Section */
         .category-header {
             text-align: center;
@@ -1503,6 +1609,25 @@
 
             .hero-indicators {
                 bottom: 20px;
+            }
+
+            .important-notice {
+                padding: 1.5rem 0;
+            }
+
+            .notice-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1.5rem;
+                text-align: center;
+            }
+
+            .notice-icon {
+                align-self: center;
+            }
+
+            .notice-title {
+                font-size: 1.3rem;
             }
 
             .product-grid {
@@ -1709,6 +1834,24 @@
         <button class="hero-nav hero-nav-next" id="heroNext" onclick="changeHeroSlide(1)">
             <i class="fas fa-chevron-right"></i>
         </button>
+    </section>
+
+    <!-- 重要通知區塊 -->
+    <section class="important-notice" id="importantNotice" style="display: none;">
+        <div class="notice-container">
+            <div class="notice-content">
+                <div class="notice-icon" id="noticeIcon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="notice-text">
+                    <h3 class="notice-title" id="noticeTitle">DeepVape 重要通知：</h3>
+                    <div class="notice-message" id="noticeMessage">
+                        <p>受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。</p>
+                        <p>商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Main Content -->
@@ -2846,6 +2989,95 @@
             }
         }
 
+        // 重要通知功能
+        async function loadNoticeData() {
+            try {
+                const response = await fetch('/.netlify/functions/notice');
+                if (!response.ok) {
+                    throw new Error('無法載入通知數據');
+                }
+                
+                const data = await response.json();
+                const notice = data.notice;
+                
+                if (notice && notice.enabled) {
+                    renderNotice(notice);
+                } else {
+                    console.log('通知已停用或無數據');
+                }
+            } catch (error) {
+                console.error('載入通知數據時發生錯誤:', error);
+                // 顯示默認通知
+                renderDefaultNotice();
+            }
+        }
+
+        // 渲染通知
+        function renderNotice(notice) {
+            const noticeSection = document.getElementById('importantNotice');
+            const noticeIcon = document.getElementById('noticeIcon');
+            const noticeTitle = document.getElementById('noticeTitle');
+            const noticeMessage = document.getElementById('noticeMessage');
+            
+            if (!noticeSection || !noticeIcon || !noticeTitle || !noticeMessage) return;
+
+            // 設置通知內容
+            noticeTitle.textContent = notice.title || 'DeepVape 重要通知：';
+            
+            // 處理換行符號
+            const content = notice.content || '';
+            const paragraphs = content.split('\n\n').filter(p => p.trim());
+            noticeMessage.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+
+            // 設置圖標
+            if (notice.showIcon) {
+                const iconMap = {
+                    'info': 'fas fa-info-circle',
+                    'warning': 'fas fa-exclamation-triangle',
+                    'success': 'fas fa-check-circle',
+                    'error': 'fas fa-times-circle'
+                };
+                noticeIcon.innerHTML = `<i class="${iconMap[notice.type] || 'fas fa-info-circle'}"></i>`;
+                noticeIcon.style.display = 'flex';
+            } else {
+                noticeIcon.style.display = 'none';
+            }
+
+            // 設置樣式
+            noticeSection.className = `important-notice notice-type-${notice.type || 'info'}`;
+            
+            // 自定義顏色
+            const noticeContent = noticeSection.querySelector('.notice-content');
+            if (noticeContent) {
+                if (notice.backgroundColor) {
+                    noticeContent.style.backgroundColor = notice.backgroundColor;
+                }
+                if (notice.borderColor) {
+                    noticeContent.style.borderColor = notice.borderColor;
+                }
+            }
+            
+            if (notice.textColor) {
+                noticeTitle.style.color = notice.textColor;
+                noticeMessage.style.color = notice.textColor;
+            }
+
+            // 顯示通知
+            noticeSection.style.display = 'block';
+        }
+
+        // 渲染默認通知
+        function renderDefaultNotice() {
+            const defaultNotice = {
+                enabled: true,
+                title: "DeepVape 重要通知：",
+                content: "受政策影響，為防止顧客個資洩露，即日起我們免費為您提供隱密包裝服務。包裹上不會註明內容物及店家，請放心選購。\n\n商品送達後我們會透過簡訊通知取貨，簡訊內容不會提及內容物及店家，亦不會致電打擾，請顧客及時留意簡訊。",
+                type: "info",
+                showIcon: true
+            };
+            renderNotice(defaultNotice);
+        }
+
         // 為logo添加點擊事件
         document.addEventListener('DOMContentLoaded', function() {
             const logo = document.querySelector('.logo');
@@ -2856,6 +3088,9 @@
             
             // 載入 Hero 輪播數據
             loadHeroData();
+            
+            // 載入重要通知數據
+            loadNoticeData();
             
             // 生成隨機售出數量
             generateRandomSoldCount();

@@ -48,6 +48,27 @@ collections:
               - {name: "showIndicators", label: "顯示指示器", widget: "boolean", default: true}
               - {name: "showNavigation", label: "顯示導航按鈕", widget: "boolean", default: true}
 
+      - name: "notice"
+        label: "重要通知管理"
+        file: "data/notice.json"
+        fields:
+          - name: "notice"
+            label: "重要通知設定"
+            widget: "object"
+            fields:
+              - {name: "enabled", label: "啟用通知", widget: "boolean", default: true}
+              - {name: "title", label: "通知標題", widget: "string"}
+              - {name: "content", label: "通知內容", widget: "text"}
+              - name: "type"
+                label: "通知類型"
+                widget: "select"
+                options: ["info", "warning", "success", "error"]
+                default: "info"
+              - {name: "showIcon", label: "顯示圖標", widget: "boolean", default: true}
+              - {name: "backgroundColor", label: "背景顏色", widget: "string", default: "#f8f9fa"}
+              - {name: "textColor", label: "文字顏色", widget: "string", default: "#495057"}
+              - {name: "borderColor", label: "邊框顏色", widget: "string", default: "#dee2e6"}
+
       - name: "contact"
         label: "聯繫信息管理"
         file: "data/contact.json"
