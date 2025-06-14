@@ -10,7 +10,7 @@
       "name": "口味",
       "type": "flavor",
       "value": "傾心草莓",
-      "stock": 120,
+      "stock": 1,
       "priceModifier": 0,
       "image": "ilia_pods/ilia_pods_main.webp",
       "sku": "ILIA-PODS-STRAWBERRY"
@@ -248,4 +248,4 @@
   ],
   "status": "active",
   "lastUpdated": "2024-01-15T10:00:00.000Z"
-} 
+}
