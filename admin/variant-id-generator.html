@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>煙彈變數ID生成器</title>
+    <title>變數ID & 優惠券代碼生成器</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -26,6 +26,42 @@
             color: #333;
             margin-bottom: 30px;
             font-size: 2.5em;
+        }
+        
+        .tool-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .tool-tab {
+            padding: 12px 24px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .tool-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .tool-tab:hover:not(.active) {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+        
+        .tool-content {
+            display: none;
+        }
+        
+        .tool-content.active {
+            display: block;
         }
         
         .form-group {
@@ -138,94 +174,199 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚬 煙彈變數ID生成器</h1>
+        <h1>🛠️ 變數ID & 優惠券代碼生成器</h1>
         
-        <div class="form-group">
-            <label for="productSeries">選擇產品系列：</label>
-            <select id="productSeries" onchange="generateIds()">
-                <option value="">請選擇產品系列</option>
-                <option value="sp2_pods">SP2 煙彈</option>
-                <option value="ilia_pods">ILIA 煙彈</option>
-                <option value="hta_pods">HTA 煙彈</option>
-                <option value="lana_pods">LANA 煙彈</option>
-            </select>
+        <div class="tool-selector">
+            <div class="tool-tab active" onclick="switchTool('variant')">
+                🚬 煙彈變數ID
+            </div>
+            <div class="tool-tab" onclick="switchTool('coupon')">
+                🎫 優惠券代碼
+            </div>
         </div>
         
-        <div class="form-group">
-            <label for="flavorName">口味名稱（中文）：</label>
-            <input type="text" id="flavorName" placeholder="例如：薄荷、草莓、藍莓" oninput="generateIds()">
-        </div>
-        
-        <div class="form-group">
-            <label for="flavorEnglish">口味英文名（小寫，用底線分隔）：</label>
-            <input type="text" id="flavorEnglish" placeholder="例如：mint、strawberry、green_tea" oninput="generateIds()">
-        </div>
-        
-        <div class="result-section" id="resultSection" style="display: none;">
-            <h3>🎯 生成結果</h3>
+        <!-- 煙彈變數ID生成器 -->
+        <div id="variantTool" class="tool-content active">
+            <div class="form-group">
+                <label for="productSeries">選擇產品系列：</label>
+                <select id="productSeries" onchange="generateVariantIds()">
+                    <option value="">請選擇產品系列</option>
+                    <option value="sp2_pods">SP2 煙彈</option>
+                    <option value="ilia_pods">ILIA 煙彈</option>
+                    <option value="hta_pods">HTA 煙彈</option>
+                    <option value="lana_pods">LANA 煙彈</option>
+                </select>
+            </div>
             
-            <div class="result-item">
-                <div class="result-label">變數ID (id)：</div>
-                <div class="result-value" id="variantId">
-                    <button class="copy-btn" onclick="copyToClipboard('variantId')">複製</button>
+            <div class="form-group">
+                <label for="flavorName">口味名稱（中文）：</label>
+                <input type="text" id="flavorName" placeholder="例如：薄荷、草莓、藍莓" oninput="generateVariantIds()">
+            </div>
+            
+            <div class="form-group">
+                <label for="flavorEnglish">口味英文名（小寫，用底線分隔）：</label>
+                <input type="text" id="flavorEnglish" placeholder="例如：mint、strawberry、green_tea" oninput="generateVariantIds()">
+            </div>
+            
+            <div class="result-section" id="variantResultSection" style="display: none;">
+                <h3>🎯 生成結果</h3>
+                
+                <div class="result-item">
+                    <div class="result-label">變數ID (id)：</div>
+                    <div class="result-value" id="variantId">
+                        <button class="copy-btn" onclick="copyToClipboard('variantId')">複製</button>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">SKU編號 (sku)：</div>
+                    <div class="result-value" id="skuCode">
+                        <button class="copy-btn" onclick="copyToClipboard('skuCode')">複製</button>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">變數名稱 (name)：</div>
+                    <div class="result-value">口味</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">變數類型 (type)：</div>
+                    <div class="result-value">flavor</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">變數值 (value)：</div>
+                    <div class="result-value" id="flavorValue"></div>
                 </div>
             </div>
             
-            <div class="result-item">
-                <div class="result-label">SKU編號 (sku)：</div>
-                <div class="result-value" id="skuCode">
-                    <button class="copy-btn" onclick="copyToClipboard('skuCode')">複製</button>
-                </div>
-            </div>
-            
-            <div class="result-item">
-                <div class="result-label">變數名稱 (name)：</div>
-                <div class="result-value">口味</div>
-            </div>
-            
-            <div class="result-item">
-                <div class="result-label">變數類型 (type)：</div>
-                <div class="result-value">flavor</div>
-            </div>
-            
-            <div class="result-item">
-                <div class="result-label">變數值 (value)：</div>
-                <div class="result-value" id="flavorValue"></div>
+            <div class="examples">
+                <h3>📝 格式範例</h3>
+                <div class="example-item">SP2煙彈薄荷：sp2_pods_mint → SP2-PODS-MINT</div>
+                <div class="example-item">ILIA煙彈草莓：ilia_pods_strawberry → ILIA-PODS-STRAWBERRY</div>
+                <div class="example-item">HTA煙彈可樂：hta_pods_cola → HTA-PODS-COLA</div>
+                <div class="example-item">LANA煙彈綠茶：lana_pods_green_tea → LANA-PODS-GREEN-TEA</div>
             </div>
         </div>
         
-        <div class="examples">
-            <h3>📝 格式範例</h3>
-            <div class="example-item">SP2煙彈薄荷：sp2_pods_mint → SP2-PODS-MINT</div>
-            <div class="example-item">ILIA煙彈草莓：ilia_pods_strawberry → ILIA-PODS-STRAWBERRY</div>
-            <div class="example-item">HTA煙彈可樂：hta_pods_cola → HTA-PODS-COLA</div>
-            <div class="example-item">LANA煙彈綠茶：lana_pods_green_tea → LANA-PODS-GREEN-TEA</div>
+        <!-- 優惠券代碼生成器 -->
+        <div id="couponTool" class="tool-content">
+            <div class="form-group">
+                <label for="couponType">優惠券類型：</label>
+                <select id="couponType" onchange="generateCouponCode()">
+                    <option value="">請選擇優惠券類型</option>
+                    <option value="WELCOME">新用戶歡迎</option>
+                    <option value="SAVE">滿額折扣</option>
+                    <option value="VIP">VIP專享</option>
+                    <option value="FLASH">限時閃購</option>
+                    <option value="STUDENT">學生優惠</option>
+                    <option value="BIRTHDAY">生日優惠</option>
+                    <option value="HOLIDAY">節日優惠</option>
+                    <option value="FIRST">首購優惠</option>
+                    <option value="RETURN">回購優惠</option>
+                    <option value="BULK">大量購買</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="couponValue">優惠數值：</label>
+                <input type="number" id="couponValue" placeholder="例如：10（代表10%或10元）" oninput="generateCouponCode()">
+            </div>
+            
+            <div class="form-group">
+                <label for="couponSuffix">額外後綴（可選）：</label>
+                <input type="text" id="couponSuffix" placeholder="例如：2024、NEW、SPECIAL" oninput="generateCouponCode()">
+            </div>
+            
+            <div class="result-section" id="couponResultSection" style="display: none;">
+                <h3>🎯 生成結果</h3>
+                
+                <div class="result-item">
+                    <div class="result-label">優惠券ID (id)：</div>
+                    <div class="result-value" id="couponId">
+                        <button class="copy-btn" onclick="copyToClipboard('couponId')">複製</button>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">優惠券代碼 (code)：</div>
+                    <div class="result-value" id="couponCode">
+                        <button class="copy-btn" onclick="copyToClipboard('couponCode')">複製</button>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">建議名稱 (name)：</div>
+                    <div class="result-value" id="couponName"></div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">建議描述 (description)：</div>
+                    <div class="result-value" id="couponDescription"></div>
+                </div>
+            </div>
+            
+            <div class="examples">
+                <h3>📝 格式範例</h3>
+                <div class="example-item">新用戶10%折扣：WELCOME10</div>
+                <div class="example-item">滿千折五十：SAVE50</div>
+                <div class="example-item">VIP會員20%：VIP20</div>
+                <div class="example-item">限時閃購100元：FLASH100</div>
+                <div class="example-item">學生優惠15%：STUDENT15</div>
+            </div>
         </div>
         
         <div class="warning">
             <strong>⚠️ 重要提醒：</strong>
             <ul>
-                <li>變數ID必須是唯一的，不能重複</li>
-                <li>英文名稱只能使用小寫字母和底線</li>
-                <li>不能使用中文、數字開頭或特殊符號</li>
-                <li>複合口味用底線分隔，如：green_tea、ice_cream</li>
+                <li><strong>煙彈變數ID</strong>：必須是唯一的，格式為小寫英文+底線</li>
+                <li><strong>優惠券代碼</strong>：必須是唯一的，格式為大寫英文+數字</li>
+                <li>生成前請檢查是否與現有代碼重複</li>
+                <li>建議先在測試環境驗證格式正確性</li>
             </ul>
         </div>
         
         <div class="success" id="validationResult" style="display: none;">
             <strong>✅ 格式驗證通過！</strong>
-            <p>生成的變數ID符合系統要求，可以安全使用。</p>
+            <p>生成的代碼符合系統要求，可以安全使用。</p>
         </div>
     </div>
 
     <script>
-        function generateIds() {
+        let currentTool = 'variant';
+        
+        function switchTool(tool) {
+            // 更新標籤狀態
+            document.querySelectorAll('.tool-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 更新內容顯示
+            document.querySelectorAll('.tool-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            if (tool === 'variant') {
+                document.getElementById('variantTool').classList.add('active');
+                currentTool = 'variant';
+            } else if (tool === 'coupon') {
+                document.getElementById('couponTool').classList.add('active');
+                currentTool = 'coupon';
+            }
+            
+            // 隱藏驗證結果
+            document.getElementById('validationResult').style.display = 'none';
+        }
+        
+        function generateVariantIds() {
             const productSeries = document.getElementById('productSeries').value;
             const flavorName = document.getElementById('flavorName').value.trim();
             const flavorEnglish = document.getElementById('flavorEnglish').value.trim().toLowerCase();
             
             if (!productSeries || !flavorName || !flavorEnglish) {
-                document.getElementById('resultSection').style.display = 'none';
+                document.getElementById('variantResultSection').style.display = 'none';
                 document.getElementById('validationResult').style.display = 'none';
                 return;
             }
@@ -233,7 +374,7 @@
             // 驗證英文格式
             const englishPattern = /^[a-z][a-z_]*[a-z]$|^[a-z]$/;
             if (!englishPattern.test(flavorEnglish)) {
-                document.getElementById('resultSection').style.display = 'none';
+                document.getElementById('variantResultSection').style.display = 'none';
                 document.getElementById('validationResult').style.display = 'none';
                 return;
             }
@@ -251,7 +392,59 @@
             document.getElementById('skuCode').innerHTML = `${skuCode} <button class="copy-btn" onclick="copyToClipboard('skuCode')">複製</button>`;
             document.getElementById('flavorValue').textContent = flavorName;
             
-            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('variantResultSection').style.display = 'block';
+            document.getElementById('validationResult').style.display = 'block';
+        }
+        
+        function generateCouponCode() {
+            const couponType = document.getElementById('couponType').value;
+            const couponValue = document.getElementById('couponValue').value.trim();
+            const couponSuffix = document.getElementById('couponSuffix').value.trim().toUpperCase();
+            
+            if (!couponType || !couponValue) {
+                document.getElementById('couponResultSection').style.display = 'none';
+                document.getElementById('validationResult').style.display = 'none';
+                return;
+            }
+            
+            // 生成優惠券代碼
+            let couponCode = couponType + couponValue;
+            if (couponSuffix) {
+                couponCode += couponSuffix;
+            }
+            
+            // 驗證格式
+            const codePattern = /^[A-Z][A-Z0-9]*$/;
+            if (!codePattern.test(couponCode)) {
+                document.getElementById('couponResultSection').style.display = 'none';
+                document.getElementById('validationResult').style.display = 'none';
+                return;
+            }
+            
+            // 生成建議名稱和描述
+            const typeNames = {
+                'WELCOME': '新用戶歡迎優惠',
+                'SAVE': '滿額折扣優惠',
+                'VIP': 'VIP會員專享',
+                'FLASH': '限時閃購優惠',
+                'STUDENT': '學生專享優惠',
+                'BIRTHDAY': '生日特別優惠',
+                'HOLIDAY': '節日限定優惠',
+                'FIRST': '首購專享優惠',
+                'RETURN': '回購感謝優惠',
+                'BULK': '大量購買優惠'
+            };
+            
+            const suggestedName = typeNames[couponType] || '特別優惠';
+            const suggestedDescription = `${suggestedName}，優惠值：${couponValue}`;
+            
+            // 顯示結果
+            document.getElementById('couponId').innerHTML = `${couponCode} <button class="copy-btn" onclick="copyToClipboard('couponId')">複製</button>`;
+            document.getElementById('couponCode').innerHTML = `${couponCode} <button class="copy-btn" onclick="copyToClipboard('couponCode')">複製</button>`;
+            document.getElementById('couponName').textContent = suggestedName;
+            document.getElementById('couponDescription').textContent = suggestedDescription;
+            
+            document.getElementById('couponResultSection').style.display = 'block';
             document.getElementById('validationResult').style.display = 'block';
         }
         
@@ -275,7 +468,7 @@
             });
         }
         
-        // 自動建議英文名稱
+        // 自動建議英文名稱（煙彈變數ID）
         document.getElementById('flavorName').addEventListener('input', function() {
             const chineseName = this.value.trim();
             const suggestions = {
@@ -308,7 +501,7 @@
             
             if (suggestions[chineseName]) {
                 document.getElementById('flavorEnglish').value = suggestions[chineseName];
-                generateIds();
+                generateVariantIds();
             }
         });
     </script>

@@ -89,8 +89,16 @@ collections:
             label: "優惠券列表"
             widget: "list"
             fields:
-              - {name: "id", label: "優惠券ID", widget: "string"}
-              - {name: "code", label: "優惠券代碼", widget: "string"}
+              - name: "id"
+                label: "優惠券ID"
+                widget: "string"
+                hint: "格式：大寫英文+數字，例如：WELCOME10, SAVE50, VIP20"
+                pattern: ["^[A-Z][A-Z0-9]*$", "格式錯誤！必須是大寫英文開頭，只能包含大寫字母和數字"]
+              - name: "code"
+                label: "優惠券代碼"
+                widget: "string"
+                hint: "格式：與ID相同，大寫英文+數字，例如：WELCOME10, SAVE50, VIP20"
+                pattern: ["^[A-Z][A-Z0-9]*$", "格式錯誤！必須是大寫英文開頭，只能包含大寫字母和數字"]
               - {name: "name", label: "優惠券名稱", widget: "string"}
               - {name: "description", label: "優惠券描述", widget: "text"}
               - name: "discountType"
