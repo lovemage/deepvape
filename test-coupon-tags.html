@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>優惠券與產品標籤測試 - DeepVape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #1afe49, #8386f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(26, 254, 73, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1afe49;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(131, 134, 245, 0.3);
+        }
+
+        .test-card h3 {
+            color: #8386f5;
+            margin-bottom: 1rem;
+        }
+
+        .coupon-test {
+            margin-bottom: 1rem;
+        }
+
+        .coupon-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(26, 254, 73, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1afe49, #8386f5);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+        }
+
+        .btn.secondary {
+            background: rgba(131, 134, 245, 0.3);
+            border: 1px solid #8386f5;
+        }
+
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem;
+            position: relative;
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(26, 254, 73, 0.2);
+        }
+
+        .product-tags {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 10;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: calc(100% - 16px);
+        }
+
+        .product-tag {
+            display: inline-block;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            animation: tagPulse 2s infinite;
+        }
+
+        @keyframes tagPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .status {
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .status.info {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .tag-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag-option {
+            background: rgba(131, 134, 245, 0.2);
+            color: #8386f5;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(131, 134, 245, 0.3);
+            font-size: 0.85rem;
+        }
+
+        .tag-option:hover {
+            background: rgba(131, 134, 245, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .tag-option.selected {
+            background: rgba(26, 254, 73, 0.3);
+            color: #1afe49;
+            border-color: #1afe49;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎫 優惠券與產品標籤測試</h1>
+            <p>測試優惠券管理系統和產品標籤功能</p>
+        </div>
+
+        <!-- 系統狀態檢查 -->
+        <div class="test-section">
+            <h2 class="section-title">🔧 系統狀態檢查</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>管理系統載入狀態</h3>
+                    <div id="systemStatus"></div>
+                    <button class="btn" onclick="checkSystemStatus()">檢查系統狀態</button>
+                </div>
+                <div class="test-card">
+                    <h3>數據載入狀態</h3>
+                    <div id="dataStatus"></div>
+                    <button class="btn" onclick="checkDataStatus()">檢查數據狀態</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 優惠券測試 -->
+        <div class="test-section">
+            <h2 class="section-title">🎫 優惠券功能測試</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>優惠券驗證測試</h3>
+                    <input type="text" id="couponCodeTest" class="coupon-input" placeholder="輸入優惠券代碼" value="WELCOME10">
+                    <input type="number" id="cartTotalTest" class="coupon-input" placeholder="購物車金額" value="1000">
+                    <button class="btn" onclick="testCouponValidation()">驗證優惠券</button>
+                    <div id="couponValidationResult" class="result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>可用優惠券列表</h3>
+                    <button class="btn" onclick="loadAvailableCoupons()">載入可用優惠券</button>
+                    <div id="availableCouponsList" class="result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>優惠券計算測試</h3>
+                    <div>
+                        <button class="btn secondary" onclick="testCouponCalculation('WELCOME10', 1000)">測試 WELCOME10 (10%)</button>
+                        <button class="btn secondary" onclick="testCouponCalculation('SAVE50', 1200)">測試 SAVE50 (固定50)</button>
+                        <button class="btn secondary" onclick="testCouponCalculation('VIP20', 800)">測試 VIP20 (20%)</button>
+                    </div>
+                    <div id="couponCalculationResult" class="result"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 產品標籤測試 -->
+        <div class="test-section">
+            <h2 class="section-title">🏷️ 產品標籤功能測試</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>標籤管理測試</h3>
+                    <select id="productSelect" class="coupon-input">
+                        <option value="sp2_device">SP2主機</option>
+                        <option value="sp2_pods">SP2煙彈</option>
+                        <option value="ilia_1">ILIA 1代</option>
+                        <option value="ilia_pods">ILIA 煙彈</option>
+                        <option value="hta_vape">HTA 黑桃主機</option>
+                        <option value="hta_pods">HTA 黑桃煙彈</option>
+                    </select>
+                    <div class="tag-selector" id="tagSelector"></div>
+                    <button class="btn" onclick="updateProductTags()">更新產品標籤</button>
+                    <div id="tagUpdateResult" class="result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>產品卡片預覽</h3>
+                    <button class="btn" onclick="generateProductCards()">生成產品卡片</button>
+                    <div id="productCardsPreview"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 整合測試 -->
+        <div class="test-section">
+            <h2 class="section-title">🔄 整合功能測試</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>購物車優惠券整合</h3>
+                    <div>
+                        <p>模擬購物車：</p>
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                            商品小計: NT$ <span id="mockSubtotal">1500</span><br>
+                            運費: NT$ <span id="mockShipping">60</span><br>
+                            優惠券折扣: NT$ <span id="mockDiscount">0</span><br>
+                            <strong>總計: NT$ <span id="mockTotal">1560</span></strong>
+                        </div>
+                        <input type="text" id="mockCouponCode" class="coupon-input" placeholder="輸入優惠券代碼">
+                        <button class="btn" onclick="applyMockCoupon()">套用優惠券</button>
+                        <button class="btn secondary" onclick="removeMockCoupon()">移除優惠券</button>
+                    </div>
+                    <div id="mockCartResult" class="result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>標籤篩選測試</h3>
+                    <select id="filterTagSelect" class="coupon-input">
+                        <option value="">選擇標籤篩選</option>
+                        <option value="hot">🔥 火爆商品</option>
+                        <option value="new">🆕 新品上架</option>
+                        <option value="recommend">👍 小編推薦</option>
+                        <option value="limited">⏰ 限時優惠</option>
+                    </select>
+                    <button class="btn" onclick="filterProductsByTag()">篩選產品</button>
+                    <div id="filteredProductsResult" class="result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入管理系統 -->
+    <script src="js/coupon-manager.js"></script>
+    <script src="js/product-tags.js"></script>
+
+    <script>
+        let mockAppliedCoupon = null;
+
+        // 系統狀態檢查
+        function checkSystemStatus() {
+            const status = document.getElementById('systemStatus');
+            const checks = {
+                'CouponManager': !!window.CouponManager,
+                'ProductTagManager': !!window.ProductTagManager
+            };
+            
+            let html = '';
+            for (const [name, loaded] of Object.entries(checks)) {
+                const statusClass = loaded ? 'success' : 'error';
+                const statusText = loaded ? '✅ 已載入' : '❌ 未載入';
+                html += `<div class="status ${statusClass}">${name}: ${statusText}</div>`;
+            }
+            
+            status.innerHTML = html;
+        }
+
+        // 數據載入狀態檢查
+        async function checkDataStatus() {
+            const status = document.getElementById('dataStatus');
+            let html = '';
+            
+            try {
+                // 檢查優惠券數據
+                if (window.CouponManager) {
+                    const coupons = window.CouponManager.getAvailableCoupons();
+                    html += `<div class="status success">優惠券數據: ✅ ${coupons.length} 張可用</div>`;
+                } else {
+                    html += `<div class="status error">優惠券數據: ❌ 管理器未載入</div>`;
+                }
+                
+                // 檢查產品標籤數據
+                if (window.ProductTagManager) {
+                    const tags = window.ProductTagManager.getAvailableTags();
+                    html += `<div class="status success">產品標籤: ✅ ${tags.length} 種標籤</div>`;
+                } else {
+                    html += `<div class="status error">產品標籤: ❌ 管理器未載入</div>`;
+                }
+                
+            } catch (error) {
+                html += `<div class="status error">數據檢查錯誤: ${error.message}</div>`;
+            }
+            
+            status.innerHTML = html;
+        }
+
+        // 優惠券驗證測試
+        function testCouponValidation() {
+            const code = document.getElementById('couponCodeTest').value;
+            const total = parseFloat(document.getElementById('cartTotalTest').value) || 0;
+            const result = document.getElementById('couponValidationResult');
+            
+            if (!window.CouponManager) {
+                result.textContent = '❌ CouponManager 未載入';
+                return;
+            }
+            
+            const validation = window.CouponManager.validateCoupon(code, total);
+            result.textContent = JSON.stringify(validation, null, 2);
+        }
+
+        // 載入可用優惠券
+        function loadAvailableCoupons() {
+            const result = document.getElementById('availableCouponsList');
+            
+            if (!window.CouponManager) {
+                result.textContent = '❌ CouponManager 未載入';
+                return;
+            }
+            
+            const coupons = window.CouponManager.getAvailableCoupons();
+            result.textContent = JSON.stringify(coupons, null, 2);
+        }
+
+        // 優惠券計算測試
+        function testCouponCalculation(code, total) {
+            const result = document.getElementById('couponCalculationResult');
+            
+            if (!window.CouponManager) {
+                result.textContent = '❌ CouponManager 未載入';
+                return;
+            }
+            
+            const applyResult = window.CouponManager.applyCoupon(code, total);
+            result.textContent = JSON.stringify(applyResult, null, 2);
+        }
+
+        // 初始化標籤選擇器
+        function initTagSelector() {
+            const selector = document.getElementById('tagSelector');
+            if (!window.ProductTagManager) return;
+            
+            const availableTags = window.ProductTagManager.getAvailableTags();
+            selector.innerHTML = availableTags.map(tag => 
+                `<div class="tag-option" data-tag="${tag.id}" onclick="toggleTag('${tag.id}')">
+                    ${tag.icon} ${tag.name}
+                </div>`
+            ).join('');
+        }
+
+        // 切換標籤選擇
+        function toggleTag(tagId) {
+            const tagElement = document.querySelector(`[data-tag="${tagId}"]`);
+            tagElement.classList.toggle('selected');
+        }
+
+        // 更新產品標籤
+        function updateProductTags() {
+            const productId = document.getElementById('productSelect').value;
+            const selectedTags = Array.from(document.querySelectorAll('.tag-option.selected'))
+                .map(el => el.dataset.tag);
+            const result = document.getElementById('tagUpdateResult');
+            
+            if (!window.ProductTagManager) {
+                result.textContent = '❌ ProductTagManager 未載入';
+                return;
+            }
+            
+            window.ProductTagManager.setProductTags(productId, selectedTags);
+            result.textContent = `✅ 已更新 ${productId} 的標籤: ${selectedTags.join(', ')}`;
+        }
+
+        // 生成產品卡片預覽
+        function generateProductCards() {
+            const preview = document.getElementById('productCardsPreview');
+            
+            if (!window.ProductTagManager) {
+                preview.innerHTML = '<div class="status error">❌ ProductTagManager 未載入</div>';
+                return;
+            }
+            
+            const products = ['sp2_device', 'ilia_1', 'hta_pods', 'lana_a8000'];
+            const productNames = {
+                'sp2_device': 'SP2主機',
+                'ilia_1': 'ILIA 1代',
+                'hta_pods': 'HTA 黑桃煙彈',
+                'lana_a8000': 'LANA A8000'
+            };
+            
+            preview.innerHTML = products.map(productId => {
+                const tags = window.ProductTagManager.getProductTags(productId);
+                const tagElements = tags.map(tagId => {
+                    const tagInfo = window.ProductTagManager.getTagInfo(tagId);
+                    return tagInfo ? `<span class="product-tag" style="background: ${tagInfo.color}">${tagInfo.icon} ${tagInfo.name}</span>` : '';
+                }).join('');
+                
+                return `
+                    <div class="product-card" data-product-id="${productId}">
+                        <div class="product-tags">${tagElements}</div>
+                        <h4 style="margin-top: 2rem;">${productNames[productId]}</h4>
+                        <p>NT$ 1,200</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 模擬購物車優惠券套用
+        function applyMockCoupon() {
+            const code = document.getElementById('mockCouponCode').value;
+            const subtotal = parseFloat(document.getElementById('mockSubtotal').textContent);
+            const shipping = parseFloat(document.getElementById('mockShipping').textContent);
+            const result = document.getElementById('mockCartResult');
+            
+            if (!window.CouponManager) {
+                result.textContent = '❌ CouponManager 未載入';
+                return;
+            }
+            
+            const applyResult = window.CouponManager.applyCoupon(code, subtotal);
+            
+            if (applyResult.success) {
+                mockAppliedCoupon = applyResult.coupon;
+                const discount = applyResult.discount;
+                const total = subtotal + shipping - discount;
+                
+                document.getElementById('mockDiscount').textContent = discount;
+                document.getElementById('mockTotal').textContent = total;
+                
+                result.innerHTML = `<div class="status success">✅ ${applyResult.message}<br>折扣金額: NT$ ${discount}</div>`;
+            } else {
+                result.innerHTML = `<div class="status error">❌ ${applyResult.message}</div>`;
+            }
+        }
+
+        // 移除模擬優惠券
+        function removeMockCoupon() {
+            if (!window.CouponManager) return;
+            
+            window.CouponManager.removeCoupon();
+            mockAppliedCoupon = null;
+            
+            const subtotal = parseFloat(document.getElementById('mockSubtotal').textContent);
+            const shipping = parseFloat(document.getElementById('mockShipping').textContent);
+            
+            document.getElementById('mockDiscount').textContent = '0';
+            document.getElementById('mockTotal').textContent = subtotal + shipping;
+            document.getElementById('mockCartResult').innerHTML = '<div class="status info">ℹ️ 已移除優惠券</div>';
+        }
+
+        // 按標籤篩選產品
+        function filterProductsByTag() {
+            const tagId = document.getElementById('filterTagSelect').value;
+            const result = document.getElementById('filteredProductsResult');
+            
+            if (!window.ProductTagManager) {
+                result.textContent = '❌ ProductTagManager 未載入';
+                return;
+            }
+            
+            if (!tagId) {
+                result.textContent = '請選擇要篩選的標籤';
+                return;
+            }
+            
+            const products = window.ProductTagManager.getProductsByTag(tagId);
+            result.textContent = `標籤 "${tagId}" 的產品: ${products.join(', ')}`;
+        }
+
+        // 頁面載入完成後初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                checkSystemStatus();
+                checkDataStatus();
+                initTagSelector();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

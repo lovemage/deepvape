@@ -1,0 +1,74 @@
+{
+  "coupons": [
+    {
+      "id": "WELCOME10",
+      "code": "WELCOME10",
+      "name": "新用戶歡迎優惠",
+      "description": "新用戶專享10%折扣",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "minAmount": 500,
+      "totalCount": 100,
+      "usedCount": 0,
+      "startDate": "2024-01-01T00:00:00Z",
+      "endDate": "2024-12-31T23:59:59Z",
+      "active": true
+    },
+    {
+      "id": "SAVE50",
+      "code": "SAVE50",
+      "name": "滿千折五十",
+      "description": "消費滿1000元立減50元",
+      "discountType": "fixed",
+      "discountValue": 50,
+      "minAmount": 1000,
+      "totalCount": 200,
+      "usedCount": 0,
+      "startDate": "2024-01-01T00:00:00Z",
+      "endDate": "2024-12-31T23:59:59Z",
+      "active": true
+    },
+    {
+      "id": "VIP20",
+      "code": "VIP20",
+      "name": "VIP會員專享",
+      "description": "VIP會員專享20%折扣",
+      "discountType": "percentage",
+      "discountValue": 20,
+      "minAmount": 800,
+      "totalCount": 50,
+      "usedCount": 0,
+      "startDate": "2024-01-01T00:00:00Z",
+      "endDate": "2024-12-31T23:59:59Z",
+      "active": true
+    },
+    {
+      "id": "FLASH100",
+      "code": "FLASH100",
+      "name": "限時閃購",
+      "description": "限時閃購滿1500立減100",
+      "discountType": "fixed",
+      "discountValue": 100,
+      "minAmount": 1500,
+      "totalCount": 30,
+      "usedCount": 0,
+      "startDate": "2024-01-01T00:00:00Z",
+      "endDate": "2024-03-31T23:59:59Z",
+      "active": true
+    },
+    {
+      "id": "STUDENT15",
+      "code": "STUDENT15",
+      "name": "學生優惠",
+      "description": "學生專享15%折扣",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "minAmount": 300,
+      "totalCount": 150,
+      "usedCount": 0,
+      "startDate": "2024-01-01T00:00:00Z",
+      "endDate": "2024-12-31T23:59:59Z",
+      "active": true
+    }
+  ]
+} 

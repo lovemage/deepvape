@@ -80,6 +80,217 @@ collections:
               - {name: "telegram", label: "Telegram", widget: "string"}
               - {name: "instagram", label: "Instagram", widget: "string"}
               - {name: "facebook", label: "Facebook", widget: "string"}
+
+      - name: "coupons"
+        label: "優惠券管理"
+        file: "data/coupons.json"
+        fields:
+          - name: "coupons"
+            label: "優惠券列表"
+            widget: "list"
+            fields:
+              - {name: "id", label: "優惠券ID", widget: "string"}
+              - {name: "code", label: "優惠券代碼", widget: "string"}
+              - {name: "name", label: "優惠券名稱", widget: "string"}
+              - {name: "description", label: "優惠券描述", widget: "text"}
+              - name: "discountType"
+                label: "折扣類型"
+                widget: "select"
+                options: 
+                  - {label: "百分比折扣", value: "percentage"}
+                  - {label: "固定金額折扣", value: "fixed"}
+              - {name: "discountValue", label: "折扣值", widget: "number"}
+              - {name: "minAmount", label: "最低消費金額", widget: "number", default: 0}
+              - {name: "totalCount", label: "總張數", widget: "number", default: 100}
+              - {name: "usedCount", label: "已使用張數", widget: "number", default: 0}
+              - {name: "startDate", label: "開始日期", widget: "datetime"}
+              - {name: "endDate", label: "結束日期", widget: "datetime"}
+              - {name: "active", label: "是否啟用", widget: "boolean", default: true}
+
+      - name: "product_tags"
+        label: "產品標籤管理"
+        file: "data/product-tags.json"
+        fields:
+          - name: "productTags"
+            label: "產品標籤配置"
+            widget: "object"
+            fields:
+              - name: "sp2_device"
+                label: "SP2主機"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "sp2_pods"
+                label: "SP2煙彈"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "ilia_1"
+                label: "ILIA 1代"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "ilia_pods"
+                label: "ILIA 煙彈"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "ilia_fabric"
+                label: "ILIA 布面版"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "ilia_leather"
+                label: "ILIA 皮革版"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "ilia_disposable"
+                label: "ILIA 一次性"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "hta_vape"
+                label: "HTA 黑桃主機"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "hta_pods"
+                label: "HTA 黑桃煙彈"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "lana_pods"
+                label: "LANA 煙彈"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
+              - name: "lana_a8000"
+                label: "LANA A8000"
+                widget: "select"
+                multiple: true
+                options: 
+                  - {label: "🔥 火爆商品", value: "hot"}
+                  - {label: "✅ 安心選擇", value: "safe"}
+                  - {label: "🆕 新品上架", value: "new"}
+                  - {label: "👍 小編推薦", value: "recommend"}
+                  - {label: "⏰ 限時優惠", value: "limited"}
+                  - {label: "📦 超值組合", value: "combo"}
+                  - {label: "📈 熱門排行", value: "trending"}
+                  - {label: "⚡ 售完為止", value: "soldout"}
+                  - {label: "💎 獨家販售", value: "exclusive"}
+                  - {label: "💰 高CP值", value: "value"}
+                default: []
       
 
 

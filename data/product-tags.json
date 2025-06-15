@@ -1,0 +1,15 @@
+{
+  "productTags": {
+    "sp2_device": ["hot", "recommend"],
+    "sp2_pods": ["new", "value"],
+    "ilia_1": ["trending", "safe"],
+    "ilia_pods": ["hot", "exclusive"],
+    "ilia_fabric": ["new", "recommend"],
+    "ilia_leather": ["limited", "value"],
+    "ilia_disposable": ["combo", "trending"],
+    "hta_vape": ["safe", "recommend"],
+    "hta_pods": ["value", "hot"],
+    "lana_pods": ["new", "exclusive"],
+    "lana_a8000": ["trending", "value"]
+  }
+} 

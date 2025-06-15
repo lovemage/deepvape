@@ -899,6 +899,170 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Coupon Section Styles */
+        .coupon-section {
+            background: rgba(26, 254, 73, 0.1);
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .coupon-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .coupon-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            background: var(--secondary-color);
+            color: var(--text-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .coupon-input:focus {
+            outline: none;
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 10px rgba(26, 254, 73, 0.3);
+        }
+
+        .coupon-apply-btn {
+            padding: 0.8rem 1.2rem;
+            background: var(--highlight-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .coupon-apply-btn:hover {
+            background: #15e03f;
+            transform: translateY(-2px);
+        }
+
+        .coupon-apply-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .coupon-message {
+            padding: 0.5rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .coupon-message.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .coupon-message.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .applied-coupon {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .coupon-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .coupon-name {
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .coupon-discount {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .coupon-remove-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .coupon-remove-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+            transform: scale(1.1);
+        }
+
+        .available-coupons {
+            margin-top: 1rem;
+        }
+
+        .coupons-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .coupons-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .coupon-tag {
+            background: rgba(131, 134, 245, 0.2);
+            color: #8386f5;
+            padding: 0.3rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(131, 134, 245, 0.3);
+        }
+
+        .coupon-tag:hover {
+            background: rgba(131, 134, 245, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .summary-row.coupon-discount .summary-value.discount {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .summary-row.total-row {
+            border-top: 2px solid var(--border-color);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
         /* Footer 上方設計區域 */
         .footer-design-section {
             background: linear-gradient(135deg, #083e12 0%, #041348 50%, #3d43b4 100%);
@@ -1285,7 +1449,45 @@
                 <span class="summary-value" id="shipping">NT$ 60</span>
             </div>
 
-            <div class="summary-row">
+            <!-- Coupon Section -->
+            <div class="coupon-section">
+                <h4 class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
+                    <i class="fas fa-ticket-alt"></i>
+                    優惠券
+                </h4>
+                
+                <div class="coupon-input-group">
+                    <input type="text" id="couponCode" class="coupon-input" placeholder="請輸入優惠券代碼" maxlength="20">
+                    <button class="coupon-apply-btn" onclick="applyCoupon()">
+                        <i class="fas fa-check"></i>
+                        套用
+                    </button>
+                </div>
+                
+                <div class="coupon-message" id="couponMessage"></div>
+                
+                <div class="applied-coupon" id="appliedCoupon" style="display: none;">
+                    <div class="coupon-info">
+                        <span class="coupon-name" id="appliedCouponName"></span>
+                        <span class="coupon-discount" id="appliedCouponDiscount"></span>
+                    </div>
+                    <button class="coupon-remove-btn" onclick="removeCoupon()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="available-coupons" id="availableCoupons">
+                    <p class="coupons-title">可用優惠券：</p>
+                    <div class="coupons-list" id="couponsList"></div>
+                </div>
+            </div>
+
+            <div class="summary-row coupon-discount" id="couponDiscountRow" style="display: none;">
+                <span class="summary-label">優惠券折扣</span>
+                <span class="summary-value discount" id="couponDiscount">-NT$ 0</span>
+            </div>
+
+            <div class="summary-row total-row">
                 <span class="summary-label">總計</span>
                 <span class="summary-value" id="total">NT$ 60</span>
             </div>
@@ -1421,6 +1623,7 @@
             renderCart();
             updateSummary();
             loadSelectedStore(); // 載入選擇的門市資訊
+            loadAvailableCoupons(); // 載入可用優惠券
             validateForm();
         }
 
@@ -1535,10 +1738,27 @@
                 shipping = storeType === '711-outlying' ? 140 : 60;
             }
             
-            const total = subtotal + shipping;
+            // 計算優惠券折扣
+            let discount = 0;
+            if (window.CouponManager && window.CouponManager.getAppliedCoupon()) {
+                const appliedCoupon = window.CouponManager.getAppliedCoupon();
+                discount = window.CouponManager.calculateDiscount(appliedCoupon, subtotal);
+            }
+            
+            const total = Math.max(0, subtotal + shipping - discount);
             
             document.getElementById('subtotal').textContent = `NT$ ${subtotal}`;
             document.getElementById('shipping').textContent = `NT$ ${shipping}`;
+            
+            // 顯示或隱藏優惠券折扣行
+            const discountRow = document.getElementById('couponDiscountRow');
+            if (discount > 0) {
+                discountRow.style.display = 'flex';
+                document.getElementById('couponDiscount').textContent = `-NT$ ${discount}`;
+            } else {
+                discountRow.style.display = 'none';
+            }
+            
             document.getElementById('total').textContent = `NT$ ${total}`;
         }
 
@@ -2121,6 +2341,13 @@ ${orderData.items.map(item =>
             loadCart();
             generateCaptcha();
             
+            // 初始化優惠券功能
+            setTimeout(() => {
+                if (window.CouponManager) {
+                    loadAvailableCoupons();
+                }
+            }, 1000);
+            
             // 添加隱藏的測試功能（連續點擊logo 3次）
             let logoClickCount = 0;
             const logo = document.querySelector('.logo-button');
@@ -2170,6 +2397,93 @@ ${orderData.items.map(item =>
             document.getElementById('storeNameInput').value = '京達門市';
             document.getElementById('storeAddressInput').value = '台中市豐原區中正路805號';
             confirmStoreSelection();
+        }
+
+        // 優惠券相關函數
+        async function loadAvailableCoupons() {
+            if (!window.CouponManager) return;
+            
+            try {
+                const availableCoupons = window.CouponManager.getAvailableCoupons();
+                const couponsList = document.getElementById('couponsList');
+                
+                if (availableCoupons.length === 0) {
+                    couponsList.innerHTML = '<span style="color: var(--text-secondary); font-size: 0.8rem;">暫無可用優惠券</span>';
+                    return;
+                }
+                
+                couponsList.innerHTML = availableCoupons.map(coupon => 
+                    `<span class="coupon-tag" onclick="applyCouponByCode('${coupon.code}')" title="${coupon.description}">
+                        ${coupon.code}
+                    </span>`
+                ).join('');
+            } catch (error) {
+                console.error('載入可用優惠券失敗:', error);
+            }
+        }
+
+        function applyCoupon() {
+            const couponCode = document.getElementById('couponCode').value.trim().toUpperCase();
+            applyCouponByCode(couponCode);
+        }
+
+        function applyCouponByCode(couponCode) {
+            if (!couponCode) {
+                showCouponMessage('請輸入優惠券代碼', 'error');
+                return;
+            }
+
+            if (!window.CouponManager) {
+                showCouponMessage('優惠券系統尚未載入', 'error');
+                return;
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const result = window.CouponManager.applyCoupon(couponCode, subtotal);
+
+            if (result.success) {
+                showCouponMessage(result.message, 'success');
+                showAppliedCoupon(result.coupon, result.discount);
+                document.getElementById('couponCode').value = '';
+                updateSummary();
+            } else {
+                showCouponMessage(result.message, 'error');
+            }
+        }
+
+        function removeCoupon() {
+            if (!window.CouponManager) return;
+
+            const result = window.CouponManager.removeCoupon();
+            showCouponMessage(result.message, 'success');
+            hideAppliedCoupon();
+            updateSummary();
+        }
+
+        function showCouponMessage(message, type) {
+            const messageElement = document.getElementById('couponMessage');
+            messageElement.textContent = message;
+            messageElement.className = `coupon-message ${type}`;
+            
+            // 3秒後清除訊息
+            setTimeout(() => {
+                messageElement.textContent = '';
+                messageElement.className = 'coupon-message';
+            }, 3000);
+        }
+
+        function showAppliedCoupon(coupon, discount) {
+            const appliedCouponElement = document.getElementById('appliedCoupon');
+            const couponNameElement = document.getElementById('appliedCouponName');
+            const couponDiscountElement = document.getElementById('appliedCouponDiscount');
+
+            couponNameElement.textContent = coupon.name;
+            couponDiscountElement.textContent = window.CouponManager.getDiscountDescription(coupon);
+            appliedCouponElement.style.display = 'flex';
+        }
+
+        function hideAppliedCoupon() {
+            document.getElementById('appliedCoupon').style.display = 'none';
         }
 
 
@@ -2300,6 +2614,7 @@ ${orderData.items.map(item =>
     <script src="js/product-manager.js"></script>
     <script src="js/inventory-manager.js"></script>
     <script src="js/order-manager.js"></script>
+    <script src="js/coupon-manager.js"></script>
 
     <!-- 初始化檢查腳本 -->
     <script>
