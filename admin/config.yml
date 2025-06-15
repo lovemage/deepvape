@@ -116,6 +116,38 @@ collections:
               - {name: "active", label: "是否啟用", widget: "boolean", default: true}
               - {name: "autoDisplay", label: "是否自動向用戶顯示", widget: "boolean", default: true, hint: "關閉後，用戶需要手動輸入優惠券代碼才能使用"}
 
+      - name: "shipping_settings"
+        label: "全館滿額免運管理"
+        file: "data/shipping-settings.json"
+        fields:
+          - name: "freeShipping"
+            label: "免運設定"
+            widget: "object"
+            fields:
+              - {name: "enabled", label: "啟用滿額免運", widget: "boolean", default: true}
+              - {name: "threshold", label: "免運門檻金額", widget: "number", default: 1000, hint: "滿多少金額即可免運費"}
+              - {name: "description", label: "免運說明文字", widget: "string", default: "全館滿$1000免運費"}
+              - {name: "showOnCart", label: "在購物車顯示免運提示", widget: "boolean", default: true}
+              - {name: "showOnProduct", label: "在商品頁顯示免運提示", widget: "boolean", default: true}
+          - name: "shippingRates"
+            label: "運費設定"
+            widget: "object"
+            fields:
+              - {name: "standard", label: "標準運費", widget: "number", default: 60, hint: "一般7-11取貨運費"}
+              - {name: "outlying", label: "離島運費", widget: "number", default: 140, hint: "離島地區7-11取貨運費"}
+              - {name: "homeDelivery", label: "宅配運費", widget: "number", default: 80, hint: "宅配到府運費"}
+          - name: "specialRules"
+            label: "特殊運費規則"
+            widget: "list"
+            required: false
+            fields:
+              - {name: "name", label: "規則名稱", widget: "string"}
+              - {name: "condition", label: "適用條件", widget: "string", hint: "例如：特定商品、特定地區等"}
+              - {name: "shippingFee", label: "運費金額", widget: "number"}
+              - {name: "freeShippingThreshold", label: "免運門檻", widget: "number", required: false}
+              - {name: "active", label: "啟用規則", widget: "boolean", default: true}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
       - name: "product_tags"
         label: "產品標籤管理"
         file: "data/product-tags.json"

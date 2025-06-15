@@ -1,0 +1,24 @@
+{
+  "freeShipping": {
+    "enabled": true,
+    "threshold": 1000,
+    "description": "全館滿$1000免運費",
+    "showOnCart": true,
+    "showOnProduct": true
+  },
+  "shippingRates": {
+    "standard": 60,
+    "outlying": 140,
+    "homeDelivery": 80
+  },
+  "specialRules": [
+    {
+      "name": "大型商品運費",
+      "condition": "重量超過5公斤的商品",
+      "shippingFee": 120,
+      "freeShippingThreshold": 2000,
+      "active": false
+    }
+  ],
+  "lastUpdated": "2025-01-01T12:00:00.000Z"
+} 

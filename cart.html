@@ -388,6 +388,29 @@
             font-weight: 600;
         }
 
+        /* Free Shipping Hint */
+        .free-shipping-hint {
+            background: linear-gradient(45deg, rgba(26, 254, 73, 0.1), rgba(0, 212, 170, 0.1));
+            border: 1px solid rgba(26, 254, 73, 0.3);
+            border-radius: 15px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(26, 254, 73, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 15px rgba(26, 254, 73, 0.5);
+            }
+        }
+
         /* Customer Information */
         .customer-info {
             margin: 2rem 0;
@@ -1449,6 +1472,11 @@
                 <span class="summary-value" id="shipping">NT$ 60</span>
             </div>
 
+            <!-- Free Shipping Hint -->
+            <div class="free-shipping-hint" id="freeShippingHint" style="display: none;">
+                全館滿$1000免運費
+            </div>
+
             <!-- Coupon Section -->
             <div class="coupon-section">
                 <h4 class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
@@ -1737,10 +1765,28 @@
         function updateSummary() {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             let shipping = 0;
+            let freeShippingHint = '';
             
             if (cart.length > 0) {
                 const storeType = document.getElementById('storeTypeSelect').value;
-                shipping = storeType === '711-outlying' ? 140 : 60;
+                const shippingMethod = storeType === '711-outlying' ? 'outlying' : 'standard';
+                
+                // 使用運費管理器計算運費
+                if (window.ShippingManager && window.ShippingManager.initialized) {
+                    const shippingResult = window.ShippingManager.calculateShipping(subtotal, shippingMethod, cart);
+                    shipping = shippingResult.shippingFee;
+                    freeShippingHint = window.ShippingManager.getFreeShippingHint(subtotal);
+                } else {
+                    // 備用計算方式
+                    shipping = storeType === '711-outlying' ? 140 : 60;
+                    if (subtotal >= 1000) {
+                        shipping = 0;
+                        freeShippingHint = '🎉 已享免運優惠！';
+                    } else {
+                        const remaining = 1000 - subtotal;
+                        freeShippingHint = `再消費 NT$ ${remaining} 即可享免運優惠！`;
+                    }
+                }
             }
             
             // 計算優惠券折扣
@@ -1765,12 +1811,28 @@
             }
             
             document.getElementById('total').textContent = `NT$ ${total}`;
+            
+            // 顯示免運提示
+            updateFreeShippingHint(freeShippingHint);
         }
 
         // Update shipping fee when store type changes
         function updateShippingFee() {
             updateSummary();
             validateForm();
+        }
+
+        // Update free shipping hint display
+        function updateFreeShippingHint(hintText) {
+            const hintElement = document.getElementById('freeShippingHint');
+            if (hintElement) {
+                if (hintText) {
+                    hintElement.textContent = hintText;
+                    hintElement.style.display = 'block';
+                } else {
+                    hintElement.style.display = 'none';
+                }
+            }
         }
 
         // 開啟ibon門市查詢系統
@@ -1997,7 +2059,20 @@ ${orderData.items.map(item =>
             console.log('選擇的門市:', selectedStoreInfo);
             
             const storeType = document.getElementById('storeTypeSelect').value;
-            const shipping = storeType === '711-outlying' ? 140 : 60;
+            const shippingMethod = storeType === '711-outlying' ? 'outlying' : 'standard';
+            
+            // 計算運費
+            let shipping = 60; // 預設運費
+            if (window.ShippingManager && window.ShippingManager.initialized) {
+                const shippingResult = window.ShippingManager.calculateShipping(
+                    currentCart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                    shippingMethod,
+                    currentCart
+                );
+                shipping = shippingResult.shippingFee;
+            } else {
+                shipping = storeType === '711-outlying' ? 140 : 60;
+            }
             
             // 準備客戶信息
             const customerInfo = {
@@ -2190,7 +2265,13 @@ ${orderData.items.map(item =>
                 });
 
                 // 計算運費
-                const shipping = subtotal >= 1000 ? 0 : 60; // 簡化的運費計算
+                let shipping = 60; // 預設運費
+                if (window.ShippingManager && window.ShippingManager.initialized) {
+                    const shippingResult = window.ShippingManager.calculateShipping(subtotal, 'standard', fallbackCart);
+                    shipping = shippingResult.shippingFee;
+                } else {
+                    shipping = subtotal >= 1000 ? 0 : 60; // 簡化的運費計算
+                }
                 const total = subtotal + shipping;
 
                 // 生成訂單ID
@@ -2641,6 +2722,7 @@ ${orderData.items.map(item =>
     <script src="js/inventory-manager.js"></script>
     <script src="js/order-manager.js"></script>
     <script src="js/coupon-manager.js"></script>
+    <script src="js/shipping-manager.js"></script>
 
     <!-- 初始化檢查腳本 -->
     <script>
@@ -2656,12 +2738,14 @@ ${orderData.items.map(item =>
                     console.log(`檢查管理器載入狀態 (${attempts}/${maxAttempts}):`, {
                         ProductManager: !!window.ProductManager,
                         InventoryManager: !!window.InventoryManager,
-                        OrderManager: !!window.OrderManager
+                        OrderManager: !!window.OrderManager,
+                        ShippingManager: !!window.ShippingManager
                     });
                     
                     if (window.ProductManager && 
                         window.InventoryManager && 
-                        window.OrderManager) {
+                        window.OrderManager &&
+                        window.ShippingManager) {
                         console.log('所有管理器已載入完成');
                         resolve(true);
                     } else if (attempts >= maxAttempts) {
@@ -2688,9 +2772,20 @@ ${orderData.items.map(item =>
                         await window.OrderManager.init();
                     }
                     
-                    console.log('OrderManager 狀態:', {
-                        exists: !!window.OrderManager,
-                        initialized: window.OrderManager?.initialized
+                    // 確保 ShippingManager 已初始化
+                    if (window.ShippingManager && !window.ShippingManager.initialized) {
+                        await window.ShippingManager.init();
+                    }
+                    
+                    console.log('管理器狀態:', {
+                        OrderManager: {
+                            exists: !!window.OrderManager,
+                            initialized: window.OrderManager?.initialized
+                        },
+                        ShippingManager: {
+                            exists: !!window.ShippingManager,
+                            initialized: window.ShippingManager?.initialized
+                        }
                     });
                 } else {
                     console.warn('部分管理器未載入，但系統將繼續運行');
