@@ -343,7 +343,7 @@ collections:
               - {name: "shippingMethod", label: "配送方式", widget: "select", options: ["home_delivery", "convenience_store", "pickup"]}
               - {name: "trackingNumber", label: "追蹤號碼", widget: "string", required: false}
               - {name: "notes", label: "訂單備註", widget: "text", required: false}
-              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
       - name: "order_stats"
         label: "訂單統計"
@@ -371,7 +371,7 @@ collections:
                   - {name: "productName", label: "產品名稱", widget: "string"}
                   - {name: "totalSold", label: "總銷量", widget: "number"}
                   - {name: "revenue", label: "營收", widget: "number"}
-              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
   - name: "inventory_logs"
     label: "庫存記錄"
@@ -669,7 +669,7 @@ collections:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "lana_a8000_product"}
           - {name: "productName", label: "產品名稱", widget: "string", default: "LANA A8000 拋棄式"}
           - {name: "price", label: "產品價格", widget: "number", default: 320}
-              - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
           - name: "variants"
             label: "產品變數（口味/顏色）"
@@ -684,5 +684,5 @@ collections:
               - {name: "image", label: "變數圖片", widget: "image", required: false}
               - {name: "sku", label: "SKU編號", widget: "string", required: false}
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
-              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""} 
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""} 
 
