@@ -55,8 +55,7 @@ class ShippingManager {
             },
             shippingRates: {
                 standard: 60,
-                outlying: 140,
-                homeDelivery: 80
+                outlying: 140
             },
             specialRules: []
         };
@@ -65,7 +64,7 @@ class ShippingManager {
     /**
      * 計算運費
      * @param {number} subtotal - 商品小計
-     * @param {string} shippingMethod - 配送方式 ('standard', 'outlying', 'homeDelivery')
+     * @param {string} shippingMethod - 配送方式 ('standard', 'outlying')
      * @param {Array} items - 商品列表（可選，用於特殊規則）
      * @returns {Object} 運費計算結果
      */

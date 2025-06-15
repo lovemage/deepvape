@@ -8,8 +8,7 @@
   },
   "shippingRates": {
     "standard": 60,
-    "outlying": 140,
-    "homeDelivery": 80
+    "outlying": 140
   },
   "specialRules": [
     {

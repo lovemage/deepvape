@@ -135,7 +135,6 @@ collections:
             fields:
               - {name: "standard", label: "標準運費", widget: "number", default: 60, hint: "一般7-11取貨運費"}
               - {name: "outlying", label: "離島運費", widget: "number", default: 140, hint: "離島地區7-11取貨運費"}
-              - {name: "homeDelivery", label: "宅配運費", widget: "number", default: 80, hint: "宅配到府運費"}
           - name: "specialRules"
             label: "特殊運費規則"
             widget: "list"
