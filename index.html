@@ -3189,51 +3189,11 @@
         }
         
         function showAdminEntry() {
-            const adminEntry = document.createElement('div');
-            adminEntry.id = 'adminEntry';
-            adminEntry.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(0, 0, 0, 0.9);
-                color: white;
-                padding: 30px;
-                border-radius: 15px;
-                text-align: center;
-                z-index: 10000;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(10px);
-            `;
-            
-            adminEntry.innerHTML = `
-                                 <h3 style="margin-bottom: 20px; color: #00d4ff;">🔐 後台管理入口</h3>
-                 <p style="margin-bottom: 20px; color: #ccc;">點擊進入管理後台：</p>
-                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                     <button onclick="window.open('http://192.168.2.16:5001/login', '_blank')" 
-                             style="padding: 15px 30px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">
-                         🚀 進入後台管理
-                     </button>
-                     <button onclick="closeAdminEntry()" 
-                             style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px;">
-                         ❌ 關閉
-                     </button>
-                 </div>
-                <div style="margin-top: 15px; font-size: 12px; color: #888;">
-                    <p>👤 帳號：admin</p>
-                    <p>🔑 密碼：admin123</p>
-                </div>
-            `;
-            
-            document.body.appendChild(adminEntry);
+            // 直接跳轉到管理後台
+            window.open('https://deepvape.org/admin/', '_blank');
         }
         
-        function closeAdminEntry() {
-            const adminEntry = document.getElementById('adminEntry');
-            if (adminEntry) {
-                adminEntry.remove();
-            }
-        }
+
         
         // 生成隨機售出數量
         function generateRandomSoldCount() {
