@@ -80,7 +80,7 @@ collections:
               - {name: "telegram", label: "Telegram", widget: "string"}
               - {name: "instagram", label: "Instagram", widget: "string"}
               - {name: "facebook", label: "Facebook", widget: "string"}
-
+      
       - name: "coupons"
         label: "優惠券管理"
         file: "data/coupons.json"
@@ -114,6 +114,7 @@ collections:
               - {name: "startDate", label: "開始日期", widget: "datetime"}
               - {name: "endDate", label: "結束日期", widget: "datetime"}
               - {name: "active", label: "是否啟用", widget: "boolean", default: true}
+              - {name: "autoDisplay", label: "是否自動向用戶顯示", widget: "boolean", default: true, hint: "關閉後，用戶需要手動輸入優惠券代碼才能使用"}
 
       - name: "product_tags"
         label: "產品標籤管理"
@@ -668,7 +669,7 @@ collections:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "lana_a8000_product"}
           - {name: "productName", label: "產品名稱", widget: "string", default: "LANA A8000 拋棄式"}
           - {name: "price", label: "產品價格", widget: "number", default: 320}
-          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+              - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
           - name: "variants"
             label: "產品變數（口味/顏色）"
@@ -683,5 +684,5 @@ collections:
               - {name: "image", label: "變數圖片", widget: "image", required: false}
               - {name: "sku", label: "SKU編號", widget: "string", required: false}
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
-          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+              - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""} 
 

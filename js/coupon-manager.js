@@ -196,6 +196,7 @@ class CouponManager {
             const endDate = new Date(coupon.endDate);
             
             return coupon.active && 
+                   coupon.autoDisplay !== false && // 只顯示設置為自動顯示的優惠券
                    coupon.usedCount < coupon.totalCount &&
                    now >= startDate && 
                    now <= endDate;

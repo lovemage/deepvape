@@ -279,6 +279,14 @@
                 <input type="text" id="couponSuffix" placeholder="例如：2024、NEW、SPECIAL" oninput="generateCouponCode()">
             </div>
             
+            <div class="form-group">
+                <label for="autoDisplay">是否自動向用戶顯示：</label>
+                <select id="autoDisplay" onchange="generateCouponCode()">
+                    <option value="true">是（用戶可在結帳頁面看到）</option>
+                    <option value="false">否（用戶需手動輸入代碼）</option>
+                </select>
+            </div>
+            
             <div class="result-section" id="couponResultSection" style="display: none;">
                 <h3>🎯 生成結果</h3>
                 
@@ -304,6 +312,11 @@
                 <div class="result-item">
                     <div class="result-label">建議描述 (description)：</div>
                     <div class="result-value" id="couponDescription"></div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">自動顯示 (autoDisplay)：</div>
+                    <div class="result-value" id="couponAutoDisplay"></div>
                 </div>
             </div>
             
@@ -400,6 +413,7 @@
             const couponType = document.getElementById('couponType').value;
             const couponValue = document.getElementById('couponValue').value.trim();
             const couponSuffix = document.getElementById('couponSuffix').value.trim().toUpperCase();
+            const autoDisplay = document.getElementById('autoDisplay').value;
             
             if (!couponType || !couponValue) {
                 document.getElementById('couponResultSection').style.display = 'none';
@@ -437,12 +451,14 @@
             
             const suggestedName = typeNames[couponType] || '特別優惠';
             const suggestedDescription = `${suggestedName}，優惠值：${couponValue}`;
+            const autoDisplayText = autoDisplay === 'true' ? '是（自動顯示）' : '否（需手動輸入）';
             
             // 顯示結果
             document.getElementById('couponId').innerHTML = `${couponCode} <button class="copy-btn" onclick="copyToClipboard('couponId')">複製</button>`;
             document.getElementById('couponCode').innerHTML = `${couponCode} <button class="copy-btn" onclick="copyToClipboard('couponCode')">複製</button>`;
             document.getElementById('couponName').textContent = suggestedName;
             document.getElementById('couponDescription').textContent = suggestedDescription;
+            document.getElementById('couponAutoDisplay').textContent = autoDisplayText;
             
             document.getElementById('couponResultSection').style.display = 'block';
             document.getElementById('validationResult').style.display = 'block';
