@@ -323,6 +323,7 @@ collections:
                 fields:
                   - {name: "name", label: "姓名", widget: "string"}
                   - {name: "phone", label: "電話", widget: "string"}
+                  - {name: "lineId", label: "Line ID", widget: "string", required: false}
                   - {name: "email", label: "Email", widget: "string", required: false}
                   - {name: "address", label: "地址", widget: "text", required: false}
                   - {name: "notes", label: "備註", widget: "text", required: false}

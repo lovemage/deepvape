@@ -1509,6 +1509,11 @@
                     <input type="tel" id="customerPhone" class="form-input" placeholder="請輸入聯絡電話" required>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-label" for="customerLineId">Line ID *</label>
+                    <input type="text" id="customerLineId" class="form-input" placeholder="請輸入Line ID" required>
+                </div>
+
                 <!-- Store Selection -->
                 <div class="store-selection">
                     <label class="form-label">選擇取貨門市 *</label>
@@ -1833,18 +1838,20 @@
         function validateForm() {
             const name = document.getElementById('customerName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
+            const lineId = document.getElementById('customerLineId').value.trim();
             const captchaInput = document.getElementById('captchaInput').value.trim();
             const hasStore = selectedStoreInfo !== null;
             const hasItems = cart.length > 0;
             const captchaValid = captchaInput.toUpperCase() === currentCaptcha;
             
-            const isValid = name && phone && hasStore && hasItems && captchaValid;
+            const isValid = name && phone && lineId && hasStore && hasItems && captchaValid;
             document.getElementById('checkoutBtn').disabled = !isValid;
         }
 
         // Add event listeners for form validation
         document.getElementById('customerName').addEventListener('input', validateForm);
         document.getElementById('customerPhone').addEventListener('input', validateForm);
+        document.getElementById('customerLineId').addEventListener('input', validateForm);
         document.getElementById('captchaInput').addEventListener('input', validateForm);
         
         // Add event listeners for store input fields
@@ -1865,6 +1872,7 @@
 👤 **客戶資訊**:
 • 姓名: ${orderData.customer.name}
 • 電話: ${orderData.customer.phone}
+• Line ID: ${orderData.customer.lineId}
 
 🏪 **取貨門市**:
 • ${orderData.store.name}
@@ -1947,6 +1955,7 @@ ${orderData.items.map(item =>
             // 驗證必要信息
             const customerName = document.getElementById('customerName').value.trim();
             const customerPhone = document.getElementById('customerPhone').value.trim();
+            const customerLineId = document.getElementById('customerLineId').value.trim();
             
             if (!customerName) {
                 alert('請輸入客戶姓名');
@@ -1955,6 +1964,11 @@ ${orderData.items.map(item =>
             
             if (!customerPhone) {
                 alert('請輸入客戶電話');
+                return;
+            }
+            
+            if (!customerLineId) {
+                alert('請輸入Line ID');
                 return;
             }
             
@@ -1980,7 +1994,8 @@ ${orderData.items.map(item =>
             // 準備客戶信息
             const customerInfo = {
                 name: customerName,
-                phone: customerPhone
+                phone: customerPhone,
+                lineId: customerLineId
             };
             
             // 準備配送信息
@@ -2181,6 +2196,7 @@ ${orderData.items.map(item =>
                     customer: {
                         name: customerInfo.name,
                         phone: customerInfo.phone,
+                        lineId: customerInfo.lineId,
                         email: customerInfo.email || '',
                         address: shippingInfo.address || '',
                         notes: customerInfo.notes || ''
@@ -2274,7 +2290,8 @@ ${orderData.items.map(item =>
                 orderDate: new Date().toISOString(),
                 customer: {
                     name: '測試客戶',
-                    phone: '0912-345-678'
+                    phone: '0912-345-678',
+                    lineId: 'test_line_id'
                 },
                 store: {
                     id: 'TEST001',
@@ -2313,6 +2330,7 @@ ${orderData.items.map(item =>
             console.log('選擇的門市:', selectedStoreInfo);
             console.log('客戶姓名:', document.getElementById('customerName').value);
             console.log('客戶電話:', document.getElementById('customerPhone').value);
+            console.log('客戶Line ID:', document.getElementById('customerLineId').value);
             console.log('OrderManager 存在:', !!window.OrderManager);
             console.log('OrderManager 初始化:', window.OrderManager?.initialized);
         }
