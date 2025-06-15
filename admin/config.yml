@@ -402,14 +402,22 @@ collections:
             label: "產品變數（口味/顏色）"
             widget: "list"
             fields:
-              - {name: "id", label: "變數ID", widget: "string"}
-              - {name: "name", label: "變數名稱", widget: "string"}
+              - name: "id"
+                label: "變數ID"
+                widget: "string"
+                hint: "格式：hta_pods_{英文口味名}，例如：hta_pods_cola, hta_pods_mint"
+                pattern: ["^hta_pods_[a-z_]+$", "格式錯誤！必須是：hta_pods_{英文口味名}"]
+              - {name: "name", label: "變數名稱", widget: "string", default: "口味"}
               - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
               - {name: "value", label: "變數值（如：清涼可樂）", widget: "string"}
               - {name: "stock", label: "庫存數量", widget: "number", default: 0}
               - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
               - {name: "image", label: "變數圖片", widget: "image", required: false}
-              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+              - name: "sku"
+                label: "SKU編號"
+                widget: "string"
+                required: false
+                hint: "格式：HTA-PODS-{英文大寫}，例如：HTA-PODS-COLA"
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
@@ -522,14 +530,22 @@ collections:
             label: "產品變數（口味/顏色）"
             widget: "list"
             fields:
-              - {name: "id", label: "變數ID", widget: "string"}
-              - {name: "name", label: "變數名稱", widget: "string"}
+              - name: "id"
+                label: "變數ID"
+                widget: "string"
+                hint: "格式：ilia_pods_{英文口味名}，例如：ilia_pods_mint, ilia_pods_strawberry"
+                pattern: ["^ilia_pods_[a-z_]+$", "格式錯誤！必須是：ilia_pods_{英文口味名}"]
+              - {name: "name", label: "變數名稱", widget: "string", default: "口味"}
               - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
               - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
               - {name: "stock", label: "庫存數量", widget: "number", default: 0}
               - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
               - {name: "image", label: "變數圖片", widget: "image", required: false}
-              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+              - name: "sku"
+                label: "SKU編號"
+                widget: "string"
+                required: false
+                hint: "格式：ILIA-PODS-{英文大寫}，例如：ILIA-PODS-MINT"
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
@@ -594,14 +610,22 @@ collections:
             label: "產品變數（口味/顏色）"
             widget: "list"
             fields:
-              - {name: "id", label: "變數ID", widget: "string"}
-              - {name: "name", label: "變數名稱", widget: "string"}
+              - name: "id"
+                label: "變數ID"
+                widget: "string"
+                hint: "格式：sp2_pods_{英文口味名}，例如：sp2_pods_mint, sp2_pods_strawberry"
+                pattern: ["^sp2_pods_[a-z_]+$", "格式錯誤！必須是：sp2_pods_{英文口味名}"]
+              - {name: "name", label: "變數名稱", widget: "string", default: "口味"}
               - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
               - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
               - {name: "stock", label: "庫存數量", widget: "number", default: 0}
               - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
               - {name: "image", label: "變數圖片", widget: "image", required: false}
-              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+              - name: "sku"
+                label: "SKU編號"
+                widget: "string"
+                required: false
+                hint: "格式：SP2-PODS-{英文大寫}，例如：SP2-PODS-MINT"
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 

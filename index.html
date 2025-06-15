@@ -3189,8 +3189,169 @@
         }
         
         function showAdminEntry() {
-            // 直接跳轉到管理後台
+            // 顯示選擇對話框
+            showAdminSelectionModal();
+        }
+        
+        function showAdminSelectionModal() {
+            // 創建模態對話框
+            const modal = document.createElement('div');
+            modal.id = 'adminSelectionModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                    border-radius: 20px;
+                    padding: 40px;
+                    max-width: 500px;
+                    width: 90%;
+                    text-align: center;
+                    border: 2px solid #1afe49;
+                    box-shadow: 0 20px 40px rgba(26, 254, 73, 0.3);
+                    animation: modalSlideIn 0.3s ease-out;
+                ">
+                    <h2 style="
+                        color: #1afe49;
+                        margin-bottom: 30px;
+                        font-size: 28px;
+                        text-shadow: 0 0 20px rgba(26, 254, 73, 0.5);
+                    ">🔧 管理工具選擇</h2>
+                    
+                    <p style="
+                        color: #ffffff;
+                        margin-bottom: 40px;
+                        font-size: 16px;
+                        line-height: 1.6;
+                    ">請選擇您要使用的管理工具：</p>
+                    
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                        <button onclick="openAdminPanel()" style="
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            color: white;
+                            border: none;
+                            padding: 15px 25px;
+                            border-radius: 12px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+                            min-width: 180px;
+                        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 25px rgba(102, 126, 234, 0.6)'" 
+                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(102, 126, 234, 0.4)'">
+                            🏠 CMS後台系統
+                        </button>
+                        
+                        <button onclick="openVariantGenerator()" style="
+                            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                            color: white;
+                            border: none;
+                            padding: 15px 25px;
+                            border-radius: 12px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+                            min-width: 180px;
+                        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 25px rgba(240, 147, 251, 0.6)'" 
+                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(240, 147, 251, 0.4)'">
+                            🚬 變數ID生成器
+                        </button>
+                    </div>
+                    
+                    <button onclick="closeAdminSelectionModal()" style="
+                        background: transparent;
+                        color: #888;
+                        border: 2px solid #444;
+                        padding: 10px 20px;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        cursor: pointer;
+                        margin-top: 30px;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.borderColor='#666'; this.style.color='#aaa'" 
+                       onmouseout="this.style.borderColor='#444'; this.style.color='#888'">
+                        取消
+                    </button>
+                </div>
+            `;
+            
+            // 添加動畫樣式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes modalSlideIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-50px) scale(0.9);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                }
+                @keyframes modalSlideOut {
+                    from {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: translateY(-50px) scale(0.9);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(modal);
+            
+            // 點擊背景關閉
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeAdminSelectionModal();
+                }
+            });
+            
+            // ESC鍵關閉
+            document.addEventListener('keydown', function escHandler(e) {
+                if (e.key === 'Escape') {
+                    closeAdminSelectionModal();
+                    document.removeEventListener('keydown', escHandler);
+                }
+            });
+        }
+        
+        function openAdminPanel() {
             window.open('https://deepvape.org/admin/', '_blank');
+            closeAdminSelectionModal();
+        }
+        
+        function openVariantGenerator() {
+            window.open('/admin/variant-id-generator.html', '_blank');
+            closeAdminSelectionModal();
+        }
+        
+        function closeAdminSelectionModal() {
+            const modal = document.getElementById('adminSelectionModal');
+            if (modal) {
+                modal.style.animation = 'modalSlideOut 0.3s ease-in forwards';
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
         }
         
 

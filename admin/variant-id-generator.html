@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>煙彈變數ID生成器</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .result-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .result-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .result-label {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 8px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+        
+        .copy-btn:hover {
+            background: #218838;
+        }
+        
+        .examples {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .examples h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .example-item {
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            color: #495057;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚬 煙彈變數ID生成器</h1>
+        
+        <div class="form-group">
+            <label for="productSeries">選擇產品系列：</label>
+            <select id="productSeries" onchange="generateIds()">
+                <option value="">請選擇產品系列</option>
+                <option value="sp2_pods">SP2 煙彈</option>
+                <option value="ilia_pods">ILIA 煙彈</option>
+                <option value="hta_pods">HTA 煙彈</option>
+                <option value="lana_pods">LANA 煙彈</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="flavorName">口味名稱（中文）：</label>
+            <input type="text" id="flavorName" placeholder="例如：薄荷、草莓、藍莓" oninput="generateIds()">
+        </div>
+        
+        <div class="form-group">
+            <label for="flavorEnglish">口味英文名（小寫，用底線分隔）：</label>
+            <input type="text" id="flavorEnglish" placeholder="例如：mint、strawberry、green_tea" oninput="generateIds()">
+        </div>
+        
+        <div class="result-section" id="resultSection" style="display: none;">
+            <h3>🎯 生成結果</h3>
+            
+            <div class="result-item">
+                <div class="result-label">變數ID (id)：</div>
+                <div class="result-value" id="variantId">
+                    <button class="copy-btn" onclick="copyToClipboard('variantId')">複製</button>
+                </div>
+            </div>
+            
+            <div class="result-item">
+                <div class="result-label">SKU編號 (sku)：</div>
+                <div class="result-value" id="skuCode">
+                    <button class="copy-btn" onclick="copyToClipboard('skuCode')">複製</button>
+                </div>
+            </div>
+            
+            <div class="result-item">
+                <div class="result-label">變數名稱 (name)：</div>
+                <div class="result-value">口味</div>
+            </div>
+            
+            <div class="result-item">
+                <div class="result-label">變數類型 (type)：</div>
+                <div class="result-value">flavor</div>
+            </div>
+            
+            <div class="result-item">
+                <div class="result-label">變數值 (value)：</div>
+                <div class="result-value" id="flavorValue"></div>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h3>📝 格式範例</h3>
+            <div class="example-item">SP2煙彈薄荷：sp2_pods_mint → SP2-PODS-MINT</div>
+            <div class="example-item">ILIA煙彈草莓：ilia_pods_strawberry → ILIA-PODS-STRAWBERRY</div>
+            <div class="example-item">HTA煙彈可樂：hta_pods_cola → HTA-PODS-COLA</div>
+            <div class="example-item">LANA煙彈綠茶：lana_pods_green_tea → LANA-PODS-GREEN-TEA</div>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ 重要提醒：</strong>
+            <ul>
+                <li>變數ID必須是唯一的，不能重複</li>
+                <li>英文名稱只能使用小寫字母和底線</li>
+                <li>不能使用中文、數字開頭或特殊符號</li>
+                <li>複合口味用底線分隔，如：green_tea、ice_cream</li>
+            </ul>
+        </div>
+        
+        <div class="success" id="validationResult" style="display: none;">
+            <strong>✅ 格式驗證通過！</strong>
+            <p>生成的變數ID符合系統要求，可以安全使用。</p>
+        </div>
+    </div>
+
+    <script>
+        function generateIds() {
+            const productSeries = document.getElementById('productSeries').value;
+            const flavorName = document.getElementById('flavorName').value.trim();
+            const flavorEnglish = document.getElementById('flavorEnglish').value.trim().toLowerCase();
+            
+            if (!productSeries || !flavorName || !flavorEnglish) {
+                document.getElementById('resultSection').style.display = 'none';
+                document.getElementById('validationResult').style.display = 'none';
+                return;
+            }
+            
+            // 驗證英文格式
+            const englishPattern = /^[a-z][a-z_]*[a-z]$|^[a-z]$/;
+            if (!englishPattern.test(flavorEnglish)) {
+                document.getElementById('resultSection').style.display = 'none';
+                document.getElementById('validationResult').style.display = 'none';
+                return;
+            }
+            
+            // 生成變數ID
+            const variantId = `${productSeries}_${flavorEnglish}`;
+            
+            // 生成SKU
+            const seriesUpper = productSeries.replace('_pods', '').toUpperCase();
+            const flavorUpper = flavorEnglish.toUpperCase().replace(/_/g, '-');
+            const skuCode = `${seriesUpper}-PODS-${flavorUpper}`;
+            
+            // 顯示結果
+            document.getElementById('variantId').innerHTML = `${variantId} <button class="copy-btn" onclick="copyToClipboard('variantId')">複製</button>`;
+            document.getElementById('skuCode').innerHTML = `${skuCode} <button class="copy-btn" onclick="copyToClipboard('skuCode')">複製</button>`;
+            document.getElementById('flavorValue').textContent = flavorName;
+            
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('validationResult').style.display = 'block';
+        }
+        
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent.replace(' 複製', '').trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = element.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '已複製!';
+                btn.style.background = '#007bff';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#28a745';
+                }, 1000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動複製');
+            });
+        }
+        
+        // 自動建議英文名稱
+        document.getElementById('flavorName').addEventListener('input', function() {
+            const chineseName = this.value.trim();
+            const suggestions = {
+                '薄荷': 'mint',
+                '草莓': 'strawberry', 
+                '藍莓': 'blueberry',
+                '芒果': 'mango',
+                '西瓜': 'watermelon',
+                '葡萄': 'grape',
+                '蘋果': 'apple',
+                '檸檬': 'lemon',
+                '可樂': 'cola',
+                '雪碧': 'sprite',
+                '奶茶': 'milk_tea',
+                '咖啡': 'coffee',
+                '香草': 'vanilla',
+                '巧克力': 'chocolate',
+                '椰子': 'coconut',
+                '荔枝': 'lychee',
+                '水蜜桃': 'peach',
+                '鳳梨': 'pineapple',
+                '櫻桃': 'cherry',
+                '柳橙': 'orange',
+                '綠茶': 'green_tea',
+                '烏龍茶': 'oolong_tea',
+                '茉莉': 'jasmine',
+                '玫瑰': 'rose',
+                '薰衣草': 'lavender'
+            };
+            
+            if (suggestions[chineseName]) {
+                document.getElementById('flavorEnglish').value = suggestions[chineseName];
+                generateIds();
+            }
+        });
+    </script>
+</body>
+</html> 

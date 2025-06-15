@@ -78,7 +78,7 @@ class StockChecker {
                 // 檢查庫存
                 const stockInfo = this.checkVariantStock(productId, color, 'color');
                 
-                if (stockInfo.stock === 0) {
+                if (stockInfo.stock <= 0) {
                     alert(`很抱歉，${color} 目前缺貨，請選擇其他顏色`);
                     return;
                 }
@@ -135,7 +135,7 @@ class StockChecker {
                 // 檢查庫存
                 const stockInfo = this.checkVariantStock(productId, flavor, 'flavor');
                 
-                if (stockInfo.stock === 0) {
+                if (stockInfo.stock <= 0) {
                     alert(`很抱歉，${flavor} 口味目前缺貨，請選擇其他口味`);
                     return;
                 }
@@ -236,9 +236,10 @@ class StockChecker {
             );
 
             if (variant) {
+                const stock = variant.stock || 0;
                 return {
-                    stock: variant.stock || 0,
-                    available: (variant.stock || 0) > 0,
+                    stock: stock,
+                    available: stock > 0,
                     variant: variant
                 };
             }
@@ -258,14 +259,15 @@ class StockChecker {
         // 嘗試從多個來源獲取產品ID
         const url = window.location.pathname;
         
-        if (url.includes('sp2_product')) return 'sp2_host';
+        if (url.includes('sp2_product')) return 'sp2_device';
         if (url.includes('sp2_pods')) return 'sp2_pods';
         if (url.includes('hta_vape')) return 'hta_spade';
         if (url.includes('hta_pods')) return 'hta_pods';
-        if (url.includes('ilia_1')) return 'ilia_1';
+        if (url.includes('ilia_1')) return 'ilia_gen1';
         if (url.includes('ilia_fabric')) return 'ilia_fabric';
         if (url.includes('ilia_leather')) return 'ilia_leather';
         if (url.includes('ilia_disposable')) return 'ilia_disposable';
+        if (url.includes('ilia_pods')) return 'ilia_pods';
         if (url.includes('lana_pods')) return 'lana_pods';
         if (url.includes('lana_a8000')) return 'lana_a8000';
 
@@ -286,7 +288,7 @@ class StockChecker {
         // 移除現有的庫存狀態類別
         element.classList.remove('out-of-stock', 'low-stock', 'in-stock');
 
-        if (stockInfo.stock === 0) {
+        if (stockInfo.stock <= 0) {
             element.classList.add('out-of-stock');
             element.style.opacity = '0.5';
             element.style.cursor = 'not-allowed';
@@ -319,7 +321,7 @@ class StockChecker {
         }
 
         if (stockElement) {
-            if (stockInfo.stock === 0) {
+            if (stockInfo.stock <= 0) {
                 stockElement.innerHTML = '<span style="color: #e94560;">⚠️ 缺貨</span>';
             } else if (stockInfo.stock <= 5) {
                 stockElement.innerHTML = `<span style="color: #ffab00;">⚠️ 庫存剩餘: ${stockInfo.stock}</span>`;
@@ -354,7 +356,7 @@ class StockChecker {
         if (variantValue) {
             const stockInfo = this.checkVariantStock(productId, variantValue, variantType);
             
-            if (stockInfo.stock === 0) {
+            if (stockInfo.stock <= 0) {
                 alert(`很抱歉，${variantValue} 目前缺貨，無法加入購物車`);
                 return false;
             }
