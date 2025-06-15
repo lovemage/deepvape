@@ -11,6 +11,7 @@ Allow: *.jpeg
 Allow: *.webp
 Allow: *.gif
 Allow: *.svg
+Allow: *.json
 
 # 禁止訪問敏感目錄和文件
 Disallow: /backend/
@@ -19,10 +20,16 @@ Disallow: /.DS_Store
 Disallow: *.log
 Disallow: /admin/
 Disallow: /config/
+Disallow: /node_modules/
+Disallow: /.netlify/
 
 # 特殊文件
 Disallow: /cvs_callback.html
 Disallow: /store_search_demo.html
 
+# 爬取延遲（毫秒）
+Crawl-delay: 1
+
 # Sitemap 位置
-Sitemap: https://deepvape.org/sitemap.xml 
+Sitemap: https://deepvape.org/sitemap.xml
+Sitemap: https://deepvape.org/sitemap_detailed.xml 

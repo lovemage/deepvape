@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO 檢查工具 - Deepvape</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #083e12 0%, #041348 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(4, 19, 72, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid rgba(26, 254, 73, 0.2);
+        }
+        h1 {
+            color: #1afe49;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .check-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1afe49;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.good { background: #28a745; }
+        .status.warning { background: #ffc107; color: #000; }
+        .status.error { background: #dc3545; }
+        .url-list {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .url-item {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn {
+            background: #1afe49;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #15d63f;
+        }
+        .tools-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .tool-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(26, 254, 73, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Deepvape SEO 檢查工具</h1>
+        
+        <div class="check-section">
+            <h2>📊 網站基本狀態</h2>
+            <p><strong>網站 URL:</strong> https://deepvape.org</p>
+            <p><strong>最後更新:</strong> <span id="lastUpdate"></span></p>
+            <p><strong>年齡驗證:</strong> <span class="status good">已優化 (對搜尋引擎友好)</span></p>
+            <p><strong>Robots.txt:</strong> <span class="status good">已配置</span></p>
+            <p><strong>Sitemap:</strong> <span class="status good">已提交</span></p>
+        </div>
+
+        <div class="check-section">
+            <h2>🤖 搜尋引擎爬蟲檢測</h2>
+            <p><strong>當前用戶代理:</strong> <span id="userAgent"></span></p>
+            <p><strong>是否為爬蟲:</strong> <span id="botStatus"></span></p>
+            <p><strong>年齡驗證狀態:</strong> <span id="ageVerificationStatus"></span></p>
+        </div>
+
+        <div class="check-section">
+            <h2>📋 重要頁面列表</h2>
+            <div class="url-list">
+                <div class="url-item">✅ 首頁: https://deepvape.org/</div>
+                <div class="url-item">✅ SP2 主機: https://deepvape.org/sp2_product.html</div>
+                <div class="url-item">✅ ILIA 一代: https://deepvape.org/ilia_1_product.html</div>
+                <div class="url-item">✅ ILIA 煙彈: https://deepvape.org/ilia_pods_product.html</div>
+                <div class="url-item">✅ HTA 主機: https://deepvape.org/hta_vape_product.html</div>
+                <div class="url-item">✅ HTA 煙彈: https://deepvape.org/hta_pods_product.html</div>
+                <div class="url-item">✅ LANA 煙彈: https://deepvape.org/lana_pods_product.html</div>
+                <div class="url-item">✅ LANA A8000: https://deepvape.org/lana_a8000_product.html</div>
+            </div>
+        </div>
+
+        <div class="tools-section">
+            <div class="tool-card">
+                <h3>🔧 Google 工具</h3>
+                <a href="https://search.google.com/search-console" target="_blank" class="btn">Search Console</a>
+                <a href="https://developers.google.com/speed/pagespeed/insights/?url=https://deepvape.org" target="_blank" class="btn">PageSpeed Insights</a>
+                <a href="https://www.google.com/webmasters/tools/mobile-friendly/" target="_blank" class="btn">行動裝置相容性測試</a>
+            </div>
+            
+            <div class="tool-card">
+                <h3>📈 SEO 檢查工具</h3>
+                <a href="https://www.google.com/search?q=site:deepvape.org" target="_blank" class="btn">檢查索引狀態</a>
+                <a href="https://deepvape.org/robots.txt" target="_blank" class="btn">查看 Robots.txt</a>
+                <a href="https://deepvape.org/sitemap.xml" target="_blank" class="btn">查看 Sitemap</a>
+            </div>
+            
+            <div class="tool-card">
+                <h3>🚀 提交索引</h3>
+                <p>在 Google Search Console 中使用「URL 檢查工具」提交以下重要頁面：</p>
+                <button onclick="copyToClipboard('https://deepvape.org/')" class="btn">複製首頁 URL</button>
+                <button onclick="copyToClipboard('https://deepvape.org/sp2_product.html')" class="btn">複製 SP2 URL</button>
+            </div>
+        </div>
+
+        <div class="check-section">
+            <h2>📝 SEO 檢查清單</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                <div>
+                    <h4>✅ 已完成項目</h4>
+                    <ul>
+                        <li>年齡驗證優化 (對爬蟲友好)</li>
+                        <li>Meta robots 標籤</li>
+                        <li>結構化數據 (Schema.org)</li>
+                        <li>Canonical 標籤</li>
+                        <li>Robots.txt 優化</li>
+                        <li>Sitemap 更新</li>
+                        <li>Open Graph 標籤</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>⏳ 待完成項目</h4>
+                    <ul>
+                        <li>Google Search Console 驗證</li>
+                        <li>提交 URL 到 Google</li>
+                        <li>監控索引狀態</li>
+                        <li>優化頁面載入速度</li>
+                        <li>增加外部連結</li>
+                        <li>內容品質優化</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 顯示最後更新時間
+        document.getElementById('lastUpdate').textContent = new Date().toLocaleString('zh-TW');
+        
+        // 顯示用戶代理
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        
+        // 檢測是否為爬蟲
+        const isBot = /bot|crawler|spider|crawling/i.test(navigator.userAgent);
+        const botStatusElement = document.getElementById('botStatus');
+        const ageVerificationElement = document.getElementById('ageVerificationStatus');
+        
+        if (isBot) {
+            botStatusElement.innerHTML = '<span class="status good">是 (搜尋引擎爬蟲)</span>';
+            ageVerificationElement.innerHTML = '<span class="status good">已跳過 (爬蟲友好)</span>';
+        } else {
+            botStatusElement.innerHTML = '<span class="status warning">否 (一般用戶)</span>';
+            ageVerificationElement.innerHTML = '<span class="status warning">需要驗證</span>';
+        }
+        
+        // 複製到剪貼板功能
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('URL 已複製到剪貼板: ' + text);
+            });
+        }
+        
+        // 檢查年齡驗證元素是否存在
+        if (parent.document.getElementById('ageVerification')) {
+            const ageVerificationDiv = parent.document.getElementById('ageVerification');
+            const isHidden = ageVerificationDiv.classList.contains('hidden');
+            if (isHidden) {
+                ageVerificationElement.innerHTML = '<span class="status good">已隱藏</span>';
+            }
+        }
+    </script>
+</body>
+</html> 

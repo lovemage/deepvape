@@ -6,7 +6,29 @@
     <title>Deepvape - 頂級電子菸專賣店 | VAPE煙彈、主機、拋棄式</title>
     <meta name="description" content="Deepvape 是您的一站式線上VAPE專賣店，提供最新、最頂級的電子菸主機、煙彈及拋棄式電子菸。我們引進ILIA, SP2, LANA等知名品牌，保證正品、快速出貨，並提供專業顧問服務。">
     <meta name="keywords" content="Deepvape, VAPE, 電子菸, 電子煙, 煙彈, 主機, 拋棄式, ILIA, SP2, LANA, HTA, 哩亞, 思博瑞, VAPE專賣店">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://deepvape.org/">
+    
+    <!-- 結構化數據 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "Deepvape",
+        "description": "頂級電子菸專賣店，提供ILIA、SP2、LANA等知名品牌的VAPE主機、煙彈及拋棄式電子菸",
+        "url": "https://deepvape.org",
+        "logo": "https://deepvape.org/logo.png",
+        "image": "https://deepvape.org/deepvape_main.png",
+        "telephone": "+886-XXX-XXXXXX",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "TW"
+        },
+        "openingHours": "Mo-Su 00:00-23:59",
+        "paymentAccepted": ["Cash", "Credit Card"],
+        "priceRange": "$$"
+    }
+    </script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -2691,7 +2713,7 @@
             }, 1500);
         });
 
-        // Age Verification
+        // Age Verification - SEO Friendly
         function verifyAge(isAdult) {
             if (isAdult) {
                 document.getElementById('ageVerification').classList.add('hidden');
@@ -2702,10 +2724,25 @@
             }
         }
 
-        // Check age verification
-        if (sessionStorage.getItem('ageVerified') === 'true') {
-            document.getElementById('ageVerification').classList.add('hidden');
+        // Check age verification - 對搜尋引擎友好
+        function initAgeVerification() {
+            // 檢測是否為搜尋引擎爬蟲
+            const isBot = /bot|crawler|spider|crawling/i.test(navigator.userAgent);
+            
+            if (isBot) {
+                // 如果是搜尋引擎爬蟲，直接隱藏年齡驗證
+                document.getElementById('ageVerification').classList.add('hidden');
+                return;
+            }
+            
+            // 對一般用戶檢查年齡驗證狀態
+            if (sessionStorage.getItem('ageVerified') === 'true') {
+                document.getElementById('ageVerification').classList.add('hidden');
+            }
         }
+
+        // 初始化年齡驗證
+        initAgeVerification();
 
         // Mobile menu toggle
         function toggleMenu() {
