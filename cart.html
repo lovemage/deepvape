@@ -1862,36 +1862,44 @@
 
         // Send Telegram notification
         async function sendTelegramNotification(orderData) {
-            console.log('🔔 開始發送 Telegram 通知...', orderData);
+            console.log('開始發送 Telegram 通知...', orderData);
             
-            const message = `🛒 **新訂單通知**
+            // 獲取當前使用的優惠券信息
+            let couponInfo = '';
+            if (window.CouponManager && window.CouponManager.getAppliedCoupon()) {
+                const appliedCoupon = window.CouponManager.getAppliedCoupon();
+                const discount = window.CouponManager.calculateDiscount(appliedCoupon, orderData.subtotal);
+                couponInfo = `\n**使用優惠券**: ${appliedCoupon.code} (${appliedCoupon.name})\n**優惠金額**: -NT$ ${discount}`;
+            }
+            
+            const message = `**新訂單通知**
 
-📋 **訂單編號**: ${orderData.orderId}
-📅 **訂單時間**: ${new Date(orderData.orderDate).toLocaleString('zh-TW')}
+**訂單編號**: ${orderData.orderId}
+**訂單時間**: ${new Date(orderData.orderDate).toLocaleString('zh-TW')}
 
-👤 **客戶資訊**:
-• 姓名: ${orderData.customer.name}
-• 電話: ${orderData.customer.phone}
-• Line ID: ${orderData.customer.lineId}
+**客戶資訊**:
+- 姓名: ${orderData.customer.name}
+- 電話: ${orderData.customer.phone}
+- Line ID: ${orderData.customer.lineId}
 
-🏪 **取貨門市**:
-• ${orderData.store.name}
-• ${orderData.store.address || '地址未提供'}
-• 店號: ${orderData.store.id}
+**取貨門市**:
+- ${orderData.store.name}
+- ${orderData.store.address || '地址未提供'}
+- 店號: ${orderData.store.id}
 
-🛍️ **訂購商品**:
+**訂購商品**:
 ${orderData.items.map(item => 
-    `• ${item.name} x${item.quantity} - NT$ ${item.price * item.quantity}${item.flavor ? `\n  口味: ${item.flavor}` : ''}${item.color ? `\n  顏色: ${item.color}` : ''}`
+    `- ${item.name} x${item.quantity} - NT$ ${item.price * item.quantity}${item.flavor ? `\n  口味: ${item.flavor}` : ''}${item.color ? `\n  顏色: ${item.color}` : ''}`
 ).join('\n')}
 
-💰 **金額明細**:
-• 商品小計: NT$ ${orderData.subtotal}
-• 運費: NT$ ${orderData.shipping}
-• **總計: NT$ ${orderData.total}**
+**金額明細**:
+- 商品小計: NT$ ${orderData.subtotal}${couponInfo}
+- 運費: NT$ ${orderData.shipping}
+- **總計: NT$ ${orderData.total}**
 
 請盡快處理此訂單！`;
 
-            console.log('📱 Telegram 配置:', {
+            console.log('Telegram 配置:', {
                 token: TELEGRAM_BOT_TOKEN ? 'Token已設定' : 'Token未設定',
                 chatId: TELEGRAM_CHAT_ID,
                 messageLength: message.length
@@ -1904,7 +1912,7 @@ ${orderData.items.map(item =>
                     parse_mode: 'Markdown'
                 };
                 
-                console.log('📤 發送請求到 Telegram API...');
+                console.log('發送請求到 Telegram API...');
                 
                 const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
@@ -1915,18 +1923,18 @@ ${orderData.items.map(item =>
                 });
 
                 const responseData = await response.json();
-                console.log('📥 Telegram API 回應:', responseData);
+                console.log('Telegram API 回應:', responseData);
 
                 if (!response.ok) {
-                    console.error('❌ Telegram 通知失敗:', response.status, responseData);
+                    console.error('Telegram 通知失敗:', response.status, responseData);
                     throw new Error(`Telegram API Error: ${responseData.description || response.statusText}`);
                 } else {
-                    console.log('✅ Telegram 通知發送成功！');
+                    console.log('Telegram 通知發送成功！');
                 }
                 
                 return responseData;
             } catch (error) {
-                console.error('❌ Telegram 通知發送錯誤:', error);
+                console.error('Telegram 通知發送錯誤:', error);
                 // 即使 Telegram 失敗，也不要阻止訂單處理
                 throw error;
             }
@@ -1950,7 +1958,7 @@ ${orderData.items.map(item =>
         }
 
         async function confirmCheckout() {
-            console.log('🛒 開始結帳流程...');
+            console.log('開始結帳流程...');
             
             // 驗證必要信息
             const customerName = document.getElementById('customerName').value.trim();
@@ -1984,7 +1992,7 @@ ${orderData.items.map(item =>
                 return;
             }
             
-            console.log('📋 驗證通過，準備訂單數據...');
+            console.log('驗證通過，準備訂單數據...');
             console.log('購物車內容:', currentCart);
             console.log('選擇的門市:', selectedStoreInfo);
             
@@ -2020,35 +2028,35 @@ ${orderData.items.map(item =>
             confirmBtn.disabled = true;
 
             try {
-                console.log('🛒 開始處理訂單...');
+                console.log('開始處理訂單...');
                 
                 // 檢查並等待 OrderManager 初始化（更寬鬆的檢查）
                 if (!window.OrderManager) {
-                    console.warn('⚠️ OrderManager 未載入，嘗試等待...');
+                    console.warn('OrderManager 未載入，嘗試等待...');
                     
                     // 等待最多3秒
                     for (let i = 0; i < 30; i++) {
                         await new Promise(resolve => setTimeout(resolve, 100));
                         if (window.OrderManager) {
-                            console.log('✅ OrderManager 載入成功');
+                            console.log('OrderManager 載入成功');
                             break;
                         }
                     }
                     
                     if (!window.OrderManager) {
-                        console.warn('⚠️ OrderManager 仍未載入，將使用備用方法');
+                        console.warn('OrderManager 仍未載入，將使用備用方法');
                         // 不拋出錯誤，繼續使用備用方法
                     }
                 }
                 
                 // 嘗試初始化 OrderManager（如果存在且需要）
                 if (window.OrderManager && !window.OrderManager.initialized) {
-                    console.log('⏳ 初始化 OrderManager...');
+                    console.log('初始化 OrderManager...');
                     try {
                         await window.OrderManager.init();
-                        console.log('✅ OrderManager 初始化完成');
+                        console.log('OrderManager 初始化完成');
                     } catch (initError) {
-                        console.warn('⚠️ OrderManager 初始化失敗，但繼續嘗試:', initError);
+                        console.warn('OrderManager 初始化失敗，但繼續嘗試:', initError);
                         // 不拋出錯誤，繼續嘗試創建訂單
                     }
                 }
@@ -2057,23 +2065,23 @@ ${orderData.items.map(item =>
                 let result;
                 if (window.OrderManager && typeof window.OrderManager.createOrderFromCart === 'function') {
                     try {
-                        console.log('📋 使用 OrderManager 創建訂單...');
+                        console.log('使用 OrderManager 創建訂單...');
                         result = await window.OrderManager.createOrderFromCart(
                             customerInfo,
                             shippingInfo,
                             paymentInfo
                         );
                     } catch (orderError) {
-                        console.warn('⚠️ OrderManager 創建訂單失敗，使用備用方法:', orderError);
+                        console.warn('OrderManager 創建訂單失敗，使用備用方法:', orderError);
                         result = await createOrderFallback(customerInfo, shippingInfo, paymentInfo);
                     }
                 } else {
-                    console.log('📋 OrderManager 不可用，直接使用備用方法...');
+                    console.log('OrderManager 不可用，直接使用備用方法...');
                     result = await createOrderFallback(customerInfo, shippingInfo, paymentInfo);
                 }
                 
                 if (result && result.success) {
-                    console.log('✅ 訂單創建成功:', result.order);
+                    console.log('訂單創建成功:', result.order);
                     
                     // 發送 Telegram 通知（使用舊格式以保持兼容性）
                     const telegramOrderData = {
@@ -2089,21 +2097,21 @@ ${orderData.items.map(item =>
                     
                     try {
                         await sendTelegramNotification(telegramOrderData);
-                        console.log('📱 Telegram 通知發送成功');
+                        console.log('Telegram 通知發送成功');
                     } catch (telegramError) {
-                        console.warn('⚠️ Telegram 通知發送失敗，但訂單已成功創建:', telegramError);
+                        console.warn('Telegram 通知發送失敗，但訂單已成功創建:', telegramError);
                     }
                     
                     // 保存訂單到 localStorage 用於確認頁面
-                    console.log('💾 保存訂單到 localStorage:', result.order);
+                    console.log('保存訂單到 localStorage:', result.order);
                     localStorage.setItem('currentOrder', JSON.stringify(result.order));
                     
                     // 驗證保存是否成功
                     const savedOrder = JSON.parse(localStorage.getItem('currentOrder'));
-                    console.log('✅ 驗證保存的訂單:', savedOrder);
+                    console.log('驗證保存的訂單:', savedOrder);
                     
                     if (!savedOrder || !savedOrder.orderId) {
-                        console.error('❌ 訂單保存失敗或缺少 orderId');
+                        console.error('訂單保存失敗或缺少 orderId');
                         alert('訂單保存失敗，請重試');
                         return;
                     }
@@ -2118,7 +2126,7 @@ ${orderData.items.map(item =>
                 }
                 
             } catch (error) {
-                console.error('❌ 訂單處理失敗:', error);
+                console.error('訂單處理失敗:', error);
                 alert(`訂單處理失敗：${error.message}\n\n請檢查：\n1. 商品庫存是否充足\n2. 網路連線是否正常\n3. 稍後再試或聯繫客服`);
                 
                 // Reset button
@@ -2142,7 +2150,7 @@ ${orderData.items.map(item =>
                 }
             });
             
-            console.log('🎯 追蹤開始結帳轉換:', {
+            console.log('追蹤開始結帳轉換:', {
                 value: totalValue,
                 items: cartData.length
             });
@@ -2155,7 +2163,7 @@ ${orderData.items.map(item =>
         // 備用的訂單創建方法（當 OrderManager 失效時使用）
         async function createOrderFallback(customerInfo, shippingInfo, paymentInfo) {
             try {
-                console.log('🔄 使用備用訂單創建方法...');
+                console.log('使用備用訂單創建方法...');
                 
                 // 獲取購物車內容
                 const fallbackCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -2163,7 +2171,7 @@ ${orderData.items.map(item =>
                     throw new Error('購物車為空');
                 }
                 
-                console.log('📦 備用方法處理購物車:', fallbackCart);
+                console.log('備用方法處理購物車:', fallbackCart);
 
                 // 計算訂單總額
                 let subtotal = 0;
@@ -2216,7 +2224,7 @@ ${orderData.items.map(item =>
                     lastUpdated: new Date().toISOString()
                 };
 
-                console.log('📋 備用方法創建的訂單:', order);
+                console.log('備用方法創建的訂單:', order);
 
                 // 保存到本地存儲
                 try {
@@ -2224,7 +2232,7 @@ ${orderData.items.map(item =>
                     existingOrders.push(order);
                     localStorage.setItem('pending_orders', JSON.stringify(existingOrders));
                 } catch (error) {
-                    console.warn('⚠️ 保存到本地存儲失敗:', error);
+                    console.warn('保存到本地存儲失敗:', error);
                 }
 
                 // 嘗試發送到後端
@@ -2238,12 +2246,12 @@ ${orderData.items.map(item =>
                     });
 
                     if (response.ok) {
-                        console.log('✅ 訂單已發送到後端');
+                        console.log('訂單已發送到後端');
                     } else {
-                        console.warn('⚠️ 後端保存失敗，但訂單已保存到本地');
+                        console.warn('後端保存失敗，但訂單已保存到本地');
                     }
                 } catch (error) {
-                    console.warn('⚠️ 無法連接後端，但訂單已保存到本地:', error);
+                    console.warn('無法連接後端，但訂單已保存到本地:', error);
                 }
 
                 return {
@@ -2253,7 +2261,7 @@ ${orderData.items.map(item =>
                 };
 
             } catch (error) {
-                console.error('❌ 備用訂單創建失敗:', error);
+                console.error('備用訂單創建失敗:', error);
                 return {
                     success: false,
                     error: error.message
@@ -2278,7 +2286,7 @@ ${orderData.items.map(item =>
                 }
             });
             
-            console.log('🎯 追蹤Line聯繫轉換');
+            console.log('追蹤Line聯繫轉換');
         }
 
         // 測試Telegram機器人功能
@@ -2654,10 +2662,10 @@ ${orderData.items.map(item =>
                     if (window.ProductManager && 
                         window.InventoryManager && 
                         window.OrderManager) {
-                        console.log('✅ 所有管理器已載入完成');
+                        console.log('所有管理器已載入完成');
                         resolve(true);
                     } else if (attempts >= maxAttempts) {
-                        console.warn('⚠️ 管理器載入超時，但繼續執行');
+                        console.warn('管理器載入超時，但繼續執行');
                         resolve(false);
                     } else {
                         setTimeout(checkManagers, 100);
@@ -2673,7 +2681,7 @@ ${orderData.items.map(item =>
                 const managersLoaded = await waitForManagers();
                 
                 if (managersLoaded) {
-                    console.log('✅ 系統初始化完成');
+                    console.log('系統初始化完成');
                     
                     // 確保 OrderManager 已初始化
                     if (window.OrderManager && !window.OrderManager.initialized) {
@@ -2685,11 +2693,11 @@ ${orderData.items.map(item =>
                         initialized: window.OrderManager?.initialized
                     });
                 } else {
-                    console.warn('⚠️ 部分管理器未載入，但系統將繼續運行');
+                    console.warn('部分管理器未載入，但系統將繼續運行');
                 }
                 
             } catch (error) {
-                console.error('❌ 系統初始化失敗:', error);
+                console.error('系統初始化失敗:', error);
             }
         });
     </script>
