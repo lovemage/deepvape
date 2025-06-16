@@ -1166,7 +1166,7 @@
                         </div>
                         
                         <div class="buy-buttons">
-                            <button class="btn-primary-custom" onclick="addToCart('lana-a8000')" id="addToCartBtn" disabled>
+                            <button class="btn-primary-custom" onclick="addToCart('lana_a8000_product')" id="addToCartBtn" disabled>
                                 <i class="fas fa-shopping-cart" style="margin-right: 0.5rem;"></i>
                                 請先選擇口味
                             </button>
@@ -1495,13 +1495,13 @@
 
             // 加入購物車
             const product = {
-                id: 'lana_a8000_product',
+                id: productId, // 使用傳入的產品ID
                 name: 'LANA A8000',
                 variant: selectedVariant.value,
                 variantId: selectedVariant.id,
                 price: 320,
                 quantity: 1,
-                image: '/lana_a8000/lana_a8000_main.webp'
+                image: selectedVariant.image || '/lana_a8000/lana_a8000.webp'
             };
 
             // 獲取現有購物車
