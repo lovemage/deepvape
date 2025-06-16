@@ -1,7 +1,7 @@
 {
   "pageId": "ilia_5_device_product",
   "productName": "ILIA 五代主機",
-      "price": 450,
+  "price": 450,
   "originalPrice": null,
   "discount": null,
   "variants": [
@@ -30,7 +30,7 @@
       "name": "顏色",
       "type": "color",
       "value": "星河藍",
-      "stock": 40,
+      "stock": 0,
       "priceModifier": 0,
       "image": "ilia_device5/IMAGE 2025-06-16 13:24:03.jpg",
       "sku": "ILIA-5-DEV-GALAXY-BLU"
@@ -58,4 +58,4 @@
   ],
   "status": "active",
   "lastUpdated": "2025-01-16T13:24:03.000Z"
-} 
+}
