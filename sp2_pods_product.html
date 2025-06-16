@@ -850,6 +850,26 @@
         let selectedFlavor = '';
         let quantity = 1;
 
+        // 變數選擇器實例
+        let variantSelector = null;
+
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('sp2_pods_product', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的口味:', variant.value);
+                    selectedFlavor = variant.value;
+                    updateAddToCartButton();
+                });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
+        }
+
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             // Scroll animations
@@ -879,6 +899,13 @@
 
             // Initialize button state
             updateAddToCartButton();
+            
+            // 初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
         });
 
         // Flavor selection
@@ -923,6 +950,53 @@
 
         // Add to cart
         function addToCart() {
+            // 檢查變數選擇器
+            if (variantSelector) {
+                const selectedVariant = variantSelector.getSelectedVariant();
+                if (!selectedVariant) {
+                    alert('請先選擇口味！');
+                    return;
+                }
+                
+                if (selectedVariant.stock <= 0) {
+                    alert('所選口味目前缺貨，請選擇其他口味！');
+                    return;
+                }
+                
+                const product = {
+                    id: `sp2_pods_product_${selectedVariant.id}`,
+                    name: `SP2 煙彈 - ${selectedVariant.value}`,
+                    price: 350,
+                    flavor: selectedVariant.value,
+                    variant: selectedVariant.value,
+                    variantId: selectedVariant.id,
+                    quantity: quantity,
+                    image: '/sp2_pods/sp2_pods_main.webp',
+                    category: 'pods'
+                };
+
+                // Get existing cart
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                
+                // Check if item already exists
+                const existingItemIndex = cart.findIndex(item => item.id === product.id);
+
+                if (existingItemIndex > -1) {
+                    cart[existingItemIndex].quantity += product.quantity;
+                } else {
+                    cart.push(product);
+                }
+
+                // Save to localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Show success message
+                alert(`✅ 已將 ${product.name} x${product.quantity} 加入購物車！`);
+                
+                return;
+            }
+            
+            // 舊版邏輯（備用）
             if (!selectedFlavor) {
                 alert('請先選擇口味');
                 return;

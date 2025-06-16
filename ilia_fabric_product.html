@@ -1068,7 +1068,6 @@
     <script>
         // 變數選擇器實例
         let variantSelector = null;
-        let selectedVariant = null;
         let currentPrice = 650;
 
         // Header scroll effect
@@ -1098,12 +1097,11 @@
         // 初始化變數選擇器
         function initVariantSelector() {
             if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('ilia_fabric_product', 'variantContainer');
+                variantSelector = new VariantSelector('ilia_fabric', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
                     console.log('選擇的變數:', variant.value);
-                    selectedVariant = variant;
                     updateSelectedColor(variant);
                     updateAddToCartButton(variant);
                 });
@@ -1154,7 +1152,7 @@
                 option.classList.remove('selected');
                 if (option.dataset.color === colorName) {
                     option.classList.add('selected');
-                    selectedColor = option.querySelector('.color-name').textContent;
+                    const selectedColor = option.querySelector('.color-name').textContent;
                     document.getElementById('selectedColor').textContent = selectedColor;
                 }
             });
@@ -1188,6 +1186,12 @@
 
         // 加入購物車
         function addToCart() {
+            if (!variantSelector) {
+                alert('變數選擇器未初始化，請稍後再試');
+                return;
+            }
+
+            const selectedVariant = variantSelector.getSelectedVariant();
             if (!selectedVariant) {
                 alert('請先選擇顏色！');
                 return;
@@ -1201,7 +1205,7 @@
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_fabric_product',
+                id: 'ilia_fabric',
                 name: 'ILIA 哩亞布紋主機',
                 variant: selectedVariant.value,
                 variantId: selectedVariant.id,
@@ -1365,7 +1369,7 @@
                 
                 // 初始化產品頁面管理器
                 const pageProductManager = new PageProductManager();
-                await pageProductManager.init('ilia_fabric_product');
+                await pageProductManager.init('ilia_fabric');
                 console.log('✅ ILIA 布紋 產品頁面管理器已初始化');
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);

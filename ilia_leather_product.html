@@ -779,17 +779,15 @@
 
         // 變數選擇器實例
         let variantSelector = null;
-        let selectedVariant = null;
 
         // 初始化變數選擇器
         function initVariantSelector() {
             if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('ilia_leather_product', 'variantContainer');
+                variantSelector = new VariantSelector('ilia_leather', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
                     console.log('選擇的變數:', variant.value);
-                    selectedVariant = variant;
                     updateAddToCartButton(variant);
                 });
             } else {
@@ -833,6 +831,12 @@
 
         // Add to Cart
         function addToCart() {
+            if (!variantSelector) {
+                alert('變數選擇器未初始化，請稍後再試');
+                return;
+            }
+
+            const selectedVariant = variantSelector.getSelectedVariant();
             if (!selectedVariant) {
                 alert('請先選擇顏色！');
                 return;
@@ -846,7 +850,7 @@
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_leather_product',
+                id: 'ilia_leather',
                 name: 'ILIA 皮革主機',
                 price: 650,
                 color: selectedVariant.value,
@@ -1002,7 +1006,7 @@
                 
                 // 初始化產品頁面管理器
                 const pageProductManager = new PageProductManager();
-                await pageProductManager.init('ilia_leather_product');
+                await pageProductManager.init('ilia_leather');
                 console.log('✅ ILIA 皮革 產品頁面管理器已初始化');
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
