@@ -319,36 +319,37 @@ class StockChecker {
      * 從頁面獲取產品ID
      */
     getProductIdFromPage() {
-        // 嘗試從多個來源獲取產品ID
+        // 優先從頁面元素獲取統一的產品ID
+        const productElement = document.querySelector('[data-product-id]');
+        if (productElement) {
+            const productId = productElement.dataset.productId;
+            console.log(`✅ 從元素獲取產品ID: ${productId}`);
+            return productId;
+        }
+
+        // 備用：從 URL 獲取並映射到統一的產品ID
         const url = window.location.pathname;
         console.log(`🔍 檢查頁面 URL: ${url}`);
         
         let productId = null;
         
-        if (url.includes('sp2_product')) productId = 'sp2_device';
-        else if (url.includes('sp2_pods')) productId = 'sp2_pods';
-        else if (url.includes('hta_vape')) productId = 'hta_vape';
-        else if (url.includes('hta_pods')) productId = 'hta_pods';
-        else if (url.includes('ilia_1')) productId = 'ilia_gen1';
-        else if (url.includes('ilia_5')) productId = 'ilia_5_device';
-        else if (url.includes('ilia_fabric')) productId = 'ilia_fabric';
-        else if (url.includes('ilia_leather')) productId = 'ilia_leather';
-        else if (url.includes('ilia_disposable')) productId = 'ilia_disposable';
-        else if (url.includes('ilia_ultra5_pods')) productId = 'ilia_ultra5_pods';
-        else if (url.includes('ilia_pods')) productId = 'ilia_pods';
-        else if (url.includes('lana_a8000')) productId = 'lana_a8000';
-        else if (url.includes('lana_pods')) productId = 'lana_pods';
+        // 使用統一的產品ID映射
+        if (url.includes('sp2_product')) productId = 'sp2_device_product';
+        else if (url.includes('sp2_pods')) productId = 'sp2_pods_product';
+        else if (url.includes('hta_vape')) productId = 'hta_vape_product';
+        else if (url.includes('hta_pods')) productId = 'hta_pods_product';
+        else if (url.includes('ilia_1')) productId = 'ilia_1_product';
+        else if (url.includes('ilia_5')) productId = 'ilia_5_device_product';
+        else if (url.includes('ilia_fabric')) productId = 'ilia_fabric_product';
+        else if (url.includes('ilia_leather')) productId = 'ilia_leather_product';
+        else if (url.includes('ilia_disposable')) productId = 'ilia_disposable_product';
+        else if (url.includes('ilia_ultra5_pods')) productId = 'ilia_ultra5_pods_product';
+        else if (url.includes('ilia_pods')) productId = 'ilia_pods_product';
+        else if (url.includes('lana_a8000')) productId = 'lana_a8000_product';
+        else if (url.includes('lana_pods')) productId = 'lana_pods_product';
 
         if (productId) {
             console.log(`✅ 從 URL 識別產品ID: ${productId}`);
-            return productId;
-        }
-
-        // 嘗試從頁面元素獲取
-        const productElement = document.querySelector('[data-product-id]');
-        if (productElement) {
-            productId = productElement.dataset.productId;
-            console.log(`✅ 從元素獲取產品ID: ${productId}`);
             return productId;
         }
 
