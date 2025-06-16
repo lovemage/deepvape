@@ -1558,6 +1558,22 @@
                     selectedVariant = variant;
                     updateAddToCartButton(variant);
                 });
+                
+                // 添加手動檢查機制，監聽容器點擊事件
+                const container = document.getElementById('variantContainer');
+                if (container) {
+                    container.addEventListener('click', function(e) {
+                        // 延遲檢查，確保選中狀態已更新
+                        setTimeout(() => {
+                            const selectedOption = document.querySelector('.variant-option.selected') || 
+                                                 document.querySelector('.flavor-option.selected');
+                            if (selectedOption && selectedVariant) {
+                                console.log('🔄 手動觸發按鈕更新');
+                                updateAddToCartButton(selectedVariant);
+                            }
+                        }, 100);
+                    });
+                }
             } else {
                 // 如果依賴未載入，稍後重試
                 setTimeout(initVariantSelector, 500);
@@ -1569,8 +1585,16 @@
             const button = document.getElementById('addToCartBtn');
             if (!button) return;
 
-            // 檢查是否有選中的變數（從 DOM 檢查）
-            const selectedOption = document.querySelector('.variant-option.selected');
+            // 檢查是否有選中的變數（多種選擇器檢查）
+            const selectedOption = document.querySelector('.variant-option.selected') || 
+                                 document.querySelector('.flavor-option.selected') ||
+                                 document.querySelector('[data-variant-id].selected');
+            
+            console.log('🔍 updateAddToCartButton 調試:');
+            console.log('  - variant:', variant);
+            console.log('  - selectedOption:', selectedOption);
+            console.log('  - variant.stock:', variant?.stock);
+            
             const hasSelection = variant && variant.stock > 0 && selectedOption;
 
             if (hasSelection) {
@@ -1578,18 +1602,26 @@
                 button.innerHTML = `<i class="fas fa-shopping-cart" style="margin-right: 0.5rem;"></i>加入購物車 - ${variant.value}`;
                 button.classList.remove('btn-secondary');
                 button.classList.add('btn-primary-custom');
+                console.log('✅ 按鈕已啟用');
             } else {
                 button.disabled = true;
                 button.innerHTML = '<i class="fas fa-shopping-cart" style="margin-right: 0.5rem;"></i>請先選擇口味';
                 button.classList.remove('btn-primary-custom');
                 button.classList.add('btn-secondary');
+                console.log('❌ 按鈕保持禁用');
             }
         }
 
         // 加入購物車
         function addToCart(productId) {
-            // 檢查是否選擇了變數
-            const selectedFlavorOption = document.querySelector('.variant-option.selected');
+            // 檢查是否選擇了變數（多種選擇器檢查）
+            const selectedFlavorOption = document.querySelector('.variant-option.selected') || 
+                                        document.querySelector('.flavor-option.selected') ||
+                                        document.querySelector('[data-variant-id].selected');
+            
+            console.log('🔍 addToCart 調試:');
+            console.log('  - selectedFlavorOption:', selectedFlavorOption);
+            
             if (!selectedFlavorOption) {
                 showNotification('請先選擇口味！', 'warning');
                 return;
@@ -1599,6 +1631,9 @@
             const variantId = selectedFlavorOption.dataset.variantId;
             const variantValue = selectedFlavorOption.querySelector('.variant-name')?.textContent.trim() || 
                                selectedFlavorOption.textContent.trim();
+            
+            console.log('  - variantId:', variantId);
+            console.log('  - variantValue:', variantValue);
             
             if (!variantId || !variantValue) {
                 showNotification('無法獲取選中的口味，請重新選擇！', 'warning');
