@@ -954,27 +954,10 @@
                                 <i class="fas fa-palette"></i>
                                 顏色選擇
                             </h3>
-                            <div class="color-options" id="colorOptions">
-                                <div class="color-option selected" data-color="布紋黑色" data-image="ilia_Bu/ilia_fabric_device_main.png">
-                                    <div class="color-name">布紋黑色</div>
-                                </div>
-                                <div class="color-option" data-color="布紋灰色" data-image="ilia_Bu/ilia_fabric_device_main.png">
-                                    <div class="color-name">布紋灰色</div>
-                                </div>
-                                <div class="color-option" data-color="布紋牛仔藍" data-image="ilia_Bu/ilia_fabric_device_main.png">
-                                    <div class="color-name">布紋牛仔藍</div>
-                                </div>
-                                <div class="color-option" data-color="布紋粉色" data-image="ilia_Bu/ilia_fabric_device_main.png">
-                                    <div class="color-name">布紋粉色</div>
-                </div>
-                                <div class="color-option" data-color="布紋綠色" data-image="ilia_Bu/ilia_fabric_device_main.png">
-                                    <div class="color-name">布紋綠色</div>
-                                </div>
-                                <div class="color-option" data-color="布紋藍色" data-image="ilia_Bu/ilia_fabric_device_main.png">
-                                    <div class="color-name">布紋藍色</div>
-                                </div>
-                </div>
-            </div>
+                            <div class="color-options" id="variantContainer">
+                                <!-- 顏色選項將由變數選擇器動態載入 -->
+                            </div>
+                        </div>
 
                         <!-- Specifications -->
                         <div class="specifications">
@@ -1083,7 +1066,9 @@
     </main>
 
     <script>
-        let selectedColor = '布紋黑色';
+        // 變數選擇器實例
+        let variantSelector = null;
+        let selectedVariant = null;
         let currentPrice = 650;
 
         // Header scroll effect
@@ -1110,26 +1095,46 @@
             }
         }
 
-        // 初始化顏色選項
-        function initializeColorOptions() {
-            const colorOptions = document.querySelectorAll('.color-option');
-            colorOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // 移除其他選中狀態
-                    colorOptions.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // 添加選中狀態
-                    this.classList.add('selected');
-                    
-                    // 更新選中的顏色
-                    selectedColor = this.querySelector('.color-name').textContent;
-                    document.getElementById('selectedColor').textContent = selectedColor;
-                    
-                    // 更新主圖片
-                    const mainImage = document.getElementById('mainImage');
-                    mainImage.src = this.dataset.image;
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('ilia_fabric', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的變數:', variant.value);
+                    selectedVariant = variant;
+                    updateSelectedColor(variant);
+                    updateAddToCartButton(variant);
                 });
-            });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
+        }
+
+        // 更新選中的顏色顯示
+        function updateSelectedColor(variant) {
+            const selectedColorElement = document.getElementById('selectedColor');
+            if (selectedColorElement) {
+                selectedColorElement.textContent = variant.value;
+            }
+        }
+
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.pulse-button');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請先選擇顏色';
+                addToCartBtn.style.opacity = '0.6';
+            }
         }
 
         // Image Gallery
@@ -1183,12 +1188,23 @@
 
         // 加入購物車
         function addToCart() {
+            if (!selectedVariant) {
+                alert('請先選擇顏色！');
+                return;
+            }
+
+            if (selectedVariant.stock <= 0) {
+                alert('該顏色目前缺貨！');
+                return;
+            }
+
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_fabric_host',
+                id: 'ilia_fabric',
                 name: 'ILIA 哩亞布紋主機',
-                color: selectedColor,
+                variant: selectedVariant.value,
+                variantId: selectedVariant.id,
                 price: 650,
                 quantity: quantity,
                 image: document.getElementById('mainImage').src
@@ -1197,9 +1213,9 @@
             // 取得現有購物車
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             
-            // 檢查是否已存在相同產品和顏色
+            // 檢查是否已存在相同產品和變數
             const existingItemIndex = cart.findIndex(item => 
-                item.id === product.id && item.color === product.color
+                item.id === product.id && item.variantId === product.variantId
             );
             
             if (existingItemIndex > -1) {
@@ -1217,10 +1233,7 @@
             updateCartCount();
             
             // 顯示成功訊息
-            alert(`已將 ${product.name} (${product.color}) x${product.quantity} 加入購物車！`);
-            
-            // 可選：跳轉到購物車頁面
-            // window.location.href = 'cart.html';
+            alert(`已將 ${product.name} (${product.variant}) x${product.quantity} 加入購物車！`);
         }
 
         // Intersection Observer for animations
@@ -1240,8 +1253,14 @@
 
         // 初始化頁面
         document.addEventListener('DOMContentLoaded', function() {
-            initializeColorOptions();
             updateTotalPrice();
+            
+            // 初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
             
             // Observe elements for animation
             const animatedElements = document.querySelectorAll('.animate-fadeIn');

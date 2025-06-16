@@ -561,31 +561,8 @@
             <!-- Color Options -->
             <div class="color-options">
                 <h3 class="color-title">顏色選擇 <span style="font-size: 0.8rem; color: var(--text-secondary);">(6種顏色)</span></h3>
-                <div class="color-grid">
-                    <div class="color-option selected" data-color="黑">
-                        <div class="color-preview" style="background: #2c2c2c;"></div>
-                        <span>黑</span>
-                    </div>
-                    <div class="color-option" data-color="白">
-                        <div class="color-preview" style="background: #f8f8f8;"></div>
-                        <span>白</span>
-                    </div>
-                    <div class="color-option" data-color="橙">
-                        <div class="color-preview" style="background: #ff8c00;"></div>
-                        <span>橙</span>
-                    </div>
-                    <div class="color-option" data-color="紅">
-                        <div class="color-preview" style="background: #dc2626;"></div>
-                        <span>紅</span>
-                    </div>
-                    <div class="color-option" data-color="綠">
-                        <div class="color-preview" style="background: #16a34a;"></div>
-                        <span>綠</span>
-                    </div>
-                    <div class="color-option" data-color="藍">
-                        <div class="color-preview" style="background: #2563eb;"></div>
-                        <span>藍</span>
-                    </div>
+                <div class="color-grid" id="variantContainer">
+                    <!-- 顏色選項將由變數選擇器動態載入 -->
                 </div>
             </div>
 
@@ -660,13 +637,40 @@
     </div>
 
     <script>
-        // Color Selection
-        document.querySelectorAll('.color-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
+        // 變數選擇器實例
+        let variantSelector = null;
+
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('hta_vape', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的顏色:', variant.value);
+                    updateAddToCartButton(variant);
+                });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
+        }
+
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.pulse-button');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇顏色';
+                addToCartBtn.style.opacity = '0.6';
+            }
+        }
 
         // Quantity Controls
         function increaseQuantity() {
@@ -684,24 +688,6 @@
                 quantityInput.value = currentValue - 1;
             }
         }
-
-        // 初始化變數選擇器
-        let variantSelector;
-        
-        // 等待產品數據載入完成
-        window.addEventListener('productsLoaded', () => {
-            // 創建變數選擇器（如果有變數容器的話）
-            const variantContainer = document.getElementById('variant-selector');
-            if (variantContainer) {
-                variantSelector = new VariantSelector('hta_spade', 'variant-selector');
-                
-                // 監聽變數變更
-                variantSelector.setOnVariantChange((variant) => {
-                    console.log('變數已變更:', variant);
-                    updateProductInfo(variant);
-                });
-            }
-        });
 
         // 更新產品信息
         function updateProductInfo(variant) {
@@ -723,63 +709,43 @@
             }
         }
 
-        // Add to Cart with New Product Management System
+        // 加入購物車功能
         async function addToCart() {
             try {
-                // 等待產品管理系統初始化
+                // 檢查產品管理系統是否已初始化
                 if (!window.ProductManager || !window.ProductManager.initialized) {
                     alert('產品數據載入中，請稍後再試');
                     return;
                 }
 
-                let selectedVariant;
-                let quantity = parseInt(document.getElementById('quantity').value);
-
-                // 如果有變數選擇器，使用選中的變數
-                if (variantSelector) {
-                    selectedVariant = variantSelector.getSelectedVariant();
-                    if (!selectedVariant) {
-                        alert('請選擇產品變數');
-                        return;
-                    }
-                } else {
-                    // 舊版本兼容：從顏色選項獲取
-                    const selectedColorElement = document.querySelector('.color-option.selected');
-                    if (!selectedColorElement) {
-                        alert('請選擇顏色');
-                        return;
-                    }
-                    
-                    const selectedColor = selectedColorElement.dataset.color;
-                    const variantId = `hta_spade_${selectedColor.toLowerCase()}`;
-                    selectedVariant = window.ProductManager.getVariant('hta_spade', variantId);
-                    
-                    if (!selectedVariant) {
-                        // 創建臨時變數對象
-                        selectedVariant = {
-                            id: variantId,
-                            name: selectedColor,
-                            value: selectedColor,
-                            stock: 999, // 預設庫存
-                            type: 'color'
-                        };
-                    }
+                // 檢查是否選擇了變數
+                if (!variantSelector) {
+                    alert('變數選擇器未初始化，請重新載入頁面');
+                    return;
                 }
 
+                const selectedVariant = variantSelector.getSelectedVariant();
+                if (!selectedVariant) {
+                    alert('請選擇顏色');
+                    return;
+                }
+
+                const quantity = parseInt(document.getElementById('quantity').value);
+                
                 // 檢查庫存
-                const stockCheck = window.ProductManager.checkStock('hta_spade', selectedVariant.id, quantity);
+                const stockCheck = window.ProductManager.checkStock('hta_vape', selectedVariant.id, quantity);
                 if (!stockCheck.available) {
                     alert(`庫存不足！${stockCheck.message}`);
                     return;
                 }
 
                 // 獲取產品價格
-                const priceInfo = window.ProductManager.getProductPrice('hta_spade');
-                let unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
+                const priceInfo = window.ProductManager.getProductPrice('hta_vape');
+                const unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
                 
-                // 添加到購物車邏輯
+                // 創建產品對象
                 const product = {
-                    id: 'hta_spade',
+                    id: 'hta_vape',
                     name: 'HTA 黑桃主機',
                     variant: selectedVariant.value,
                     price: unitPrice,
@@ -801,7 +767,7 @@
                     const newQuantity = cart[existingIndex].quantity + product.quantity;
                     
                     // 再次檢查庫存
-                    const newStockCheck = window.ProductManager.checkStock('hta_spade', selectedVariant.id, newQuantity);
+                    const newStockCheck = window.ProductManager.checkStock('hta_vape', selectedVariant.id, newQuantity);
                     if (!newStockCheck.available) {
                         alert(`庫存不足！目前庫存：${newStockCheck.stock}，購物車已有：${cart[existingIndex].quantity}`);
                         return;
@@ -814,6 +780,11 @@
 
                 // 保存到 localStorage
                 localStorage.setItem('cart', JSON.stringify(cart));
+
+                // 更新購物車數量顯示
+                if (window.updateCartCount) {
+                    window.updateCartCount();
+                }
 
                 // 顯示成功訊息
                 let message = `已將 ${quantity} 個 HTA 黑桃主機 (${selectedVariant.value}) 加入購物車！`;
@@ -915,6 +886,9 @@
                 const pageProductManager = new PageProductManager();
                 await pageProductManager.init('hta_vape_product');
                 console.log('HTA 黑桃主機 產品頁面管理器已初始化');
+                
+                // 初始化變數選擇器
+                initVariantSelector();
             } catch (error) {
                 console.error('初始化產品頁面管理器失敗:', error);
             }

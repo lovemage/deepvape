@@ -703,12 +703,8 @@
             <!-- Color Options -->
             <div class="color-options">
                 <h3 class="color-title">顏色選擇</h3>
-                <div class="color-grid">
-                    <div class="color-option selected" data-color="霜月白">霜月白</div>
-                    <div class="color-option" data-color="霞光粉">霞光粉</div>
-                    <div class="color-option" data-color="星河藍">星河藍</div>
-                    <div class="color-option" data-color="魅影灰">魅影灰</div>
-                    <div class="color-option" data-color="耀巖黑">耀巖黑</div>
+                <div class="color-grid" id="variantContainer">
+                    <!-- 顏色選項將由變數選擇器動態載入 -->
                 </div>
             </div>
 
@@ -796,15 +792,40 @@
             img.classList.add('active');
         }
 
-        // Color Selection
-        document.querySelectorAll('.color-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.color-option').forEach(opt => {
-                    opt.classList.remove('selected');
+        // 變數選擇器實例
+        let variantSelector = null;
+
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('ilia_5_device', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的顏色:', variant.value);
+                    updateAddToCartButton(variant);
                 });
-                this.classList.add('selected');
-            });
-        });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
+        }
+
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.add-to-cart-btn');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 立即購買 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇顏色';
+                addToCartBtn.style.opacity = '0.6';
+            }
+        }
 
         // Quantity Controls
         function increaseQuantity() {
@@ -825,47 +846,60 @@
 
         // Add to Cart
         function addToCart() {
-            // 如果 API 整合腳本已載入，使用 API 版本
-            if (window.addToCartWithAPI) {
-                window.addToCartWithAPI();
+            if (!variantSelector) {
+                alert('變數選擇器未初始化，請稍後再試');
                 return;
             }
-            
-            // 備用方案：使用原始邏輯
-            const selectedColor = document.querySelector('.color-option.selected').dataset.color;
-            const quantity = document.getElementById('quantity').value;
-            
-            // 獲取產品資訊
-            const product = {
-                id: 'ilia_5_host',
-                name: 'ILIA 五代主機',
-                price: 450,
-                color: selectedColor,
-                quantity: parseInt(quantity),
+
+            const selectedVariant = variantSelector.getSelectedVariant();
+            if (!selectedVariant) {
+                alert('請先選擇顏色！');
+                return;
+            }
+
+            if (selectedVariant.stock <= 0) {
+                alert('所選顏色目前缺貨，請選擇其他顏色！');
+                return;
+            }
+
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const productId = 'ilia_5_device';
+            const productName = 'ILIA 五代主機';
+            const price = 450;
+
+            // Create cart item object with color
+            const cartItem = {
+                id: `${productId}_${selectedVariant.id}`,
+                name: `${productName} - ${selectedVariant.value}`,
+                price: price,
+                quantity: quantity,
+                color: selectedVariant.value,
+                colorId: selectedVariant.id,
                 image: 'ilia_device5/IMAGE 2025-06-16 13:24:03.jpg',
                 category: 'host'
             };
-            
-            // 儲存到 localStorage
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            
-            // 檢查是否已存在相同產品和顏色
-            const existingIndex = cart.findIndex(item => 
-                item.id === product.id && item.color === product.color
-            );
-            
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity += product.quantity;
+
+            // Get existing cart or create new one
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
+
+            if (existingItemIndex > -1) {
+                // Update quantity if item exists
+                cart[existingItemIndex].quantity += quantity;
             } else {
-                cart.push(product);
+                // Add new item to cart
+                cart.push(cartItem);
             }
-            
+
+            // Save cart to localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // 顯示成功訊息
-            alert(`已將 ${quantity} 個 ILIA 五代主機 (${selectedColor}) 加入購物車！`);
-            
-            // 更新購物車圖示（如果有的話）
+
+            // Show success message
+            alert(`已將 ${quantity} 個 ${productName} (${selectedVariant.value}) 加入購物車！`);
+
+            // Update cart count if cart counter exists
             updateCartCount();
         }
 
@@ -935,6 +969,13 @@
 
             // 初始化購物車數量
             updateCartCount();
+
+            // 等待產品管理器初始化後再初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
         });
 
         // Logo click animation

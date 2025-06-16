@@ -618,7 +618,7 @@
             <!-- Flavor Options -->
             <div class="flavor-options">
                 <h3 class="flavor-title">口味選擇 <span class="tech-badge">24種口味</span></h3>
-                <div class="flavor-grid" id="flavorGrid">
+                <div class="flavor-grid" id="variantContainer">
                     <!-- 21種口味選項將由 JavaScript 生成 -->
                 </div>
             </div>
@@ -699,41 +699,55 @@
     </div>
 
     <script>
-        // 21種口味列表
-        const flavors = [
-            '冰釀藍莓', '濃郁紅', '冰釀檸檬', '高級藍莓', '清涼薄荷',
-            '冰釀蘋果', '刺激薄荷', '香草多', '濃郁可樂', '黃檸檬茶',
-            '黑檸檬茶', '白桃烏龍', '紅豆牛奶', '多重草莓', '柑橘藍莓',
-            '清涼薄荷', '蜜桃草莓', '多重草莓', '檸檬海鹽', '紅豆芋泥',
-            '獼猴桃'
-        ];
+        // 變數選擇器實例
+        let variantSelector = null;
 
-        let selectedFlavor = '';
-        let currentPrice = 320;
-
-        // 初始化口味選項
-        function initializeFlavors() {
-            const flavorGrid = document.getElementById('flavorGrid');
-            flavors.forEach(flavor => {
-                const flavorOption = document.createElement('div');
-                flavorOption.className = 'flavor-option';
-                flavorOption.textContent = flavor;
-                flavorOption.onclick = () => selectFlavor(flavor, flavorOption);
-                flavorGrid.appendChild(flavorOption);
-            });
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('ilia_disposable', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的口味:', variant.value);
+                    updateAddToCartButton(variant);
+                    updateTotalPrice();
+                });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
         }
 
-        // 選擇口味
-        function selectFlavor(flavor, element) {
-            // 移除其他選中狀態
-            document.querySelectorAll('.flavor-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            // 添加選中狀態
-            element.classList.add('selected');
-            selectedFlavor = flavor;
-            document.getElementById('selectedFlavor').textContent = flavor;
+        // 獲取當前頁面ID
+        function getCurrentPageId() {
+            const path = window.location.pathname;
+            const filename = path.split('/').pop();
+            return filename.replace('.html', '');
+        }
+
+        // 從頁面ID獲取產品ID
+        function getProductIdFromPageId(pageId) {
+            const mapping = {
+                'ilia_disposable_product': 'ilia_disposable'
+            };
+            return mapping[pageId];
+        }
+
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.pulse-button');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇口味';
+                addToCartBtn.style.opacity = '0.6';
+            }
         }
 
         // Image Gallery
@@ -769,59 +783,125 @@
         // 更新總價
         function updateTotalPrice() {
             const quantity = parseInt(document.getElementById('quantity').value);
-            let unitPrice = currentPrice;
+            let unitPrice = 320; // 預設價格
+            
+            // 如果有選擇變數，使用變數價格
+            if (variantSelector && window.ProductManager && window.ProductManager.initialized) {
+                const selectedVariant = variantSelector.getSelectedVariant();
+                if (selectedVariant) {
+                    const priceInfo = window.ProductManager.getProductPrice('ilia_disposable');
+                    unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
+                }
+            }
             
             // 20支以上優惠價
             if (quantity >= 20) {
-                unitPrice = 310;
+                unitPrice = Math.max(unitPrice - 10, 310);
             }
             
             const totalPrice = unitPrice * quantity;
             document.getElementById('totalPrice').textContent = totalPrice;
         }
 
-        // Add to Cart
-        function addToCart() {
-            if (!selectedFlavor) {
-                alert('請先選擇口味！');
-                return;
-            }
-            
-            const quantity = parseInt(document.getElementById('quantity').value);
-            
-            // 獲取產品資訊
-            const product = {
-                id: 'ilia_disposable_gen4',
-                name: 'ILIA 拋棄式四代',
-                price: currentPrice,
-                flavor: selectedFlavor,
-                quantity: quantity,
-                image: 'ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp',
-                category: 'disposable'
-            };
-            
-            // 儲存到 localStorage
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            
-            // 檢查是否已存在相同產品和口味
-            const existingIndex = cart.findIndex(item => 
-                item.id === product.id && item.flavor === product.flavor
-            );
-            
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity += product.quantity;
-            } else {
-                cart.push(product);
-            }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // 顯示成功訊息
-            alert(`已將 ${quantity} 支 ${selectedFlavor} 口味的 ILIA 拋棄式四代加入購物車！`);
-            
-            // 詢問是否前往購物車
-            if (confirm('是否前往購物車結帳？')) {
-                window.location.href = 'cart.html';
+        // 加入購物車功能
+        async function addToCart() {
+            try {
+                // 檢查產品管理系統是否已初始化
+                if (!window.ProductManager || !window.ProductManager.initialized) {
+                    alert('產品數據載入中，請稍後再試');
+                    return;
+                }
+
+                // 檢查是否選擇了變數
+                if (!variantSelector) {
+                    alert('變數選擇器未初始化，請重新載入頁面');
+                    return;
+                }
+
+                const selectedVariant = variantSelector.getSelectedVariant();
+                if (!selectedVariant) {
+                    alert('請選擇口味');
+                    return;
+                }
+
+                const quantity = parseInt(document.getElementById('quantity').value);
+                
+                // 檢查庫存
+                const stockCheck = window.ProductManager.checkStock('ilia_disposable', selectedVariant.id, quantity);
+                if (!stockCheck.available) {
+                    alert(`庫存不足！${stockCheck.message}`);
+                    return;
+                }
+
+                // 獲取產品價格
+                const priceInfo = window.ProductManager.getProductPrice('ilia_disposable');
+                let unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
+                
+                // 20支以上優惠價
+                if (quantity >= 20) {
+                    unitPrice = Math.max(unitPrice - 10, 310);
+                }
+                
+                // 創建產品對象
+                const product = {
+                    id: 'ilia_disposable',
+                    name: 'ILIA 拋棄式四代',
+                    variant: selectedVariant.value,
+                    price: unitPrice,
+                    originalPrice: priceInfo.originalPrice,
+                    quantity: quantity,
+                    image: 'ilia_a_4/-哩亞拋棄式-1000x1000.jpg.webp',
+                    variantId: selectedVariant.id
+                };
+
+                // 獲取現有購物車
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                
+                // 檢查是否已存在相同產品和變數
+                const existingIndex = cart.findIndex(item => 
+                    item.id === product.id && item.variantId === product.variantId
+                );
+
+                if (existingIndex > -1) {
+                    const newQuantity = cart[existingIndex].quantity + product.quantity;
+                    
+                    // 再次檢查庫存
+                    const newStockCheck = window.ProductManager.checkStock('ilia_disposable', selectedVariant.id, newQuantity);
+                    if (!newStockCheck.available) {
+                        alert(`庫存不足！目前庫存：${newStockCheck.stock}，購物車已有：${cart[existingIndex].quantity}`);
+                        return;
+                    }
+                    
+                    cart[existingIndex].quantity = newQuantity;
+                } else {
+                    cart.push(product);
+                }
+
+                // 保存到 localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // 更新購物車數量顯示
+                if (window.updateCartCount) {
+                    window.updateCartCount();
+                }
+
+                // 顯示成功訊息
+                let message = `已將 ${quantity} 支 ILIA 拋棄式四代 (${selectedVariant.value}) 加入購物車！`;
+                if (quantity >= 20) {
+                    message += '\n🎉 享受大量購買優惠價！';
+                }
+                if (priceInfo.discount) {
+                    message += `\n🎉 特價商品：${priceInfo.discount}`;
+                }
+                message += `\n\n是否前往購物車結帳？`;
+
+                if (confirm(message)) {
+                    window.location.href = 'cart.html';
+                }
+
+            } catch (error) {
+                console.error('加入購物車失敗:', error);
+                alert('加入購物車失敗，請稍後再試');
             }
         }
 
@@ -851,8 +931,8 @@
                 productInfo.style.transform = 'translateY(0)';
             }, 300);
             
-            // 初始化口味選項
-            initializeFlavors();
+            // 初始化變數選擇器
+            initVariantSelector();
         });
     </script>
 
@@ -936,6 +1016,9 @@
                 const pageProductManager = new PageProductManager();
                 await pageProductManager.init('ilia_disposable_product');
                 console.log('ILIA 拋棄式 產品頁面管理器已初始化');
+                
+                // 初始化變數選擇器
+                initVariantSelector();
             } catch (error) {
                 console.error('初始化產品頁面管理器失敗:', error);
             }

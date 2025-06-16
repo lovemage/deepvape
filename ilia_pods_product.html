@@ -742,31 +742,8 @@
             <!-- Flavor Options -->
             <div class="flavor-options">
                 <h3 class="flavor-title">口味選擇 <span class="glow-badge">29種口味</span></h3>
-                <div class="flavor-grid">
-                    <div class="flavor-option selected" data-flavor="傾心草莓">傾心草莓</div>
-                    <div class="flavor-option" data-flavor="冰釀藍莓">冰釀藍莓</div>
-                    <div class="flavor-option" data-flavor="霸氣鳳梨">霸氣鳳梨</div>
-                    <div class="flavor-option" data-flavor="白桃烏龍">白桃烏龍</div>
-                    <div class="flavor-option" data-flavor="荔枝甘露">荔枝甘露</div>
-                    <div class="flavor-option" data-flavor="百香果汁">百香果汁</div>
-                    <div class="flavor-option" data-flavor="蜜瓜誘惑">蜜瓜誘惑</div>
-                    <div class="flavor-option" data-flavor="海鹽檸檬">海鹽檸檬</div>
-                    <div class="flavor-option" data-flavor="零度可樂">零度可樂</div>
-                    <div class="flavor-option" data-flavor="雪碧口味">雪碧口味</div>
-                    <div class="flavor-option" data-flavor="可爾必思">可爾必思</div>
-                    <div class="flavor-option" data-flavor="寶礦力">寶礦力</div>
-                    <div class="flavor-option" data-flavor="激情薄荷">激情薄荷</div>
-                    <div class="flavor-option" data-flavor="深海冰泉">深海冰泉</div>
-                    <div class="flavor-option" data-flavor="冰鎮西瓜">冰鎮西瓜</div>
-                    <div class="flavor-option" data-flavor="脆青蘋果">脆青蘋果</div>
-                    <div class="flavor-option" data-flavor="多肉芒果">多肉芒果</div>
-                    <div class="flavor-option" data-flavor="多肉葡萄">多肉葡萄</div>
-                    <div class="flavor-option" data-flavor="奇異果">奇異果</div>
-                    <div class="flavor-option" data-flavor="紅心芭樂">紅心芭樂</div>
-                    <div class="flavor-option" data-flavor="綠豆冰沙">綠豆冰沙</div>
-                    <div class="flavor-option" data-flavor="老冰棍">老冰棍</div>
-                    <div class="flavor-option" data-flavor="鐵觀音">鐵觀音</div>
-                    <div class="flavor-option" data-flavor="幸運煙草">幸運煙草</div>
+                <div class="flavor-grid" id="variantContainer">
+                    <!-- 口味選項將由變數選擇器動態載入 -->
                 </div>
             </div>
 
@@ -852,13 +829,40 @@
             img.classList.add('active');
         }
 
-        // Flavor Selection
-        document.querySelectorAll('.flavor-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.flavor-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
+        // 變數選擇器實例
+        let variantSelector = null;
+
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('ilia_pods', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的口味:', variant.value);
+                    updateAddToCartButton(variant);
+                });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
+        }
+
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.pulse-button');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇口味';
+                addToCartBtn.style.opacity = '0.6';
+            }
+        }
 
         // Quantity Controls
         function increaseQuantity() {
@@ -879,33 +883,73 @@
 
         // Add to Cart
         function addToCart() {
-            const selectedFlavor = document.querySelector('.flavor-option.selected').dataset.flavor;
-            const quantity = document.getElementById('quantity').value;
-            
-            const product = {
-                id: 'ilia_glow_pods',
-                name: 'ILIA 發光煙彈',
-                price: 300,
-                flavor: selectedFlavor,
-                quantity: parseInt(quantity),
+            if (!variantSelector) {
+                alert('變數選擇器未初始化，請稍後再試');
+                return;
+            }
+
+            const selectedVariant = variantSelector.getSelectedVariant();
+            if (!selectedVariant) {
+                alert('請先選擇口味！');
+                return;
+            }
+
+            if (selectedVariant.stock <= 0) {
+                alert('所選口味目前缺貨，請選擇其他口味！');
+                return;
+            }
+
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const productId = 'ilia_pods';
+            const productName = 'ILIA 發光煙彈';
+            const price = 300;
+
+            // Create cart item object with flavor
+            const cartItem = {
+                id: `${productId}_${selectedVariant.id}`,
+                name: `${productName} - ${selectedVariant.value}`,
+                price: price,
+                quantity: quantity,
+                flavor: selectedVariant.value,
+                flavorId: selectedVariant.id,
                 image: 'illa_d/哩亞-ILIA煙彈.webp',
                 category: 'pods'
             };
-            
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const existingIndex = cart.findIndex(item => 
-                item.id === product.id && item.flavor === product.flavor
-            );
-            
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity += product.quantity;
+
+            // Get existing cart or create new one
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
+
+            if (existingItemIndex > -1) {
+                // Update quantity if item exists
+                cart[existingItemIndex].quantity += quantity;
             } else {
-                cart.push(product);
+                // Add new item to cart
+                cart.push(cartItem);
             }
-            
+
+            // Save cart to localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Show success message
+            alert(`已將 ${quantity} 盒 ${productName} (${selectedVariant.value}) 加入購物車！`);
+
+            // Update cart count if cart counter exists
+            updateCartCount();
+        }
+
+        // 更新購物車數量顯示
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             
-            alert(`已將 ${quantity} 盒 ILIA 發光煙彈 (${selectedFlavor}) 加入購物車！`);
+            const cartCountElements = document.querySelectorAll('.cart-count');
+            cartCountElements.forEach(element => {
+                element.textContent = totalItems;
+                element.style.display = totalItems > 0 ? 'block' : 'none';
+            });
         }
 
         
@@ -932,6 +976,16 @@
                 productInfo.style.opacity = '1';
                 productInfo.style.transform = 'translateY(0)';
             }, 300);
+
+            // 初始化變數選擇器
+            updateCartCount();
+            
+            // 等待產品管理器初始化後再初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
         });
     </script>
 

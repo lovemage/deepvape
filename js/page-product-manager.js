@@ -61,7 +61,7 @@ class PageProductManager {
             'ilia_pods_product': '/data/page_products/ilia_pods.json',
             'ilia_leather_product': '/data/page_products/ilia_leather.json',
             'ilia_5_product': '/data/page_products/ilia_5_device.json',
-    'ilia_ultra5_pods_product': '/data/page_products/ilia_ultra5_pods.json',
+            'ilia_ultra5_pods_product': '/data/page_products/ilia_ultra5_pods.json',
             'sp2_product': '/data/page_products/sp2_device.json',
             'sp2_device_product': '/data/page_products/sp2_device.json',
             'sp2_pods_product': '/data/page_products/sp2_pods.json',

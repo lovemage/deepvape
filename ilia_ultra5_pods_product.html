@@ -456,6 +456,108 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Flavor Options */
+        .flavor-options {
+            margin-bottom: 30px;
+        }
+
+        .flavor-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .flavor-title::before {
+            content: "🍃";
+            font-size: 1.2rem;
+        }
+
+        .flavor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 2px solid rgba(103, 126, 234, 0.1);
+            border-radius: 15px;
+            background: rgba(103, 126, 234, 0.02);
+        }
+
+        .flavor-option {
+            padding: 12px 16px;
+            border: 2px solid rgba(103, 126, 234, 0.2);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            font-weight: 500;
+            text-align: center;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flavor-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(103, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .flavor-option:hover::before {
+            left: 100%;
+        }
+
+        .flavor-option:hover {
+            border-color: #667eea;
+            background: rgba(103, 126, 234, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(103, 126, 234, 0.2);
+        }
+
+        .flavor-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(103, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+            color: #667eea;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(103, 126, 234, 0.3);
+        }
+
+        .flavor-option.out-of-stock {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+            border-color: #ddd;
+        }
+
+        .flavor-option.out-of-stock:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .stock-indicator {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .stock-indicator.low-stock {
+            color: #f59e0b;
+        }
+
+        .stock-indicator.out-of-stock {
+            color: #ef4444;
+        }
     </style>
 </head>
 <body>
@@ -542,6 +644,14 @@
                             <br>• 此款煙彈不通用一代主機！
                             <br>• 此款煙彈不通用凱斯5代主機！
                             <br>• 本產品僅供 18 歲以上成年人使用
+                        </div>
+
+                        <!-- Flavor Options -->
+                        <div class="flavor-options">
+                            <h3 class="flavor-title">口味選擇</h3>
+                            <div class="flavor-grid" id="variantContainer">
+                                <!-- 口味選項將由變數選擇器動態載入 -->
+                            </div>
                         </div>
 
                         <!-- Quantity Selector -->
@@ -725,6 +835,13 @@
         // Initialize cart count on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
+            
+            // 等待產品管理器初始化後再初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
         });
 
         // Smooth scrolling for anchor links
@@ -740,6 +857,99 @@
                 }
             });
         });
+
+        // 變數選擇器實例
+        let variantSelector = null;
+
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('ilia_ultra5_pods', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的口味:', variant.value);
+                    updateAddToCartButton(variant);
+                });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
+        }
+
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.add-to-cart');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.textContent = `加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.textContent = '請選擇口味';
+                addToCartBtn.style.opacity = '0.6';
+            }
+        }
+
+        // 更新加入購物車功能
+        function addToCart() {
+            if (!variantSelector) {
+                alert('變數選擇器未初始化，請稍後再試');
+                return;
+            }
+
+            const selectedVariant = variantSelector.getSelectedVariant();
+            if (!selectedVariant) {
+                alert('請先選擇口味！');
+                return;
+            }
+
+            if (selectedVariant.stock <= 0) {
+                alert('所選口味目前缺貨，請選擇其他口味！');
+                return;
+            }
+
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const productId = 'ilia_ultra5_pods';
+            const productName = 'ILIA Ultra5 煙彈';
+            const price = 320;
+
+            // Create cart item object with flavor
+            const cartItem = {
+                id: `${productId}_${selectedVariant.id}`,
+                name: `${productName} - ${selectedVariant.value}`,
+                price: price,
+                quantity: quantity,
+                flavor: selectedVariant.value,
+                flavorId: selectedVariant.id,
+                image: 'ilia_pod5/ilia-pod5.jpg'
+            };
+
+            // Get existing cart or create new one
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
+
+            if (existingItemIndex > -1) {
+                // Update quantity if item exists
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                // Add new item to cart
+                cart.push(cartItem);
+            }
+
+            // Save cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Show success message
+            alert(`已將 ${quantity} 個 ${productName} (${selectedVariant.value}) 加入購物車！`);
+
+            // Update cart count if cart counter exists
+            updateCartCount();
+        }
     </script>
 
     <!-- 產品頁面管理器 -->

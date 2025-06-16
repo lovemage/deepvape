@@ -583,16 +583,8 @@
             <!-- Color Options -->
             <div class="color-options">
                 <h3 class="color-title">顏色選擇</h3>
-                <div class="color-grid">
-                    <div class="color-option selected" data-color="黑色白">黑色白</div>
-                    <div class="color-option" data-color="藍色銀灰">藍色銀灰</div>
-                    <div class="color-option" data-color="天空之藍">天空之藍</div>
-                    <div class="color-option" data-color="綠綠紅">綠綠紅</div>
-                    <div class="color-option" data-color="綠綠綠">綠綠綠</div>
-                    <div class="color-option" data-color="紫色紫色">紫色紫色</div>
-                    <div class="color-option" data-color="橙橙灰紅">橙橙灰紅</div>
-                    <div class="color-option" data-color="橙色紫紅">橙色紫紅</div>
-                    <div class="color-option" data-color="黑色紅">黑色紅</div>
+                <div class="color-grid" id="variantContainer">
+                    <!-- 顏色選項將由變數選擇器動態載入 -->
                 </div>
             </div>
 
@@ -669,13 +661,42 @@
             img.classList.add('active');
         }
 
-        // Color Selection
-        document.querySelectorAll('.color-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
+        // 變數選擇器實例
+        let variantSelector = null;
+        let selectedVariant = null;
+
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('ilia_gen1', 'variantContainer');
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的變數:', variant.value);
+                    selectedVariant = variant;
+                    updateAddToCartButton(variant);
+                });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
+        }
+
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.pulse-button');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請先選擇顏色';
+                addToCartBtn.style.opacity = '0.6';
+            }
+        }
 
         // Quantity Controls
         function increaseQuantity() {
@@ -696,22 +717,32 @@
 
         // Add to Cart
         function addToCart() {
-            const selectedColor = document.querySelector('.color-option.selected').dataset.color;
-            const quantity = document.getElementById('quantity').value;
+            if (!selectedVariant) {
+                alert('請先選擇顏色！');
+                return;
+            }
+
+            if (selectedVariant.stock <= 0) {
+                alert('該顏色目前缺貨！');
+                return;
+            }
+
+            const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_1_host',
+                id: 'ilia_gen1',
                 name: 'ILIA 一代主機',
                 price: 650,
-                color: selectedColor,
-                quantity: parseInt(quantity),
+                variant: selectedVariant.value,
+                variantId: selectedVariant.id,
+                quantity: quantity,
                 image: 'ilia_1/ilia_gen1_main_device.jpg',
                 category: 'host'
             };
             
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
             const existingIndex = cart.findIndex(item => 
-                item.id === product.id && item.color === product.color
+                item.id === product.id && item.variantId === product.variantId
             );
             
             if (existingIndex > -1) {
@@ -722,7 +753,12 @@
             
             localStorage.setItem('cart', JSON.stringify(cart));
             
-            alert(`已將 ${quantity} 個 ILIA 一代主機 (${selectedColor}) 加入購物車！`);
+            // 更新購物車計數
+            if (typeof updateCartCount === 'function') {
+                updateCartCount();
+            }
+            
+            alert(`已將 ${quantity} 個 ILIA 一代主機 (${selectedVariant.value}) 加入購物車！`);
         }
 
         
@@ -749,6 +785,13 @@
                 productInfo.style.opacity = '1';
                 productInfo.style.transform = 'translateY(0)';
             }, 300);
+
+            // 初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
         });
     </script>
 

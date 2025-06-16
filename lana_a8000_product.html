@@ -1160,8 +1160,8 @@
                         <!-- Flavor Selection -->
                         <div class="flavor-selection-section">
                             <h4>選擇口味</h4>
-                            <div id="flavor-grid-main">
-                                <!-- 口味選項將通過 JavaScript 動態載入 -->
+                            <div id="variantContainer">
+                                <!-- 口味選項將由變數選擇器動態載入 -->
                             </div>
                         </div>
                         
@@ -1427,67 +1427,44 @@
 
         window.addEventListener('scroll', handleNavbarScroll);
 
-        // 口味數據
-        const flavors = [
-            { id: 'mint', name: '薄荷', color: '#00ff88' },
-            { id: 'strawberry', name: '草莓', color: '#ff6b9d' },
-            { id: 'mango', name: '芒果', color: '#ffa726' },
-            { id: 'grape', name: '葡萄', color: '#7e57c2' },
-            { id: 'apple', name: '青蘋果', color: '#66bb6a' },
-            { id: 'watermelon', name: '西瓜', color: '#ef5350' },
-            { id: 'banana', name: '香蕉', color: '#ffee58' },
-            { id: 'orange', name: '橙子', color: '#ff9800' }
-        ];
+        // 變數選擇器實例
+        let variantSelector = null;
+        let selectedVariant = null;
 
         // 產品數據
         const productData = {
-            id: 'lana-a8000',
+            id: 'lana_a8000',
             name: 'LANA A8000 一次性電子煙',
             price: 320,
             image: 'lana_a8000/lana_a8000.webp',
             description: '8000口超長續航，極致口感體驗'
         };
 
-        // 全局變量
-        let selectedFlavor = null;
-
-        // 載入口味選項
-        function loadFlavors() {
-            const flavorGrid = document.getElementById('flavor-grid-main');
-            flavorGrid.innerHTML = '';
-            
-            flavors.forEach(flavor => {
-                const flavorOption = document.createElement('div');
-                flavorOption.className = 'flavor-option';
-                flavorOption.dataset.flavor = flavor.name;
-                flavorOption.innerHTML = `
-                    <div class="flavor-name">${flavor.name}</div>
-                `;
+        // 初始化變數選擇器
+        function initVariantSelector() {
+            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+                variantSelector = new VariantSelector('lana_a8000', 'variantContainer');
                 
-                flavorOption.addEventListener('click', function() {
-                    // 移除其他選項的選中狀態
-                    document.querySelectorAll('.flavor-option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // 添加選中狀態
-                    this.classList.add('selected');
-                    selectedFlavor = flavor.name;
-                    
-                    // 更新按鈕狀態
-                    updateAddToCartButton();
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的變數:', variant.value);
+                    selectedVariant = variant;
+                    updateAddToCartButton(variant);
                 });
-                
-                flavorGrid.appendChild(flavorOption);
-            });
+            } else {
+                // 如果依賴未載入，稍後重試
+                setTimeout(initVariantSelector, 500);
+            }
         }
 
         // 更新加入購物車按鈕
-        function updateAddToCartButton() {
+        function updateAddToCartButton(variant) {
             const button = document.getElementById('addToCartBtn');
-            if (selectedFlavor) {
+            if (!button) return;
+
+            if (variant && variant.stock > 0) {
                 button.disabled = false;
-                button.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>加入購物車';
+                button.innerHTML = `<i class="fas fa-shopping-cart me-2"></i>加入購物車 - ${variant.value}`;
                 button.classList.remove('btn-secondary');
                 button.classList.add('btn-primary-custom');
             } else {
@@ -1500,16 +1477,22 @@
 
         // 加入購物車
         function addToCart(productId) {
-            if (!selectedFlavor) {
+            if (!selectedVariant) {
                 showNotification('請先選擇口味！', 'warning');
+                return;
+            }
+
+            if (selectedVariant.stock <= 0) {
+                showNotification('該口味目前缺貨！', 'warning');
                 return;
             }
 
             // 模擬加入購物車
             const product = {
-                id: productId,
+                id: 'lana_a8000',
                 name: 'LANA A8000',
-                flavor: selectedFlavor,
+                variant: selectedVariant.value,
+                variantId: selectedVariant.id,
                 price: 320,
                 quantity: 1,
                 image: 'lana_a8000/lana_a8000.webp'
@@ -1518,9 +1501,9 @@
             // 獲取現有購物車
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             
-            // 檢查是否已存在相同產品和口味
+            // 檢查是否已存在相同產品和變數
             const existingIndex = cart.findIndex(item => 
-                item.id === product.id && item.flavor === product.flavor
+                item.id === product.id && item.variantId === product.variantId
             );
             
             if (existingIndex > -1) {
@@ -1531,6 +1514,9 @@
             
             // 保存到 localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // 更新購物車計數
+            updateCartCount();
             
             showNotification('產品已加入購物車！', 'success');
         }
@@ -1670,10 +1656,16 @@
 
         // Page initialization
         document.addEventListener('DOMContentLoaded', function() {
-            loadFlavors();
             loadAnnouncements();
             loadProductStock();
             updateCartCount();
+            
+            // 初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
             
             // Initialize scroll animations
             document.querySelectorAll('.section-hidden').forEach(el => {

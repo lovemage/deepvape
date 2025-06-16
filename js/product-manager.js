@@ -11,10 +11,10 @@ class ProductManager {
             'sp2_device': 'data/page_products/sp2_device.json',
             'ilia_gen1': 'data/page_products/ilia_1.json',
             'ilia_5_device': 'data/page_products/ilia_5_device.json',
-    'ilia_ultra5_pods': 'data/page_products/ilia_ultra5_pods.json',
+            'ilia_ultra5_pods': 'data/page_products/ilia_ultra5_pods.json',
             'ilia_leather': 'data/page_products/ilia_leather.json',
             'ilia_fabric': 'data/page_products/ilia_fabric.json',
-            'hta_spade': 'data/page_products/hta_vape.json',
+            'hta_vape': 'data/page_products/hta_vape.json',
             
             // 煙彈系列
             'ilia_pods': 'data/page_products/ilia_pods.json',
