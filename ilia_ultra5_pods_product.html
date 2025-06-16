@@ -782,42 +782,79 @@
 
         // Add to cart functionality
         function addToCart() {
-            const quantity = document.getElementById('quantity').value;
-            const productId = 'ilia_ultra5_pods';
-            const productName = 'ILIA Ultra5 煙彈';
-                         const price = 320;
-
-            // Create cart item object
-            const cartItem = {
-                id: productId,
+            // 檢查是否選擇了變數
+            const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
+            if (!selectedColorOption) {
+                alert('請先選擇產品選項！');
+                return;
+            }
+            
+            // 獲取選中的變數信息
+            const variantId = selectedColorOption.dataset.variantId || 
+                             selectedColorOption.dataset.color || 
+                             selectedColorOption.dataset.flavor;
+            const variantValue = selectedColorOption.textContent.trim() || 
+                               selectedColorOption.dataset.color || 
+                               selectedColorOption.dataset.flavor;
+            
+            if (!variantId || !variantValue) {
+                alert('無法獲取選中的產品選項，請重新選擇！');
+                return;
+            }
+            
+            // 檢查庫存（如果有 StockChecker）
+            if (window.StockChecker && window.StockChecker.initialized) {
+                const stockInfo = window.StockChecker.checkVariantStock('ilia_ultra5_pods_product', variantId, 'variant');
+                if (stockInfo.stock <= 0) {
+                    alert(`很抱歉，${variantValue} 目前缺貨！`);
+                    return;
+                }
+            }
+            
+            const quantity = parseInt(document.getElementById('quantity')?.value || '1');
+            
+            // 獲取產品基本信息
+            const productNameElement = document.querySelector('h1, .product-title, .product-name');
+            const productName = productNameElement ? productNameElement.textContent.trim() : '產品';
+            
+            const priceElement = document.querySelector('.price, .product-price, [class*="price"]');
+            let price = 0;
+            if (priceElement) {
+                const priceText = priceElement.textContent.replace(/[^0-9]/g, '');
+                price = parseInt(priceText) || 0;
+            }
+            
+            const product = {
+                id: 'ilia_ultra5_pods_product',
                 name: productName,
                 price: price,
-                quantity: parseInt(quantity),
-                image: '/ilia_ultra5_pods/ilia_ultra5_pods_main.webp'
+                variant: variantValue,
+                variantId: variantId,
+                quantity: quantity,
+                image: document.querySelector('.main-image img, .product-image img')?.src || '',
+                category: 'product'
             };
-
-            // Get existing cart or create new one
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            // Check if item already exists in cart
-            const existingItemIndex = cart.findIndex(item => item.id === productId);
-
-            if (existingItemIndex > -1) {
-                // Update quantity if item exists
-                cart[existingItemIndex].quantity += parseInt(quantity);
+            
+            // 加入購物車
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingIndex = cart.findIndex(item => 
+                item.id === product.id && item.variantId === product.variantId
+            );
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += product.quantity;
             } else {
-                // Add new item to cart
-                cart.push(cartItem);
+                cart.push(product);
             }
-
-            // Save cart to localStorage
+            
             localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Show success message
-            alert(`✅ 已將 ${quantity} 個 ${productName} 加入購物車！`);
-
-            // Update cart count if cart counter exists
-            updateCartCount();
+            
+            // 更新購物車計數
+            if (typeof updateCartCount === 'function') {
+                updateCartCount();
+            }
+            
+            alert(`✅ 已將 ${quantity} 個 ${productName} (${variantValue}) 加入購物車！`);
         }
 
         // Update cart count display

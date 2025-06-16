@@ -715,36 +715,60 @@
 
         // Add to Cart
         function addToCart() {
-            if (!variantSelector) {
-                alert('變數選擇器未初始化，請稍後再試');
+            // 檢查是否選擇了變數
+            const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
+            if (!selectedColorOption) {
+                alert('請先選擇產品選項！');
                 return;
             }
-
-            const selectedVariant = variantSelector.getSelectedVariant();
-            if (!selectedVariant) {
-                alert('請先選擇顏色！');
+            
+            // 獲取選中的變數信息
+            const variantId = selectedColorOption.dataset.variantId || 
+                             selectedColorOption.dataset.color || 
+                             selectedColorOption.dataset.flavor;
+            const variantValue = selectedColorOption.textContent.trim() || 
+                               selectedColorOption.dataset.color || 
+                               selectedColorOption.dataset.flavor;
+            
+            if (!variantId || !variantValue) {
+                alert('無法獲取選中的產品選項，請重新選擇！');
                 return;
             }
-
-            if (selectedVariant.stock <= 0) {
-                alert('該顏色目前缺貨！');
-                return;
+            
+            // 檢查庫存（如果有 StockChecker）
+            if (window.StockChecker && window.StockChecker.initialized) {
+                const stockInfo = window.StockChecker.checkVariantStock('ilia_1_product', variantId, 'variant');
+                if (stockInfo.stock <= 0) {
+                    alert(`很抱歉，${variantValue} 目前缺貨！`);
+                    return;
+                }
             }
-
-            const quantity = parseInt(document.getElementById('quantity').value);
+            
+            const quantity = parseInt(document.getElementById('quantity')?.value || '1');
+            
+            // 獲取產品基本信息
+            const productNameElement = document.querySelector('h1, .product-title, .product-name');
+            const productName = productNameElement ? productNameElement.textContent.trim() : '產品';
+            
+            const priceElement = document.querySelector('.price, .product-price, [class*="price"]');
+            let price = 0;
+            if (priceElement) {
+                const priceText = priceElement.textContent.replace(/[^0-9]/g, '');
+                price = parseInt(priceText) || 0;
+            }
             
             const product = {
                 id: 'ilia_1_product',
-                name: 'ILIA 一代主機',
-                price: 650,
-                color: selectedVariant.value,
-                variant: selectedVariant.value,
-                variantId: selectedVariant.id,
+                name: productName,
+                price: price,
+                variant: variantValue,
+                variantId: variantId,
                 quantity: quantity,
-                image: '/ilia_1/ilia_1_main.webp',
-                category: 'host'
+                image: document.querySelector('.main-image img, .product-image img')?.src || '',
+                category: 'product'
             };
             
+            // 加入購物車
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
             const existingIndex = cart.findIndex(item => 
                 item.id === product.id && item.variantId === product.variantId
@@ -763,7 +787,7 @@
                 updateCartCount();
             }
             
-            alert(`✅ 已將 ${quantity} 個 ILIA 一代主機 (${selectedVariant.value}) 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 個 ${productName} (${variantValue}) 加入購物車！`);
         }
 
         

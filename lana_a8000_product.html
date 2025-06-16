@@ -1477,31 +1477,44 @@
 
         // 加入購物車
         function addToCart(productId) {
-            if (!variantSelector) {
-                showNotification('變數選擇器未初始化，請稍後再試！', 'warning');
-                return;
-            }
-
-            const selectedVariant = variantSelector.getSelectedVariant();
-            if (!selectedVariant) {
+            // 檢查是否選擇了變數
+            const selectedFlavorOption = document.querySelector('.flavor-option.selected, .color-option.selected, .variant-option.selected');
+            if (!selectedFlavorOption) {
                 showNotification('請先選擇口味！', 'warning');
                 return;
             }
-
-            if (selectedVariant.stock <= 0) {
-                showNotification('該口味目前缺貨！', 'warning');
+            
+            // 獲取選中的變數信息
+            const variantId = selectedFlavorOption.dataset.variantId || 
+                             selectedFlavorOption.dataset.flavor || 
+                             selectedFlavorOption.dataset.color;
+            const variantValue = selectedFlavorOption.textContent.trim() || 
+                               selectedFlavorOption.dataset.flavor || 
+                               selectedFlavorOption.dataset.color;
+            
+            if (!variantId || !variantValue) {
+                showNotification('無法獲取選中的口味，請重新選擇！', 'warning');
                 return;
+            }
+            
+            // 檢查庫存（如果有 StockChecker）
+            if (window.StockChecker && window.StockChecker.initialized) {
+                const stockInfo = window.StockChecker.checkVariantStock(productId || 'lana_a8000_product', variantId, 'flavor');
+                if (stockInfo.stock <= 0) {
+                    showNotification(`很抱歉，${variantValue} 目前缺貨！`, 'warning');
+                    return;
+                }
             }
 
             // 加入購物車
             const product = {
-                id: productId, // 使用傳入的產品ID
+                id: productId || 'lana_a8000_product',
                 name: 'LANA A8000',
-                variant: selectedVariant.value,
-                variantId: selectedVariant.id,
+                variant: variantValue,
+                variantId: variantId,
                 price: 320,
                 quantity: 1,
-                image: selectedVariant.image || '/lana_a8000/lana_a8000.webp'
+                image: '/lana_a8000/lana_a8000.webp'
             };
 
             // 獲取現有購物車
@@ -1524,7 +1537,7 @@
             // 更新購物車計數
             updateCartCount();
             
-            showNotification(`✅ 已將 LANA A8000 (${selectedVariant.value}) 加入購物車！`, 'success');
+            showNotification(`✅ 已將 LANA A8000 (${variantValue}) 加入購物車！`, 'success');
         }
 
         // 載入公告

@@ -711,96 +711,79 @@
 
         // 加入購物車功能
         async function addToCart() {
-            try {
-                // 檢查產品管理系統是否已初始化
-                if (!window.ProductManager || !window.ProductManager.initialized) {
-                    alert('產品數據載入中，請稍後再試');
-                    return;
-                }
-
-                // 檢查是否選擇了變數
-                if (!variantSelector) {
-                    alert('變數選擇器未初始化，請重新載入頁面');
-                    return;
-                }
-
-                const selectedVariant = variantSelector.getSelectedVariant();
-                if (!selectedVariant) {
-                    alert('請選擇顏色');
-                    return;
-                }
-
-                const quantity = parseInt(document.getElementById('quantity').value);
-                
-                // 檢查庫存
-                const stockCheck = window.ProductManager.checkStock('hta_vape', selectedVariant.id, quantity);
-                if (!stockCheck.available) {
-                    alert(`庫存不足！${stockCheck.message}`);
-                    return;
-                }
-
-                // 獲取產品價格
-                const priceInfo = window.ProductManager.getProductPrice('hta_vape');
-                const unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
-                
-                // 創建產品對象
-                const product = {
-                    id: 'hta_vape_product',
-                    name: 'HTA 黑桃主機',
-                    variant: selectedVariant.value,
-                    price: unitPrice,
-                    originalPrice: priceInfo.originalPrice,
-                    quantity: quantity,
-                    image: '/hta_vape/hta_vape_main.webp',
-                    variantId: selectedVariant.id
-                };
-
-                // 獲取現有購物車
-                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-                
-                // 檢查是否已存在相同產品和變數
-                const existingIndex = cart.findIndex(item => 
-                    item.id === product.id && item.variantId === product.variantId
-                );
-
-                if (existingIndex > -1) {
-                    const newQuantity = cart[existingIndex].quantity + product.quantity;
-                    
-                    // 再次檢查庫存
-                    const newStockCheck = window.ProductManager.checkStock('hta_vape', selectedVariant.id, newQuantity);
-                    if (!newStockCheck.available) {
-                        alert(`庫存不足！目前庫存：${newStockCheck.stock}，購物車已有：${cart[existingIndex].quantity}`);
-                        return;
-                    }
-                    
-                    cart[existingIndex].quantity = newQuantity;
-                } else {
-                    cart.push(product);
-                }
-
-                // 保存到 localStorage
-                localStorage.setItem('cart', JSON.stringify(cart));
-
-                // 更新購物車數量顯示
-                if (window.updateCartCount) {
-                    window.updateCartCount();
-                }
-
-                // 顯示成功訊息
-                let message = `已將 ${quantity} 個 HTA 黑桃主機 (${selectedVariant.value}) 加入購物車！`;
-                if (priceInfo.discount) {
-                    message += `\n🎉 特價商品：${priceInfo.discount}`;
-                }
-                message += `\n\n是否前往購物車結帳？`;
-
-                if (confirm(message)) {
-                    window.location.href = 'cart.html';
-                }
-
-            } catch (error) {
-                console.error('加入購物車失敗:', error);
-                alert('加入購物車失敗，請稍後再試');
+            // 檢查是否選擇了變數
+            const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
+            if (!selectedColorOption) {
+                alert('請先選擇產品選項！');
+                return;
             }
+            
+            // 獲取選中的變數信息
+            const variantId = selectedColorOption.dataset.variantId || 
+                             selectedColorOption.dataset.color || 
+                             selectedColorOption.dataset.flavor;
+            const variantValue = selectedColorOption.textContent.trim() || 
+                               selectedColorOption.dataset.color || 
+                               selectedColorOption.dataset.flavor;
+            
+            if (!variantId || !variantValue) {
+                alert('無法獲取選中的產品選項，請重新選擇！');
+                return;
+            }
+            
+            // 檢查庫存（如果有 StockChecker）
+            if (window.StockChecker && window.StockChecker.initialized) {
+                const stockInfo = window.StockChecker.checkVariantStock('hta_vape_product', variantId, 'variant');
+                if (stockInfo.stock <= 0) {
+                    alert(`很抱歉，${variantValue} 目前缺貨！`);
+                    return;
+                }
+            }
+            
+            const quantity = parseInt(document.getElementById('quantity')?.value || '1');
+            
+            // 獲取產品基本信息
+            const productNameElement = document.querySelector('h1, .product-title, .product-name');
+            const productName = productNameElement ? productNameElement.textContent.trim() : '產品';
+            
+            const priceElement = document.querySelector('.price, .product-price, [class*="price"]');
+            let price = 0;
+            if (priceElement) {
+                const priceText = priceElement.textContent.replace(/[^0-9]/g, '');
+                price = parseInt(priceText) || 0;
+            }
+            
+            const product = {
+                id: 'hta_vape_product',
+                name: productName,
+                price: price,
+                variant: variantValue,
+                variantId: variantId,
+                quantity: quantity,
+                image: document.querySelector('.main-image img, .product-image img')?.src || '',
+                category: 'product'
+            };
+            
+            // 加入購物車
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingIndex = cart.findIndex(item => 
+                item.id === product.id && item.variantId === product.variantId
+            );
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += product.quantity;
+            } else {
+                cart.push(product);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // 更新購物車計數
+            if (typeof updateCartCount === 'function') {
+                updateCartCount();
+            }
+            
+            alert(`✅ 已將 ${quantity} 個 ${productName} (${variantValue}) 加入購物車！`);
         }
 
         

@@ -9,7 +9,7 @@
     "test": "echo 'No tests specified'"
   },
   "dependencies": {
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "netlify-cli": "^17.10.1"
@@ -26,4 +26,4 @@
   "engines": {
     "node": ">=16.0.0"
   }
-} 
+}

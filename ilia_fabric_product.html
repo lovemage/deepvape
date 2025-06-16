@@ -1186,58 +1186,79 @@
 
         // 加入購物車
         function addToCart() {
-            if (!variantSelector) {
-                alert('變數選擇器未初始化，請稍後再試');
+            // 檢查是否選擇了變數
+            const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
+            if (!selectedColorOption) {
+                alert('請先選擇產品選項！');
                 return;
             }
-
-            const selectedVariant = variantSelector.getSelectedVariant();
-            if (!selectedVariant) {
-                alert('請先選擇顏色！');
+            
+            // 獲取選中的變數信息
+            const variantId = selectedColorOption.dataset.variantId || 
+                             selectedColorOption.dataset.color || 
+                             selectedColorOption.dataset.flavor;
+            const variantValue = selectedColorOption.textContent.trim() || 
+                               selectedColorOption.dataset.color || 
+                               selectedColorOption.dataset.flavor;
+            
+            if (!variantId || !variantValue) {
+                alert('無法獲取選中的產品選項，請重新選擇！');
                 return;
             }
-
-            if (selectedVariant.stock <= 0) {
-                alert('該顏色目前缺貨！');
-                return;
+            
+            // 檢查庫存（如果有 StockChecker）
+            if (window.StockChecker && window.StockChecker.initialized) {
+                const stockInfo = window.StockChecker.checkVariantStock('ilia_fabric_product', variantId, 'variant');
+                if (stockInfo.stock <= 0) {
+                    alert(`很抱歉，${variantValue} 目前缺貨！`);
+                    return;
+                }
             }
-
-            const quantity = parseInt(document.getElementById('quantity').value);
+            
+            const quantity = parseInt(document.getElementById('quantity')?.value || '1');
+            
+            // 獲取產品基本信息
+            const productNameElement = document.querySelector('h1, .product-title, .product-name');
+            const productName = productNameElement ? productNameElement.textContent.trim() : '產品';
+            
+            const priceElement = document.querySelector('.price, .product-price, [class*="price"]');
+            let price = 0;
+            if (priceElement) {
+                const priceText = priceElement.textContent.replace(/[^0-9]/g, '');
+                price = parseInt(priceText) || 0;
+            }
             
             const product = {
                 id: 'ilia_fabric_product',
-                name: 'ILIA 哩亞布紋主機',
-                variant: selectedVariant.value,
-                variantId: selectedVariant.id,
-                price: 650,
+                name: productName,
+                price: price,
+                variant: variantValue,
+                variantId: variantId,
                 quantity: quantity,
-                image: document.getElementById('mainImage').src
+                image: document.querySelector('.main-image img, .product-image img')?.src || '',
+                category: 'product'
             };
             
-            // 取得現有購物車
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            // 檢查是否已存在相同產品和變數
-            const existingItemIndex = cart.findIndex(item => 
+            // 加入購物車
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingIndex = cart.findIndex(item => 
                 item.id === product.id && item.variantId === product.variantId
             );
             
-            if (existingItemIndex > -1) {
-                // 如果存在，增加數量
-                cart[existingItemIndex].quantity += product.quantity;
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += product.quantity;
             } else {
-                // 如果不存在，添加新項目
                 cart.push(product);
             }
             
-            // 儲存購物車
             localStorage.setItem('cart', JSON.stringify(cart));
             
-            // 更新購物車計數器
-            updateCartCount();
+            // 更新購物車計數
+            if (typeof updateCartCount === 'function') {
+                updateCartCount();
+            }
             
-            // 顯示成功訊息
-            alert(`✅ 已將 ${product.name} (${product.variant}) x${product.quantity} 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 個 ${productName} (${variantValue}) 加入購物車！`);
         }
 
         // Intersection Observer for animations
