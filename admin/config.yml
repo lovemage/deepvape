@@ -316,7 +316,7 @@ collections:
                   - {label: "💰 高CP值", value: "value"}
                 default: []
               - name: "lana_a8000"
-                label: "LANA A8000"
+                label: "Lana 拋棄式 8000口"
                 widget: "select"
                 multiple: true
                 options: 
@@ -435,7 +435,7 @@ collections:
         file: "data/page_products/hta_pods.json"
         fields:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "hta_pods_product"}
-          - {name: "productName", label: "產品名稱", widget: "string", default: "HTA 黑桃煙彈"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "HTA 黑桃煙彈 - 14種口味"}
           - {name: "price", label: "產品價格", widget: "number", default: 260}
           - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
@@ -515,7 +515,7 @@ collections:
         file: "data/page_products/ilia_disposable.json"
         fields:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_disposable_product"}
-          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 拋棄式四代"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 拋棄式四代 - 24種口味"}
           - {name: "price", label: "產品價格", widget: "number", default: 320}
           - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
@@ -563,7 +563,7 @@ collections:
         file: "data/page_products/ilia_pods.json"
         fields:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_pods_product"}
-          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 發光煙彈"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 發光煙彈 - 29種口味"}
           - {name: "price", label: "產品價格", widget: "number", default: 300}
           - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
@@ -587,6 +587,30 @@ collections:
                 widget: "string"
                 required: false
                 hint: "格式：ILIA-PODS-{英文大寫}，例如：ILIA-PODS-MINT"
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "ilia_5_device_product"
+        label: "ILIA 五代主機頁面"
+        file: "data/page_products/ilia_5_device.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_5_device_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA 五代主機"}
+          - {name: "price", label: "產品價格", widget: "number", default: 450}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - {name: "id", label: "變數ID", widget: "string"}
+              - {name: "name", label: "變數名稱", widget: "string"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "color"}
+              - {name: "value", label: "變數值（如：霜月白）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - {name: "sku", label: "SKU編號", widget: "string", required: false}
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
@@ -643,7 +667,7 @@ collections:
         file: "data/page_products/sp2_pods.json"
         fields:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "sp2_pods_product"}
-          - {name: "productName", label: "產品名稱", widget: "string", default: "SP2 煙彈"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "SP2 煙彈 - 36種口味"}
           - {name: "price", label: "產品價格", widget: "number", default: 350}
           - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
@@ -675,7 +699,7 @@ collections:
         file: "data/page_products/lana_pods.json"
         fields:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "lana_pods_product"}
-          - {name: "productName", label: "產品名稱", widget: "string", default: "LANA 煙彈"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "LANA 煙彈 - 35種口味"}
           - {name: "price", label: "產品價格", widget: "number", default: 280}
           - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
@@ -683,23 +707,31 @@ collections:
             label: "產品變數（口味/顏色）"
             widget: "list"
             fields:
-              - {name: "id", label: "變數ID", widget: "string"}
-              - {name: "name", label: "變數名稱", widget: "string"}
+              - name: "id"
+                label: "變數ID"
+                widget: "string"
+                hint: "格式：lana_pods_{英文口味名}，例如：lana_pods_grape, lana_pods_cola"
+                pattern: ["^lana_pods_[a-z_]+$", "格式錯誤！必須是：lana_pods_{英文口味名}"]
+              - {name: "name", label: "變數名稱", widget: "string", default: "口味"}
               - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
-              - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
+              - {name: "value", label: "變數值（如：葡萄）", widget: "string"}
               - {name: "stock", label: "庫存數量", widget: "number", default: 0}
               - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
               - {name: "image", label: "變數圖片", widget: "image", required: false}
-              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+              - name: "sku"
+                label: "SKU編號"
+                widget: "string"
+                required: false
+                hint: "格式：LANA-PODS-{英文大寫}，例如：LANA-PODS-GRAPE"
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
           - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 
       - name: "lana_a8000_product"
-        label: "LANA A8000 拋棄式頁面"
+        label: "Lana 拋棄式 8000口頁面"
         file: "data/page_products/lana_a8000.json"
         fields:
           - {name: "pageId", label: "頁面ID", widget: "string", default: "lana_a8000_product"}
-          - {name: "productName", label: "產品名稱", widget: "string", default: "LANA A8000 拋棄式"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "Lana 拋棄式 8000口 - 20種口味"}
           - {name: "price", label: "產品價格", widget: "number", default: 320}
           - {name: "originalPrice", label: "原價", widget: "number", required: false}
           - {name: "discount", label: "折扣標籤", widget: "string", required: false}
@@ -707,14 +739,54 @@ collections:
             label: "產品變數（口味/顏色）"
             widget: "list"
             fields:
-              - {name: "id", label: "變數ID", widget: "string"}
-              - {name: "name", label: "變數名稱", widget: "string"}
+              - name: "id"
+                label: "變數ID"
+                widget: "string"
+                hint: "格式：lana_a8000_{英文口味名}，例如：lana_a8000_grape, lana_a8000_mint"
+                pattern: ["^lana_a8000_[a-z_]+$", "格式錯誤！必須是：lana_a8000_{英文口味名}"]
+              - {name: "name", label: "變數名稱", widget: "string", default: "口味"}
               - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
-              - {name: "value", label: "變數值（如：薄荷）", widget: "string"}
+              - {name: "value", label: "變數值（如：葡萄）", widget: "string"}
               - {name: "stock", label: "庫存數量", widget: "number", default: 0}
               - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
               - {name: "image", label: "變數圖片", widget: "image", required: false}
-              - {name: "sku", label: "SKU編號", widget: "string", required: false}
+              - name: "sku"
+                label: "SKU編號"
+                widget: "string"
+                required: false
+                hint: "格式：LANA-A8000-{英文大寫}，例如：LANA-A8000-GRAPE"
           - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
-          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""} 
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
+
+      - name: "ilia_ultra5_pods_product"
+        label: "ILIA Ultra5 煙彈頁面"
+        file: "data/page_products/ilia_ultra5_pods.json"
+        fields:
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "ilia_ultra5_pods_product"}
+          - {name: "productName", label: "產品名稱", widget: "string", default: "ILIA Ultra5 煙彈 - 23種口味"}
+          - {name: "price", label: "產品價格", widget: "number", default: 320}
+          - {name: "originalPrice", label: "原價", widget: "number", required: false}
+          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "variants"
+            label: "產品變數（口味/顏色）"
+            widget: "list"
+            fields:
+              - name: "id"
+                label: "變數ID"
+                widget: "string"
+                hint: "格式：ilia_ultra5_pods_{英文口味名}，例如：ilia_ultra5_pods_mint, ilia_ultra5_pods_apple"
+                pattern: ["^ilia_ultra5_pods_[a-z_]+$", "格式錯誤！必須是：ilia_ultra5_pods_{英文口味名}"]
+              - {name: "name", label: "變數名稱", widget: "string", default: "口味"}
+              - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
+              - {name: "value", label: "變數值（如：脆青蘋果）", widget: "string"}
+              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
+              - {name: "image", label: "變數圖片", widget: "image", required: false}
+              - name: "sku"
+                label: "SKU編號"
+                widget: "string"
+                required: false
+                hint: "格式：ILIA-ULTRA5-{英文大寫}，例如：ILIA-ULTRA5-APPLE"
+          - {name: "status", label: "產品狀態", widget: "select", options: ["active", "inactive", "out_of_stock"], default: "active"}
+          - {name: "lastUpdated", label: "更新時間", widget: "datetime", default: ""}
 

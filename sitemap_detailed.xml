@@ -45,6 +45,18 @@
     </image:image>
   </url>
 
+  <!-- ILIA 五代主機 -->
+  <url>
+    <loc>https://deepvape.org/ilia_5_product.html</loc>
+    <lastmod>2025-01-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://deepvape.org/ilia_device5/IMAGE 2025-06-16 13:24:03.jpg</image:loc>
+      <image:title>ILIA 五代主機 - 創新科技，非凡體驗 - 450元</image:title>
+    </image:image>
+  </url>
+
   <!-- ILIA 皮革主機 -->
   <url>
     <loc>https://deepvape.org/ilia_leather_product.html</loc>
@@ -91,7 +103,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://deepvape.org/illa_d/哩亞-ILIA煙彈.webp</image:loc>
-      <image:title>ILIA 發光煙彈 - 25種口味 - 300元</image:title>
+      <image:title>ILIA 發光煙彈 - 29種口味 - 300元</image:title>
     </image:image>
   </url>
 
@@ -103,7 +115,7 @@
     <priority>0.8</priority>
     <image:image>
               <image:loc>https://deepvape.org/sp2_pods/sp2_pods_main.webp</image:loc>
-      <image:title>SP2 煙彈 - 32種口味 - 350元</image:title>
+      <image:title>SP2 煙彈 - 36種口味 - 350元</image:title>
     </image:image>
   </url>
 
@@ -115,7 +127,19 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://deepvape.org/hta_pods/HTA_pods.webp</image:loc>
-      <image:title>HTA 黑桃煙彈 - 15種口味 - 260元</image:title>
+      <image:title>HTA 黑桃煙彈 - 14種口味 - 260元</image:title>
+    </image:image>
+  </url>
+
+  <!-- ILIA Ultra5 煙彈 -->
+  <url>
+    <loc>https://deepvape.org/ilia_ultra5_pods_product.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://deepvape.org/ilia_pod5/ilia-pod5.jpg</image:loc>
+      <image:title>ILIA Ultra5 煙彈 - 23種口味 - 320元</image:title>
     </image:image>
   </url>
 
@@ -127,7 +151,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://deepvape.org/lana_pods/LANA煙彈.webp</image:loc>
-      <image:title>LANA 煙彈 - 12種口味 - 280元</image:title>
+      <image:title>LANA 煙彈 - 35種口味 - 280元</image:title>
     </image:image>
   </url>
 
@@ -145,7 +169,7 @@
     </image:image>
   </url>
 
-  <!-- LANA A8000 拋棄式 -->
+  <!-- Lana 拋棄式 8000口 -->
   <url>
     <loc>https://deepvape.org/lana_a8000_product.html</loc>
     <lastmod>2024-12-23</lastmod>
@@ -153,7 +177,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://deepvape.org/lana_a8000.webp</image:loc>
-      <image:title>LANA A8000 拋棄式 - 8000口 - 320元</image:title>
+      <image:title>Lana 拋棄式 8000口 - 8000口 - 320元</image:title>
     </image:image>
   </url>
 

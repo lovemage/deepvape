@@ -1,0 +1,61 @@
+{
+  "pageId": "ilia_5_device_product",
+  "productName": "ILIA 五代主機",
+      "price": 450,
+  "originalPrice": null,
+  "discount": null,
+  "variants": [
+    {
+      "id": "ilia_5_device_frost_white",
+      "name": "顏色",
+      "type": "color",
+      "value": "霜月白",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "ilia_device5/IMAGE 2025-06-16 13:24:03.jpg",
+      "sku": "ILIA-5-DEV-FROST-WHT"
+    },
+    {
+      "id": "ilia_5_device_sunset_pink",
+      "name": "顏色",
+      "type": "color",
+      "value": "霞光粉",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "ilia_device5/IMAGE 2025-06-16 13:24:03.jpg",
+      "sku": "ILIA-5-DEV-SUNSET-PNK"
+    },
+    {
+      "id": "ilia_5_device_galaxy_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "星河藍",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "ilia_device5/IMAGE 2025-06-16 13:24:03.jpg",
+      "sku": "ILIA-5-DEV-GALAXY-BLU"
+    },
+    {
+      "id": "ilia_5_device_shadow_gray",
+      "name": "顏色",
+      "type": "color",
+      "value": "魅影灰",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "ilia_device5/IMAGE 2025-06-16 13:24:03.jpg",
+      "sku": "ILIA-5-DEV-SHADOW-GRY"
+    },
+    {
+      "id": "ilia_5_device_obsidian_black",
+      "name": "顏色",
+      "type": "color",
+      "value": "耀巖黑",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "ilia_device5/IMAGE 2025-06-16 13:24:03.jpg",
+      "sku": "ILIA-5-DEV-OBSIDIAN-BLK"
+    }
+  ],
+  "status": "active",
+  "lastUpdated": "2025-01-16T13:24:03.000Z"
+} 

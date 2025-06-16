@@ -6,124 +6,354 @@
   "discount": null,
   "variants": [
     {
-      "id": "lana_pods_tobacco",
+      "id": "lana_pods_grape",
       "name": "口味",
       "type": "flavor",
-      "value": "經典煙草",
+      "value": "葡萄",
       "stock": 120,
       "priceModifier": 0,
       "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-TOBACCO"
+      "sku": "LANA-PODS-GRAPE"
     },
     {
-      "id": "lana_pods_mint",
+      "id": "lana_pods_cola",
       "name": "口味",
       "type": "flavor",
-      "value": "薄荷涼感",
+      "value": "可樂",
       "stock": 100,
       "priceModifier": 0,
       "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-MINT"
+      "sku": "LANA-PODS-COLA"
     },
     {
-      "id": "lana_pods_fruit_mix",
+      "id": "lana_pods_green_bean",
       "name": "口味",
       "type": "flavor",
-      "value": "水果混合",
+      "value": "綠豆",
       "stock": 90,
       "priceModifier": 0,
       "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-FRUIT"
+      "sku": "LANA-PODS-GREEN-BEAN"
     },
     {
-      "id": "lana_pods_vanilla",
+      "id": "lana_pods_lychee",
       "name": "口味",
       "type": "flavor",
-      "value": "香草奶昔",
+      "value": "荔枝",
       "stock": 85,
-      "priceModifier": 0,
-      "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-VANILLA"
-    },
-    {
-      "id": "lana_pods_blueberry",
-      "name": "口味",
-      "type": "flavor",
-      "value": "藍莓爆珠",
-      "stock": 95,
-      "priceModifier": 0,
-      "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-BLUEBERRY"
-    },
-    {
-      "id": "lana_pods_lemon_soda",
-      "name": "口味",
-      "type": "flavor",
-      "value": "檸檬汽水",
-      "stock": 80,
-      "priceModifier": 0,
-      "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-LEMON"
-    },
-    {
-      "id": "lana_pods_strawberry_tea",
-      "name": "口味",
-      "type": "flavor",
-      "value": "草莓奶茶",
-      "stock": 75,
-      "priceModifier": 0,
-      "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-STRAWBERRY"
-    },
-    {
-      "id": "lana_pods_coffee_latte",
-      "name": "口味",
-      "type": "flavor",
-      "value": "咖啡拿鐵",
-      "stock": 70,
-      "priceModifier": 0,
-      "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-COFFEE"
-    },
-    {
-      "id": "lana_pods_mango_ice",
-      "name": "口味",
-      "type": "flavor",
-      "value": "芒果冰沙",
-      "stock": 85,
-      "priceModifier": 0,
-      "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-MANGO"
-    },
-    {
-      "id": "lana_pods_peach_oolong",
-      "name": "口味",
-      "type": "flavor",
-      "value": "蜜桃烏龍",
-      "stock": 90,
-      "priceModifier": 0,
-      "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-PEACH"
-    },
-    {
-      "id": "lana_pods_lychee_honey",
-      "name": "口味",
-      "type": "flavor",
-      "value": "荔枝蜂蜜",
-      "stock": 65,
       "priceModifier": 0,
       "image": "lana_pods/lana_ceramic_pods_main.webp",
       "sku": "LANA-PODS-LYCHEE"
     },
     {
-      "id": "lana_pods_blackcurrant",
+      "id": "lana_pods_watermelon",
       "name": "口味",
       "type": "flavor",
-      "value": "黑加侖子",
+      "value": "西瓜",
+      "stock": 95,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-WATERMELON"
+    },
+    {
+      "id": "lana_pods_peach",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蜜桃",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-PEACH"
+    },
+    {
+      "id": "lana_pods_pineapple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "鳳梨",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-PINEAPPLE"
+    },
+    {
+      "id": "lana_pods_kiwi",
+      "name": "口味",
+      "type": "flavor",
+      "value": "獼猴桃",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-KIWI"
+    },
+    {
+      "id": "lana_pods_sprite",
+      "name": "口味",
+      "type": "flavor",
+      "value": "雪碧",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-SPRITE"
+    },
+    {
+      "id": "lana_pods_ice_stick",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰棍",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-ICE-STICK"
+    },
+    {
+      "id": "lana_pods_strawberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "草莓",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-STRAWBERRY"
+    },
+    {
+      "id": "lana_pods_orange_ice",
+      "name": "口味",
+      "type": "flavor",
+      "value": "橙冰",
       "stock": 60,
       "priceModifier": 0,
       "image": "lana_pods/lana_ceramic_pods_main.webp",
-      "sku": "LANA-PODS-BLACKCURRANT"
+      "sku": "LANA-PODS-ORANGE-ICE"
+    },
+    {
+      "id": "lana_pods_passion_fruit",
+      "name": "口味",
+      "type": "flavor",
+      "value": "百香果",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-PASSION-FRUIT"
+    },
+    {
+      "id": "lana_pods_sarsaparilla",
+      "name": "口味",
+      "type": "flavor",
+      "value": "沙士啤酒",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-SARSAPARILLA"
+    },
+    {
+      "id": "lana_pods_black_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "紅茶",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-BLACK-TEA"
+    },
+    {
+      "id": "lana_pods_berry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "莓果",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-BERRY"
+    },
+    {
+      "id": "lana_pods_tieguanyin",
+      "name": "口味",
+      "type": "flavor",
+      "value": "鐵觀音",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-TIEGUANYIN"
+    },
+    {
+      "id": "lana_pods_ice_spring",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰泉",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-ICE-SPRING"
+    },
+    {
+      "id": "lana_pods_green_apple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "青蘋果",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-GREEN-APPLE"
+    },
+    {
+      "id": "lana_pods_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "芒果",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-MANGO"
+    },
+    {
+      "id": "lana_pods_oolong",
+      "name": "口味",
+      "type": "flavor",
+      "value": "烏龍",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-OOLONG"
+    },
+    {
+      "id": "lana_pods_coffee",
+      "name": "口味",
+      "type": "flavor",
+      "value": "咖啡",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-COFFEE"
+    },
+    {
+      "id": "lana_pods_blueberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "藍莓",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-BLUEBERRY"
+    },
+    {
+      "id": "lana_pods_peach_grape_banana",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蜜桃葡萄香蕉",
+      "stock": 25,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-PEACH-GRAPE-BANANA"
+    },
+    {
+      "id": "lana_pods_cranberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "蔓越莓",
+      "stock": 20,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-CRANBERRY"
+    },
+    {
+      "id": "lana_pods_strawberry_watermelon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "草莓西瓜",
+      "stock": 15,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-STRAWBERRY-WATERMELON"
+    },
+    {
+      "id": "lana_pods_red_wine",
+      "name": "口味",
+      "type": "flavor",
+      "value": "紅酒",
+      "stock": 10,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-RED-WINE"
+    },
+    {
+      "id": "lana_pods_taro_ice_cream",
+      "name": "口味",
+      "type": "flavor",
+      "value": "芋頭冰淇淋",
+      "stock": 5,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-TARO-ICE-CREAM"
+    },
+    {
+      "id": "lana_pods_rainbow_candy",
+      "name": "口味",
+      "type": "flavor",
+      "value": "彩虹糖",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-RAINBOW-CANDY"
+    },
+    {
+      "id": "lana_pods_mint_gum",
+      "name": "口味",
+      "type": "flavor",
+      "value": "薄荷口香糖",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-MINT-GUM"
+    },
+    {
+      "id": "lana_pods_grapefruit",
+      "name": "口味",
+      "type": "flavor",
+      "value": "葡萄柚",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-GRAPEFRUIT"
+    },
+    {
+      "id": "lana_pods_guava",
+      "name": "口味",
+      "type": "flavor",
+      "value": "芭樂",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-GUAVA"
+    },
+    {
+      "id": "lana_pods_cantaloupe",
+      "name": "口味",
+      "type": "flavor",
+      "value": "哈密瓜",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-CANTALOUPE"
+    },
+    {
+      "id": "lana_pods_jasmine_longjing",
+      "name": "口味",
+      "type": "flavor",
+      "value": "茉莉龍井",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-JASMINE-LONGJING"
+    },
+    {
+      "id": "lana_pods_passion_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "百香芒果",
+      "stock": 20,
+      "priceModifier": 0,
+      "image": "lana_pods/lana_ceramic_pods_main.webp",
+      "sku": "LANA-PODS-PASSION-MANGO"
     }
   ],
   "status": "active",

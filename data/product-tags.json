@@ -3,6 +3,8 @@
     "sp2_device": ["hot", "recommend"],
     "sp2_pods": ["new", "value"],
     "ilia_1": ["trending", "safe"],
+    "ilia_5_device": ["new", "tech", "recommend"],
+    "ilia_ultra5_pods": ["new", "popular", "ultra5", "pods"],
     "ilia_pods": ["hot", "exclusive"],
     "ilia_fabric": ["new", "recommend"],
     "ilia_leather": ["limited", "value"],

@@ -28,6 +28,13 @@
   </url>
 
   <url>
+    <loc>https://deepvape.org/ilia_5_product.html</loc>
+    <lastmod>2025-01-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://deepvape.org/ilia_leather_product.html</loc>
     <lastmod>2025-06-15</lastmod>
     <changefreq>monthly</changefreq>
@@ -66,6 +73,13 @@
   <url>
     <loc>https://deepvape.org/hta_pods_product.html</loc>
     <lastmod>2025-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://deepvape.org/ilia_ultra5_pods_product.html</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
