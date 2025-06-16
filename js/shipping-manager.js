@@ -48,8 +48,8 @@ class ShippingManager {
         return {
             freeShipping: {
                 enabled: true,
-                threshold: 1000,
-                description: "全館滿$1000免運費",
+                threshold: 2000,
+                description: "全館滿$2000免運費",
                 showOnCart: true,
                 showOnProduct: true
             },
@@ -74,9 +74,9 @@ class ShippingManager {
             return {
                 shippingFee: 60,
                 isFreeShipping: false,
-                freeShippingThreshold: 1000,
-                remainingForFreeShipping: Math.max(0, 1000 - subtotal),
-                description: "全館滿$1000免運費"
+                freeShippingThreshold: 2000,
+                remainingForFreeShipping: Math.max(0, 2000 - subtotal),
+                description: "全館滿$2000免運費"
             };
         }
 
@@ -150,7 +150,7 @@ class ShippingManager {
      */
     getFreeShippingHint(subtotal) {
         if (!this.initialized || !this.settings) {
-            return "全館滿$1000免運費";
+            return "全館滿$2000免運費";
         }
 
         const { freeShipping } = this.settings;
@@ -179,7 +179,7 @@ class ShippingManager {
      */
     getFreeShippingThreshold() {
         if (!this.initialized || !this.settings) {
-            return 1000;
+            return 2000;
         }
         return this.settings.freeShipping.threshold;
     }

@@ -1474,7 +1474,7 @@
 
             <!-- Free Shipping Hint -->
             <div class="free-shipping-hint" id="freeShippingHint" style="display: none;">
-                全館滿$1000免運費
+                全館滿$2000免運費
             </div>
 
             <!-- Coupon Section -->
@@ -1778,12 +1778,13 @@
                     freeShippingHint = window.ShippingManager.getFreeShippingHint(subtotal);
                 } else {
                     // 備用計算方式
+                    const freeShippingThreshold = 2000;
                     shipping = storeType === '711-outlying' ? 140 : 60;
-                    if (subtotal >= 1000) {
+                    if (subtotal >= freeShippingThreshold) {
                         shipping = 0;
                         freeShippingHint = '🎉 已享免運優惠！';
                     } else {
-                        const remaining = 1000 - subtotal;
+                        const remaining = freeShippingThreshold - subtotal;
                         freeShippingHint = `再消費 NT$ ${remaining} 即可享免運優惠！`;
                     }
                 }

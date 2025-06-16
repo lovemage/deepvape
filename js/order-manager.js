@@ -168,11 +168,13 @@ class OrderManager {
      * 計算運費
      */
     calculateShipping(shippingMethod, subtotal) {
+        const freeShippingThreshold = 2000; // 統一免運門檻
+        
         switch (shippingMethod) {
             case 'convenience_store':
-                return subtotal >= 1000 ? 0 : 60; // 滿千免運
+                return subtotal >= freeShippingThreshold ? 0 : 60; // 滿額免運
             case 'home_delivery':
-                return subtotal >= 1500 ? 0 : 100; // 滿1500免運
+                return subtotal >= freeShippingThreshold ? 0 : 100; // 滿額免運
             case 'pickup':
                 return 0;
             default:

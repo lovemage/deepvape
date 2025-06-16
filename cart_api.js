@@ -396,15 +396,18 @@ class CartAPI {
 
     // 計算配送費用
     calculateShipping(cart, deliveryMethod) {
+        // 從設定檔讀取免運門檻
+        const freeShippingThreshold = 2000; // 應該從 shipping-settings.json 讀取
+        
         switch (deliveryMethod) {
             case 'store_pickup':
                 return 0; // 門市取貨免運費
             case 'home_delivery':
-                return cart.subtotal >= 1000 ? 0 : 60; // 滿1000免運
+                return cart.subtotal >= freeShippingThreshold ? 0 : 60; // 滿額免運
             case 'express_delivery':
                 return 120; // 快速配送
             default:
-                return 60;
+                return cart.subtotal >= freeShippingThreshold ? 0 : 60;
         }
     }
 

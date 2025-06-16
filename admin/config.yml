@@ -125,8 +125,8 @@ collections:
             widget: "object"
             fields:
               - {name: "enabled", label: "啟用滿額免運", widget: "boolean", default: true}
-              - {name: "threshold", label: "免運門檻金額", widget: "number", default: 1000, hint: "滿多少金額即可免運費"}
-              - {name: "description", label: "免運說明文字", widget: "string", default: "全館滿$1000免運費"}
+              - {name: "threshold", label: "免運門檻金額", widget: "number", default: 2000, hint: "滿多少金額即可免運費"}
+              - {name: "description", label: "免運說明文字", widget: "string", default: "全館滿$2000免運費"}
               - {name: "showOnCart", label: "在購物車顯示免運提示", widget: "boolean", default: true}
               - {name: "showOnProduct", label: "在商品頁顯示免運提示", widget: "boolean", default: true}
           - name: "shippingRates"
