@@ -760,27 +760,10 @@
                 </div>
             </div>
 
-            <!-- Color Options -->
-            <div class="color-options">
+            <!-- Variant Container -->
+            <div id="variantContainer">
                 <h3 class="color-title">顏色選擇 <span class="tech-badge">16種顏色</span></h3>
-                <div class="color-grid">
-                    <div class="color-option selected" data-color="經典黑">經典黑</div>
-                    <div class="color-option" data-color="太空銀">太空銀</div>
-                    <div class="color-option" data-color="深海藍">深海藍</div>
-                    <div class="color-option" data-color="玫瑰金">玫瑰金</div>
-                    <div class="color-option" data-color="珍珠白">珍珠白</div>
-                    <div class="color-option" data-color="炫彩紫">炫彩紫</div>
-                    <div class="color-option" data-color="森林綠">森林綠</div>
-                    <div class="color-option" data-color="夕陽橙">夕陽橙</div>
-                    <div class="color-option" data-color="櫻花粉">櫻花粉</div>
-                    <div class="color-option" data-color="星空灰">星空灰</div>
-                    <div class="color-option" data-color="海洋藍">海洋藍</div>
-                    <div class="color-option" data-color="香檳金">香檳金</div>
-                    <div class="color-option" data-color="薄荷綠">薄荷綠</div>
-                    <div class="color-option" data-color="酒紅色">酒紅色</div>
-                    <div class="color-option" data-color="鈦金屬">鈦金屬</div>
-                    <div class="color-option" data-color="極光色">極光色</div>
-                </div>
+                <!-- VariantSelector 會在這裡動態生成選項 -->
             </div>
 
             <!-- Quantity Selector -->
@@ -868,13 +851,7 @@
             img.classList.add('active');
         }
 
-        // Color Selection
-        document.querySelectorAll('.color-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
+        // 移除舊的顏色選擇邏輯，改用 VariantSelector
 
         // Quantity Controls
         function increaseQuantity() {
@@ -895,23 +872,39 @@
 
         // Add to Cart
         function addToCart() {
-            // 檢查是否有選擇顏色
-            const selectedColorElement = document.querySelector('.color-option.selected');
-            if (!selectedColorElement) {
+            // 檢查是否有選擇變數
+            const selectedVariantElement = document.querySelector('.variant-option.selected');
+            if (!selectedVariantElement) {
                 alert('請先選擇顏色！');
                 return;
             }
             
-            const selectedColor = selectedColorElement.dataset.color;
+            const selectedVariant = selectedVariantElement.textContent.trim();
+            const variantId = selectedVariantElement.dataset.variantId || selectedVariant;
             const quantity = parseInt(document.getElementById('quantity').value);
+            
+            // 檢查庫存
+            if (window.StockChecker) {
+                const stockResult = window.StockChecker.checkVariantStock('sp2_device_product', variantId);
+                if (!stockResult.available) {
+                    alert(`❌ ${selectedVariant} 目前缺貨，請選擇其他顏色或稍後再試。`);
+                    return;
+                }
+                
+                if (stockResult.stock < quantity) {
+                    alert(`❌ ${selectedVariant} 庫存不足，目前僅剩 ${stockResult.stock} 件。`);
+                    return;
+                }
+            }
             
             // 獲取產品資訊
             const product = {
                 id: 'sp2_device_product',
                 name: 'SP2 一代主機',
                 price: 650,
-                color: selectedColor,
-                variant: selectedColor,
+                color: selectedVariant,
+                variant: selectedVariant,
+                variantId: variantId,
                 quantity: quantity,
                 image: '/sp2_v/sp2_device_main_showcase.jpg',
                 category: 'host'
@@ -920,9 +913,9 @@
             // 儲存到 localStorage
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
             
-            // 檢查是否已存在相同產品和顏色
+            // 檢查是否已存在相同產品和變數
             const existingIndex = cart.findIndex(item => 
-                item.id === product.id && item.color === product.color
+                item.id === product.id && item.variantId === product.variantId
             );
             
             if (existingIndex > -1) {
@@ -934,7 +927,7 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             
             // 顯示成功訊息
-            alert(`✅ 已將 ${quantity} 個 SP2 一代主機 (${selectedColor}) 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 個 SP2 一代主機 (${selectedVariant}) 加入購物車！`);
             
             // 更新購物車圖示
             updateCartCount();
@@ -1074,6 +1067,11 @@
                 const pageProductManager = new PageProductManager();
                 await pageProductManager.init('sp2_device_product');
                 console.log('✅ SP2 產品頁面管理器已初始化');
+                
+                // 初始化 VariantSelector
+                const variantSelector = new VariantSelector('sp2_device_product');
+                await variantSelector.init();
+                console.log('✅ SP2 VariantSelector 已初始化');
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
             }

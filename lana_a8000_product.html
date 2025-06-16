@@ -1587,8 +1587,7 @@
 
             // 檢查是否有選中的變數（多種選擇器檢查）
             const selectedOption = document.querySelector('.variant-option.selected') || 
-                                 document.querySelector('.flavor-option.selected') ||
-                                 document.querySelector('[data-variant-id].selected');
+                                 document.querySelector('.flavor-option.selected');
             
             console.log('🔍 updateAddToCartButton 調試:');
             console.log('  - variant:', variant);
@@ -1616,8 +1615,7 @@
         function addToCart(productId) {
             // 檢查是否選擇了變數（多種選擇器檢查）
             const selectedFlavorOption = document.querySelector('.variant-option.selected') || 
-                                        document.querySelector('.flavor-option.selected') ||
-                                        document.querySelector('[data-variant-id].selected');
+                                        document.querySelector('.flavor-option.selected');
             
             console.log('🔍 addToCart 調試:');
             console.log('  - selectedFlavorOption:', selectedFlavorOption);
