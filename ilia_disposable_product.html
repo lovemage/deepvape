@@ -532,7 +532,36 @@
             color: var(--warning-color);
             margin-right: 0.5rem;
         }
-    </style>
+    
+        .stock-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .stock-status.in-stock {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .stock-status.low-stock {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .stock-status.out-of-stock {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        </style>
 </head>
 <body>
     <!-- Header -->
@@ -577,6 +606,10 @@
             <div class="product-price">
                 NT$ 320
                 <div class="price-note">20支以上 NT$ 310</div>
+                    <div class="stock-status in-stock" id="stock-status">
+                        <i class="fas fa-check-circle"></i>
+                        <span>載入庫存中...</span>
+                    </div>
             </div>
             
             <div class="product-description">
@@ -1003,6 +1036,123 @@
             } catch (error) {
                 console.error('初始化產品頁面管理器失敗:', error);
             }
+        });
+    </script>
+    <script>
+        
+        // 更新產品庫存顯示
+        function updateProductStockDisplay() {
+            if (!window.ProductManager || !window.ProductManager.initialized) {
+                console.log('ProductManager 未初始化，稍後重試...');
+                setTimeout(updateProductStockDisplay, 1000);
+                return;
+            }
+
+            const productId = document.querySelector('[data-product-id]')?.dataset.productId;
+            if (!productId) {
+                console.warn('無法獲取產品ID');
+                return;
+            }
+
+            const variants = window.ProductManager.getProductVariants(productId);
+            if (!variants || variants.length === 0) {
+                console.warn('無法獲取產品變數');
+                return;
+            }
+
+            // 計算總庫存
+            const totalStock = variants.reduce((sum, variant) => sum + (variant.stock || 0), 0);
+            const availableVariants = variants.filter(v => (v.stock || 0) > 0).length;
+            
+            const stockElement = document.getElementById('stock-status');
+            if (stockElement) {
+                let statusClass, statusText, statusIcon;
+                
+                if (totalStock === 0) {
+                    statusClass = 'out-of-stock';
+                    statusText = '暫時缺貨';
+                    statusIcon = 'fas fa-times-circle';
+                } else if (totalStock <= 10) {
+                    statusClass = 'low-stock';
+                    statusText = `庫存偏低 (剩餘 ${totalStock} 件)`;
+                    statusIcon = 'fas fa-exclamation-triangle';
+                } else {
+                    statusClass = 'in-stock';
+                    statusText = `現貨供應 (${availableVariants} 種選項可選)`;
+                    statusIcon = 'fas fa-check-circle';
+                }
+                
+                stockElement.className = `stock-status ${statusClass}`;
+                stockElement.innerHTML = `
+                    <i class="${statusIcon}"></i>
+                    <span>${statusText}</span>
+                `;
+                
+                console.log(`✅ 庫存顯示已更新: ${statusText}`);
+            }
+        }
+
+        // 當選擇變數時更新具體庫存
+        function updateVariantStockDisplay(variantValue) {
+            if (!window.ProductManager || !window.ProductManager.initialized) return;
+
+            const productId = document.querySelector('[data-product-id]')?.dataset.productId;
+            if (!productId) return;
+
+            const variants = window.ProductManager.getProductVariants(productId);
+            const variant = variants.find(v => v.value === variantValue || v.id === variantValue);
+            
+            if (variant) {
+                const stockElement = document.getElementById('stock-status');
+                if (stockElement) {
+                    let statusClass, statusText, statusIcon;
+                    const stock = variant.stock || 0;
+                    
+                    if (stock === 0) {
+                        statusClass = 'out-of-stock';
+                        statusText = `${variantValue} - 暫時缺貨`;
+                        statusIcon = 'fas fa-times-circle';
+                    } else if (stock <= 5) {
+                        statusClass = 'low-stock';
+                        statusText = `${variantValue} - 剩餘 ${stock} 件`;
+                        statusIcon = 'fas fa-exclamation-triangle';
+                    } else {
+                        statusClass = 'in-stock';
+                        statusText = `${variantValue} - 現貨充足`;
+                        statusIcon = 'fas fa-check-circle';
+                    }
+                    
+                    stockElement.className = `stock-status ${statusClass}`;
+                    stockElement.innerHTML = `
+                        <i class="${statusIcon}"></i>
+                        <span>${statusText}</span>
+                    `;
+                }
+            }
+        }
+
+        // 頁面載入時更新庫存顯示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延遲執行，確保 ProductManager 已初始化
+            setTimeout(updateProductStockDisplay, 2000);
+            
+            // 監聽 ProductManager 載入完成事件
+            window.addEventListener('productsLoaded', updateProductStockDisplay);
+            
+            // 監聽變數選擇事件
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.color-option, .flavor-option, .variant-option')) {
+                    const option = e.target.closest('.color-option, .flavor-option, .variant-option');
+                    const variantValue = option.textContent.trim() || 
+                                       option.dataset.color || 
+                                       option.dataset.flavor || 
+                                       option.dataset.variantId;
+                    
+                    if (variantValue) {
+                        setTimeout(() => updateVariantStockDisplay(variantValue), 100);
+                    }
+                }
+            });
         });
     </script>
 </body>
