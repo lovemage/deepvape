@@ -2,7 +2,7 @@
   "freeShipping": {
     "enabled": true,
     "threshold": 2000,
-    "description": "全館滿$2000免運費",
+    "description": "全館滿$1500免運費",
     "showOnCart": true,
     "showOnProduct": true
   },
