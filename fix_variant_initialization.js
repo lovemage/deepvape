@@ -108,12 +108,20 @@ function autoInitializeVariantSelector() {
     const productId = PRODUCT_PAGE_MAPPING[currentPage];
     
     if (productId) {
-        console.log(`檢測到產品頁面: ${currentPage} -> ${productId}`);
+        console.log(`🔍 檢測到產品頁面: ${currentPage} -> ${productId}`);
+        
+        // 檢查是否已有頁面自定義的初始化函數
+        if (typeof window.initVariantSelector === 'function') {
+            console.log('✅ 使用頁面現有的 initVariantSelector 函數');
+            return; // 不覆蓋現有函數
+        }
+        
+        console.log('🔧 創建統一的變數選擇器初始化函數');
         
         // 創建初始化函數
         const initFunction = createUnifiedVariantInitializer(productId);
         
-        // 設置全域初始化函數
+        // 設置全域初始化函數（只在沒有現有函數時）
         window.initVariantSelector = initFunction;
         
         // 立即嘗試初始化
@@ -127,7 +135,7 @@ function autoInitializeVariantSelector() {
         window.addEventListener('productsLoaded', initFunction);
         
     } else {
-        console.log(`當前頁面不是產品頁面: ${currentPage}`);
+        console.log(`ℹ️ 當前頁面不是產品頁面: ${currentPage}`);
     }
 }
 
@@ -231,7 +239,9 @@ window.debugVariantSelector = function() {
     }
 };
 
-// 自動執行初始化
-autoInitializeVariantSelector();
+// 暫時禁用自動執行，讓頁面原本的邏輯運行
+// setTimeout(() => {
+//     autoInitializeVariantSelector();
+// }, 100);
 
-console.log('變數選擇器修復腳本載入完成'); 
+console.log('🔧 變數選擇器修復腳本載入完成'); 
