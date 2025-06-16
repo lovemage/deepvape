@@ -61,24 +61,48 @@ class StockChecker {
         console.log(`設置 ${colorOptions.length} 個顏色選項的庫存檢查`);
 
         colorOptions.forEach(option => {
-            // 移除原有的點擊事件
+            // 檢查是否是 PageProductManager 動態生成的元素
+            const hasVariantId = option.dataset.variantId;
+            
+            if (hasVariantId) {
+                // 如果是動態生成的元素，不要替換，而是增強現有功能
+                console.log('🔧 檢測到 PageProductManager 管理的元素，增強現有功能');
+                this.enhanceExistingColorOption(option);
+                return;
+            }
+            
+            // 對於靜態元素，使用原來的替換邏輯
             const newOption = option.cloneNode(true);
             option.parentNode.replaceChild(newOption, option);
 
             // 添加新的點擊事件（包含庫存檢查）
             newOption.addEventListener('click', (e) => {
-                // 確保從正確的元素獲取 data-color 屬性
+                // 確保從正確的元素獲取顏色信息
                 const colorElement = e.target.closest('.color-option') || e.currentTarget;
-                const color = colorElement.dataset.color;
                 const productId = this.getProductIdFromPage();
+                
+                // 支援兩種數據格式：data-color 或 data-variant-id
+                let color = colorElement.dataset.color;
+                let variantId = colorElement.dataset.variantId;
+                
+                // 如果沒有 data-color，嘗試從 variant-id 或文本內容獲取顏色
+                if (!color) {
+                    if (variantId) {
+                        // 從 variant-id 提取顏色名稱，或使用元素文本
+                        color = colorElement.textContent.trim();
+                    } else {
+                        color = colorElement.textContent.trim();
+                    }
+                }
                 
                 console.log(`🎨 點擊顏色選項: ${color}, 產品ID: ${productId}`);
                 console.log(`🔍 事件目標:`, e.target);
                 console.log(`🔍 顏色元素:`, colorElement);
                 console.log(`🔍 所有 data 屬性:`, colorElement.dataset);
+                console.log(`🔍 變數ID: ${variantId}, 顏色: ${color}`);
                 
                 if (!productId || !color) {
-                    console.warn('❌ 無法獲取產品ID或顏色信息', { productId, color, element: colorElement });
+                    console.warn('❌ 無法獲取產品ID或顏色信息', { productId, color, variantId, element: colorElement });
                     return;
                 }
 
@@ -113,6 +137,38 @@ class StockChecker {
                 this.applyStockStyles(newOption, stockInfo);
             }
         });
+    }
+
+    /**
+     * 增強現有的顏色選項（不替換元素）
+     */
+    enhanceExistingColorOption(option) {
+        // 添加庫存狀態樣式
+        const variantId = option.dataset.variantId;
+        const color = option.textContent.trim();
+        const productId = this.getProductIdFromPage();
+        
+        console.log(`🎨 增強顏色選項: ${color} (${variantId})`);
+        
+        if (productId && color) {
+            const stockInfo = this.checkVariantStock(productId, color, 'color');
+            this.applyStockStyles(option, stockInfo);
+            
+            // 添加額外的庫存檢查事件監聽器（不替換現有的）
+            option.addEventListener('click', (e) => {
+                const selectedColor = e.currentTarget.textContent.trim();
+                console.log(`🔍 庫存檢查 - 選擇顏色: ${selectedColor}`);
+                
+                const stockInfo = this.checkVariantStock(productId, selectedColor, 'color');
+                if (stockInfo.stock <= 0) {
+                    console.warn(`⚠️ ${selectedColor} 庫存不足: ${stockInfo.stock}`);
+                } else {
+                    console.log(`✅ ${selectedColor} 庫存充足: ${stockInfo.stock}`);
+                }
+                
+                this.updateStockDisplay(stockInfo);
+            });
+        }
     }
 
     /**
