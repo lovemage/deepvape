@@ -567,7 +567,7 @@
         </div>
 
         <!-- Product Info -->
-        <div class="product-info" data-product-id="ilia_disposable">
+                            <div class="product-info" data-product-id="ilia_disposable_product">
             <span class="product-badge">
                 <i class="fas fa-battery-full"></i> 6500口大容量
             </span>
@@ -729,7 +729,7 @@
         // 從頁面ID獲取產品ID
         function getProductIdFromPageId(pageId) {
             const mapping = {
-                'ilia_disposable_product': 'ilia_disposable'
+                'ilia_disposable_product': 'ilia_disposable_product'
             };
             return mapping[pageId];
         }
@@ -789,7 +789,7 @@
             if (variantSelector && window.ProductManager && window.ProductManager.initialized) {
                 const selectedVariant = variantSelector.getSelectedVariant();
                 if (selectedVariant) {
-                    const priceInfo = window.ProductManager.getProductPrice('ilia_disposable');
+                    const priceInfo = window.ProductManager.getProductPrice('ilia_disposable_product');
                     unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
                 }
             }
@@ -826,15 +826,15 @@
 
                 const quantity = parseInt(document.getElementById('quantity').value);
                 
-                // 檢查庫存
-                const stockCheck = window.ProductManager.checkStock('ilia_disposable', selectedVariant.id, quantity);
+                                    // 檢查庫存
+                const stockCheck = window.ProductManager.checkStock('ilia_disposable_product', selectedVariant.id, quantity);
                 if (!stockCheck.available) {
                     alert(`庫存不足！${stockCheck.message}`);
                     return;
                 }
 
                 // 獲取產品價格
-                const priceInfo = window.ProductManager.getProductPrice('ilia_disposable');
+                const priceInfo = window.ProductManager.getProductPrice('ilia_disposable_product');
                 let unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
                 
                 // 20支以上優惠價
@@ -844,7 +844,7 @@
                 
                 // 創建產品對象
                 const product = {
-                    id: 'ilia_disposable',
+                    id: 'ilia_disposable_product',
                     name: 'ILIA 拋棄式四代',
                     variant: selectedVariant.value,
                     price: unitPrice,
@@ -866,7 +866,7 @@
                     const newQuantity = cart[existingIndex].quantity + product.quantity;
                     
                     // 再次檢查庫存
-                    const newStockCheck = window.ProductManager.checkStock('ilia_disposable', selectedVariant.id, newQuantity);
+                    const newStockCheck = window.ProductManager.checkStock('ilia_disposable_product', selectedVariant.id, newQuantity);
                     if (!newStockCheck.available) {
                         alert(`庫存不足！目前庫存：${newStockCheck.stock}，購物車已有：${cart[existingIndex].quantity}`);
                         return;

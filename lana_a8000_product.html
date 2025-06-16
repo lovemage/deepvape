@@ -1134,7 +1134,7 @@
                     <img src="lana_a8000/lana_a8000.webp" alt="LANA A8000 一次性電子煙" class="product-image">
                 </div>
                 <div class="section-hidden">
-                    <div class="product-info" data-product-id="lana_a8000">
+                    <div class="product-info" data-product-id="lana_a8000_product">
                         <h2 class="product-title">Lana 拋棄式 8000口</h2>
                         
                         <div class="product-price">
@@ -1433,7 +1433,7 @@
 
         // 產品數據
         const productData = {
-            id: 'lana_a8000',
+            id: 'lana_a8000_product',
             name: 'LANA A8000 一次性電子煙',
             price: 320,
             image: '/lana_a8000/lana_a8000_main.webp',
@@ -1477,6 +1477,12 @@
 
         // 加入購物車
         function addToCart(productId) {
+            if (!variantSelector) {
+                showNotification('變數選擇器未初始化，請稍後再試！', 'warning');
+                return;
+            }
+
+            const selectedVariant = variantSelector.getSelectedVariant();
             if (!selectedVariant) {
                 showNotification('請先選擇口味！', 'warning');
                 return;
@@ -1487,9 +1493,9 @@
                 return;
             }
 
-            // 模擬加入購物車
+            // 加入購物車
             const product = {
-                id: 'lana_a8000',
+                id: 'lana_a8000_product',
                 name: 'LANA A8000',
                 variant: selectedVariant.value,
                 variantId: selectedVariant.id,
@@ -1518,7 +1524,7 @@
             // 更新購物車計數
             updateCartCount();
             
-            showNotification('產品已加入購物車！', 'success');
+            showNotification(`✅ 已將 LANA A8000 (${selectedVariant.value}) 加入購物車！`, 'success');
         }
 
         // 載入公告

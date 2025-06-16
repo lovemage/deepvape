@@ -629,7 +629,7 @@
         </div>
 
         <!-- Product Info -->
-        <div class="product-info" data-product-id="ilia_5_device">
+        <div class="product-info" data-product-id="ilia_5_device_product">
             <span class="product-badge">創新科技</span>
             <h1 class="product-title">ILIA 五代主機</h1>
             <p class="product-short-description">
@@ -798,7 +798,7 @@
         // 初始化變數選擇器
         function initVariantSelector() {
             if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('ilia_5_device', 'variantContainer');
+                variantSelector = new VariantSelector('ilia_5_device_product', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
@@ -1028,7 +1028,7 @@
                 
                 // 初始化產品頁面管理器
                 const pageProductManager = new PageProductManager();
-                await pageProductManager.init('ilia_5_device');
+                await pageProductManager.init('ilia_5_device_product');
                 console.log('✅ ILIA 五代產品頁面管理器已初始化');
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);

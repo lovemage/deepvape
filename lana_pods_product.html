@@ -754,7 +754,7 @@
                     </div>
 
                     <!-- Product Info -->
-                    <div class="product-info" data-product-id="lana_pods">
+                    <div class="product-info" data-product-id="lana_pods_product">
                         <h1 class="product-title">LANA 煙彈</h1>
                         
                         <div class="product-price">NT$ 280</div>
@@ -990,7 +990,7 @@
             if (variantSelector && window.ProductManager && window.ProductManager.initialized) {
                 const selectedVariant = variantSelector.getSelectedVariant();
                 if (selectedVariant) {
-                    const priceInfo = window.ProductManager.getProductPrice('lana_pods');
+                    const priceInfo = window.ProductManager.getProductPrice('lana_pods_product');
                     unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
                 }
             }
@@ -1023,14 +1023,14 @@
                 const quantity = parseInt(document.getElementById('quantity').value);
                 
                 // 檢查庫存
-                const stockCheck = window.ProductManager.checkStock('lana_pods', selectedVariant.id, quantity);
+                const stockCheck = window.ProductManager.checkStock('lana_pods_product', selectedVariant.id, quantity);
                 if (!stockCheck.available) {
                     alert(`庫存不足！${stockCheck.message}`);
                     return;
                 }
 
                 // 獲取產品價格
-                const priceInfo = window.ProductManager.getProductPrice('lana_pods');
+                const priceInfo = window.ProductManager.getProductPrice('lana_pods_product');
                 const unitPrice = priceInfo.price + (selectedVariant.priceModifier || 0);
                 
                 // 創建產品對象
@@ -1057,7 +1057,7 @@
                     const newQuantity = cart[existingIndex].quantity + product.quantity;
                     
                     // 再次檢查庫存
-                    const newStockCheck = window.ProductManager.checkStock('lana_pods', selectedVariant.id, newQuantity);
+                    const newStockCheck = window.ProductManager.checkStock('lana_pods_product', selectedVariant.id, newQuantity);
                     if (!newStockCheck.available) {
                         alert(`庫存不足！目前庫存：${newStockCheck.stock}，購物車已有：${cart[existingIndex].quantity}`);
                         return;

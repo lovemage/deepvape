@@ -504,7 +504,7 @@
         </div>
 
         <!-- Product Info -->
-        <div class="product-info" data-product-id="hta_spade">
+        <div class="product-info" data-product-id="hta_vape_product">
             <span class="product-badge">
                 <i class="fas fa-crown"></i> HTA 黑桃頂級系列
             </span>
@@ -702,7 +702,7 @@
             if (variant.priceModifier && variant.priceModifier !== 0) {
                 const priceElement = document.querySelector('.product-price');
                 if (priceElement && window.ProductManager) {
-                    const basePrice = window.ProductManager.getProductPrice('hta_spade').price;
+                    const basePrice = window.ProductManager.getProductPrice('hta_vape_product').price;
                     const adjustedPrice = basePrice + variant.priceModifier;
                     priceElement.textContent = `NT$ ${adjustedPrice}`;
                 }
