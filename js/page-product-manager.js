@@ -514,16 +514,20 @@ class PageProductManager {
      * 獲取頁面ID
      */
     getPageId() {
-        // 從 URL 或 DOM 獲取頁面ID
+        // 從 DOM 獲取頁面ID
         const productInfo = document.querySelector('.product-info[data-product-id]');
         if (productInfo) {
-            return productInfo.dataset.productId + '_product';
+            const productId = productInfo.dataset.productId;
+            console.log(`從 DOM 獲取產品ID: ${productId}`);
+            return productId;
         }
 
         // 從 URL 獲取
         const path = window.location.pathname;
         const filename = path.split('/').pop().replace('.html', '');
-        return filename + '_product';
+        const pageId = filename.endsWith('_product') ? filename : filename + '_product';
+        console.log(`從 URL 獲取產品ID: ${pageId}`);
+        return pageId;
     }
 }
 
