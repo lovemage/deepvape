@@ -1098,7 +1098,7 @@
         // 初始化變數選擇器
         function initVariantSelector() {
             if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('ilia_fabric', 'variantContainer');
+                variantSelector = new VariantSelector('ilia_fabric_product', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
@@ -1201,7 +1201,7 @@
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_fabric',
+                id: 'ilia_fabric_product',
                 name: 'ILIA 哩亞布紋主機',
                 variant: selectedVariant.value,
                 variantId: selectedVariant.id,

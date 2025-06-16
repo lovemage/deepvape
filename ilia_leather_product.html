@@ -784,7 +784,7 @@
         // 初始化變數選擇器
         function initVariantSelector() {
             if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('ilia_leather', 'variantContainer');
+                variantSelector = new VariantSelector('ilia_leather_product', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
@@ -846,9 +846,10 @@
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_leather',
+                id: 'ilia_leather_product',
                 name: 'ILIA 皮革主機',
                 price: 650,
+                color: selectedVariant.value,
                 variant: selectedVariant.value,
                 variantId: selectedVariant.id,
                 quantity: quantity,

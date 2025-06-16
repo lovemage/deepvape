@@ -798,7 +798,7 @@
         // 初始化變數選擇器
         function initVariantSelector() {
             if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('ilia_5_device', 'variantContainer');
+                variantSelector = new VariantSelector('ilia_5_product', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
@@ -863,7 +863,7 @@
             }
 
             const quantity = parseInt(document.getElementById('quantity').value);
-            const productId = 'ilia_5_device';
+            const productId = 'ilia_5_product';
             const productName = 'ILIA 五代主機';
             const price = 450;
 
@@ -874,6 +874,7 @@
                 price: price,
                 quantity: quantity,
                 color: selectedVariant.value,
+                variant: selectedVariant.value,
                 colorId: selectedVariant.id,
                 image: '/ilia_5/ilia_5_main.webp',
                 category: 'host'
