@@ -67,13 +67,18 @@ class StockChecker {
 
             // 添加新的點擊事件（包含庫存檢查）
             newOption.addEventListener('click', (e) => {
-                const color = e.target.dataset.color;
+                // 確保從正確的元素獲取 data-color 屬性
+                const colorElement = e.target.closest('.color-option') || e.currentTarget;
+                const color = colorElement.dataset.color;
                 const productId = this.getProductIdFromPage();
                 
                 console.log(`🎨 點擊顏色選項: ${color}, 產品ID: ${productId}`);
+                console.log(`🔍 事件目標:`, e.target);
+                console.log(`🔍 顏色元素:`, colorElement);
+                console.log(`🔍 所有 data 屬性:`, colorElement.dataset);
                 
                 if (!productId || !color) {
-                    console.warn('❌ 無法獲取產品ID或顏色信息', { productId, color });
+                    console.warn('❌ 無法獲取產品ID或顏色信息', { productId, color, element: colorElement });
                     return;
                 }
 
@@ -91,7 +96,7 @@ class StockChecker {
                 });
 
                 // 選中當前選項
-                e.target.classList.add('selected');
+                colorElement.classList.add('selected');
 
                 // 更新庫存顯示
                 this.updateStockDisplay(stockInfo);
@@ -100,12 +105,12 @@ class StockChecker {
             });
 
             // 添加庫存狀態樣式
-            const color = option.dataset.color;
+            const color = newOption.dataset.color;
             const productId = this.getProductIdFromPage();
             
             if (productId && color) {
                 const stockInfo = this.checkVariantStock(productId, color, 'color');
-                this.applyStockStyles(option, stockInfo);
+                this.applyStockStyles(newOption, stockInfo);
             }
         });
     }
