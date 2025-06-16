@@ -37,6 +37,12 @@ class ProductManager {
             await this.loadAllProducts();
             this.initialized = true;
             console.log('產品管理系統初始化完成');
+            
+            // 觸發產品載入完成事件
+            window.dispatchEvent(new CustomEvent('productsLoaded', {
+                detail: { productManager: this }
+            }));
+            
             return true;
         } catch (error) {
             console.error('產品管理系統初始化失敗:', error);
@@ -300,12 +306,8 @@ window.ProductManager = new ProductManager();
 
 // 自動初始化
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('開始初始化產品管理系統...');
     await window.ProductManager.init();
-    
-    // 觸發自定義事件，通知其他系統產品數據已載入
-    window.dispatchEvent(new CustomEvent('productsLoaded', {
-        detail: { productManager: window.ProductManager }
-    }));
 });
 
 // 導出類別供其他模組使用

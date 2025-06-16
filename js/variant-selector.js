@@ -16,12 +16,39 @@ class VariantSelector {
 
     async init() {
         try {
+            console.log(`初始化變數選擇器: ${this.productId}`);
+            
             // 等待產品管理器初始化
             if (!window.ProductManager || !window.ProductManager.initialized) {
+                console.log('等待 ProductManager 初始化...');
+                
+                // 設置超時重試機制
+                let retryCount = 0;
+                const maxRetries = 20; // 最多等待10秒
+                
+                const checkAndLoad = () => {
+                    if (window.ProductManager && window.ProductManager.initialized) {
+                        console.log('ProductManager 已初始化，載入變數');
+                        this.loadVariants();
+                    } else if (retryCount < maxRetries) {
+                        retryCount++;
+                        console.log(`重試 ${retryCount}/${maxRetries}...`);
+                        setTimeout(checkAndLoad, 500);
+                    } else {
+                        console.error('ProductManager 初始化超時');
+                        this.container.innerHTML = '<p class="error">載入失敗，請重新整理頁面</p>';
+                    }
+                };
+                
+                // 監聽事件和定時檢查雙重保險
                 window.addEventListener('productsLoaded', () => {
+                    console.log('收到 productsLoaded 事件');
                     this.loadVariants();
                 });
+                
+                checkAndLoad();
             } else {
+                console.log('ProductManager 已就緒，直接載入變數');
                 this.loadVariants();
             }
         } catch (error) {
@@ -35,13 +62,32 @@ class VariantSelector {
     loadVariants() {
         if (!window.ProductManager) {
             console.error('產品管理器未初始化');
+            this.container.innerHTML = '<p class="error">產品管理器未初始化</p>';
             return;
         }
 
-        this.variants = window.ProductManager.getProductVariants(this.productId);
-        this.renderVariants();
-        
-        console.log(`載入 ${this.productId} 的 ${this.variants.length} 個變數`);
+        if (!window.ProductManager.initialized) {
+            console.error('產品管理器未完成初始化');
+            this.container.innerHTML = '<p class="error">產品管理器未完成初始化</p>';
+            return;
+        }
+
+        try {
+            this.variants = window.ProductManager.getProductVariants(this.productId);
+            
+            if (!this.variants || this.variants.length === 0) {
+                console.warn(`產品 ${this.productId} 沒有變數數據`);
+                this.container.innerHTML = '<p class="warning">此產品暫無可選變數</p>';
+                return;
+            }
+
+            console.log(`成功載入 ${this.productId} 的 ${this.variants.length} 個變數`);
+            this.renderVariants();
+            
+        } catch (error) {
+            console.error(`載入變數失敗: ${error.message}`);
+            this.container.innerHTML = '<p class="error">載入變數失敗，請重新整理頁面</p>';
+        }
     }
 
     /**
