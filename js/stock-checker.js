@@ -331,8 +331,24 @@ class StockChecker {
                 console.log(`📦 變數詳情:`, variants.map(v => ({ id: v.id, value: v.value, stock: v.stock })));
             }
             
-            // 優先使用 ID 匹配，這是最準確的方式
-            const variant = variants.find(v => v.id === variantValue);
+            // 優先使用 ID 匹配
+            let variant = variants.find(v => v.id === variantValue);
+            
+            // 如果 ID 匹配失敗，嘗試用 value 字段匹配
+            if (!variant) {
+                variant = variants.find(v => v.value === variantValue);
+                console.log(`🔍 使用 value 字段匹配: ${variantValue}`);
+            }
+            
+            // 如果還是沒找到，嘗試部分匹配
+            if (!variant) {
+                variant = variants.find(v => 
+                    v.value && v.value.includes(variantValue) ||
+                    variantValue.includes(v.value) ||
+                    v.id && v.id.includes(variantValue.toLowerCase().replace(/\s+/g, '_'))
+                );
+                console.log(`🔍 使用部分匹配: ${variantValue}`);
+            }
 
             if (variant) {
                 const stock = variant.stock || 0;
@@ -345,6 +361,7 @@ class StockChecker {
             }
 
             console.warn(`❌ 未找到匹配的變數: ${variantValue}`);
+            console.log(`🔍 可用變數值:`, variants.map(v => v.value));
             return { stock: 0, available: false };
         } catch (error) {
             console.error('檢查庫存失敗:', error);
