@@ -1530,18 +1530,30 @@
         // 載入公告
         async function loadAnnouncements() {
             try {
-                const API_BASE_URL = 'http://localhost:5000';
-                const response = await fetch(`${API_BASE_URL}/api/announcements`);
+                const response = await fetch('/data/announcements.json');
                 
                 if (response.ok) {
-                    const announcements = await response.json();
+                    const data = await response.json();
+                    const announcements = data.announcements.filter(announcement => {
+                        if (!announcement.active) return false;
+                        
+                        const now = new Date();
+                        const startDate = announcement.startDate ? new Date(announcement.startDate) : null;
+                        const endDate = announcement.endDate ? new Date(announcement.endDate) : null;
+                        
+                        if (startDate && now < startDate) return false;
+                        if (endDate && now > endDate) return false;
+                        
+                        return true;
+                    });
+                    
                     const container = document.getElementById('announcements-list');
                     
                     if (announcements.length > 0) {
                         container.innerHTML = announcements.map(announcement => `
                             <div class="announcement-item">
                                 <h6 class="mb-2">${announcement.title}</h6>
-                                <p class="mb-0">${announcement.content}</p>
+                                <p class="mb-0">${announcement.text}</p>
                             </div>
                         `).join('');
                     } else {
@@ -1549,7 +1561,7 @@
                         document.getElementById('announcements').style.display = 'none';
                     }
                 } else {
-                    // 如果 API 無法訪問，隱藏公告區域
+                    // 如果無法載入，隱藏公告區域
                     document.getElementById('announcements').style.display = 'none';
                 }
             } catch (error) {
@@ -1562,23 +1574,15 @@
         // 載入產品庫存狀態
         async function loadProductStock() {
             try {
-                const API_BASE_URL = 'http://localhost:5000';
-                const response = await fetch(`${API_BASE_URL}/api/products`);
-                
-                if (response.ok) {
-                    const products = await response.json();
-                    const lanaProduct = products.find(p => p.name.includes('LANA') || p.name.includes('A8000'));
-                    
-                    if (lanaProduct && lanaProduct.stock_status) {
-                        const stockElement = document.getElementById('stock-status');
-                        const status = lanaProduct.stock_status;
-                        
-                        stockElement.className = `stock-status ${status.class}`;
-                        stockElement.innerHTML = `
-                            <i class="fas ${status.status === 'out_of_stock' ? 'fa-times-circle' : status.status === 'critical_low' || status.status === 'low_stock' ? 'fa-exclamation-triangle' : 'fa-check-circle'} me-2"></i>
-                            ${status.text}
-                        `;
-                    }
+                // 使用本地庫存數據，設置默認庫存狀態
+                const stockElement = document.getElementById('stock-status');
+                if (stockElement) {
+                    // 設置默認庫存狀態為有庫存
+                    stockElement.className = 'stock-status in-stock';
+                    stockElement.innerHTML = `
+                        <i class="fas fa-check-circle me-2"></i>
+                        現貨供應
+                    `;
                 }
             } catch (error) {
                 console.log('無法載入庫存狀態:', error);

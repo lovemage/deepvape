@@ -1,0 +1,95 @@
+{
+  "products": [
+    {
+      "id": "sp2_device_product",
+      "name": "SP2 Device",
+      "price": 1299,
+      "originalPrice": 1499,
+      "discount": "13% OFF"
+    },
+    {
+      "id": "ilia_1_product", 
+      "name": "ILIA Gen1",
+      "price": 899,
+      "originalPrice": 1099,
+      "discount": "18% OFF"
+    },
+    {
+      "id": "ilia_5_device_product",
+      "name": "ILIA 5 Device", 
+      "price": 1199,
+      "originalPrice": 1399,
+      "discount": "14% OFF"
+    },
+    {
+      "id": "ilia_ultra5_pods_product",
+      "name": "ILIA Ultra5 Pods",
+      "price": 299,
+      "originalPrice": 349,
+      "discount": "14% OFF"
+    },
+    {
+      "id": "ilia_leather_product",
+      "name": "ILIA Leather",
+      "price": 1599,
+      "originalPrice": 1799,
+      "discount": "11% OFF"
+    },
+    {
+      "id": "ilia_fabric_product", 
+      "name": "ILIA Fabric",
+      "price": 1399,
+      "originalPrice": 1599,
+      "discount": "13% OFF"
+    },
+    {
+      "id": "hta_vape_product",
+      "name": "HTA Vape",
+      "price": 999,
+      "originalPrice": 1199,
+      "discount": "17% OFF"
+    },
+    {
+      "id": "ilia_pods_product",
+      "name": "ILIA Pods", 
+      "price": 249,
+      "originalPrice": 299,
+      "discount": "17% OFF"
+    },
+    {
+      "id": "sp2_pods_product",
+      "name": "SP2 Pods",
+      "price": 279,
+      "originalPrice": 329,
+      "discount": "15% OFF"
+    },
+    {
+      "id": "hta_pods_product",
+      "name": "HTA Pods",
+      "price": 259,
+      "originalPrice": 309,
+      "discount": "16% OFF"
+    },
+    {
+      "id": "lana_pods_product",
+      "name": "LANA Pods", 
+      "price": 289,
+      "originalPrice": 339,
+      "discount": "15% OFF"
+    },
+    {
+      "id": "ilia_disposable_product",
+      "name": "ILIA Disposable",
+      "price": 199,
+      "originalPrice": 249,
+      "discount": "20% OFF"
+    },
+    {
+      "id": "lana_a8000_product",
+      "name": "LANA A8000",
+      "price": 1799,
+      "originalPrice": 1999,
+      "discount": "10% OFF"
+    }
+  ]
+} 
