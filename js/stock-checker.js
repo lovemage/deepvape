@@ -70,8 +70,10 @@ class StockChecker {
                 const color = e.target.dataset.color;
                 const productId = this.getProductIdFromPage();
                 
+                console.log(`🎨 點擊顏色選項: ${color}, 產品ID: ${productId}`);
+                
                 if (!productId || !color) {
-                    console.warn('無法獲取產品ID或顏色信息');
+                    console.warn('❌ 無法獲取產品ID或顏色信息', { productId, color });
                     return;
                 }
 
@@ -258,28 +260,38 @@ class StockChecker {
     getProductIdFromPage() {
         // 嘗試從多個來源獲取產品ID
         const url = window.location.pathname;
+        console.log(`🔍 檢查頁面 URL: ${url}`);
         
-        if (url.includes('sp2_product')) return 'sp2_device';
-        if (url.includes('sp2_pods')) return 'sp2_pods';
-        if (url.includes('hta_vape')) return 'hta_vape';
-        if (url.includes('hta_pods')) return 'hta_pods';
-        if (url.includes('ilia_1')) return 'ilia_gen1';
-        if (url.includes('ilia_5')) return 'ilia_5_device';
-        if (url.includes('ilia_fabric')) return 'ilia_fabric';
-        if (url.includes('ilia_leather')) return 'ilia_leather';
-        if (url.includes('ilia_disposable')) return 'ilia_disposable';
-        if (url.includes('ilia_ultra5_pods')) return 'ilia_ultra5_pods';
-        if (url.includes('ilia_pods')) return 'ilia_pods';
-        if (url.includes('lana_a8000')) return 'lana_a8000';
-        if (url.includes('lana_pods')) return 'lana_pods';
+        let productId = null;
+        
+        if (url.includes('sp2_product')) productId = 'sp2_device';
+        else if (url.includes('sp2_pods')) productId = 'sp2_pods';
+        else if (url.includes('hta_vape')) productId = 'hta_vape';
+        else if (url.includes('hta_pods')) productId = 'hta_pods';
+        else if (url.includes('ilia_1')) productId = 'ilia_gen1';
+        else if (url.includes('ilia_5')) productId = 'ilia_5_device';
+        else if (url.includes('ilia_fabric')) productId = 'ilia_fabric';
+        else if (url.includes('ilia_leather')) productId = 'ilia_leather';
+        else if (url.includes('ilia_disposable')) productId = 'ilia_disposable';
+        else if (url.includes('ilia_ultra5_pods')) productId = 'ilia_ultra5_pods';
+        else if (url.includes('ilia_pods')) productId = 'ilia_pods';
+        else if (url.includes('lana_a8000')) productId = 'lana_a8000';
+        else if (url.includes('lana_pods')) productId = 'lana_pods';
+
+        if (productId) {
+            console.log(`✅ 從 URL 識別產品ID: ${productId}`);
+            return productId;
+        }
 
         // 嘗試從頁面元素獲取
         const productElement = document.querySelector('[data-product-id]');
         if (productElement) {
-            return productElement.dataset.productId;
+            productId = productElement.dataset.productId;
+            console.log(`✅ 從元素獲取產品ID: ${productId}`);
+            return productId;
         }
 
-        console.warn('無法確定產品ID');
+        console.warn('❌ 無法確定產品ID');
         return null;
     }
 
@@ -427,13 +439,31 @@ class StockChecker {
 
 // 自動初始化庫存檢查器
 document.addEventListener('DOMContentLoaded', () => {
-    // 延遲初始化，確保其他腳本已載入
-    setTimeout(() => {
-        if (!window.stockChecker) {
-            window.stockChecker = new StockChecker();
-            console.log('🔍 庫存檢查器已初始化');
+    // 等待 ProductManager 初始化完成
+    const initStockChecker = () => {
+        if (window.ProductManager && window.ProductManager.initialized) {
+            if (!window.stockChecker) {
+                window.stockChecker = new StockChecker();
+                console.log('🔍 庫存檢查器已初始化');
+            }
+        } else {
+            // 如果 ProductManager 還沒初始化，等待事件或重試
+            if (window.ProductManager) {
+                window.addEventListener('productsLoaded', () => {
+                    if (!window.stockChecker) {
+                        window.stockChecker = new StockChecker();
+                        console.log('🔍 庫存檢查器已初始化（通過事件）');
+                    }
+                });
+            } else {
+                // 重試
+                setTimeout(initStockChecker, 500);
+            }
         }
-    }, 1000);
+    };
+    
+    // 延遲初始化，確保其他腳本已載入
+    setTimeout(initStockChecker, 1000);
 });
 
 // 導出類別
