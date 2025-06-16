@@ -1,28 +1,47 @@
 /**
  * 變數選擇器初始化修復腳本
  * 解決系統性的初始化時序問題
+ * 支援 Netlify 靜態網站託管環境
  */
 
 // 統一的變數選擇器初始化函數
 function createUnifiedVariantInitializer(productId, containerId = 'variantContainer') {
     return function initVariantSelector() {
-        console.log(`開始初始化變數選擇器: ${productId}`);
+        console.log(`🚀 開始初始化變數選擇器: ${productId}`);
+        
+        // Netlify 環境檢查
+        if (window.NetlifyCompatibility) {
+            console.log('🌐 Netlify 環境檢測完成');
+        }
         
         // 檢查必要的依賴
         if (!window.VariantSelector) {
-            console.error('VariantSelector 類別未載入');
+            console.error('❌ VariantSelector 類別未載入');
+            
+            // 在 Netlify 環境中嘗試重新載入
+            if (window.NetlifyCompatibility?.isNetlify) {
+                console.log('🔄 嘗試重新載入 VariantSelector...');
+                setTimeout(initVariantSelector, 1000);
+            }
             return;
         }
 
         if (!window.ProductManager) {
-            console.error('ProductManager 未載入');
+            console.error('❌ ProductManager 未載入');
+            
+            // 在 Netlify 環境中嘗試重新載入
+            if (window.NetlifyCompatibility?.isNetlify) {
+                console.log('🔄 嘗試重新載入 ProductManager...');
+                setTimeout(initVariantSelector, 1000);
+            }
             return;
         }
 
         if (!window.ProductManager.initialized) {
-            console.log('ProductManager 未初始化，等待中...');
-            // 設置重試機制
-            setTimeout(initVariantSelector, 500);
+            console.log('⏳ ProductManager 未初始化，等待中...');
+            // 設置重試機制，在 Netlify 環境中延長等待時間
+            const retryDelay = window.NetlifyCompatibility?.isNetlify ? 1000 : 500;
+            setTimeout(initVariantSelector, retryDelay);
             return;
         }
 
@@ -77,6 +96,7 @@ const PRODUCT_PAGE_MAPPING = {
     'ilia_disposable_product.html': 'ilia_disposable',
     'hta_vape_product.html': 'hta_vape',
     'hta_pods_product.html': 'hta_pods',
+    'sp2_product.html': 'sp2_device',
     'sp2_pods_product.html': 'sp2_pods',
     'lana_pods_product.html': 'lana_pods',
     'lana_a8000_product.html': 'lana_a8000'

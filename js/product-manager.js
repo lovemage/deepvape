@@ -8,23 +8,23 @@ class ProductManager {
         this.products = new Map();
         this.productMapping = {
             // 主機系列
-            'sp2_device': 'data/page_products/sp2_device.json',
-            'ilia_gen1': 'data/page_products/ilia_1.json',
-            'ilia_5_device': 'data/page_products/ilia_5_device.json',
-            'ilia_ultra5_pods': 'data/page_products/ilia_ultra5_pods.json',
-            'ilia_leather': 'data/page_products/ilia_leather.json',
-            'ilia_fabric': 'data/page_products/ilia_fabric.json',
-            'hta_vape': 'data/page_products/hta_vape.json',
+            'sp2_device': '/data/page_products/sp2_device.json',
+            'ilia_gen1': '/data/page_products/ilia_1.json',
+            'ilia_5_device': '/data/page_products/ilia_5_device.json',
+            'ilia_ultra5_pods': '/data/page_products/ilia_ultra5_pods.json',
+            'ilia_leather': '/data/page_products/ilia_leather.json',
+            'ilia_fabric': '/data/page_products/ilia_fabric.json',
+            'hta_vape': '/data/page_products/hta_vape.json',
             
             // 煙彈系列
-            'ilia_pods': 'data/page_products/ilia_pods.json',
-            'sp2_pods': 'data/page_products/sp2_pods.json',
-            'hta_pods': 'data/page_products/hta_pods.json',
-            'lana_pods': 'data/page_products/lana_pods.json',
+            'ilia_pods': '/data/page_products/ilia_pods.json',
+            'sp2_pods': '/data/page_products/sp2_pods.json',
+            'hta_pods': '/data/page_products/hta_pods.json',
+            'lana_pods': '/data/page_products/lana_pods.json',
             
             // 拋棄式系列
-            'ilia_disposable': 'data/page_products/ilia_disposable.json',
-            'lana_a8000': 'data/page_products/lana_a8000.json'
+            'ilia_disposable': '/data/page_products/ilia_disposable.json',
+            'lana_a8000': '/data/page_products/lana_a8000.json'
         };
         this.initialized = false;
     }
@@ -66,18 +66,40 @@ class ProductManager {
      */
     async loadProduct(productId, dataPath) {
         try {
+            console.log(`嘗試載入產品數據: ${productId} from ${dataPath}`);
+            
             const response = await fetch(dataPath);
+            
             if (!response.ok) {
-                console.warn(`無法載入產品數據: ${dataPath}`);
+                console.warn(`HTTP ${response.status}: 無法載入產品數據 ${dataPath}`);
+                
+                // 在 Netlify 上嘗試備用路徑
+                const alternativePath = dataPath.startsWith('/') ? dataPath.substring(1) : '/' + dataPath;
+                console.log(`嘗試備用路徑: ${alternativePath}`);
+                
+                const altResponse = await fetch(alternativePath);
+                if (altResponse.ok) {
+                    const productData = await altResponse.json();
+                    this.products.set(productId, productData);
+                    console.log(`✅ 已載入產品 (備用路徑): ${productId} (${productData.productName})`);
+                    return;
+                }
+                
+                console.error(`❌ 所有路徑都無法載入: ${productId}`);
                 return;
             }
             
             const productData = await response.json();
             this.products.set(productId, productData);
             
-            console.log(`已載入產品: ${productId} (${productData.productName})`);
+            console.log(`✅ 已載入產品: ${productId} (${productData.productName})`);
         } catch (error) {
-            console.error(`載入產品 ${productId} 失敗:`, error);
+            console.error(`❌ 載入產品 ${productId} 失敗:`, error);
+            
+            // 提供錯誤詳情
+            if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                console.error('網路錯誤：可能是 CORS 問題或文件不存在');
+            }
         }
     }
 
