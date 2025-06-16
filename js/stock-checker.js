@@ -241,8 +241,8 @@ class StockChecker {
         const addToCartButtons = document.querySelectorAll('button[onclick*="addToCart"], .add-to-cart-btn, .pulse-button');
         
         addToCartButtons.forEach(button => {
-            // 保存原始的點擊處理器
-            const originalOnClick = button.onclick;
+            // 保存原始的 onclick 屬性值
+            const originalOnClickAttr = button.getAttribute('onclick');
             
             // 移除原始的 onclick 屬性
             button.removeAttribute('onclick');
@@ -256,10 +256,25 @@ class StockChecker {
                 }
                 
                 // 如果庫存檢查通過，執行原始的加入購物車邏輯
-                if (originalOnClick) {
-                    originalOnClick.call(button);
-                } else if (window.addToCart) {
-                    window.addToCart();
+                if (originalOnClickAttr) {
+                    // 解析並執行原始的 onclick 代碼
+                    try {
+                        // 提取產品ID參數
+                        const match = originalOnClickAttr.match(/addToCart\(['"]([^'"]+)['"]\)/);
+                        if (match && window.addToCart) {
+                            const productId = match[1];
+                            window.addToCart(productId);
+                        } else {
+                            // 備用：直接執行原始代碼
+                            eval(originalOnClickAttr);
+                        }
+                    } catch (error) {
+                        console.error('執行原始 onclick 失敗:', error);
+                        // 最後備用：調用全局 addToCart
+                        if (window.addToCart) {
+                            window.addToCart();
+                        }
+                    }
                 }
             });
         });
