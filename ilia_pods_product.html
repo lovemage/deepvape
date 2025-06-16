@@ -900,7 +900,7 @@
             }
 
             const quantity = parseInt(document.getElementById('quantity').value);
-            const productId = 'ilia_pods';
+            const productId = 'ilia_pods_product';
             const productName = 'ILIA 發光煙彈';
             const price = 300;
 
@@ -911,8 +911,9 @@
                 price: price,
                 quantity: quantity,
                 flavor: selectedVariant.value,
+                variant: selectedVariant.value,
                 flavorId: selectedVariant.id,
-                image: 'illa_d/哩亞-ILIA煙彈.webp',
+                image: '/ilia_pods/ilia_pods_main.webp',
                 category: 'pods'
             };
 
