@@ -190,8 +190,14 @@ class StockChecker {
                 const flavor = e.target.dataset.flavor;
                 const productId = this.getProductIdFromPage();
                 
+                console.log(`🔍 StockChecker 調試信息:`);
+                console.log(`  - 產品ID: ${productId}`);
+                console.log(`  - 口味: ${flavor}`);
+                console.log(`  - 目標元素:`, e.target);
+                console.log(`  - 目標元素數據屬性:`, e.target.dataset);
+                
                 if (!productId || !flavor) {
-                    console.warn('無法獲取產品ID或口味信息');
+                    console.warn('無法獲取產品ID或口味信息', { productId, flavor });
                     return;
                 }
 
