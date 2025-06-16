@@ -884,7 +884,7 @@
         // Add to Cart
         function addToCart() {
             if (!variantSelector) {
-                alert('變數選擇器未初始化，請稍後再試');
+                alert('請先選擇口味！');
                 return;
             }
 
@@ -935,9 +935,9 @@
             localStorage.setItem('cart', JSON.stringify(cart));
 
             // Show success message
-            alert(`已將 ${quantity} 盒 ${productName} (${selectedVariant.value}) 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 盒 ${productName} (${selectedVariant.value}) 加入購物車！`);
 
-            // Update cart count if cart counter exists
+            // Update cart count
             updateCartCount();
         }
 

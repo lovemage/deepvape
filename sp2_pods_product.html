@@ -932,8 +932,9 @@
                 name: 'SP2 煙彈',
                 price: 350,
                 flavor: selectedFlavor,
+                variant: selectedFlavor,
                 quantity: quantity,
-                image: 'sp2_pods/sp2_pods_main.webp'
+                image: '/sp2_pods/sp2_pods_main.webp'
             };
 
             // Get existing cart
@@ -954,7 +955,7 @@
             localStorage.setItem('cart', JSON.stringify(cart));
 
             // Show success message
-            alert(`已將 ${product.name} (${product.flavor}) x${product.quantity} 加入購物車！`);
+            alert(`✅ 已將 ${product.name} (${product.flavor}) x${product.quantity} 加入購物車！`);
             
             // Reset selection
             selectedFlavor = '';

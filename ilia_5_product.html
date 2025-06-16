@@ -875,7 +875,7 @@
                 quantity: quantity,
                 color: selectedVariant.value,
                 colorId: selectedVariant.id,
-                image: 'ilia_device5/IMAGE 2025-06-16 13:24:03.jpg',
+                image: '/ilia_5/ilia_5_main.webp',
                 category: 'host'
             };
 
@@ -897,7 +897,7 @@
             localStorage.setItem('cart', JSON.stringify(cart));
 
             // Show success message
-            alert(`已將 ${quantity} 個 ${productName} (${selectedVariant.value}) 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 個 ${productName} (${selectedVariant.value}) 加入購物車！`);
 
             // Update cart count if cart counter exists
             updateCartCount();

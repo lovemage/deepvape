@@ -862,15 +862,15 @@
 
         // Add to Cart
         function addToCart() {
-            // 如果 API 整合腳本已載入，使用 API 版本
-            if (window.addToCartWithAPI) {
-                window.addToCartWithAPI();
+            // 檢查是否有選擇顏色
+            const selectedColorElement = document.querySelector('.color-option.selected');
+            if (!selectedColorElement) {
+                alert('請先選擇顏色！');
                 return;
             }
             
-            // 備用方案：使用原始邏輯
-            const selectedColor = document.querySelector('.color-option.selected').dataset.color;
-            const quantity = document.getElementById('quantity').value;
+            const selectedColor = selectedColorElement.dataset.color;
+            const quantity = parseInt(document.getElementById('quantity').value);
             
             // 獲取產品資訊
             const product = {
@@ -879,7 +879,7 @@
                 price: 650,
                 color: selectedColor,
                 variant: selectedColor,
-                quantity: parseInt(quantity),
+                quantity: quantity,
                 image: '/sp2_v/sp2_device_main_showcase.jpg',
                 category: 'host'
             };
@@ -901,9 +901,9 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             
             // 顯示成功訊息
-            alert(`已將 ${quantity} 個 SP2 一代主機 (${selectedColor}) 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 個 SP2 一代主機 (${selectedColor}) 加入購物車！`);
             
-            // 更新購物車圖示（如果有的話）
+            // 更新購物車圖示
             updateCartCount();
         }
 

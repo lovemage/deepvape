@@ -730,13 +730,14 @@
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const product = {
-                id: 'ilia_gen1',
+                id: 'ilia_1_product',
                 name: 'ILIA 一代主機',
                 price: 650,
+                color: selectedVariant.value,
                 variant: selectedVariant.value,
                 variantId: selectedVariant.id,
                 quantity: quantity,
-                image: 'ilia_1/ilia_gen1_main_device.jpg',
+                image: '/ilia_1/ilia_1_main.webp',
                 category: 'host'
             };
             
@@ -758,7 +759,7 @@
                 updateCartCount();
             }
             
-            alert(`已將 ${quantity} 個 ILIA 一代主機 (${selectedVariant.value}) 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 個 ILIA 一代主機 (${selectedVariant.value}) 加入購物車！`);
         }
 
         

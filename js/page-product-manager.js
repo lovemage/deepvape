@@ -373,6 +373,12 @@ class PageProductManager {
         const addToCartBtn = document.querySelector('button[onclick*="addToCart"], .pulse-button');
         if (!addToCartBtn) return;
 
+        // 檢查是否已有原始的 addToCart 函數
+        if (typeof window.addToCart === 'function') {
+            console.log('檢測到原始 addToCart 函數，保持原有邏輯');
+            return; // 不覆蓋原有邏輯
+        }
+
         // 移除原有的 onclick 事件
         addToCartBtn.removeAttribute('onclick');
         
