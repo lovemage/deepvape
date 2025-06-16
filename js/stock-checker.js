@@ -307,20 +307,21 @@ class StockChecker {
      */
     checkVariantStock(productId, variantValue, variantType) {
         if (!this.productManager) {
-            return { stock: 999, available: true }; // 預設有庫存
+            console.warn('ProductManager 未初始化');
+            return { stock: 0, available: false }; // 沒有 ProductManager 時返回缺貨
         }
 
         try {
             const variants = this.productManager.getProductVariants(productId);
-            const variant = variants.find(v => 
-                v.value === variantValue || 
-                v.name === variantValue ||
-                (variantType === 'color' && v.value.includes(variantValue)) ||
-                (variantType === 'flavor' && v.value.includes(variantValue))
-            );
+            console.log(`🔍 查找變數: ${variantValue} 在產品 ${productId} 中`);
+            console.log(`📦 可用變數:`, variants.map(v => ({ id: v.id, value: v.value, stock: v.stock })));
+            
+            // 優先使用 ID 匹配，這是最準確的方式
+            const variant = variants.find(v => v.id === variantValue);
 
             if (variant) {
                 const stock = variant.stock || 0;
+                console.log(`✅ 找到匹配變數: ${variant.id} (${variant.value}) - 庫存: ${stock}`);
                 return {
                     stock: stock,
                     available: stock > 0,
@@ -328,11 +329,11 @@ class StockChecker {
                 };
             }
 
-            // 如果找不到變數，返回預設值
-            return { stock: 999, available: true };
+            console.warn(`❌ 未找到匹配的變數: ${variantValue}`);
+            return { stock: 0, available: false };
         } catch (error) {
             console.error('檢查庫存失敗:', error);
-            return { stock: 999, available: true };
+            return { stock: 0, available: false };
         }
     }
 
