@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTA 黑桃煙彈 - 15種口味選擇 | Deepvape 頂級電子菸專賣店</title>
+    <title>HTA 黑桃煙彈 - 13種口味選擇 | Deepvape 頂級電子菸專賣店</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -603,7 +603,7 @@
                     </li>
                     <li>
                         <span class="spec-label">口味數量</span>
-                        <span class="spec-value">15種精選口味</span>
+                        <span class="spec-value">13種精選口味</span>
                     </li>
                     <li>
                         <span class="spec-label">適用設備</span>
@@ -614,7 +614,7 @@
 
             <!-- Flavor Options -->
             <div class="flavor-options">
-                <h3 class="flavor-title">口味選擇 <span style="font-size: 0.8rem; color: var(--text-secondary);">(15種口味)</span></h3>
+                                    <h3 class="flavor-title">口味選擇 <span style="font-size: 0.8rem; color: var(--text-secondary);">(13種口味)</span></h3>
                 <div class="flavor-grid">
                     <div class="flavor-option selected" data-flavor="清涼可樂">清涼可樂</div>
                     <div class="flavor-option" data-flavor="清涼可樂">清涼可樂</div>
@@ -880,6 +880,8 @@
     </script>
 
     <!-- 產品頁面管理器 -->
+    <script src="/js/page-product-manager.js"></script>
+    
     <!-- 產品管理系統 -->
     <script src="/js/product-manager.js"></script>
     
@@ -894,5 +896,18 @@
     
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
+
+    <!-- 初始化產品頁面管理器 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const pageProductManager = new PageProductManager();
+                await pageProductManager.init('hta_pods_product');
+                console.log('HTA 產品頁面管理器已初始化');
+            } catch (error) {
+                console.error('初始化產品頁面管理器失敗:', error);
+            }
+        });
+    </script>
 </body>
 </html> 

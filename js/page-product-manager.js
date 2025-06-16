@@ -60,10 +60,11 @@ class PageProductManager {
             'ilia_fabric_product': '/data/page_products/ilia_fabric.json',
             'ilia_pods_product': '/data/page_products/ilia_pods.json',
             'ilia_leather_product': '/data/page_products/ilia_leather.json',
+            'sp2_product': '/data/page_products/sp2_device.json',
             'sp2_device_product': '/data/page_products/sp2_device.json',
             'sp2_pods_product': '/data/page_products/sp2_pods.json',
-            'relx_infinity_product': '/data/page_products/relx_infinity.json',
-            'relx_pods_product': '/data/page_products/relx_pods.json'
+            'lana_a8000_product': '/data/page_products/lana_a8000.json',
+            'lana_pods_product': '/data/page_products/lana_pods.json'
         };
 
         return dataFileMap[pageId] || '/data/page_products/default.json';

@@ -1750,6 +1750,9 @@
         });
     </script>
 
+    <!-- 產品頁面管理器 -->
+    <script src="/js/page-product-manager.js"></script>
+    
     <!-- 產品管理系統 -->
     <script src="/js/product-manager.js"></script>
     
@@ -1761,6 +1764,19 @@
     
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
+
+    <!-- 初始化產品頁面管理器 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const pageProductManager = new PageProductManager();
+                await pageProductManager.init('lana_a8000_product');
+                console.log('LANA A8000 產品頁面管理器已初始化');
+            } catch (error) {
+                console.error('初始化產品頁面管理器失敗:', error);
+            }
+        });
+    </script>
     
     <!-- 聯繫信息載入器 -->
     <script src="/js/contact-loader.js"></script>
