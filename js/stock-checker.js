@@ -312,9 +312,24 @@ class StockChecker {
         }
 
         try {
-            const variants = this.productManager.getProductVariants(productId);
             console.log(`🔍 查找變數: ${variantValue} 在產品 ${productId} 中`);
-            console.log(`📦 可用變數:`, variants.map(v => ({ id: v.id, value: v.value, stock: v.stock })));
+            
+            // 檢查 ProductManager 狀態
+            console.log(`🔍 ProductManager 初始化狀態:`, this.productManager.initialized);
+            console.log(`🔍 ProductManager 產品數量:`, this.productManager.products.size);
+            console.log(`🔍 ProductManager 所有產品:`, Array.from(this.productManager.products.keys()));
+            
+            // 檢查特定產品
+            const product = this.productManager.getProduct(productId);
+            console.log(`🔍 產品 ${productId} 數據:`, product);
+            
+            const variants = this.productManager.getProductVariants(productId);
+            console.log(`📦 可用變數:`, variants);
+            console.log(`📦 變數數量:`, variants ? variants.length : 0);
+            
+            if (variants && variants.length > 0) {
+                console.log(`📦 變數詳情:`, variants.map(v => ({ id: v.id, value: v.value, stock: v.stock })));
+            }
             
             // 優先使用 ID 匹配，這是最準確的方式
             const variant = variants.find(v => v.id === variantValue);

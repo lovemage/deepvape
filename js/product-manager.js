@@ -8,23 +8,23 @@ class ProductManager {
         this.products = new Map();
         this.productMapping = {
             // 主機系列
-            'sp2_device': '/data/page_products/sp2_device.json',
-            'ilia_gen1': '/data/page_products/ilia_1.json',
-            'ilia_5_device': '/data/page_products/ilia_5_device.json',
-            'ilia_ultra5_pods': '/data/page_products/ilia_ultra5_pods.json',
-            'ilia_leather': '/data/page_products/ilia_leather.json',
-            'ilia_fabric': '/data/page_products/ilia_fabric.json',
-            'hta_vape': '/data/page_products/hta_vape.json',
+            'sp2_device_product': '/data/page_products/sp2_device.json',
+            'ilia_1_product': '/data/page_products/ilia_1.json',
+            'ilia_5_device_product': '/data/page_products/ilia_5_device.json',
+            'ilia_ultra5_pods_product': '/data/page_products/ilia_ultra5_pods.json',
+            'ilia_leather_product': '/data/page_products/ilia_leather.json',
+            'ilia_fabric_product': '/data/page_products/ilia_fabric.json',
+            'hta_vape_product': '/data/page_products/hta_vape.json',
             
             // 煙彈系列
-            'ilia_pods': '/data/page_products/ilia_pods.json',
-            'sp2_pods': '/data/page_products/sp2_pods.json',
-            'hta_pods': '/data/page_products/hta_pods.json',
-            'lana_pods': '/data/page_products/lana_pods.json',
+            'ilia_pods_product': '/data/page_products/ilia_pods.json',
+            'sp2_pods_product': '/data/page_products/sp2_pods.json',
+            'hta_pods_product': '/data/page_products/hta_pods.json',
+            'lana_pods_product': '/data/page_products/lana_pods.json',
             
             // 拋棄式系列
-            'ilia_disposable': '/data/page_products/ilia_disposable.json',
-            'lana_a8000': '/data/page_products/lana_a8000.json'
+            'ilia_disposable_product': '/data/page_products/ilia_disposable.json',
+            'lana_a8000_product': '/data/page_products/lana_a8000.json'
         };
         this.initialized = false;
     }
