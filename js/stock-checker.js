@@ -261,15 +261,17 @@ class StockChecker {
         
         if (url.includes('sp2_product')) return 'sp2_device';
         if (url.includes('sp2_pods')) return 'sp2_pods';
-        if (url.includes('hta_vape')) return 'hta_spade';
+        if (url.includes('hta_vape')) return 'hta_vape';
         if (url.includes('hta_pods')) return 'hta_pods';
         if (url.includes('ilia_1')) return 'ilia_gen1';
+        if (url.includes('ilia_5')) return 'ilia_5_device';
         if (url.includes('ilia_fabric')) return 'ilia_fabric';
         if (url.includes('ilia_leather')) return 'ilia_leather';
         if (url.includes('ilia_disposable')) return 'ilia_disposable';
+        if (url.includes('ilia_ultra5_pods')) return 'ilia_ultra5_pods';
         if (url.includes('ilia_pods')) return 'ilia_pods';
-        if (url.includes('lana_pods')) return 'lana_pods';
         if (url.includes('lana_a8000')) return 'lana_a8000';
+        if (url.includes('lana_pods')) return 'lana_pods';
 
         // 嘗試從頁面元素獲取
         const productElement = document.querySelector('[data-product-id]');

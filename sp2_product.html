@@ -820,7 +820,7 @@
     </div>
 
     <!-- API Integration Script -->
-    <script src="product-api-integration.js"></script>
+    <!-- <script src="product-api-integration.js"></script> -->
     
     <script>
         // Image Gallery
@@ -1004,8 +1004,8 @@
         });
     </script>
 
-    <!-- Netlify 兼容性腳本 (必須最先載入) -->
-    <script src="/js/netlify-compatibility.js"></script>
+    <!-- Netlify 兼容性腳本 (暫時禁用) -->
+    <!-- <script src="/js/netlify-compatibility.js"></script> -->
     
     <!-- 產品頁面管理器 -->
     <script src="/js/page-product-manager.js"></script>
@@ -1025,15 +1025,23 @@
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
 
-    <!-- 初始化產品頁面管理器 -->
+    <!-- 初始化產品管理器 -->
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             try {
+                // 創建全域 ProductManager 實例
+                if (!window.ProductManager) {
+                    window.ProductManager = new ProductManager();
+                    await window.ProductManager.init();
+                    console.log('✅ ProductManager 已初始化');
+                }
+                
+                // 初始化產品頁面管理器
                 const pageProductManager = new PageProductManager();
-                await pageProductManager.init('sp2_product');
-                console.log('SP2 產品頁面管理器已初始化');
+                await pageProductManager.init('sp2_device_product');
+                console.log('✅ SP2 產品頁面管理器已初始化');
             } catch (error) {
-                console.error('初始化產品頁面管理器失敗:', error);
+                console.error('❌ 初始化失敗:', error);
             }
         });
     </script>
