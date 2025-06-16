@@ -751,8 +751,19 @@
             // 檢查是否選擇了變數
             const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
             if (!selectedColorOption) {
+            // 使用新的購物車動畫系統
+            if (window.CartAnimation) {
+                window.CartAnimation.showAddToCartAnimation({
+                    productName: 'ILIA 1',
+                    variant: variantValue,
+                    sourceElement: document.getElementById('addToCartBtn'),
+                    productImage: '/ilia_1/ilia_gen1_main_device.jpg'
+                });
+            } else {
+                // 備用通知
                 alert('請先選擇產品選項！');
-                return;
+            }
+return;
             }
             
             // 獲取選中的變數信息
@@ -935,6 +946,9 @@
     
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
+
+    <!-- 購物車動畫系統 -->
+    <script src="/js/cart-animation.js"></script>
 
     <!-- 初始化產品管理器 -->
     <script>

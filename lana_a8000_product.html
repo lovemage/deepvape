@@ -1675,10 +1675,19 @@
             // 保存到 localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
             
-            // 更新購物車計數
-            updateCartCount();
-            
-            showNotification(`✅ 已將 LANA A8000 (${variantValue}) 加入購物車！`, 'success');
+            // 使用新的購物車動畫系統
+            if (window.CartAnimation) {
+                window.CartAnimation.showAddToCartAnimation({
+                    productName: 'LANA A8000',
+                    variant: variantValue,
+                    sourceElement: document.getElementById('addToCartBtn'),
+                    productImage: '/lana_a8000/lana_a8000.webp'
+                });
+            } else {
+                // 備用通知
+                showNotification(`✅ 已將 LANA A8000 (${variantValue}) 加入購物車！`, 'success');
+                updateCartCount();
+            }
         }
 
         // 載入公告
@@ -1927,6 +1936,9 @@
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
 
+    <!-- 購物車動畫系統 -->
+    <script src="/js/cart-animation.js"></script>
+
     <!-- 初始化產品管理器 -->
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
@@ -1938,10 +1950,18 @@
                     console.log('✅ ProductManager 已初始化');
                 }
                 
+                // 等待頁面的 addToCart 函數定義完成
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
                 // 初始化產品頁面管理器
                 const pageProductManager = new PageProductManager();
                 await pageProductManager.init('lana_a8000_product');
                 console.log('✅ LANA A8000 拋棄式 產品頁面管理器已初始化');
+                
+                // 初始化完成後更新按鈕狀態
+                if (pageProductManager.updateAddToCartButton) {
+                    pageProductManager.updateAddToCartButton();
+                }
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
             }

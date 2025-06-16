@@ -875,8 +875,19 @@
             // 檢查是否有選擇變數
             const selectedVariantElement = document.querySelector('.variant-option.selected');
             if (!selectedVariantElement) {
+            // 使用新的購物車動畫系統
+            if (window.CartAnimation) {
+                window.CartAnimation.showAddToCartAnimation({
+                    productName: 'SP2 Device',
+                    variant: variantValue,
+                    sourceElement: document.getElementById('addToCartBtn'),
+                    productImage: '/sp2_v/sp2_device_main_showcase.jpg'
+                });
+            } else {
+                // 備用通知
                 alert('請先選擇顏色！');
-                return;
+            }
+return;
             }
             
             const selectedVariant = selectedVariantElement.textContent.trim();
@@ -1051,6 +1062,9 @@
     
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
+
+    <!-- 購物車動畫系統 -->
+    <script src="/js/cart-animation.js"></script>
 
     <!-- 初始化產品管理器 -->
     <script>

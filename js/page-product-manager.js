@@ -271,31 +271,50 @@ class PageProductManager {
      * 設置變數選擇功能
      */
     setupVariantSelection() {
-        const variantOptions = document.querySelectorAll('.flavor-option, .color-option');
+        // 使用事件委託來處理動態創建的元素
+        const variantContainer = document.getElementById('variantContainer') || 
+                                document.querySelector('.flavor-grid, .color-grid') ||
+                                document.body;
         
-        variantOptions.forEach(option => {
-            option.addEventListener('click', (e) => {
-                const stock = parseInt(e.target.dataset.stock || '0');
-                
-                // 檢查庫存
-                if (stock === 0) {
-                    alert('此變數目前缺貨，請選擇其他選項');
-                    return;
-                }
+        // 移除舊的事件監聽器（如果存在）
+        if (this.variantClickHandler) {
+            variantContainer.removeEventListener('click', this.variantClickHandler);
+        }
+        
+        // 創建新的事件處理器
+        this.variantClickHandler = (e) => {
+            const option = e.target.closest('.flavor-option, .color-option, .variant-option');
+            if (!option) return;
+            
+            const stock = parseInt(option.dataset.stock || '0');
+            
+            // 檢查庫存
+            if (stock === 0) {
+                alert('此變數目前缺貨，請選擇其他選項');
+                return;
+            }
 
-                // 移除其他選中狀態
-                variantOptions.forEach(opt => opt.classList.remove('selected'));
-                
-                // 選中當前選項
-                e.target.classList.add('selected');
-                
-                // 更新庫存狀態
-                this.updateStockStatus();
-                
-                // 更新價格（如果有價格調整）
-                this.updatePriceWithModifier();
-            });
-        });
+            // 移除其他選中狀態
+            const allOptions = document.querySelectorAll('.flavor-option, .color-option, .variant-option');
+            allOptions.forEach(opt => opt.classList.remove('selected'));
+            
+            // 選中當前選項
+            option.classList.add('selected');
+            
+            // 更新庫存狀態
+            this.updateStockStatus();
+            
+            // 更新價格（如果有價格調整）
+            this.updatePriceWithModifier();
+            
+            // 更新加入購物車按鈕狀態
+            this.updateAddToCartButton();
+            
+            console.log('✅ 變數已選擇:', option.textContent.trim());
+        };
+        
+        // 綁定事件監聽器
+        variantContainer.addEventListener('click', this.variantClickHandler);
     }
 
     /**
@@ -322,11 +341,41 @@ class PageProductManager {
      * 獲取當前選中的變數
      */
     getSelectedVariant() {
-        const selectedElement = document.querySelector('.flavor-option.selected, .color-option.selected');
+        const selectedElement = document.querySelector('.flavor-option.selected, .color-option.selected, .variant-option.selected');
         if (!selectedElement) return null;
 
         const variantId = selectedElement.dataset.variantId;
         return this.pageData.variants.find(v => v.id === variantId);
+    }
+
+    /**
+     * 更新加入購物車按鈕狀態
+     */
+    updateAddToCartButton() {
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        if (!addToCartBtn) return;
+
+        const selectedVariant = this.getSelectedVariant();
+        
+        if (selectedVariant && selectedVariant.stock > 0) {
+            addToCartBtn.disabled = false;
+            addToCartBtn.innerHTML = `
+                <i class="fas fa-shopping-cart" style="margin-right: 0.5rem;"></i>
+                加入購物車 - NT$ ${this.pageData.price + (selectedVariant.priceModifier || 0)}
+            `;
+        } else if (selectedVariant && selectedVariant.stock === 0) {
+            addToCartBtn.disabled = true;
+            addToCartBtn.innerHTML = `
+                <i class="fas fa-times-circle" style="margin-right: 0.5rem;"></i>
+                缺貨中
+            `;
+        } else {
+            addToCartBtn.disabled = true;
+            addToCartBtn.innerHTML = `
+                <i class="fas fa-hand-pointer" style="margin-right: 0.5rem;"></i>
+                請先選擇${this.pageData.variants[0]?.type === 'flavor' ? '口味' : '顏色'}
+            `;
+        }
     }
 
     /**
