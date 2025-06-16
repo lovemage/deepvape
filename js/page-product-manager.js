@@ -33,16 +33,18 @@ class PageProductManager {
         try {
             // 根據頁面ID載入對應的數據文件
             const dataFile = this.getDataFileByPageId(pageId);
+            console.log(`嘗試載入數據文件: ${dataFile} (產品ID: ${pageId})`);
+            
             const response = await fetch(dataFile);
             
             if (!response.ok) {
-                throw new Error(`載入數據失敗: ${response.status}`);
+                throw new Error(`載入數據失敗: ${response.status} - ${dataFile}`);
             }
             
             this.pageData = await response.json();
-            console.log('頁面數據已載入:', this.pageData);
+            console.log('✅ 頁面數據已載入:', this.pageData);
         } catch (error) {
-            console.error('載入頁面數據失敗:', error);
+            console.warn('⚠️ 載入頁面數據失敗，使用備用數據:', error.message);
             // 使用預設數據或從 DOM 獲取現有數據
             this.loadFallbackData(pageId);
         }
@@ -60,9 +62,8 @@ class PageProductManager {
             'ilia_fabric_product': '/data/page_products/ilia_fabric.json',
             'ilia_pods_product': '/data/page_products/ilia_pods.json',
             'ilia_leather_product': '/data/page_products/ilia_leather.json',
-            'ilia_5_product': '/data/page_products/ilia_5_device.json',
+            'ilia_5_device_product': '/data/page_products/ilia_5_device.json',
             'ilia_ultra5_pods_product': '/data/page_products/ilia_ultra5_pods.json',
-            'sp2_product': '/data/page_products/sp2_device.json',
             'sp2_device_product': '/data/page_products/sp2_device.json',
             'sp2_pods_product': '/data/page_products/sp2_pods.json',
             'lana_a8000_product': '/data/page_products/lana_a8000.json',
@@ -92,7 +93,7 @@ class PageProductManager {
             lastUpdated: new Date().toISOString()
         };
 
-        console.log('使用備用數據:', this.pageData);
+        console.log('✅ 使用備用數據:', this.pageData);
     }
 
     /**
@@ -108,22 +109,47 @@ class PageProductManager {
      */
     extractVariantsFromDOM() {
         const variants = [];
-        const variantElements = document.querySelectorAll('.flavor-option, .color-option');
         
-        variantElements.forEach((element, index) => {
-            const value = element.textContent.trim();
-            const type = element.classList.contains('flavor-option') ? 'flavor' : 'color';
+        // 首先嘗試從 VariantSelector 容器提取
+        const variantContainer = document.getElementById('variantContainer');
+        if (variantContainer) {
+            const variantElements = variantContainer.querySelectorAll('.variant-option, .flavor-option, .color-option');
             
-            variants.push({
-                id: `variant_${index}`,
-                name: type === 'flavor' ? '口味' : '顏色',
-                type: type,
-                value: value,
-                stock: 50, // 預設庫存
-                priceModifier: 0,
-                sku: `SKU-${index}`
+            variantElements.forEach((element, index) => {
+                const value = element.textContent.trim();
+                const type = element.classList.contains('flavor-option') || element.dataset.type === 'flavor' ? 'flavor' : 'color';
+                
+                variants.push({
+                    id: `variant_${index}`,
+                    name: type === 'flavor' ? '口味' : '顏色',
+                    type: type,
+                    value: value,
+                    stock: 50, // 預設庫存
+                    priceModifier: 0,
+                    sku: `SKU-${index}`
+                });
             });
-        });
+        }
+        
+        // 如果沒有找到，嘗試傳統的選擇器
+        if (variants.length === 0) {
+            const variantElements = document.querySelectorAll('.flavor-option, .color-option');
+            
+            variantElements.forEach((element, index) => {
+                const value = element.textContent.trim();
+                const type = element.classList.contains('flavor-option') ? 'flavor' : 'color';
+                
+                variants.push({
+                    id: `variant_${index}`,
+                    name: type === 'flavor' ? '口味' : '顏色',
+                    type: type,
+                    value: value,
+                    stock: 50, // 預設庫存
+                    priceModifier: 0,
+                    sku: `SKU-${index}`
+                });
+            });
+        }
 
         return variants;
     }
@@ -166,8 +192,11 @@ class PageProductManager {
     updateVariantOptions() {
         if (!this.pageData.variants || this.pageData.variants.length === 0) return;
 
-        // 找到變數容器
-        const variantContainer = document.querySelector('.flavor-grid, .color-grid');
+        // 找到變數容器 - 優先使用 VariantSelector 容器
+        let variantContainer = document.getElementById('variantContainer');
+        if (!variantContainer) {
+            variantContainer = document.querySelector('.flavor-grid, .color-grid');
+        }
         if (!variantContainer) return;
 
         // 清空現有選項
@@ -176,9 +205,10 @@ class PageProductManager {
         // 添加新的變數選項
         this.pageData.variants.forEach((variant, index) => {
             const optionElement = document.createElement('div');
-            optionElement.className = `${variant.type}-option`;
+            optionElement.className = `${variant.type}-option variant-option`;
             optionElement.dataset.variantId = variant.id;
             optionElement.dataset.stock = variant.stock;
+            optionElement.dataset.type = variant.type;
             optionElement.textContent = variant.value;
 
             // 添加庫存狀態
@@ -199,6 +229,15 @@ class PageProductManager {
 
             variantContainer.appendChild(optionElement);
         });
+
+        // 如果是 VariantSelector 容器，觸發變數選擇器重新初始化
+        if (variantContainer.id === 'variantContainer' && window.variantSelector) {
+            setTimeout(() => {
+                if (window.variantSelector.refresh) {
+                    window.variantSelector.refresh();
+                }
+            }, 100);
+        }
     }
 
     /**
