@@ -82,7 +82,7 @@ class StockChecker {
                 const productId = this.getProductIdFromPage();
                 
                 // 支援兩種數據格式：data-color 或 data-variant-id
-                let color = colorElement.dataset.color;
+                let color = colorElement.dataset.color || colorElement.dataset.variantId;
                 let variantId = colorElement.dataset.variantId;
                 
                 // 如果沒有 data-color，嘗試從 variant-id 或文本內容獲取顏色
@@ -129,7 +129,7 @@ class StockChecker {
             });
 
             // 添加庫存狀態樣式
-            const color = newOption.dataset.color;
+                            const color = newOption.dataset.color || newOption.dataset.variantId;
             const productId = this.getProductIdFromPage();
             
             if (productId && color) {
@@ -187,7 +187,7 @@ class StockChecker {
 
             // 添加新的點擊事件（包含庫存檢查）
             newOption.addEventListener('click', (e) => {
-                const flavor = e.target.dataset.flavor;
+                const flavor = e.target.dataset.flavor || e.target.dataset.variantId;
                 const productId = this.getProductIdFromPage();
                 
                 console.log(`🔍 StockChecker 調試信息:`);
@@ -224,7 +224,7 @@ class StockChecker {
             });
 
             // 添加庫存狀態樣式
-            const flavor = option.dataset.flavor;
+            const flavor = option.dataset.flavor || option.dataset.variantId;
             const productId = this.getProductIdFromPage();
             
             if (productId && flavor) {
@@ -428,10 +428,10 @@ class StockChecker {
         let variantType = null;
 
         if (selectedColor) {
-            variantValue = selectedColor.dataset.color;
+            variantValue = selectedColor.dataset.color || selectedColor.dataset.variantId;
             variantType = 'color';
         } else if (selectedFlavor) {
-            variantValue = selectedFlavor.dataset.flavor;
+            variantValue = selectedFlavor.dataset.flavor || selectedFlavor.dataset.variantId;
             variantType = 'flavor';
         }
 
@@ -475,10 +475,10 @@ class StockChecker {
         let variantType = null;
 
         if (selectedColor) {
-            variantValue = selectedColor.dataset.color;
+            variantValue = selectedColor.dataset.color || selectedColor.dataset.variantId;
             variantType = 'color';
         } else if (selectedFlavor) {
-            variantValue = selectedFlavor.dataset.flavor;
+            variantValue = selectedFlavor.dataset.flavor || selectedFlavor.dataset.variantId;
             variantType = 'flavor';
         }
 
