@@ -5,6 +5,19 @@ backend:
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
+# 🎯 DeepVape CMS 使用指南
+# 
+# 📋 快速導航：
+# 1. 💰 價格管理 → 網站設定 → 全域價格管理
+# 2. 📦 庫存管理 → 產品頁面管理 → 各產品頁面 → 產品變數
+# 3. 📢 公告管理 → 網站設定 → 跑馬燈公告
+# 4. 🎨 輪播圖管理 → 網站設定 → 首頁輪播圖管理
+# 
+# ⚠️ 重要提醒：
+# - 價格只在「全域價格管理」修改，其他地方的價格會被自動覆蓋
+# - 庫存在「產品頁面管理」的各產品中修改
+# - 修改後約30秒內會自動同步到網站前端
+
 collections:
   - name: "settings"
     label: "網站設定"
@@ -80,6 +93,55 @@ collections:
               - {name: "telegram", label: "Telegram", widget: "string"}
               - {name: "instagram", label: "Instagram", widget: "string"}
               - {name: "facebook", label: "Facebook", widget: "string"}
+      
+      - name: "prices"
+        label: "全域價格管理 💰"
+        file: "data/prices.json"
+        description: "⚠️ 重要：這是統一價格管理中心！所有產品價格請在這裡修改，系統會自動同步到前端顯示。請勿在「產品頁面管理」中修改價格。"
+        fields:
+          - name: "products"
+            label: "產品價格列表"
+            widget: "list"
+            summary: "{{fields.name}} - NT$ {{fields.price}}"
+            fields:
+              - name: "id"
+                label: "產品ID"
+                widget: "select"
+                hint: "⚠️ 請勿修改此ID，系統用於識別產品"
+                options:
+                  - {label: "SP2 Device", value: "sp2_device_product"}
+                  - {label: "ILIA Gen1", value: "ilia_1_product"}
+                  - {label: "ILIA 5 Device", value: "ilia_5_device_product"}
+                  - {label: "ILIA Ultra5 Pods", value: "ilia_ultra5_pods_product"}
+                  - {label: "ILIA Leather", value: "ilia_leather_product"}
+                  - {label: "ILIA Fabric", value: "ilia_fabric_product"}
+                  - {label: "HTA Vape", value: "hta_vape_product"}
+                  - {label: "ILIA Pods", value: "ilia_pods_product"}
+                  - {label: "SP2 Pods", value: "sp2_pods_product"}
+                  - {label: "HTA Pods", value: "hta_pods_product"}
+                  - {label: "LANA Pods", value: "lana_pods_product"}
+                  - {label: "ILIA Disposable", value: "ilia_disposable_product"}
+                  - {label: "LANA A8000", value: "lana_a8000_product"}
+              - name: "name"
+                label: "產品名稱"
+                widget: "string"
+                hint: "顯示在網站上的產品名稱"
+              - name: "price"
+                label: "💰 售價"
+                widget: "number"
+                min: 0
+                hint: "當前銷售價格（必填）- 這個價格會顯示在首頁和產品頁面"
+              - name: "originalPrice"
+                label: "🏷️ 原價（劃線價）"
+                widget: "number"
+                min: 0
+                required: false
+                hint: "選填 - 如果有原價，會顯示為劃線價格。必須大於售價才會顯示"
+              - name: "discount"
+                label: "🔥 折扣標籤"
+                widget: "string"
+                required: false
+                hint: "選填 - 折扣標籤文字，例如：13% OFF、限時優惠、買一送一"
       
       - name: "coupons"
         label: "優惠券管理"
@@ -428,20 +490,35 @@ collections:
               - {name: "notes", label: "備註", widget: "text", required: false}
 
   - name: "product_pages"
-    label: "產品頁面管理"
+    label: "產品頁面管理 📦"
+    description: "⚠️ 注意：這裡主要管理庫存、產品變數和產品資訊。價格請到「網站設定」→「全域價格管理」修改！"
     files:
       - name: "hta_pods_product"
         label: "HTA 黑桃煙彈頁面"
         file: "data/page_products/hta_pods.json"
         fields:
-          - {name: "pageId", label: "頁面ID", widget: "string", default: "hta_pods_product"}
+          - {name: "pageId", label: "頁面ID", widget: "string", default: "hta_pods_product", hint: "⚠️ 請勿修改此ID"}
           - {name: "productName", label: "產品名稱", widget: "string", default: "HTA 黑桃煙彈 - 14種口味"}
-          - {name: "price", label: "產品價格", widget: "number", default: 260}
-          - {name: "originalPrice", label: "原價", widget: "number", required: false}
-          - {name: "discount", label: "折扣標籤", widget: "string", required: false}
+          - name: "price"
+            label: "⚠️ 產品價格（請勿修改）"
+            widget: "number"
+            default: 260
+            hint: "⚠️ 警告：請到「網站設定」→「全域價格管理」修改價格！此處價格會被自動覆蓋"
+          - name: "originalPrice"
+            label: "⚠️ 原價（請勿修改）"
+            widget: "number"
+            required: false
+            hint: "⚠️ 警告：請到「網站設定」→「全域價格管理」修改價格！"
+          - name: "discount"
+            label: "⚠️ 折扣標籤（請勿修改）"
+            widget: "string"
+            required: false
+            hint: "⚠️ 警告：請到「網站設定」→「全域價格管理」修改折扣！"
           - name: "variants"
-            label: "產品變數（口味/顏色）"
+            label: "📦 產品變數（口味/顏色）- 庫存管理"
             widget: "list"
+            summary: "{{fields.value}} - 庫存: {{fields.stock}}"
+            hint: "✅ 這裡管理庫存數量！每個口味/顏色的庫存請在這裡修改"
             fields:
               - name: "id"
                 label: "變數ID"
@@ -451,7 +528,11 @@ collections:
               - {name: "name", label: "變數名稱", widget: "string", default: "口味"}
               - {name: "type", label: "變數類型", widget: "select", options: ["flavor", "color"], default: "flavor"}
               - {name: "value", label: "變數值（如：清涼可樂）", widget: "string"}
-              - {name: "stock", label: "庫存數量", widget: "number", default: 0}
+              - name: "stock"
+                label: "📦 庫存數量"
+                widget: "number"
+                default: 0
+                hint: "✅ 重要：這裡設定庫存！0=缺貨，負數=預購，正數=有庫存"
               - {name: "priceModifier", label: "價格調整", widget: "number", default: 0}
               - {name: "image", label: "變數圖片", widget: "image", required: false}
               - name: "sku"
