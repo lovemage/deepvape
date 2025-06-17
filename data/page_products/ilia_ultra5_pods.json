@@ -1,312 +1,308 @@
 {
-    "pageId": "ilia_ultra5_pods_product",
-    "productName": "ILIA Ultra5 煙彈",
-    "price": 320,
-    "originalPrice": null,
-    "discount": null,
-    "variants": [
-        {
-            "id": "ilia_ultra5_pods_green_apple",
-            "name": "口味",
-            "type": "flavor",
-            "value": "脆青蘋果",
-            "stock": 100,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-GREEN-APPLE"
-        },
-        {
-            "id": "ilia_ultra5_pods_super_mint",
-            "name": "口味",
-            "type": "flavor",
-            "value": "超A薄荷",
-            "stock": 95,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-SUPER-MINT"
-        },
-        {
-            "id": "ilia_ultra5_pods_treasure_lychee",
-            "name": "口味",
-            "type": "flavor",
-            "value": "寶藏荔枝",
-            "stock": 90,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-TREASURE-LYCHEE"
-        },
-        {
-            "id": "ilia_ultra5_pods_fresh_grape",
-            "name": "口味",
-            "type": "flavor",
-            "value": "鮮萃葡萄",
-            "stock": 85,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-FRESH-GRAPE"
-        },
-        {
-            "id": "ilia_ultra5_pods_red_guava",
-            "name": "口味",
-            "type": "flavor",
-            "value": "紅心芭樂",
-            "stock": 80,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-RED-GUAVA"
-        },
-        {
-            "id": "ilia_ultra5_pods_hand_lemon",
-            "name": "口味",
-            "type": "flavor",
-            "value": "手打檸檬",
-            "stock": 75,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-HAND-LEMON"
-        },
-        {
-            "id": "ilia_ultra5_pods_exciting_cola",
-            "name": "口味",
-            "type": "flavor",
-            "value": "激爽可樂",
-            "stock": 70,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-EXCITING-COLA"
-        },
-        {
-            "id": "ilia_ultra5_pods_sweet_blueberry",
-            "name": "口味",
-            "type": "flavor",
-            "value": "清甜藍莓",
-            "stock": 65,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-SWEET-BLUEBERRY"
-        },
-        {
-            "id": "ilia_ultra5_pods_juicy_mango",
-            "name": "口味",
-            "type": "flavor",
-            "value": "多肉芒果",
-            "stock": 60,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-JUICY-MANGO"
-        },
-        {
-            "id": "ilia_ultra5_pods_passion_fruit",
-            "name": "口味",
-            "type": "flavor",
-            "value": "百香果汁",
-            "stock": 55,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-PASSION-FRUIT"
-        },
-        {
-            "id": "ilia_ultra5_pods_juicy_peach",
-            "name": "口味",
-            "type": "flavor",
-            "value": "爆汁蜜桃",
-            "stock": 50,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-JUICY-PEACH"
-        },
-        {
-            "id": "ilia_ultra5_pods_passion_mint",
-            "name": "口味",
-            "type": "flavor",
-            "value": "激情薄荷",
-            "stock": 45,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-PASSION-MINT"
-        },
-        {
-            "id": "ilia_ultra5_pods_ice_tieguanyin",
-            "name": "口味",
-            "type": "flavor",
-            "value": "冰鐵觀音",
-            "stock": 40,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-ICE-TIEGUANYIN"
-        },
-        {
-            "id": "ilia_ultra5_pods_old_ice_stick",
-            "name": "口味",
-            "type": "flavor",
-            "value": "老冰棍兒",
-            "stock": 85,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-OLD-ICE-STICK"
-        },
-        {
-            "id": "ilia_ultra5_pods_sweet_melon",
-            "name": "口味",
-            "type": "flavor",
-            "value": "甜蜜瓜",
-            "stock": 75,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-SWEET-MELON"
-        },
-        {
-            "id": "ilia_ultra5_pods_ice_green_plum",
-            "name": "口味",
-            "type": "flavor",
-            "value": "冰爽青梅",
-            "stock": 65,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-ICE-GREEN-PLUM"
-        },
-        {
-            "id": "ilia_ultra5_pods_ice_watermelon",
-            "name": "口味",
-            "type": "flavor",
-            "value": "冰鮮西瓜",
-            "stock": 55,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-ICE-WATERMELON"
-        },
-        {
-            "id": "ilia_ultra5_pods_lemon_passion",
-            "name": "口味",
-            "type": "flavor",
-            "value": "檸檬百香",
-            "stock": 45,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-LEMON-PASSION"
-        },
-        {
-            "id": "ilia_ultra5_pods_musk_grape",
-            "name": "口味",
-            "type": "flavor",
-            "value": "麝香葡萄",
-            "stock": 35,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-MUSK-GRAPE"
-        },
-        {
-            "id": "ilia_ultra5_pods_mountain_tea",
-            "name": "口味",
-            "type": "flavor",
-            "value": "高山茶韻",
-            "stock": 25,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-MOUNTAIN-TEA"
-        },
-        {
-            "id": "ilia_ultra5_pods_exciting_sprite",
-            "name": "口味",
-            "type": "flavor",
-            "value": "激爽雪碧",
-            "stock": 80,
-            "priceModifier": 0,
-            "image": "ilia_pod5/ilia-pod5.jpg",
-            "sku": "ILIA-ULTRA5-EXCITING-SPRITE"
-        },
-                 {
-             "id": "ilia_ultra5_pods_extreme_ice_soda",
-             "name": "口味",
-             "type": "flavor",
-             "value": "塔冰蘇打",
-             "stock": 70,
-             "priceModifier": 0,
-             "image": "ilia_pod5/ilia-pod5.jpg",
-             "sku": "ILIA-ULTRA5-EXTREME-ICE-SODA"
-         },
-         {
-             "id": "ilia_ultra5_pods_mint_powder",
-             "name": "口味",
-             "type": "flavor",
-             "value": "薄荷粉",
-             "stock": 60,
-             "priceModifier": 0,
-             "image": "ilia_pod5/ilia-pod5.jpg",
-             "sku": "ILIA-ULTRA5-MINT-POWDER"
-         }
-    ],
-    "status": "active",
-    "currency": "NT$",
+  "discount": null,
+  "lastUpdated": "2025-06-17T01:39:23.111Z",
+  "brand": "ILIA",
+  "price": 320,
+  "pageId": "ilia_ultra5_pods_product",
+  "created_at": "2024-12-19",
+  "variants": [
+    {
+      "id": "ilia_ultra5_pods_green_apple",
+      "name": "口味",
+      "type": "flavor",
+      "value": "脆青蘋果",
+      "stock": 100,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-GREEN-APPLE"
+    },
+    {
+      "id": "ilia_ultra5_pods_super_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "超A薄荷",
+      "stock": 95,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-SUPER-MINT"
+    },
+    {
+      "id": "ilia_ultra5_pods_treasure_lychee",
+      "name": "口味",
+      "type": "flavor",
+      "value": "寶藏荔枝",
+      "stock": 90,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-TREASURE-LYCHEE"
+    },
+    {
+      "id": "ilia_ultra5_pods_fresh_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "鮮萃葡萄",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-FRESH-GRAPE"
+    },
+    {
+      "id": "ilia_ultra5_pods_red_guava",
+      "name": "口味",
+      "type": "flavor",
+      "value": "紅心芭樂",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-RED-GUAVA"
+    },
+    {
+      "id": "ilia_ultra5_pods_hand_lemon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "手打檸檬",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-HAND-LEMON"
+    },
+    {
+      "id": "ilia_ultra5_pods_exciting_cola",
+      "name": "口味",
+      "type": "flavor",
+      "value": "激爽可樂",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-EXCITING-COLA"
+    },
+    {
+      "id": "ilia_ultra5_pods_sweet_blueberry",
+      "name": "口味",
+      "type": "flavor",
+      "value": "清甜藍莓",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-SWEET-BLUEBERRY"
+    },
+    {
+      "id": "ilia_ultra5_pods_juicy_mango",
+      "name": "口味",
+      "type": "flavor",
+      "value": "多肉芒果",
+      "stock": 60,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-JUICY-MANGO"
+    },
+    {
+      "id": "ilia_ultra5_pods_passion_fruit",
+      "name": "口味",
+      "type": "flavor",
+      "value": "百香果汁",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-PASSION-FRUIT"
+    },
+    {
+      "id": "ilia_ultra5_pods_juicy_peach",
+      "name": "口味",
+      "type": "flavor",
+      "value": "爆汁蜜桃",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-JUICY-PEACH"
+    },
+    {
+      "id": "ilia_ultra5_pods_passion_mint",
+      "name": "口味",
+      "type": "flavor",
+      "value": "激情薄荷",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-PASSION-MINT"
+    },
+    {
+      "id": "ilia_ultra5_pods_ice_tieguanyin",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰鐵觀音",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-ICE-TIEGUANYIN"
+    },
+    {
+      "id": "ilia_ultra5_pods_old_ice_stick",
+      "name": "口味",
+      "type": "flavor",
+      "value": "老冰棍兒",
+      "stock": 85,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-OLD-ICE-STICK"
+    },
+    {
+      "id": "ilia_ultra5_pods_sweet_melon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "甜蜜瓜",
+      "stock": 75,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-SWEET-MELON"
+    },
+    {
+      "id": "ilia_ultra5_pods_ice_green_plum",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰爽青梅",
+      "stock": 65,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-ICE-GREEN-PLUM"
+    },
+    {
+      "id": "ilia_ultra5_pods_ice_watermelon",
+      "name": "口味",
+      "type": "flavor",
+      "value": "冰鮮西瓜",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-ICE-WATERMELON"
+    },
+    {
+      "id": "ilia_ultra5_pods_lemon_passion",
+      "name": "口味",
+      "type": "flavor",
+      "value": "檸檬百香",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-LEMON-PASSION"
+    },
+    {
+      "id": "ilia_ultra5_pods_musk_grape",
+      "name": "口味",
+      "type": "flavor",
+      "value": "麝香葡萄",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-MUSK-GRAPE"
+    },
+    {
+      "id": "ilia_ultra5_pods_mountain_tea",
+      "name": "口味",
+      "type": "flavor",
+      "value": "高山茶韻",
+      "stock": 25,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-MOUNTAIN-TEA"
+    },
+    {
+      "id": "ilia_ultra5_pods_exciting_sprite",
+      "name": "口味",
+      "type": "flavor",
+      "value": "激爽雪碧",
+      "stock": 80,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-EXCITING-SPRITE"
+    },
+    {
+      "id": "ilia_ultra5_pods_extreme_ice_soda",
+      "name": "口味",
+      "type": "flavor",
+      "value": "極冰蘇打",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "ilia_pod5/ilia-pod5.jpg",
+      "sku": "ILIA-ULTRA5-EXTREME-ICE-SODA"
+    }
+  ],
+  "specifications": {
+    "通用性": "五代通用",
+    "口味數量": "23種",
+    "容量": "2.0ML",
+    "尼古丁含量": "3%",
+    "包裝": "單盒三顆入",
+    "設計": "膠囊型包裝"
+  },
+  "currency": "NT$",
+  "status": "active",
+  "flavors": [
+    "脆青蘋果",
+    "超A薄荷",
+    "寶藏荔枝",
+    "鮮萃葡萄",
+    "紅心芭樂",
+    "手打檸檬",
+    "激爽可樂",
+    "清甜藍莓",
+    "多肉芒果",
+    "百香果汁",
+    "蜜汁蜜桃",
+    "薄荷薄荷",
+    "冰鎮龍舌",
+    "老冰棒兒",
+    "沁甜哈密瓜",
+    "冰爽青梅",
+    "冰鮮西瓜",
+    "檸檬百香",
+    "麝香葡萄",
+    "高山茶韻",
+    "薄荷粉",
+    "激爽雪碧",
+    "塔冰蘇打"
+  ],
+  "stock": {
+    "available": true,
+    "quantity": 100,
+    "status": "現貨供應"
+  },
+  "warnings": [
+    "此款煙彈不通用一代主機！",
+    "此款煙彈不通用凱斯5代主機！",
+    "本產品僅供 18 歲以上成年人使用"
+  ],
+  "updated_at": "2024-12-19",
+  "originalPrice": null,
+  "images": {
+    "main": "ilia_pod5/ilia-pod5.jpg",
+    "gallery": [
+      "ilia_pod5/ilia-pod5.jpg"
+    ]
+  },
+  "tags": [
+    "new",
+    "popular",
+    "ultra5",
+    "pods"
+  ],
+  "short_description": "23種口味選擇 • 2.0ML大容量 • 3%尼古丁含量 • 五代通用",
+  "productName": "ILIA Ultra5 煙彈",
+  "description": "ILIA Ultra5 煙彈，23種豐富口味，2.0ML大容量，3%尼古丁含量，五代通用設計，膠囊型包裝，黑色油杯設計。極致口感，無縫體驗。",
+  "features": [
+    "23種豐富口味選擇，滿足不同喜好",
+    "2.0ML大容量設計，持久使用體驗",
+    "3%尼古丁含量，適中濃度",
+    "膠囊型包裝，時尚美觀",
+    "黑色油杯設計，質感出眾",
+    "單盒三顆入，經濟實惠",
+    "五代通用設計，相容性佳",
+    "ILIA品質保證，安心選擇"
+  ],
+  "seo": {
+    "title": "ILIA Ultra5 煙彈 - 23種口味選擇 | DeepVape",
     "description": "ILIA Ultra5 煙彈，23種豐富口味，2.0ML大容量，3%尼古丁含量，五代通用設計，膠囊型包裝，黑色油杯設計。極致口感，無縫體驗。",
-    "short_description": "23種口味選擇 • 2.0ML大容量 • 3%尼古丁含量 • 五代通用",
-    "category": "pods",
-    "brand": "ILIA",
-    "images": {
-        "main": "ilia_pod5/ilia-pod5.jpg",
-        "gallery": [
-            "ilia_pod5/ilia-pod5.jpg"
-        ]
-    },
-    "specifications": {
-        "通用性": "五代通用",
-        "口味數量": "23種",
-        "容量": "2.0ML",
-        "尼古丁含量": "3%",
-        "包裝": "單盒三顆入",
-        "設計": "膠囊型包裝"
-    },
-    "features": [
-        "23種豐富口味選擇，滿足不同喜好",
-        "2.0ML大容量設計，持久使用體驗",
-        "3%尼古丁含量，適中濃度",
-        "膠囊型包裝，時尚美觀",
-        "黑色油杯設計，質感出眾",
-        "單盒三顆入，經濟實惠",
-        "五代通用設計，相容性佳",
-        "ILIA品質保證，安心選擇"
-    ],
-    "flavors": [
-        "脆青蘋果",
-        "超A薄荷",
-        "寶藏荔枝",
-        "鮮萃葡萄",
-        "紅心芭樂",
-        "手打檸檬",
-        "激爽可樂",
-        "清甜藍莓",
-        "多肉芒果",
-        "百香果汁",
-        "蜜汁蜜桃",
-        "薄荷薄荷",
-        "冰鎮龍舌",
-        "老冰棒兒",
-        "沁甜哈密瓜",
-        "冰爽青梅",
-        "冰鮮西瓜",
-        "檸檬百香",
-        "麝香葡萄",
-        "高山茶韻",
-        "薄荷粉",
-        "激爽雪碧",
-        "塔冰蘇打"
-    ],
-    "stock": {
-        "available": true,
-        "quantity": 100,
-        "status": "現貨供應"
-    },
-    "tags": ["new", "popular", "ultra5", "pods"],
-    "warnings": [
-        "此款煙彈不通用一代主機！",
-        "此款煙彈不通用凱斯5代主機！",
-        "本產品僅供 18 歲以上成年人使用"
-    ],
-    "seo": {
-        "title": "ILIA Ultra5 煙彈 - 23種口味選擇 | DeepVape",
-        "description": "ILIA Ultra5 煙彈，23種豐富口味，2.0ML大容量，3%尼古丁含量，五代通用設計，膠囊型包裝，黑色油杯設計。極致口感，無縫體驗。",
-        "keywords": "ILIA Ultra5, 煙彈, 電子煙, 23種口味, 五代通用, 膠囊型包裝, 黑色油杯"
-    },
-    "created_at": "2024-12-19",
-    "updated_at": "2024-12-19"
-} 
+    "keywords": "ILIA Ultra5, 煙彈, 電子煙, 23種口味, 五代通用, 膠囊型包裝, 黑色油杯"
+  },
+  "category": "pods"
+}
