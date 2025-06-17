@@ -9,13 +9,14 @@ public_folder: "/images/uploads"
 # 
 # 📋 快速導航：
 # 1. 💰 價格管理 → 網站設定 → 全域價格管理
-# 2. 📦 庫存管理 → 產品頁面管理 → 各產品頁面 → 產品變數
+# 2. 📦 庫存管理 → 變數卡片管理 → 各產品頁面 → 產品變數
 # 3. 📢 公告管理 → 網站設定 → 跑馬燈公告
 # 4. 🎨 輪播圖管理 → 網站設定 → 首頁輪播圖管理
+# 5. 📋 訂單管理 → 目前使用Telegram機器人系統
 # 
 # ⚠️ 重要提醒：
 # - 價格只在「全域價格管理」修改，其他地方的價格會被自動覆蓋
-# - 庫存在「產品頁面管理」的各產品中修改
+# - 庫存在「變數卡片管理」的各產品中修改
 # - 修改後約30秒內會自動同步到網站前端
 
 collections:
@@ -397,7 +398,8 @@ collections:
 
 
   - name: "orders"
-    label: "訂單管理"
+    label: "訂單管理 📋"
+    description: "ℹ️ 說明：目前使用Telegram機器人通知系統處理訂單。若有大量訂單管理需求，請升級動態服務器。"
     files:
       - name: "orders"
         label: "訂單記錄"
@@ -490,7 +492,7 @@ collections:
               - {name: "notes", label: "備註", widget: "text", required: false}
 
   - name: "product_pages"
-    label: "產品頁面管理 📦"
+    label: "變數卡片管理 📦"
     description: "⚠️ 注意：這裡主要管理庫存、產品變數和產品資訊。價格請到「網站設定」→「全域價格管理」修改！"
     files:
       - name: "hta_pods_product"
