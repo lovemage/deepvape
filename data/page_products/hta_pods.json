@@ -138,7 +138,7 @@
     {
       "name": "口味",
       "type": "flavor",
-      "stock": 0,
+      "stock": 50,
       "priceModifier": 0,
       "value": "愛文芒果",
       "id": "hta_pods_mango"

@@ -2,8 +2,8 @@
   "pageId": "ilia_leather_product",
   "productName": "皮革款主機",
   "price": 650,
-  "originalPrice": null,
-  "discount": null,
+  "originalPrice": 900,
+  "discount": "900",
   "variants": [
     {
       "id": "ilia_leather_gucci_green",
