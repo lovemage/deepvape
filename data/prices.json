@@ -3,22 +3,22 @@
     {
       "id": "sp2_device_product",
       "name": "SP2 Device",
-      "price": 450,
-      "originalPrice": 690,
+      "price": 650,
+      "originalPrice": 880,
       "discount": ""
     },
     {
       "id": "ilia_1_product",
       "name": "ILIA Gen1",
       "price": 650,
-      "originalPrice": 680,
+      "originalPrice": 780,
       "discount": ""
     },
     {
       "id": "ilia_5_device_product",
       "name": "ILIA 5 Device",
-      "price": 660,
-      "originalPrice": 789,
+      "price": 450,
+      "originalPrice": 590,
       "discount": "新上市"
     },
     {
@@ -52,15 +52,15 @@
     {
       "id": "ilia_pods_product",
       "name": "ILIA Pods",
-      "price": 320,
-      "originalPrice": 490,
+      "price": 300,
+      "originalPrice": 450,
       "discount": ""
     },
     {
       "id": "sp2_pods_product",
       "name": "SP2 Pods",
-      "price": 320,
-      "originalPrice": 479,
+      "price": 350,
+      "originalPrice": 490,
       "discount": ""
     },
     {
@@ -73,21 +73,21 @@
     {
       "id": "lana_pods_product",
       "name": "LANA Pods",
-      "price": 320,
+      "price": 280,
       "originalPrice": 450,
       "discount": ""
     },
     {
       "id": "ilia_disposable_product",
       "name": "ILIA Disposable",
-      "price": 350,
-      "originalPrice": "",
+      "price": 320,
+      "originalPrice": 490,
       "discount": ""
     },
     {
       "id": "lana_a8000_product",
       "name": "LANA 8000",
-      "price": 450,
+      "price": 320,
       "originalPrice": 880,
       "discount": ""
     }
