@@ -390,6 +390,53 @@
             color: var(--text-color);
         }
 
+        /* 動態生成的變數選擇器基本樣式 */
+        .variant-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .variant-option {
+            padding: 0.8rem;
+            background: var(--accent-color);
+            border: 2px solid transparent;
+            border-radius: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .variant-option:hover,
+        .variant-option.selected {
+            border-color: var(--highlight-color);
+            background: rgba(26, 254, 73, 0.2);
+        }
+        
+        .variant-option .variant-name {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        
+        .variant-option .variant-stock {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        
+        .variant-option .color-swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-bottom: 0.3rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
         /* Smart Features */
         .smart-features {
             margin-bottom: 2rem;
@@ -609,6 +656,56 @@
                 justify-content: center;
                 text-align: center;
                 line-height: 1.2;
+            }
+            
+            /* 動態生成的變數選擇器樣式 */
+            .variant-options {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.4rem;
+            }
+            
+            .variant-option {
+                padding: 0.6rem 0.4rem;
+                font-size: 0.75rem;
+                min-height: 50px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.2;
+                background: var(--accent-color);
+                border: 2px solid transparent;
+                border-radius: 20px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: var(--text-color);
+            }
+            
+            .variant-option:hover,
+            .variant-option.selected {
+                border-color: var(--highlight-color);
+                background: rgba(26, 254, 73, 0.2);
+            }
+            
+            .variant-option .variant-name {
+                font-size: 0.75rem;
+                font-weight: 500;
+                margin-bottom: 0.2rem;
+            }
+            
+            .variant-option .variant-stock {
+                font-size: 0.65rem;
+                color: var(--text-secondary);
+            }
+            
+            .variant-option .color-swatch {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                margin-bottom: 0.2rem;
+                border: 1px solid rgba(255, 255, 255, 0.3);
             }
 
             .smart-grid {
