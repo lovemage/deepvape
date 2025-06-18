@@ -698,7 +698,19 @@
             }
 
             .flavor-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.4rem;
+            }
+            
+            .flavor-option {
+                padding: 0.6rem 0.3rem;
+                font-size: 0.75rem;
+                min-height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.1;
             }
         }
 
