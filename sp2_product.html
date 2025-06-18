@@ -359,104 +359,166 @@
         }
 
         .color-title {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-title::before {
+            content: "🎨";
+            font-size: 1.2rem;
         }
 
         .color-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
         }
 
         .color-option {
-            padding: 0.8rem;
-            background: var(--accent-color);
-            border: 2px solid transparent;
-            border-radius: 30px;
+            padding: 1rem;
+            background: rgba(17, 24, 39, 0.5);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
             color: var(--text-color);
+            backdrop-filter: blur(8px);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .color-option:hover,
+        .color-option::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(6, 182, 212, 0.1) 45%,
+                rgba(6, 182, 212, 0.2) 50%,
+                rgba(6, 182, 212, 0.1) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .color-option:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
+        .color-option:hover {
+            border-color: var(--highlight-color);
+            background: rgba(6, 182, 212, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
         .color-option.selected {
             border-color: var(--highlight-color);
-            background: rgba(26, 254, 73, 0.2);
-            color: var(--text-color);
+            background: linear-gradient(135deg, var(--highlight-color), var(--tech-cyan));
+            color: var(--primary-color);
+            box-shadow: 0 4px 20px rgba(26, 254, 73, 0.4);
         }
 
-        /* 變數選擇器樣式 - 與color-option保持一致 */
+        /* VariantSelector 生成的元素樣式 */
         .variant-options {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
         }
 
         .variant-option {
-            padding: 0.8rem;
-            background: var(--accent-color);
-            border: 2px solid transparent;
-            border-radius: 30px;
+            background: rgba(17, 24, 39, 0.5);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
-            color: var(--text-color);
+            backdrop-filter: blur(8px);
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .variant-option:hover,
+        .variant-option::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(6, 182, 212, 0.1) 45%,
+                rgba(6, 182, 212, 0.2) 50%,
+                rgba(6, 182, 212, 0.1) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .variant-option:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
+        .variant-option:hover {
+            border-color: var(--highlight-color);
+            background: rgba(6, 182, 212, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
         .variant-option.selected {
             border-color: var(--highlight-color);
-            background: rgba(26, 254, 73, 0.2);
-            color: var(--text-color);
+            background: linear-gradient(135deg, var(--highlight-color), var(--tech-cyan));
+            color: var(--primary-color);
+            box-shadow: 0 4px 20px rgba(26, 254, 73, 0.4);
         }
 
-        .variant-option.out-of-stock {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #f5f5f5;
-            border-color: #ddd;
-        }
-
-        .variant-option.out-of-stock:hover {
-            transform: none;
-            box-shadow: none;
-            background: #f5f5f5;
-            border-color: #ddd;
-        }
-
-        /* 變數選擇器內部元素樣式 */
         .variant-name {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.2rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .variant-option.selected .variant-name {
+            color: var(--primary-color);
         }
 
         .variant-stock {
-            display: block;
             font-size: 0.8rem;
             color: var(--text-secondary);
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
         }
 
-        .color-swatch {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin: 0 auto 0.3rem;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        /* 變數組標題 */
-        .variant-group-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-color);
+        .variant-option.selected .variant-stock {
+            color: rgba(0, 0, 0, 0.7);
         }
 
         /* Smart Features */
@@ -664,38 +726,61 @@
                 flex-direction: column;
             }
 
-            .color-grid,
-            .variant-options {
+            .color-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.4rem;
             }
             
-            .color-option,
-            .variant-option {
+            .color-option {
                 padding: 0.6rem 0.4rem;
                 font-size: 0.75rem;
                 min-height: 50px;
                 display: flex;
-                flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 text-align: center;
                 line-height: 1.2;
             }
-
+            
+            /* VariantSelector 生成的元素樣式 - 移動端 */
+            .variant-options {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.4rem !important;
+            }
+            
+            .variant-option {
+                padding: 0.6rem 0.3rem !important;
+                font-size: 0.75rem !important;
+                min-height: 50px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.1 !important;
+                border-radius: 15px !important;
+                gap: 0.1rem !important;
+            }
+            
             .variant-name {
-                font-size: 0.7rem;
-                margin-bottom: 0.1rem;
+                font-size: 0.75rem !important;
+                margin-bottom: 0 !important;
+                font-weight: 600 !important;
             }
-
+            
             .variant-stock {
-                font-size: 0.6rem;
+                font-size: 0.65rem !important;
+                margin-top: 0 !important;
             }
-
-            .color-swatch {
-                width: 15px;
-                height: 15px;
-                margin-bottom: 0.2rem;
+            
+            /* 確保選中狀態在移動端也正常顯示 */
+            .variant-option.selected .variant-name {
+                color: var(--primary-color) !important;
+            }
+            
+            .variant-option.selected .variant-stock {
+                color: rgba(0, 0, 0, 0.7) !important;
             }
 
             .smart-grid {
@@ -798,7 +883,7 @@
             
             <div class="product-description">
                 SP2S 一代主機以其獨特的設計和創新的性能，成為市場上的大熱電子菸產品，
-                為您帶來前所未有的電子菸體驗。擁有 16 種顏色選擇，內建智能溫控系統。
+                為您帶來前所未有的電子菸體驗。擁有 23 種顏色選擇，內建智能溫控系統。
             </div>
 
             <!-- Specifications -->
@@ -861,7 +946,7 @@
 
             <!-- Variant Container -->
             <div id="variantContainer">
-                <h3 class="color-title">顏色選擇 <span class="tech-badge">16種顏色</span></h3>
+                <h3 class="color-title">顏色選擇 <span class="tech-badge">23種顏色</span></h3>
                 <!-- VariantSelector 會在這裡動態生成選項 -->
             </div>
 
