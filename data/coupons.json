@@ -29,6 +29,21 @@
       "discountType": "percentage",
       "id": "COU168",
       "description": "DEEPVAPE優惠卷（30天）"
+    },
+    {
+      "active": true,
+      "endDate": "2025-06-18T14:12:02.083Z",
+      "minAmount": 0,
+      "totalCount": 100,
+      "name": "小王優惠卷",
+      "code": "XYZ01",
+      "discountValue": 45,
+      "startDate": "2025-06-18T14:12:02.074Z",
+      "usedCount": 0,
+      "autoDisplay": false,
+      "discountType": "fixed",
+      "id": "XYZ01",
+      "description": "凡事用這個優惠卷就是小王的朋友折50"
     }
   ]
 }
