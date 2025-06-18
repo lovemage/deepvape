@@ -3,93 +3,93 @@
     {
       "id": "sp2_device_product",
       "name": "SP2 Device",
-      "price": 1299,
-      "originalPrice": 1499,
-      "discount": "13% OFF"
+      "price": 650,
+      "originalPrice": 880,
+      "discount": ""
     },
     {
-      "id": "ilia_1_product", 
+      "id": "ilia_1_product",
       "name": "ILIA Gen1",
-      "price": 899,
-      "originalPrice": 1099,
-      "discount": "18% OFF"
+      "price": 650,
+      "originalPrice": 780,
+      "discount": ""
     },
     {
       "id": "ilia_5_device_product",
-      "name": "ILIA 5 Device", 
-      "price": 1199,
-      "originalPrice": 1399,
-      "discount": "14% OFF"
+      "name": "ILIA 5 Device",
+      "price": 450,
+      "originalPrice": 590,
+      "discount": "新上市"
     },
     {
       "id": "ilia_ultra5_pods_product",
       "name": "ILIA Ultra5 Pods",
-      "price": 299,
-      "originalPrice": 349,
-      "discount": "14% OFF"
+      "price": 320,
+      "originalPrice": 490,
+      "discount": ""
     },
     {
       "id": "ilia_leather_product",
       "name": "ILIA Leather",
-      "price": 1599,
-      "originalPrice": 1799,
-      "discount": "11% OFF"
+      "price": 649,
+      "originalPrice": 980,
+      "discount": ""
     },
     {
-      "id": "ilia_fabric_product", 
+      "id": "ilia_fabric_product",
       "name": "ILIA Fabric",
-      "price": 1399,
-      "originalPrice": 1599,
-      "discount": "13% OFF"
+      "price": 650,
+      "originalPrice": 880,
+      "discount": ""
     },
     {
       "id": "hta_vape_product",
       "name": "HTA Vape",
-      "price": 999,
-      "originalPrice": 1199,
-      "discount": "17% OFF"
+      "price": 450,
+      "originalPrice": 670,
+      "discount": ""
     },
     {
       "id": "ilia_pods_product",
-      "name": "ILIA Pods", 
-      "price": 249,
-      "originalPrice": 299,
-      "discount": "17% OFF"
+      "name": "ILIA Pods",
+      "price": 300,
+      "originalPrice": 450,
+      "discount": ""
     },
     {
       "id": "sp2_pods_product",
       "name": "SP2 Pods",
-      "price": 279,
-      "originalPrice": 329,
-      "discount": "15% OFF"
+      "price": 350,
+      "originalPrice": 490,
+      "discount": ""
     },
     {
       "id": "hta_pods_product",
       "name": "HTA Pods",
-      "price": 259,
-      "originalPrice": 309,
-      "discount": "16% OFF"
+      "price": 280,
+      "originalPrice": 450,
+      "discount": "售完為止"
     },
     {
       "id": "lana_pods_product",
-      "name": "LANA Pods", 
-      "price": 289,
-      "originalPrice": 339,
-      "discount": "15% OFF"
+      "name": "LANA Pods",
+      "price": 280,
+      "originalPrice": 450,
+      "discount": ""
     },
     {
       "id": "ilia_disposable_product",
       "name": "ILIA Disposable",
-      "price": 199,
-      "originalPrice": 249,
-      "discount": "20% OFF"
+      "price": 320,
+      "originalPrice": 490,
+      "discount": ""
     },
     {
       "id": "lana_a8000_product",
-      "name": "LANA A8000",
-      "price": 1799,
-      "originalPrice": 1999,
-      "discount": "10% OFF"
+      "name": "LANA 8000",
+      "price": 320,
+      "originalPrice": 880,
+      "discount": ""
     }
   ]
-} 
+}

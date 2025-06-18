@@ -1,169 +1,239 @@
 {
   "pageId": "sp2_device_product",
-  "productName": "SP2 一代主機",
+  "productName": "SP2 一代主機 - 23色",
   "price": 450,
   "originalPrice": null,
   "discount": null,
   "variants": [
     {
-      "id": "sp2_device_classic_black",
+      "id": "sp2_device_star_ice_mist_blue",
       "name": "顏色",
       "type": "color",
-      "value": "經典黑",
+      "value": "星冰霧藍",
+      "stock": 50,
+      "priceModifier": 0,
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-STAR-ICE-MIST-BLUE"
+    },
+    {
+      "id": "sp2_device_disc_feather_blue_green",
+      "name": "顏色",
+      "type": "color",
+      "value": "碟羽藍綠",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-DISC-FEATHER-BLUE-GREEN"
+    },
+    {
+      "id": "sp2_device_golden_shadow_pink",
+      "name": "顏色",
+      "type": "color",
+      "value": "金影粉",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-GOLDEN-SHADOW-PINK"
+    },
+    {
+      "id": "sp2_device_phantom_night_black",
+      "name": "顏色",
+      "type": "color",
+      "value": "幻夜黑",
+      "stock": 55,
+      "priceModifier": 0,
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-PHANTOM-NIGHT-BLACK"
+    },
+    {
+      "id": "sp2_device_charming_sea_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "魅海藍",
       "stock": 35,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-CLASSIC-BLK"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-CHARMING-SEA-BLUE"
     },
     {
-      "id": "sp2_device_space_silver",
+      "id": "sp2_device_charming_flame_red",
       "name": "顏色",
       "type": "color",
-      "value": "太空銀",
-      "stock": -2,
+      "value": "媚焰紅",
+      "stock": 30,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-SPACE-SLV"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-CHARMING-FLAME-RED"
     },
     {
-      "id": "sp2_device_deep_blue",
+      "id": "sp2_device_charming_sea_blue_gradient",
       "name": "顏色",
       "type": "color",
-      "value": "深海藍",
+      "value": "媚海藍(漸層)",
       "stock": 25,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-DEEP-BLU"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-CHARMING-SEA-BLUE-GRADIENT"
     },
     {
-      "id": "sp2_device_rose_gold",
+      "id": "sp2_device_black_warrior",
       "name": "顏色",
       "type": "color",
-      "value": "玫瑰金",
-      "stock": 8,
+      "value": "黑武士",
+      "stock": 45,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-ROSE-GLD"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-BLACK-WARRIOR"
     },
     {
-      "id": "sp2_device_pearl_white",
+      "id": "sp2_device_elegant_silver_white",
       "name": "顏色",
       "type": "color",
-      "value": "珍珠白",
-      "stock": 32,
+      "value": "淡雅銀白",
+      "stock": 40,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-PEARL-WHT"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-ELEGANT-SILVER-WHITE"
     },
     {
-      "id": "sp2_device_dazzling_purple",
+      "id": "sp2_device_jade_wave_pink_green",
       "name": "顏色",
       "type": "color",
-      "value": "炫彩紫",
-      "stock": 3,
+      "value": "碧波粉綠",
+      "stock": 35,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-DAZZLING-PUR"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-JADE-WAVE-PINK-GREEN"
     },
     {
-      "id": "sp2_device_forest_green",
+      "id": "sp2_device_star_joy_lake_blue",
       "name": "顏色",
       "type": "color",
-      "value": "森林綠",
-      "stock": 22,
+      "value": "星悅湖藍",
+      "stock": 30,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-FOREST-GRN"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-STAR-JOY-LAKE-BLUE"
     },
     {
-      "id": "sp2_device_sunset_orange",
+      "id": "sp2_device_electrolytic_snow_white",
       "name": "顏色",
       "type": "color",
-      "value": "夕陽橙",
-      "stock": 18,
+      "value": "電泳雪白",
+      "stock": 50,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-SUNSET-ORG"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-ELECTROLYTIC-SNOW-WHITE"
     },
     {
-      "id": "sp2_device_cherry_pink",
+      "id": "sp2_device_dazzling_shadow_purple_red",
       "name": "顏色",
       "type": "color",
-      "value": "櫻花粉",
-      "stock": 24,
+      "value": "炫影紫紅",
+      "stock": 25,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-CHERRY-PNK"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-DAZZLING-SHADOW-PURPLE-RED"
     },
     {
-      "id": "sp2_device_starry_gray",
+      "id": "sp2_device_lilac_light_purple",
       "name": "顏色",
       "type": "color",
-      "value": "星空灰",
-      "stock": 26,
+      "value": "丁香淡紫",
+      "stock": 20,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-STARRY-GRY"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-LILAC-LIGHT-PURPLE"
     },
     {
-      "id": "sp2_device_ocean_blue",
+      "id": "sp2_device_begonia_pink",
       "name": "顏色",
       "type": "color",
-      "value": "海洋藍",
-      "stock": 21,
+      "value": "海棠粉",
+      "stock": 35,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-OCEAN-BLU"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-BEGONIA-PINK"
     },
     {
-      "id": "sp2_device_champagne_gold",
+      "id": "sp2_device_titanium_black",
       "name": "顏色",
       "type": "color",
-      "value": "香檳金",
-      "stock": 19,
+      "value": "鈦黑",
+      "stock": 60,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-CHAMPAGNE-GLD"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-BLACK"
     },
     {
-      "id": "sp2_device_mint_green",
+      "id": "sp2_device_titanium_red",
       "name": "顏色",
       "type": "color",
-      "value": "薄荷綠",
-      "stock": 23,
+      "value": "鈦紅",
+      "stock": 45,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-MINT-GRN"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-RED"
     },
     {
-      "id": "sp2_device_wine_red",
+      "id": "sp2_device_titanium_pink",
       "name": "顏色",
       "type": "color",
-      "value": "酒紅色",
-      "stock": 17,
+      "value": "鈦粉",
+      "stock": 40,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-WINE-RED"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-PINK"
     },
     {
-      "id": "sp2_device_titanium",
+      "id": "sp2_device_titanium_silver",
       "name": "顏色",
       "type": "color",
-      "value": "鈦金屬",
-      "stock": 15,
+      "value": "鈦銀",
+      "stock": 55,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-TITANIUM"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-SILVER"
     },
     {
-      "id": "sp2_device_aurora",
+      "id": "sp2_device_titanium_original",
       "name": "顏色",
       "type": "color",
-      "value": "極光色",
-      "stock": 12,
+      "value": "鈦原色",
+      "stock": 50,
       "priceModifier": 0,
-      "image": "sp2_device/sp2_main.webp",
-      "sku": "SP2-DEV-AURORA"
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-ORIGINAL"
+    },
+    {
+      "id": "sp2_device_titanium_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "鈦藍",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-BLUE"
+    },
+    {
+      "id": "sp2_device_titanium_white",
+      "name": "顏色",
+      "type": "color",
+      "value": "鈦白",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-WHITE"
+    },
+    {
+      "id": "sp2_device_titanium_green",
+      "name": "顏色",
+      "type": "color",
+      "value": "鈦綠",
+      "stock": 30,
+      "priceModifier": 0,
+      "image": "sp2_v/sp2_device_color_options.webp",
+      "sku": "SP2-DEV-TITANIUM-GREEN"
     }
   ],
   "status": "active",

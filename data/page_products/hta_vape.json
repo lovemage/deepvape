@@ -1,69 +1,79 @@
 {
   "pageId": "hta_vape_product",
-  "productName": "HTA 黑桃主機",
+  "productName": "HTA 黑桃主機 - 7色",
   "price": 450,
   "originalPrice": null,
   "discount": null,
   "variants": [
     {
-      "id": "hta_spade_black",
+      "id": "hta_spade_bright_moon_white",
       "name": "顏色",
       "type": "color",
-      "value": "黑",
-      "stock": 50,
+      "value": "皎月白",
+      "stock": 60,
       "priceModifier": 0,
       "image": "hta_vape/hta_spade_device.webp",
-      "sku": "HTA-SPADE-BLK"
+      "sku": "HTA-SPADE-BRIGHT-MOON-WHITE"
     },
     {
-      "id": "hta_spade_white",
+      "id": "hta_spade_absolute_purple",
       "name": "顏色",
       "type": "color",
-      "value": "白",
+      "value": "絕絕紫",
+      "stock": 45,
+      "priceModifier": 0,
+      "image": "hta_vape/hta_spade_device.webp",
+      "sku": "HTA-SPADE-ABSOLUTE-PURPLE"
+    },
+    {
+      "id": "hta_spade_elegant_black",
+      "name": "顏色",
+      "type": "color",
+      "value": "典雅黑",
+      "stock": 70,
+      "priceModifier": 0,
+      "image": "hta_vape/hta_spade_device.webp",
+      "sku": "HTA-SPADE-ELEGANT-BLACK"
+    },
+    {
+      "id": "hta_spade_orange_red",
+      "name": "顏色",
+      "type": "color",
+      "value": "橙紅橙",
+      "stock": 35,
+      "priceModifier": 0,
+      "image": "hta_vape/hta_spade_device.webp",
+      "sku": "HTA-SPADE-ORANGE-RED"
+    },
+    {
+      "id": "hta_spade_haze_blue",
+      "name": "顏色",
+      "type": "color",
+      "value": "霧霾藍",
+      "stock": 40,
+      "priceModifier": 0,
+      "image": "hta_vape/hta_spade_device.webp",
+      "sku": "HTA-SPADE-HAZE-BLUE"
+    },
+    {
+      "id": "hta_spade_ink_pine_green",
+      "name": "顏色",
+      "type": "color",
+      "value": "墨松綠",
       "stock": 30,
       "priceModifier": 0,
       "image": "hta_vape/hta_spade_device.webp",
-      "sku": "HTA-SPADE-WHT"
+      "sku": "HTA-SPADE-INK-PINE-GREEN"
     },
     {
-      "id": "hta_spade_orange",
+      "id": "hta_spade_peach_pink",
       "name": "顏色",
       "type": "color",
-      "value": "橙",
-      "stock": 25,
+      "value": "蜜桃粉",
+      "stock": 50,
       "priceModifier": 0,
       "image": "hta_vape/hta_spade_device.webp",
-      "sku": "HTA-SPADE-ORG"
-    },
-    {
-      "id": "hta_spade_red",
-      "name": "顏色",
-      "type": "color",
-      "value": "紅",
-      "stock": 20,
-      "priceModifier": 0,
-      "image": "hta_vape/hta_spade_device.webp",
-      "sku": "HTA-SPADE-RED"
-    },
-    {
-      "id": "hta_spade_green",
-      "name": "顏色",
-      "type": "color",
-      "value": "綠",
-      "stock": 15,
-      "priceModifier": 0,
-      "image": "hta_vape/hta_spade_device.webp",
-      "sku": "HTA-SPADE-GRN"
-    },
-    {
-      "id": "hta_spade_blue",
-      "name": "顏色",
-      "type": "color",
-      "value": "藍",
-      "stock": 18,
-      "priceModifier": 0,
-      "image": "hta_vape/hta_spade_device.webp",
-      "sku": "HTA-SPADE-BLU"
+      "sku": "HTA-SPADE-PEACH-PINK"
     }
   ],
   "status": "active",
