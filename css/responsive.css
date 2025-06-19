@@ -1,92 +1,229 @@
 /**
- * DeepVape 響應式設計
- * 統一的響應式佈局，適用於所有電子煙產品頁面
- * 無需 !important，採用正確的CSS層次結構
+ * DeepVape 響應式設計統一管理
+ * 確保所有產品頁面在不同裝置上的一致性
  */
 
 /* ================================
-   移動端優化 (≤768px)
+   基礎響應式設定
    ================================ */
 
+/* 手機版 (768px 以下) */
 @media (max-width: 768px) {
-    /* 產品展示區 */
+    /* 產品展示區域調整 */
     .product-showcase {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
     }
-    
-    /* 產品資訊區 */
+
+    /* 產品資訊區域調整 */
     .product-info {
-        padding: 1.5rem;
+        padding: 1rem !important;
     }
-    
-    /* 口味選項容器 */
+
+    /* 口味選項調整 */
     .flavor-options {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--dv-variant-mobile-gap);
-        width: 100%;
+        margin-bottom: 1.5rem !important;
     }
-    
-    /* 變數容器 */
+
+    /* 變數容器調整 */
     #variantContainer {
-        width: 100%;
-        padding: 0;
-        margin: 0;
+        width: 100% !important;
+        margin-bottom: 1.5rem !important;
     }
-    
-    /* 變數組 */
+
+    /* 變數組調整 */
     .variant-group {
-        margin-bottom: var(--dv-spacing-xl);
-        width: 100%;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .variant-group-title {
+        font-size: 1rem !important;
+        margin-bottom: 0.8rem !important;
+    }
+
+    /* 特別針對 color-grid 容器的三列佈局 (ILIA一代產品頁面) */
+    .color-grid,
+    .color-grid .variant-options,
+    .color-grid .dv-variant-options,
+    #variantContainer.color-grid,
+    #variantContainer.color-grid .variant-options,
+    #variantContainer.color-grid .dv-variant-options {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--dv-variant-mobile-gap) !important;
+        width: 100% !important;
+        justify-items: stretch !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: grid !important;
+    }
+
+    /* 標準變數選擇器容器 (SP2和ILIA Ultra5等頁面) - 統一三列佈局 */
+    .dv-variant-selector .dv-variant-options,
+    .dv-variant-selector .variant-options {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--dv-variant-mobile-gap) !important;
+        width: 100% !important;
+        justify-items: stretch !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* flavor-grid 容器的特殊處理 */
+    .flavor-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--dv-variant-mobile-gap) !important;
+        width: 100% !important;
+        justify-items: stretch !important;
+        margin: 0 !important;
+        padding: 0.5rem !important;
+        display: grid !important;
+    }
+
+    /* 變數選項項目 */
+    .variant-option,
+    .dv-variant-option,
+    .color-option,
+    .flavor-option {
+        padding: var(--dv-variant-mobile-padding) !important;
+        min-height: 60px !important;
+        height: 60px !important;
+        max-height: 60px !important;
+        font-size: var(--dv-variant-mobile-font-size) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        line-height: 1.1 !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
     }
     
-    /* 變數組標題 */
-    .variant-group-title {
-        font-size: var(--dv-font-lg);
-        margin-bottom: var(--dv-spacing-base);
-        text-align: center;
+    /* 變數文字 */
+    .variant-name,
+    .dv-variant-name {
+        font-size: var(--dv-variant-mobile-font-size) !important;
+        margin-bottom: 0.1rem !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.2 !important;
+    }
+    
+    .variant-stock,
+    .dv-variant-stock {
+        font-size: var(--dv-font-xs) !important;
+        white-space: nowrap !important;
+    }
+    
+    /* 顏色樣本 */
+    .color-swatch,
+    .dv-color-swatch {
+        width: 16px !important;
+        height: 16px !important;
+        margin-bottom: var(--dv-spacing-xs) !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* 舊的口味選擇器兼容 - 只保留特殊樣式 */
+    .flavor-option {
+        border-radius: 20px !important;
+    }
+    
+    /* flavor-option 內的文字處理 */
+    .flavor-option span,
+    .flavor-option .variant-name {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.2 !important;
+        word-break: break-word !important;
     }
     
     /* 產品標題調整 */
     .product-title {
-        font-size: 2rem;
+        font-size: 2rem !important;
     }
     
     /* 頭部動作按鈕 */
     .header-actions {
-        flex-direction: row;
-        gap: 0.5rem;
+        flex-direction: row !important;
+        gap: 0.5rem !important;
     }
 
     .back-button, 
     .cart-button {
-        width: 45px;
-        height: 45px;
-        font-size: 1rem;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1rem !important;
     }
     
     /* 數量控制器 */
     .quantity-selector,
     .quantity-section {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
     }
     
     .quantity-controls,
     .quantity-control {
-        justify-content: center;
+        justify-content: center !important;
+    }
+}
+
+/* 平板版 (769px - 1024px) - 統一三列佈局 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default,
+    .color-grid,
+    .flavor-grid,
+    .dv-variant-selector .dv-variant-options,
+    .dv-variant-selector .variant-options {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.8rem !important;
+        justify-items: stretch !important;
+    }
+}
+
+/* 桌面版 (1025px 以上) - 統一三列佈局 */
+@media (min-width: 1025px) {
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default,
+    .color-grid,
+    .flavor-grid,
+    .dv-variant-selector .dv-variant-options,
+    .dv-variant-selector .variant-options {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.8rem !important;
+        justify-items: stretch !important;
     }
     
-    /* 容器寬度調整 */
-    .container,
-    .content-wrapper {
-        width: 100%;
-        max-width: 100%;
-        padding-left: 1rem;
-        padding-right: 1rem;
+    /* 桌面版確保 flex-direction 為 column */
+    .variant-option,
+    .dv-variant-option {
+        flex-direction: column;
     }
 }
 
@@ -94,99 +231,90 @@
    特殊情況處理
    ================================ */
 
+/* 修復容器寬度問題 */
 @media (max-width: 768px) {
-    /* 變數選擇器容器 */
-    .variant-selector,
-    .dv-variant-selector {
-        width: 100%;
-        margin-bottom: var(--dv-spacing-xl);
+    /* 確保所有產品頁面容器都是全寬 */
+    .container,
+    .content-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
     
-    /* 變數選擇器網格 */
-    .variant-selector .variant-options,
-    .dv-variant-selector .dv-variant-options {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--dv-variant-mobile-gap);
-        width: 100%;
+    /* 修復 product-showcase 網格問題 */
+    .product-showcase {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 確保變數選擇器容器不被其他樣式覆蓋 */
+    .variant-selector,
+    .dv-variant-selector,
+    #variantContainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
 }
 
 /* ================================
-   無障礙和動畫優化
+   無障礙設計
    ================================ */
 
+/* 減少動畫效果 (使用者偏好) */
 @media (prefers-reduced-motion: reduce) {
     .variant-option,
     .dv-variant-option,
-    .color-option,
     .flavor-option {
-        transition: none;
+        transition: none !important;
     }
     
     .variant-option::before,
-    .dv-variant-option::before,
-    .color-option::before,
-    .flavor-option::before {
-        transition: none;
+    .dv-variant-option::before {
+        display: none !important;
     }
     
     .variant-option:hover,
     .dv-variant-option:hover,
-    .color-option:hover,
     .flavor-option:hover {
-        transform: none;
+        transform: none !important;
     }
 }
 
-/* ================================
-   高對比度模式支援
-   ================================ */
-
+/* 高對比度模式支援 */
 @media (prefers-contrast: high) {
     .variant-option,
-    .dv-variant-option,
-    .color-option,
-    .flavor-option {
-        border-width: 3px;
+    .dv-variant-option {
+        border-width: 3px !important;
     }
     
     .variant-option.selected,
-    .dv-variant-option--selected,
-    .color-option.selected,
-    .flavor-option.selected {
-        border-width: 4px;
-        outline: 2px solid currentColor;
-        outline-offset: 2px;
+    .dv-variant-option--selected {
+        border-width: 4px !important;
     }
 }
 
 /* ================================
-   列印樣式
+   印刷樣式
    ================================ */
 
 @media print {
     .variant-option::before,
-    .dv-variant-option::before,
-    .color-option::before,
-    .flavor-option::before {
-        display: none;
+    .dv-variant-option::before {
+        display: none !important;
     }
     
     .variant-option,
-    .dv-variant-option,
-    .color-option,
-    .flavor-option {
-        background: white;
-        color: black;
-        border: 2px solid black;
+    .dv-variant-option {
+        background: white !important;
+        color: black !important;
+        border: 2px solid black !important;
     }
     
     .variant-option.selected,
-    .dv-variant-option--selected,
-    .color-option.selected,
-    .flavor-option.selected {
-        background: black;
-        color: white;
+    .dv-variant-option--selected {
+        background: #f0f0f0 !important;
+        border: 3px solid black !important;
     }
 } 
