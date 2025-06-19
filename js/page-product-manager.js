@@ -446,12 +446,13 @@ class PageProductManager {
             console.warn('找不到加入購物車按鈕');
             return;
         }
-
-        // 強制移除旧的 onclick 属性，避免冲突
-        addToCartBtn.removeAttribute('onclick');
         
-        // 绑定新的事件处理器
-        addToCartBtn.addEventListener('click', () => {
+        // 使用克隆節點的方式徹底移除所有舊的事件監聽器，防止重複綁定
+        const newBtn = addToCartBtn.cloneNode(true);
+        addToCartBtn.parentNode.replaceChild(newBtn, addToCartBtn);
+
+        // 在新的、乾淨的按鈕上綁定事件
+        newBtn.addEventListener('click', () => {
             this.addToCart();
         });
 
@@ -508,6 +509,13 @@ class PageProductManager {
         if (confirm(`已將 ${quantity} 個 ${this.pageData.productName} (${selectedVariant.value}) 加入購物車！\n\n是否前往購物車結帳？`)) {
             window.location.href = 'cart.html';
         }
+
+        if (window.animateCartIcon) {
+            window.animateCartIcon();
+        }
+
+        // 按照用戶要求，顯示更簡潔的確認訊息
+        alert(`${this.pageData.productName} (${selectedVariant.value}) 已加入購物車`);
     }
 
     /**
