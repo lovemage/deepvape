@@ -83,10 +83,13 @@
 
     /* 變數選項項目 */
     .variant-option,
-    .dv-variant-option {
+    .dv-variant-option,
+    .color-option,
+    .flavor-option {
         padding: var(--dv-variant-mobile-padding) !important;
-        min-height: var(--dv-variant-mobile-min-height) !important;
+        min-height: 60px !important;
         height: 60px !important;
+        max-height: 60px !important;
         font-size: var(--dv-variant-mobile-font-size) !important;
         display: flex !important;
         align-items: center !important;
@@ -96,6 +99,7 @@
         word-break: break-word !important;
         hyphens: auto !important;
         overflow: hidden !important;
+        box-sizing: border-box !important;
     }
     
     /* 變數文字 */
@@ -128,21 +132,9 @@
         flex-shrink: 0 !important;
     }
     
-    /* 舊的口味選擇器兼容 */
+    /* 舊的口味選擇器兼容 - 只保留特殊樣式 */
     .flavor-option {
-        padding: 0.6rem 0.3rem !important;
-        font-size: 0.75rem !important;
-        min-height: 45px !important;
-        height: 60px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        line-height: 1.2 !important;
         border-radius: 20px !important;
-        word-break: break-word !important;
-        hyphens: auto !important;
-        overflow: hidden !important;
     }
     
     /* flavor-option 內的文字處理 */

@@ -197,14 +197,20 @@
     
     /* 選項調整 */
     .dv-variant-option {
-        padding: var(--dv-variant-mobile-padding);
-        min-height: var(--dv-variant-mobile-min-height);
-        font-size: var(--dv-variant-mobile-font-size);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        line-height: 1.1;
+        padding: var(--dv-variant-mobile-padding) !important;
+        min-height: 60px !important;
+        height: 60px !important;
+        max-height: 60px !important;
+        font-size: var(--dv-variant-mobile-font-size) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        line-height: 1.1 !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
     }
     
     /* 文字調整 */
@@ -345,6 +351,7 @@
     overflow: hidden;
     font-weight: 500;
     color: var(--dv-text-primary);
+    box-sizing: border-box;
 }
 
 /* 確保 color-grid 中的變數選項使用正確的樣式 */
@@ -562,4 +569,24 @@
     background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary)) !important;
     color: var(--dv-text-primary) !important;
     box-shadow: var(--dv-shadow-primary) !important;
+}
+
+/* 舊系統變數選項統一設置 */
+.variant-option,
+.color-option,
+.flavor-option {
+    padding: var(--dv-variant-mobile-padding) !important;
+    min-height: 60px !important;
+    height: 60px !important;
+    max-height: 60px !important;
+    font-size: var(--dv-variant-mobile-font-size) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    line-height: 1.1 !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
 } 
