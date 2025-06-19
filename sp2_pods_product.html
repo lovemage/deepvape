@@ -484,7 +484,9 @@
             font-weight: bold;
         }
 
-        .variant-options {
+        .variant-options,
+        .variant-options-color,
+        .variant-options-flavor {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 0.8rem;
@@ -492,7 +494,9 @@
         }
 
         @media (max-width: 768px) {
-            .variant-options {
+            .variant-options,
+            .variant-options-color,
+            .variant-options-flavor {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.6rem;
             }

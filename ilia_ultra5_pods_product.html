@@ -557,7 +557,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 15px;
-            color: #333;
+            color: #1afe49;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -685,7 +685,9 @@
         }
 
         /* Variant Options */
-        .variant-options {
+        .variant-options,
+        .variant-options-color,
+        .variant-options-flavor {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 0.8rem;
@@ -693,7 +695,9 @@
         }
 
         @media (max-width: 768px) {
-            .variant-options {
+            .variant-options,
+            .variant-options-color,
+            .variant-options-flavor {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.6rem;
             }
@@ -878,7 +882,7 @@
                         <!-- Flavor Options -->
                         <div class="flavor-options">
                             <h3 class="flavor-title">口味選擇</h3>
-                            <div class="flavor-grid variant-options" id="variantContainer">
+                            <div class="variant-options" id="variantContainer">
                                 <!-- 口味選項將由變數選擇器動態載入 -->
                             </div>
                         </div>
