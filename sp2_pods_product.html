@@ -1023,8 +1023,7 @@
                 }
             });
 
-            // Initialize button state
-            updateAddToCartButton();
+            // 按鈕狀態由變數選擇器回調處理
         });
 
         // 口味選擇由 VariantSelector 處理，不需要手動邏輯
@@ -1040,16 +1039,19 @@
             this.value = quantity;
         });
 
-        // Update add to cart button
-        function updateAddToCartButton() {
-            const button = document.querySelector('.add-to-cart-btn');
-            const selectedOption = document.querySelector('.variant-option.selected');
-            if (selectedOption) {
-                button.disabled = false;
-                button.innerHTML = '<i class="fas fa-shopping-cart"></i> 加入購物車';
+        // 更新加入購物車按鈕狀態
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.querySelector('.add-to-cart-btn');
+            if (!addToCartBtn) return;
+
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
             } else {
-                button.disabled = true;
-                button.innerHTML = '<i class="fas fa-shopping-cart"></i> 請先選擇口味';
+                addToCartBtn.disabled = true;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇口味';
+                addToCartBtn.style.opacity = '0.6';
             }
         }
 
@@ -1237,7 +1239,7 @@
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
                     console.log('選擇的口味:', variant.value);
-                    updateAddToCartButton();
+                    updateAddToCartButton(variant);
                 });
                 
                 console.log('✅ SP2 煙彈 VariantSelector 已初始化');
