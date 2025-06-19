@@ -42,19 +42,11 @@
         margin-bottom: 0.8rem !important;
     }
 
-    /* 變數選項容器 - 包含 color-grid 的特別支援 */
-    .variant-options,
-    .variant-options-color,
-    .variant-options-flavor,
-    .variant-options-default,
-    .dv-variant-options,
-    .dv-variant-options--color,
-    .dv-variant-options--flavor,
-    .dv-variant-options--default,
+    /* 特別針對 color-grid 容器的三列佈局 (ILIA一代產品頁面) */
     .color-grid,
-    .flavor-grid,
     .color-grid .variant-options,
     .color-grid .dv-variant-options,
+    #variantContainer.color-grid,
     #variantContainer.color-grid .variant-options,
     #variantContainer.color-grid .dv-variant-options {
         grid-template-columns: repeat(3, 1fr) !important;
@@ -65,7 +57,30 @@
         padding: 0 !important;
         display: grid !important;
     }
-    
+
+    /* 標準變數選擇器容器 (SP2和ILIA Ultra5等頁面) */
+    .dv-variant-selector .dv-variant-options,
+    .dv-variant-selector .variant-options {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+        gap: var(--dv-variant-mobile-gap) !important;
+        width: 100% !important;
+        justify-items: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* flavor-grid 容器的特殊處理 */
+    .flavor-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--dv-variant-mobile-gap) !important;
+        width: 100% !important;
+        justify-items: stretch !important;
+        margin: 0 !important;
+        padding: 0.5rem !important;
+        display: grid !important;
+    }
+
     /* 變數選項項目 */
     .variant-option,
     .dv-variant-option {
