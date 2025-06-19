@@ -238,4 +238,13 @@ body::before {
 .quantity-btn:focus-visible {
     outline: 3px solid var(--dv-primary);
     outline-offset: 2px;
-} 
+}
+
+.variant-options-default,
+.dv-variant-options--default {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--dv-variant-gap, 0.5rem);
+}
+
+/* 針對特定類型的選項進行微調 */ 
