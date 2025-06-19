@@ -71,25 +71,21 @@ class ContentManager {
 
             const promises = productFiles.map(async (file) => {
                 try {
-                    const response = await fetch(`/data/page_products/${file}.json`);
+                    const response = await fetch(`/data/page_products/${file}.json?v=${new Date().getTime()}`);
                     if (response.ok) {
                         const data = await response.json();
-                        this.pageProductPrices[data.pageId] = {
-                            price: data.price,
-                            originalPrice: data.originalPrice,
-                            discount: data.discount,
-                            productName: data.productName
-                        };
+                        // 載入完整的產品對象，而不僅僅是價格
+                        this.pageProductPrices[data.pageId] = data;
                     }
                 } catch (error) {
-                    console.warn(`載入產品頁面價格失敗: ${file}`, error);
+                    console.warn(`載入產品頁面資料失敗: ${file}`, error);
                 }
             });
 
             await Promise.all(promises);
-            console.log('✅ 產品頁面價格已載入:', this.pageProductPrices);
+            console.log('✅ 產品頁面完整資料已載入:', this.pageProductPrices);
         } catch (error) {
-            console.error('載入產品頁面價格失敗:', error);
+            console.error('載入產品頁面資料失敗:', error);
             this.pageProductPrices = {};
         }
     }
@@ -97,36 +93,40 @@ class ContentManager {
     // 同步價格 - 以全域價格為準
     syncPrices() {
         console.log('🔄 開始同步價格...');
+        const updatedData = {};
         
         Object.keys(this.prices).forEach(productId => {
             const globalPrice = this.prices[productId];
-            const pagePrice = this.pageProductPrices[productId];
+            const pageData = this.pageProductPrices[productId];
             
-            if (pagePrice && (
-                pagePrice.price !== globalPrice.price ||
-                pagePrice.originalPrice !== globalPrice.originalPrice ||
-                pagePrice.discount !== globalPrice.discount
+            if (pageData && (
+                pageData.price !== globalPrice.price ||
+                pageData.originalPrice !== globalPrice.originalPrice ||
+                pageData.discount !== globalPrice.discount
             )) {
                 console.log(`⚠️ 發現價格不一致: ${productId}`, {
                     global: globalPrice,
-                    page: pagePrice
+                    page: { 
+                        price: pageData.price, 
+                        originalPrice: pageData.originalPrice,
+                        discount: pageData.discount
+                    }
                 });
                 
-                // 以全域價格為準，更新頁面價格
-                this.pageProductPrices[productId] = {
-                    ...pagePrice,
-                    price: globalPrice.price,
-                    originalPrice: globalPrice.originalPrice,
-                    discount: globalPrice.discount
-                };
+                // 直接在完整的頁面資料對象上更新價格
+                pageData.price = globalPrice.price;
+                pageData.originalPrice = globalPrice.originalPrice;
+                pageData.discount = globalPrice.discount;
+
+                updatedData[productId] = pageData; // 現在 pageData 是完整的對象
             }
         });
         
         console.log('✅ 價格同步完成');
 
         // 如果發現任何不一致，就準備一個下載按鈕
-        if (Object.keys(this.pageProductPrices).length > 0) {
-            this.preparePriceUpdateDownload(this.pageProductPrices);
+        if (Object.keys(updatedData).length > 0) {
+            this.preparePriceUpdateDownload(updatedData);
         }
     }
 
