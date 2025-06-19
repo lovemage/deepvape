@@ -13,6 +13,15 @@ class PageProductManager {
      * 初始化產品頁面管理器
      */
     async init(pageId) {
+        // --- 根本原因修正 ---
+        // 檢查新版變數選擇器是否存在。如果是，則完全停止此舊版管理器。
+        const variantContainer = document.getElementById('variantContainer');
+        if (variantContainer && (variantContainer.classList.contains('dv-variant-selector') || window.VariantSelector)) {
+            console.log('✅ 檢測到新版變數選擇器，PageProductManager 將不會初始化以避免衝突。');
+            return;
+        }
+        // --- 修正結束 ---
+
         try {
             await this.loadPageData(pageId);
             this.updatePageContent();
