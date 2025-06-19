@@ -1146,8 +1146,8 @@
                 
                 // 初始化新版變數選擇器 V2.0
                 if (window.VariantSelectorV2) {
-                    const variantSelector = new VariantSelectorV2('ilia_ultra5_pods_product', 'dv-variant-selector');
-                    variantSelector.setOnVariantChange((variant) => {
+                    window.variantSelector = new VariantSelectorV2('ilia_ultra5_pods_product', 'variantContainer');
+                    window.variantSelector.setOnVariantChange((variant) => {
                         console.log('🎯 變數選擇:', variant.value);
                         updateVariantStockDisplay(variant.value);
                     });
