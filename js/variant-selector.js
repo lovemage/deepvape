@@ -139,17 +139,17 @@ class VariantSelector {
      */
     renderVariantGroup(type, variants) {
         const groupContainer = document.createElement('div');
-        groupContainer.className = `variant-group variant-group-${type}`;
+        groupContainer.className = `variant-group variant-group-${type} dv-variant-group dv-variant-group--${type}`;
         
         // 添加組標題
         const title = document.createElement('h4');
-        title.className = 'variant-group-title';
+        title.className = 'variant-group-title dv-variant-group-title';
         title.textContent = this.getTypeLabel(type);
         groupContainer.appendChild(title);
 
-        // 添加變數選項
+        // 添加變數選項 - 使用新的 BEM 類名 + 向後兼容舊類名
         const optionsContainer = document.createElement('div');
-        optionsContainer.className = `variant-options variant-options-${type}`;
+        optionsContainer.className = `variant-options variant-options-${type} dv-variant-options dv-variant-options--${type}`;
         
         variants.forEach(variant => {
             const option = this.createVariantOption(variant, type);
@@ -165,7 +165,7 @@ class VariantSelector {
      */
     createVariantOption(variant, type) {
         const option = document.createElement('div');
-        option.className = `variant-option variant-option-${type}`;
+        option.className = `variant-option variant-option-${type} dv-variant-option dv-variant-option--${type}`;
         option.dataset.variantId = variant.id;
         option.dataset.variantType = type;
         option.dataset.stock = variant.stock; // 添加庫存數據
@@ -173,22 +173,22 @@ class VariantSelector {
         // 根據類型設置不同的顯示樣式
         if (type === 'color') {
             option.innerHTML = `
-                <div class="color-swatch" style="background-color: ${this.getColorValue(variant.value)}"></div>
-                <span class="variant-name">${variant.value}</span>
-                <span class="variant-stock">${this.getStockLabel(variant.stock)}</span>
+                <div class="color-swatch dv-color-swatch" style="background-color: ${this.getColorValue(variant.value)}"></div>
+                <span class="variant-name dv-variant-name">${variant.value}</span>
+                <span class="variant-stock dv-variant-stock">${this.getStockLabel(variant.stock)}</span>
             `;
         } else {
             option.innerHTML = `
-                <span class="variant-name">${variant.value}</span>
-                <span class="variant-stock">${this.getStockLabel(variant.stock)}</span>
+                <span class="variant-name dv-variant-name">${variant.value}</span>
+                <span class="variant-stock dv-variant-stock">${this.getStockLabel(variant.stock)}</span>
             `;
         }
 
-        // 添加庫存狀態類別
+        // 添加庫存狀態類別 - 使用新的 BEM 類名 + 向後兼容舊類名
         if (variant.stock === 0) {
-            option.classList.add('out-of-stock');
+            option.classList.add('out-of-stock', 'dv-variant-option--out-of-stock');
         } else if (variant.stock <= 5) {
-            option.classList.add('low-stock');
+            option.classList.add('low-stock', 'dv-variant-option--low-stock');
         }
 
         // 添加點擊事件
@@ -262,15 +262,15 @@ class VariantSelector {
      * 選擇變數
      */
     selectVariant(variant) {
-        // 移除之前的選中狀態
-        this.container.querySelectorAll('.variant-option.selected').forEach(option => {
-            option.classList.remove('selected');
+        // 移除之前的選中狀態 - 同時處理新舊類名
+        this.container.querySelectorAll('.variant-option.selected, .dv-variant-option--selected').forEach(option => {
+            option.classList.remove('selected', 'dv-variant-option--selected');
         });
 
-        // 添加新的選中狀態
+        // 添加新的選中狀態 - 使用新的 BEM 類名 + 向後兼容舊類名
         const option = this.container.querySelector(`[data-variant-id="${variant.id}"]`);
         if (option) {
-            option.classList.add('selected');
+            option.classList.add('selected', 'dv-variant-option--selected');
         }
 
         this.selectedVariant = variant;
