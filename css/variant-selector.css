@@ -233,7 +233,9 @@
 .variant-options,
 .variant-options-color,
 .variant-options-flavor,
-.variant-options-default {
+.variant-options-default,
+.color-grid,
+.flavor-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: var(--dv-variant-gap);
