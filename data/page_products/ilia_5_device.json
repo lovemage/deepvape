@@ -2,8 +2,8 @@
   "pageId": "ilia_5_device_product",
   "productName": "ILIA 五代主機",
   "price": 450,
-  "originalPrice": null,
-  "discount": null,
+  "originalPrice": 590,
+  "discount": "新上市",
   "variants": [
     {
       "id": "ilia_5_device_frost_white",

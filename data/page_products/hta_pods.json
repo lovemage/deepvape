@@ -2,8 +2,8 @@
   "pageId": "hta_pods_product",
   "productName": "HTA 黑桃煙彈",
   "price": 280,
-  "originalPrice": null,
-  "discount": null,
+  "originalPrice": 450,
+  "discount": "售完為止",
   "variants": [
     {
       "id": "hta_pods_cola",

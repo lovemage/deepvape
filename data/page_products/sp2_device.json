@@ -1,9 +1,9 @@
 {
   "pageId": "sp2_device_product",
   "productName": "SP2 一代主機 - 23色",
-  "price": 450,
-  "originalPrice": null,
-  "discount": null,
+  "price": 650,
+  "originalPrice": 880,
+  "discount": "",
   "variants": [
     {
       "id": "sp2_device_star_ice_mist_blue",

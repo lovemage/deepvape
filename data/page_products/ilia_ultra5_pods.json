@@ -1,5 +1,5 @@
 {
-  "discount": null,
+  "discount": "",
   "lastUpdated": "2025-06-17T01:39:23.111Z",
   "brand": "ILIA",
   "price": 320,
@@ -272,7 +272,7 @@
     "本產品僅供 18 歲以上成年人使用"
   ],
   "updated_at": "2024-12-19",
-  "originalPrice": null,
+  "originalPrice": 490,
   "images": {
     "main": "ilia_pod5/ilia-pod5.jpg",
     "gallery": [

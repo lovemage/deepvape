@@ -1,9 +1,9 @@
 {
   "pageId": "ilia_fabric_product",
   "productName": "ILIA 哩亞布紋主機",
-  "price": 450,
-  "originalPrice": null,
-  "discount": null,
+  "price": 650,
+  "originalPrice": 880,
+  "discount": "",
   "variants": [
     {
       "id": "ilia_fabric_black",

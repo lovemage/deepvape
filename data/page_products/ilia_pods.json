@@ -1,9 +1,9 @@
 {
   "pageId": "ilia_pods_product",
   "productName": "ILIA 發光煙彈 - 29種口味",
-  "price": 320,
-  "originalPrice": null,
-  "discount": null,
+  "price": 300,
+  "originalPrice": 450,
+  "discount": "",
   "variants": [
     {
       "id": "ilia_pods_strawberry",

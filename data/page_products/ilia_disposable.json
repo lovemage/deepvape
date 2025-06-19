@@ -2,8 +2,8 @@
   "pageId": "ilia_disposable_product",
   "productName": "ILIA 6500口拋棄式 - 24種口味",
   "price": 320,
-  "originalPrice": null,
-  "discount": null,
+  "originalPrice": 490,
+  "discount": "",
   "variants": [
     {
       "id": "ilia_disp_winter_melon_lemon",
@@ -251,4 +251,4 @@
   ],
   "status": "active",
   "lastUpdated": "2024-01-15T10:00:00.000Z"
-} 
+}

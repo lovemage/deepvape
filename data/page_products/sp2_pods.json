@@ -1,9 +1,9 @@
 {
   "pageId": "sp2_pods_product",
   "productName": "SP2 煙彈 - 36種口味",
-  "price": 320,
-  "originalPrice": null,
-  "discount": null,
+  "price": 350,
+  "originalPrice": 490,
+  "discount": "",
   "variants": [
     {
       "id": "sp2_pods_rich_mango",

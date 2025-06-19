@@ -2,8 +2,8 @@
   "pageId": "lana_a8000_product",
   "productName": "LANA A8000拋棄式 - 20種口味",
   "price": 320,
-  "originalPrice": null,
-  "discount": null,
+  "originalPrice": 880,
+  "discount": "",
   "variants": [
     {
       "id": "lana_a8000_grape",
@@ -208,4 +208,4 @@
   ],
   "status": "active",
   "lastUpdated": "2024-01-15T10:00:00.000Z"
-} 
+}

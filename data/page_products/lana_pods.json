@@ -2,8 +2,8 @@
   "pageId": "lana_pods_product",
   "productName": "LANA 煙彈 - 35種口味",
   "price": 280,
-  "originalPrice": null,
-  "discount": null,
+  "originalPrice": 450,
+  "discount": "",
   "variants": [
     {
       "id": "lana_pods_grape",
@@ -358,4 +358,4 @@
   ],
   "status": "active",
   "lastUpdated": "2024-01-15T10:00:00.000Z"
-} 
+}

@@ -1,9 +1,9 @@
 {
   "pageId": "ilia_1_product",
   "productName": "ILIA 一代主機",
-  "price": 450,
-  "originalPrice": null,
-  "discount": null,
+  "price": 650,
+  "originalPrice": 780,
+  "discount": "",
   "variants": [
     {
       "id": "ilia_gen1_black_white",

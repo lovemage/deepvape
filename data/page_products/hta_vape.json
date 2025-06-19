@@ -2,8 +2,8 @@
   "pageId": "hta_vape_product",
   "productName": "HTA 黑桃主機 - 7色",
   "price": 450,
-  "originalPrice": null,
-  "discount": null,
+  "originalPrice": 670,
+  "discount": "",
   "variants": [
     {
       "id": "hta_spade_bright_moon_white",
@@ -78,4 +78,4 @@
   ],
   "status": "active",
   "lastUpdated": "2024-01-15T10:00:00.000Z"
-} 
+}
