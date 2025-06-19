@@ -274,56 +274,38 @@ class PageProductManager {
      * 設置變數選擇功能
      */
     setupVariantSelection() {
-        // 使用事件委託來處理動態創建的元素
-        const variantContainer = document.getElementById('variantContainer') || 
-                                document.querySelector('.flavor-grid, .color-grid') ||
-                                document.body;
-        
-        // 如果使用 VariantSelector，跳過重複的事件監聽器設置
-        if (window.variantSelector && variantContainer.id === 'variantContainer') {
-            console.log('檢測到 VariantSelector，跳過重複的事件監聽器設置');
+        const variantContainer = document.getElementById('variantContainer');
+        if (!variantContainer) {
+            console.warn('變數容器未找到，無法設置選擇功能。');
             return;
         }
-        
-        // 移除舊的事件監聽器（如果存在）
-        if (this.variantClickHandler) {
-            variantContainer.removeEventListener('click', this.variantClickHandler);
-        }
-        
-        // 創建新的事件處理器
-        this.variantClickHandler = (e) => {
-            const option = e.target.closest('.flavor-option, .color-option, .variant-option');
-            if (!option) return;
-            
-            const stock = parseInt(option.dataset.stock || '0');
-            
-            // 檢查庫存
-            if (stock === 0) {
-                alert('此變數目前缺貨，請選擇其他選項');
-                return;
-            }
 
-            // 移除其他選中狀態
-            const allOptions = document.querySelectorAll('.flavor-option, .color-option, .variant-option');
-            allOptions.forEach(opt => opt.classList.remove('selected'));
-            
-            // 選中當前選項
-            option.classList.add('selected');
-            
-            // 更新庫存狀態
-            this.updateStockStatus();
-            
-            // 更新價格（如果有價格調整）
-            this.updatePriceWithModifier();
-            
-            // 更新加入購物車按鈕狀態
-            this.updateAddToCartButton();
-            
-            console.log('✅ 變數已選擇:', option.textContent.trim());
-        };
+        const variantOptions = variantContainer.querySelectorAll('.variant-option');
         
-        // 綁定事件監聽器
-        variantContainer.addEventListener('click', this.variantClickHandler);
+        variantOptions.forEach(option => {
+            // 為每個按鈕單獨添加事件監聽器
+            option.addEventListener('click', () => {
+                // 如果點擊的是缺貨商品，則不執行任何操作
+                if (option.classList.contains('out-of-stock')) {
+                    alert('此商品目前缺貨，請選擇其他選項。');
+                    return;
+                }
+
+                // 移除所有按鈕的 'selected' class
+                variantOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // 為當前點擊的按鈕添加 'selected' class
+                option.classList.add('selected');
+
+                // 更新價格和加入購物車按鈕
+                this.updatePriceWithModifier();
+                this.updateAddToCartButton();
+                this.updateStockStatus(); // 同步更新庫存顯示
+            });
+        });
+
+        // 首次載入時，更新一次加入購物車按鈕的狀態
+        this.updateAddToCartButton();
     }
 
     /**
