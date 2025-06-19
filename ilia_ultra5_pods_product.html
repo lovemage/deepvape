@@ -746,18 +746,36 @@
             
             .flavor-options {
                 margin-bottom: 20px;
+                width: 100% !important;
+            }
+            
+            /* 主變數容器 */
+            #variantContainer {
+                width: 100% !important;
+                display: block !important;
+            }
+            
+            /* 動態生成的變數容器 */
+            .variant-group {
                 width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .variant-group-title {
+                display: none; /* 隱藏動態生成的標題 */
             }
             
             .variant-options,
             .variant-options-color,
-            .variant-options-flavor {
+            .variant-options-flavor,
+            .variant-options-default {
                 grid-template-columns: repeat(3, 1fr) !important;
                 gap: 0.6rem !important;
                 width: 100% !important;
                 justify-items: stretch;
-                margin: 0;
-                padding: 0;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: grid !important;
             }
             
             .variant-option {
