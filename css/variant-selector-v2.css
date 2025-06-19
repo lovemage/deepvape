@@ -47,126 +47,154 @@
 
 /* 顏色選項 - 完全使用舊版樣式 */
 .color-option {
-    padding: 0.8rem;
-    background: var(--dv-variant-bg, rgba(17, 24, 39, 0.5));
-    border: 2px solid var(--dv-border-primary, rgba(26, 254, 73, 0.2));
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    color: var(--dv-text-primary, #ffffff);
-    font-weight: 500;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
+    padding: 15px 20px !important;
+    border: 2px solid rgba(26, 254, 73, 0.3) !important;
+    border-radius: 25px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    background: rgba(26, 254, 73, 0.1) !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    font-size: 0.95rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    min-height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .color-option:hover {
-    border-color: var(--dv-primary, #1afe49);
-    background: rgba(26, 254, 73, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+    border-color: #1afe49 !important;
+    background: rgba(26, 254, 73, 0.2) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(26, 254, 73, 0.3) !important;
+    color: #ffffff !important;
 }
 
 .color-option.selected {
-    border-color: var(--dv-primary, #1afe49);
-    background: rgba(233, 69, 96, 0.2);
-    color: var(--dv-text-primary, #ffffff);
-    box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+    border-color: #1afe49 !important;
+    background: linear-gradient(135deg, rgba(26, 254, 73, 0.3), rgba(26, 254, 73, 0.2)) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(26, 254, 73, 0.4) !important;
 }
 
-/* 口味選項 - 完全使用舊版樣式 */
+/* 口味選項 - 針對不同主題優化 */
 .flavor-option {
-    padding: 0.8rem;
-    background: var(--dv-variant-bg, rgba(17, 24, 39, 0.5));
-    border: 2px solid var(--dv-border-primary, rgba(26, 254, 73, 0.2));
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    color: var(--dv-text-primary, #ffffff);
-    font-weight: 500;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
-}
-
-.flavor-option::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        45deg,
-        transparent 40%,
-        rgba(6, 182, 212, 0.1) 45%,
-        rgba(6, 182, 212, 0.2) 50%,
-        rgba(6, 182, 212, 0.1) 55%,
-        transparent 60%
-    );
-    transition: transform 0.5s ease;
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-}
-
-.flavor-option:hover::before {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
+    padding: 15px 20px !important;
+    border: 2px solid rgba(26, 254, 73, 0.3) !important;
+    border-radius: 25px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    background: rgba(26, 254, 73, 0.1) !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    font-size: 0.95rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    min-height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .flavor-option:hover {
-    border-color: var(--dv-secondary, #06b6d4);
-    background: rgba(6, 182, 212, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(6, 182, 212, 0.3);
+    border-color: #1afe49 !important;
+    background: rgba(26, 254, 73, 0.2) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(26, 254, 73, 0.3) !important;
+    color: #ffffff !important;
 }
 
 .flavor-option.selected {
-    background: linear-gradient(135deg, var(--dv-primary, #1afe49), var(--dv-accent, #8b5cf6));
-    color: var(--dv-text-primary, #ffffff);
-    border-color: var(--dv-primary, #1afe49);
-    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+    border-color: #1afe49 !important;
+    background: linear-gradient(135deg, rgba(26, 254, 73, 0.3), rgba(26, 254, 73, 0.2)) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(26, 254, 73, 0.4) !important;
+}
+
+/* ILIA 主題特殊樣式 */
+.theme-ilia .flavor-option {
+    border-color: rgba(103, 126, 234, 0.4) !important;
+    background: rgba(103, 126, 234, 0.1) !important;
+    color: #ffffff !important;
+}
+
+.theme-ilia .flavor-option:hover {
+    border-color: #667eea !important;
+    background: rgba(103, 126, 234, 0.2) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(103, 126, 234, 0.3) !important;
+}
+
+.theme-ilia .flavor-option.selected {
+    border-color: #667eea !important;
+    background: linear-gradient(135deg, rgba(103, 126, 234, 0.3), rgba(118, 75, 162, 0.2)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(103, 126, 234, 0.4) !important;
+}
+
+.theme-ilia .color-option {
+    border-color: rgba(103, 126, 234, 0.4) !important;
+    background: rgba(103, 126, 234, 0.1) !important;
+    color: #ffffff !important;
+}
+
+.theme-ilia .color-option:hover {
+    border-color: #667eea !important;
+    background: rgba(103, 126, 234, 0.2) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(103, 126, 234, 0.3) !important;
+}
+
+.theme-ilia .color-option.selected {
+    border-color: #667eea !important;
+    background: linear-gradient(135deg, rgba(103, 126, 234, 0.3), rgba(118, 75, 162, 0.2)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(103, 126, 234, 0.4) !important;
 }
 
 /* 通用變數選項 */
 .variant-option {
-    padding: 0.8rem;
-    background: var(--dv-variant-bg, rgba(17, 24, 39, 0.5));
-    border: 2px solid var(--dv-border-primary, rgba(26, 254, 73, 0.2));
-    border-radius: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    color: var(--dv-text-primary, #ffffff);
-    font-weight: 500;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
+    padding: 15px 20px !important;
+    border: 2px solid rgba(26, 254, 73, 0.3) !important;
+    border-radius: 25px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    background: rgba(26, 254, 73, 0.1) !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    font-size: 0.95rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    min-height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .variant-option:hover {
-    border-color: var(--dv-primary, #1afe49);
-    background: rgba(26, 254, 73, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+    border-color: #1afe49 !important;
+    background: rgba(26, 254, 73, 0.2) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(26, 254, 73, 0.3) !important;
+    color: #ffffff !important;
 }
 
 .variant-option.selected {
-    border-color: var(--dv-primary, #1afe49);
-    background: linear-gradient(45deg, var(--dv-primary, #1afe49), var(--dv-secondary, #06b6d4));
-    color: var(--dv-text-primary, #ffffff);
-    box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+    border-color: #1afe49 !important;
+    background: linear-gradient(135deg, rgba(26, 254, 73, 0.3), rgba(26, 254, 73, 0.2)) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(26, 254, 73, 0.4) !important;
 }
 
 /* ================================
@@ -176,24 +204,148 @@
 .color-option.out-of-stock,
 .flavor-option.out-of-stock,
 .variant-option.out-of-stock {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: rgba(107, 114, 128, 0.2);
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: rgba(107, 114, 128, 0.1) !important;
+    border-color: rgba(107, 114, 128, 0.3) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .color-option.out-of-stock:hover,
 .flavor-option.out-of-stock:hover,
 .variant-option.out-of-stock:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: var(--dv-border-primary, rgba(26, 254, 73, 0.2));
+    transform: none !important;
+    box-shadow: none !important;
+    background: rgba(107, 114, 128, 0.1) !important;
+    border-color: rgba(107, 114, 128, 0.3) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
+/* 低庫存警告 */
 .color-option.low-stock,
 .flavor-option.low-stock,
 .variant-option.low-stock {
-    border-color: #fbbf24;
-    background: rgba(251, 191, 36, 0.1);
+    border-color: rgba(251, 191, 36, 0.5) !important;
+    background: rgba(251, 191, 36, 0.1) !important;
+}
+
+.color-option.low-stock:hover,
+.flavor-option.low-stock:hover,
+.variant-option.low-stock:hover {
+    border-color: #fbbf24 !important;
+    background: rgba(251, 191, 36, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3) !important;
+}
+
+/* ================================
+   容器佈局樣式
+   ================================ */
+
+/* 顏色網格容器 */
+.color-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    padding: 15px !important;
+    border-radius: 15px !important;
+    background: rgba(17, 24, 39, 0.3) !important;
+    border: 1px solid rgba(26, 254, 73, 0.2) !important;
+}
+
+/* 口味網格容器 */
+.flavor-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    padding: 15px !important;
+    border-radius: 15px !important;
+    background: rgba(17, 24, 39, 0.3) !important;
+    border: 1px solid rgba(26, 254, 73, 0.2) !important;
+    max-height: 400px !important;
+    overflow-y: auto !important;
+}
+
+/* 通用變數選擇器容器 */
+.dv-variant-selector {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    padding: 15px !important;
+    border-radius: 15px !important;
+    background: rgba(17, 24, 39, 0.3) !important;
+    border: 1px solid rgba(26, 254, 73, 0.2) !important;
+}
+
+/* ================================
+   響應式設計
+   ================================ */
+
+@media (max-width: 768px) {
+    .color-grid,
+    .flavor-grid,
+    .dv-variant-selector {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
+        padding: 10px !important;
+    }
+    
+    .color-option,
+    .flavor-option,
+    .variant-option {
+        padding: 12px 8px !important;
+        font-size: 0.85rem !important;
+        min-height: 50px !important;
+        line-height: 1.2 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .color-option,
+    .flavor-option,
+    .variant-option {
+        padding: 10px 6px !important;
+        font-size: 0.8rem !important;
+        min-height: 45px !important;
+    }
+}
+
+/* ================================
+   動畫效果
+   ================================ */
+
+.color-option::before,
+.flavor-option::before,
+.variant-option::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent) !important;
+    transition: left 0.5s ease !important;
+}
+
+.color-option:hover::before,
+.flavor-option:hover::before,
+.variant-option:hover::before {
+    left: 100% !important;
+}
+
+/* 庫存指示器 */
+.stock-indicator {
+    font-size: 0.7rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    margin-top: 4px !important;
+    display: block !important;
+}
+
+.stock-indicator.low-stock {
+    color: #fbbf24 !important;
+}
+
+.stock-indicator.out-of-stock {
+    color: #ef4444 !important;
 }
 
 /* ================================
@@ -228,52 +380,6 @@
 }
 
 /* ================================
-   響應式設計
-   ================================ */
-
-/* 移動端 (≤768px) */
-@media (max-width: 768px) {
-    .color-grid,
-    .flavor-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.6rem;
-    }
-    
-    .color-option,
-    .flavor-option,
-    .variant-option {
-        padding: 0.6rem 0.3rem;
-        font-size: 0.75rem;
-        min-height: 60px;
-        height: 60px;
-        max-height: 60px;
-    }
-    
-    .variant-group-title {
-        font-size: 1.1rem;
-        text-align: center;
-    }
-}
-
-/* 平板端 (769px - 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .color-grid,
-    .flavor-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.8rem;
-    }
-}
-
-/* 桌面端 (≥1025px) */
-@media (min-width: 1025px) {
-    .color-grid,
-    .flavor-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.8rem;
-    }
-}
-
-/* ================================
    特殊產品頁面樣式覆蓋
    ================================ */
 
@@ -287,18 +393,6 @@
     color: var(--dv-text-primary, #ffffff);
     border-color: var(--dv-primary, #1afe49);
     box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
-}
-
-/* ILIA 產品特殊樣式 */
-.theme-ilia .color-option.selected {
-    border-color: #1afe49;
-    background: rgba(233, 69, 96, 0.2);
-}
-
-/* HTA 產品特殊樣式 */
-.theme-hta .color-option,
-.theme-hta .flavor-option {
-    border-radius: 15px;
 }
 
 /* SP2 產品特殊樣式 */
