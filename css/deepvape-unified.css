@@ -1,0 +1,117 @@
+/**
+ * DeepVape 統一 CSS 檔案
+ * 整合所有產品頁面的共用樣式
+ * 
+ * 使用方式：
+ * <link rel="stylesheet" href="css/deepvape-unified.css">
+ * 
+ * 或者分別引入：
+ * <link rel="stylesheet" href="css/variables.css">
+ * <link rel="stylesheet" href="css/variant-selector.css">
+ * <link rel="stylesheet" href="css/responsive.css">
+ */
+
+/* 引入所有子檔案 */
+@import url('variables.css');
+@import url('variant-selector.css');
+@import url('responsive.css');
+
+/* ================================
+   全域重置和基礎樣式
+   ================================ */
+
+/* 確保 box-sizing 一致 */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 基礎變數選擇器容器重置 */
+.variant-selector,
+.dv-variant-selector,
+#variantContainer {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* ================================
+   工具類別
+   ================================ */
+
+/* 強制全寬 */
+.dv-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* 隱藏元素 */
+.dv-hidden {
+    display: none !important;
+}
+
+/* 視覺隱藏 (保留螢幕閱讀器可讀性) */
+.dv-sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* 載入狀態 */
+.dv-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.dv-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--dv-primary);
+    border-radius: 50%;
+    animation: dv-spin 1s linear infinite;
+}
+
+/* ================================
+   調試工具 (開發時使用)
+   ================================ */
+
+/* 開發模式：顯示網格線 */
+.dv-debug .variant-options,
+.dv-debug .dv-variant-options {
+    outline: 2px dashed red;
+}
+
+.dv-debug .variant-option,
+.dv-debug .dv-variant-option {
+    outline: 1px solid blue;
+}
+
+/* 開發模式：顯示容器邊界 */
+.dv-debug .variant-group,
+.dv-debug .dv-variant-group {
+    outline: 2px dotted green;
+}
+
+/* ================================
+   版本資訊
+   ================================ */
+
+/* CSS 版本標記 (用於調試) */
+body::before {
+    content: "DeepVape Unified CSS v1.0.0";
+    display: none; /* 隱藏，僅供開發者工具查看 */
+} 

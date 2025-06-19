@@ -49,6 +49,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- DeepVape 統一 CSS 架構 -->
+    <link rel="stylesheet" href="css/deepvape-unified.css">
 
     <style>
         * {
@@ -722,16 +725,7 @@
             transform: translateY(0);
         }
 
-        /* Variant Options */
-        .variant-options,
-        .variant-options-color,
-        .variant-options-flavor {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-        }
-
+        /* 響應式設計 - 移動端 */
         @media (max-width: 768px) {
             .product-showcase {
                 grid-template-columns: 1fr;
@@ -743,155 +737,10 @@
                 padding: 1rem 0;
                 width: 100%;
             }
-            
-            .flavor-options {
-                margin-bottom: 20px;
-                width: 100% !important;
-            }
-            
-            /* 主變數容器 */
-            #variantContainer {
-                width: 100% !important;
-                display: block !important;
-            }
-            
-            /* 動態生成的變數容器 */
-            .variant-group {
-                width: 100%;
-                margin-bottom: 1rem;
-            }
-            
-            .variant-group-title {
-                display: none; /* 隱藏動態生成的標題 */
-            }
-            
-            .variant-options,
-            .variant-options-color,
-            .variant-options-flavor,
-            .variant-options-default {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.6rem !important;
-                width: 100% !important;
-                justify-items: stretch;
-                margin: 0 !important;
-                padding: 0 !important;
-                display: grid !important;
-            }
-            
-            .variant-option {
-                padding: 0.6rem 0.3rem;
-                min-height: 50px;
-                font-size: 0.75rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                line-height: 1.1;
-            }
-            
-            .variant-name {
-                font-size: 0.75rem;
-                margin-bottom: 0.1rem;
-            }
-            
-            .variant-stock {
-                font-size: 0.65rem;
-            }
-        }
-
-        .variant-option {
-            background: rgba(17, 24, 39, 0.6);
-            border: 2px solid rgba(26, 254, 73, 0.2);
-            border-radius: 15px;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Desktop variant option layout */
-        @media (min-width: 769px) {
-            .variant-option {
-                flex-direction: column;
-            }
-        }
-
-        .variant-option::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 40%,
-                rgba(26, 254, 73, 0.1) 45%,
-                rgba(26, 254, 73, 0.2) 50%,
-                rgba(26, 254, 73, 0.1) 55%,
-                transparent 60%
-            );
-            transition: transform 0.5s ease;
-            transform: translateX(-100%) translateY(-100%) rotate(45deg);
-        }
-
-        .variant-option:hover::before {
-            transform: translateX(100%) translateY(100%) rotate(45deg);
-        }
-
-        .variant-option:hover {
-            border-color: #1afe49;
-            background: rgba(26, 254, 73, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
-        }
-
-        .variant-option.selected {
-            border-color: #1afe49;
-            background: linear-gradient(135deg, rgba(26, 254, 73, 0.2), rgba(0, 212, 255, 0.2));
-            color: #ffffff;
-            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.4);
-        }
-
-        .variant-name {
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 0.3rem;
-            font-size: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .variant-stock {
-            font-size: 0.8rem;
-            color: #d1d5db;
-            line-height: 1.2;
-            position: relative;
-            z-index: 1;
-        }
-
-        .variant-option.selected .variant-stock {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .variant-option.out-of-stock {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .variant-option.low-stock {
-            border-color: #f59e0b;
         }
     </style>
 </head>
-<body>
+<body class="theme-ilia">
     <header id="navbar">
         <div class="header-container">
             <div class="logo">
@@ -983,9 +832,9 @@
                         </div>
 
                         <!-- Flavor Options -->
-                        <div class="flavor-options">
-                            <h3 class="flavor-title">口味選擇</h3>
-                            <div class="variant-options" id="variantContainer">
+                        <div class="dv-variant-selector">
+                            <h3 class="dv-variant-title">口味選擇</h3>
+                            <div class="dv-variant-options variant-options" id="variantContainer">
                                 <!-- 口味選項將由變數選擇器動態載入 -->
                             </div>
                         </div>

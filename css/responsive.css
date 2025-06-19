@@ -1,0 +1,285 @@
+/**
+ * DeepVape 響應式設計統一管理
+ * 確保所有產品頁面在不同裝置上的一致性
+ */
+
+/* ================================
+   基礎響應式設定
+   ================================ */
+
+/* 手機版 (768px 以下) */
+@media (max-width: 768px) {
+    /* 產品展示區域 */
+    .product-showcase {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+        padding: 1.5rem !important;
+    }
+    
+    .product-info {
+        padding: 1rem 0 !important;
+        width: 100% !important;
+    }
+    
+    /* 口味選擇容器 */
+    .flavor-options {
+        margin-bottom: 20px !important;
+        width: 100% !important;
+    }
+    
+    /* 主變數容器 */
+    #variantContainer {
+        width: 100% !important;
+        display: block !important;
+    }
+    
+    /* 動態生成的變數容器 */
+    .variant-group {
+        width: 100% !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .variant-group-title {
+        display: none !important; /* 隱藏動態生成的標題 */
+    }
+    
+    /* 變數選項容器 - 統一為三列佈局 */
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--dv-variant-mobile-gap) !important;
+        width: 100% !important;
+        justify-items: stretch !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: grid !important;
+    }
+    
+    /* 變數選項項目 */
+    .variant-option,
+    .dv-variant-option {
+        padding: var(--dv-variant-mobile-padding) !important;
+        min-height: var(--dv-variant-mobile-min-height) !important;
+        font-size: var(--dv-variant-mobile-font-size) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        line-height: 1.1 !important;
+    }
+    
+    /* 變數文字 */
+    .variant-name,
+    .dv-variant-name {
+        font-size: var(--dv-variant-mobile-font-size) !important;
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .variant-stock,
+    .dv-variant-stock {
+        font-size: var(--dv-font-xs) !important;
+    }
+    
+    /* 顏色樣本 */
+    .color-swatch,
+    .dv-color-swatch {
+        width: 16px !important;
+        height: 16px !important;
+        margin-bottom: var(--dv-spacing-xs) !important;
+    }
+    
+    /* 舊的口味選擇器兼容 */
+    .flavor-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.4rem !important;
+        max-height: 400px !important;
+        padding: 0.5rem !important;
+    }
+    
+    .flavor-option {
+        padding: 0.6rem 0.3rem !important;
+        font-size: 0.75rem !important;
+        min-height: 45px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        line-height: 1.1 !important;
+        border-radius: 20px !important;
+    }
+    
+    /* 產品標題調整 */
+    .product-title {
+        font-size: 2rem !important;
+    }
+    
+    /* 頭部動作按鈕 */
+    .header-actions {
+        flex-direction: row !important;
+        gap: 0.5rem !important;
+    }
+
+    .back-button, 
+    .cart-button {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1rem !important;
+    }
+    
+    /* 數量控制器 */
+    .quantity-selector,
+    .quantity-section {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    
+    .quantity-controls,
+    .quantity-control {
+        justify-content: center !important;
+    }
+}
+
+/* 平板版 (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.8rem;
+    }
+    
+    .flavor-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.8rem;
+    }
+}
+
+/* 桌面版 (1025px 以上) */
+@media (min-width: 1025px) {
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.8rem;
+    }
+    
+    .flavor-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.8rem;
+    }
+    
+    /* 桌面版確保 flex-direction 為 column */
+    .variant-option,
+    .dv-variant-option {
+        flex-direction: column;
+    }
+}
+
+/* ================================
+   特殊情況處理
+   ================================ */
+
+/* 修復容器寬度問題 */
+@media (max-width: 768px) {
+    /* 確保所有產品頁面容器都是全寬 */
+    .container,
+    .content-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    /* 修復 product-showcase 網格問題 */
+    .product-showcase {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 確保變數選擇器容器不被其他樣式覆蓋 */
+    .variant-selector,
+    .dv-variant-selector,
+    #variantContainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* ================================
+   無障礙設計
+   ================================ */
+
+/* 減少動畫效果 (使用者偏好) */
+@media (prefers-reduced-motion: reduce) {
+    .variant-option,
+    .dv-variant-option,
+    .flavor-option {
+        transition: none !important;
+    }
+    
+    .variant-option::before,
+    .dv-variant-option::before {
+        display: none !important;
+    }
+    
+    .variant-option:hover,
+    .dv-variant-option:hover,
+    .flavor-option:hover {
+        transform: none !important;
+    }
+}
+
+/* 高對比度模式支援 */
+@media (prefers-contrast: high) {
+    .variant-option,
+    .dv-variant-option {
+        border-width: 3px !important;
+    }
+    
+    .variant-option.selected,
+    .dv-variant-option--selected {
+        border-width: 4px !important;
+    }
+}
+
+/* ================================
+   印刷樣式
+   ================================ */
+
+@media print {
+    .variant-option::before,
+    .dv-variant-option::before {
+        display: none !important;
+    }
+    
+    .variant-option,
+    .dv-variant-option {
+        background: white !important;
+        color: black !important;
+        border: 2px solid black !important;
+    }
+    
+    .variant-option.selected,
+    .dv-variant-option--selected {
+        background: #f0f0f0 !important;
+        border: 3px solid black !important;
+    }
+} 

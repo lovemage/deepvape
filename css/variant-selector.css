@@ -1,0 +1,427 @@
+/**
+ * DeepVape 變數選擇器樣式
+ * 統一管理所有產品頁面的變數選擇器樣式
+ */
+
+/* ================================
+   變數選擇器主容器
+   ================================ */
+
+.dv-variant-selector {
+    width: 100%;
+    margin-bottom: var(--dv-spacing-xl);
+}
+
+/* ================================
+   變數組容器
+   ================================ */
+
+.dv-variant-group {
+    margin-bottom: var(--dv-spacing-xl);
+    width: 100%;
+}
+
+.dv-variant-group-title {
+    color: var(--dv-text-primary);
+    margin-bottom: var(--dv-spacing-base);
+    font-size: var(--dv-font-lg);
+    font-weight: 600;
+}
+
+/* ================================
+   變數選項容器
+   ================================ */
+
+.dv-variant-options,
+.dv-variant-options--color,
+.dv-variant-options--flavor,
+.dv-variant-options--default {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--dv-variant-gap);
+    margin-bottom: var(--dv-spacing-xl);
+    width: 100%;
+}
+
+/* ================================
+   變數選項項目
+   ================================ */
+
+.dv-variant-option {
+    background: var(--dv-variant-bg);
+    border: var(--dv-variant-border);
+    border-radius: var(--dv-variant-border-radius);
+    padding: var(--dv-variant-padding);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--dv-transition-normal);
+    backdrop-filter: blur(8px);
+    min-height: var(--dv-variant-min-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    color: var(--dv-text-primary);
+}
+
+/* 動畫效果 */
+.dv-variant-option::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 40%,
+        var(--dv-border-primary) 45%,
+        var(--dv-border-secondary) 50%,
+        var(--dv-border-primary) 55%,
+        transparent 60%
+    );
+    transition: transform var(--dv-transition-slow);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0.1;
+}
+
+.dv-variant-option:hover::before {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+/* Hover 狀態 */
+.dv-variant-option:hover {
+    border-color: var(--dv-primary);
+    background: var(--dv-border-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--dv-shadow-primary);
+}
+
+/* 選中狀態 */
+.dv-variant-option--selected {
+    border-color: var(--dv-primary);
+    background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary));
+    color: var(--dv-text-primary);
+    box-shadow: var(--dv-shadow-primary);
+}
+
+/* 缺貨狀態 */
+.dv-variant-option--disabled,
+.dv-variant-option--out-of-stock {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--dv-glass-bg);
+}
+
+.dv-variant-option--disabled:hover,
+.dv-variant-option--out-of-stock:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--dv-border-primary);
+}
+
+/* 低庫存狀態 */
+.dv-variant-option--low-stock {
+    border-color: #f59e0b;
+}
+
+/* ================================
+   變數選項內容
+   ================================ */
+
+.dv-variant-name {
+    font-weight: 600;
+    color: var(--dv-text-primary);
+    margin-bottom: var(--dv-spacing-xs);
+    font-size: var(--dv-font-base);
+    position: relative;
+    z-index: 1;
+    line-height: 1.2;
+}
+
+.dv-variant-stock {
+    font-size: var(--dv-font-sm);
+    color: var(--dv-text-secondary);
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+}
+
+.dv-variant-option--selected .dv-variant-name {
+    color: var(--dv-text-primary);
+}
+
+.dv-variant-option--selected .dv-variant-stock {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ================================
+   顏色樣本
+   ================================ */
+
+.dv-color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    margin: 0 auto var(--dv-spacing-sm);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: var(--dv-transition-normal);
+}
+
+.dv-variant-option--selected .dv-color-swatch {
+    border-color: var(--dv-text-primary);
+    box-shadow: 0 0 10px var(--dv-primary);
+}
+
+/* ================================
+   響應式設計
+   ================================ */
+
+@media (max-width: 768px) {
+    /* 容器調整 */
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--dv-variant-mobile-gap) !important;
+        width: 100% !important;
+        justify-items: stretch;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: grid !important;
+    }
+    
+    /* 選項調整 */
+    .dv-variant-option {
+        padding: var(--dv-variant-mobile-padding);
+        min-height: var(--dv-variant-mobile-min-height);
+        font-size: var(--dv-variant-mobile-font-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.1;
+    }
+    
+    /* 文字調整 */
+    .dv-variant-name {
+        font-size: var(--dv-variant-mobile-font-size);
+        margin-bottom: 0.1rem;
+    }
+    
+    .dv-variant-stock {
+        font-size: var(--dv-font-xs);
+    }
+    
+    /* 顏色樣本調整 */
+    .dv-color-swatch {
+        width: 16px;
+        height: 16px;
+        margin-bottom: var(--dv-spacing-xs);
+    }
+}
+
+/* ================================
+   兼容性類名 (向後兼容)
+   ================================ */
+
+/* 支援舊的類名結構 - 直接複製樣式 */
+.variant-options,
+.variant-options-color,
+.variant-options-flavor,
+.variant-options-default {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--dv-variant-gap);
+    margin-bottom: var(--dv-spacing-xl);
+    width: 100%;
+}
+
+.variant-option {
+    background: var(--dv-variant-bg);
+    border: var(--dv-variant-border);
+    border-radius: var(--dv-variant-border-radius);
+    padding: var(--dv-variant-padding);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--dv-transition-normal);
+    backdrop-filter: blur(8px);
+    min-height: var(--dv-variant-min-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    color: var(--dv-text-primary);
+}
+
+.variant-option::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 40%,
+        var(--dv-border-primary) 45%,
+        var(--dv-border-secondary) 50%,
+        var(--dv-border-primary) 55%,
+        transparent 60%
+    );
+    transition: transform var(--dv-transition-slow);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0.1;
+}
+
+.variant-option:hover::before {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+.variant-option:hover {
+    border-color: var(--dv-primary);
+    background: var(--dv-border-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--dv-shadow-primary);
+}
+
+.variant-option.selected {
+    border-color: var(--dv-primary);
+    background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary));
+    color: var(--dv-text-primary);
+    box-shadow: var(--dv-shadow-primary);
+}
+
+.variant-option.out-of-stock {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--dv-glass-bg);
+}
+
+.variant-option.out-of-stock:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--dv-border-primary);
+}
+
+.variant-option.low-stock {
+    border-color: #f59e0b;
+}
+
+.variant-name {
+    font-weight: 600;
+    color: var(--dv-text-primary);
+    margin-bottom: var(--dv-spacing-xs);
+    font-size: var(--dv-font-base);
+    position: relative;
+    z-index: 1;
+    line-height: 1.2;
+}
+
+.variant-option.selected .variant-name {
+    color: var(--dv-text-primary);
+}
+
+.variant-stock {
+    font-size: var(--dv-font-sm);
+    color: var(--dv-text-secondary);
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+}
+
+.variant-option.selected .variant-stock {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    margin: 0 auto var(--dv-spacing-sm);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: var(--dv-transition-normal);
+}
+
+.variant-option.selected .color-swatch {
+    border-color: var(--dv-text-primary);
+    box-shadow: 0 0 10px var(--dv-primary);
+}
+
+/* ================================
+   動態生成元素支援
+   ================================ */
+
+/* 支援 VariantSelector.js 動態生成的元素 */
+.variant-group {
+    margin-bottom: var(--dv-spacing-xl);
+    width: 100%;
+}
+
+.variant-group-title {
+    color: var(--dv-text-primary);
+    margin-bottom: var(--dv-spacing-base);
+    font-size: var(--dv-font-lg);
+    font-weight: 600;
+}
+
+/* 隱藏重複的動態標題 */
+@media (max-width: 768px) {
+    .variant-group-title {
+        display: none;
+    }
+}
+
+/* ================================
+   特殊狀態和動畫
+   ================================ */
+
+/* 載入狀態 */
+.dv-variant-option--loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.dv-variant-option--loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--dv-primary);
+    border-radius: 50%;
+    animation: dv-spin 1s linear infinite;
+}
+
+@keyframes dv-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 錯誤狀態 */
+.dv-variant-selector--error {
+    border: 2px solid #ef4444;
+    border-radius: var(--dv-variant-border-radius);
+    padding: var(--dv-spacing-base);
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    text-align: center;
+}
+
+/* 空狀態 */
+.dv-variant-selector--empty {
+    text-align: center;
+    color: var(--dv-text-secondary);
+    padding: var(--dv-spacing-xl);
+    font-style: italic;
+} 

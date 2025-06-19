@@ -1,0 +1,110 @@
+/**
+ * DeepVape 產品頁面 CSS 變數
+ * 統一管理所有產品頁面的設計變數
+ */
+
+:root {
+    /* 主要顏色 */
+    --dv-primary: #1afe49;
+    --dv-secondary: #06b6d4;
+    --dv-accent: #8b5cf6;
+    --dv-tech-cyan: #00d4ff;
+    
+    /* 背景顏色 */
+    --dv-bg-primary: #0a0a0a;
+    --dv-bg-secondary: #1a1a2e;
+    --dv-bg-tertiary: #16213e;
+    --dv-card-bg: rgba(17, 24, 39, 0.8);
+    --dv-glass-bg: rgba(17, 24, 39, 0.6);
+    
+    /* 文字顏色 */
+    --dv-text-primary: #ffffff;
+    --dv-text-secondary: #d1d5db;
+    --dv-text-tertiary: #9ca3af;
+    
+    /* 邊框和陰影 */
+    --dv-border-primary: rgba(26, 254, 73, 0.2);
+    --dv-border-secondary: rgba(6, 182, 212, 0.2);
+    --dv-border-tertiary: rgba(139, 92, 246, 0.2);
+    
+    /* 陰影效果 */
+    --dv-shadow-primary: 0 5px 15px rgba(26, 254, 73, 0.3);
+    --dv-shadow-secondary: 0 5px 15px rgba(6, 182, 212, 0.3);
+    --dv-shadow-accent: 0 5px 15px rgba(139, 92, 246, 0.3);
+    --dv-shadow-card: 0 20px 40px rgba(0, 0, 0, 0.3);
+    
+    /* 變數選擇器專用變數 */
+    --dv-variant-bg: rgba(17, 24, 39, 0.5);
+    --dv-variant-border: 2px solid var(--dv-border-primary);
+    --dv-variant-border-radius: 15px;
+    --dv-variant-padding: 1rem;
+    --dv-variant-gap: 0.8rem;
+    --dv-variant-min-height: 80px;
+    
+    /* 變數選擇器響應式 */
+    --dv-variant-mobile-gap: 0.6rem;
+    --dv-variant-mobile-padding: 0.6rem 0.3rem;
+    --dv-variant-mobile-min-height: 50px;
+    --dv-variant-mobile-font-size: 0.75rem;
+    
+    /* 動畫和過渡 */
+    --dv-transition-fast: all 0.2s ease;
+    --dv-transition-normal: all 0.3s ease;
+    --dv-transition-slow: all 0.5s ease;
+    
+    /* 響應式斷點 */
+    --dv-breakpoint-mobile: 768px;
+    --dv-breakpoint-tablet: 1024px;
+    --dv-breakpoint-desktop: 1280px;
+    
+    /* 字體大小 */
+    --dv-font-xs: 0.65rem;
+    --dv-font-sm: 0.75rem;
+    --dv-font-base: 1rem;
+    --dv-font-lg: 1.2rem;
+    --dv-font-xl: 1.5rem;
+    
+    /* 間距 */
+    --dv-spacing-xs: 0.25rem;
+    --dv-spacing-sm: 0.5rem;
+    --dv-spacing-base: 1rem;
+    --dv-spacing-lg: 1.5rem;
+    --dv-spacing-xl: 2rem;
+    --dv-spacing-2xl: 3rem;
+}
+
+/* 主題變體 - SP2 系列 */
+.theme-sp2 {
+    --dv-primary: #6366f1;
+    --dv-secondary: #06b6d4;
+    --dv-accent: #8b5cf6;
+    --dv-border-primary: rgba(99, 102, 241, 0.2);
+    --dv-shadow-primary: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+
+/* 主題變體 - LANA 系列 */
+.theme-lana {
+    --dv-primary: #06b6d4;
+    --dv-secondary: #1afe49;
+    --dv-accent: #00d4ff;
+    --dv-border-primary: rgba(6, 182, 212, 0.2);
+    --dv-shadow-primary: 0 5px 15px rgba(6, 182, 212, 0.3);
+}
+
+/* 主題變體 - ILIA 系列 */
+.theme-ilia {
+    --dv-primary: #1afe49;
+    --dv-secondary: #00d4ff;
+    --dv-accent: #667eea;
+    --dv-border-primary: rgba(26, 254, 73, 0.2);
+    --dv-shadow-primary: 0 5px 15px rgba(26, 254, 73, 0.3);
+}
+
+/* 主題變體 - HTA 系列 */
+.theme-hta {
+    --dv-primary: #f59e0b;
+    --dv-secondary: #ef4444;
+    --dv-accent: #10b981;
+    --dv-border-primary: rgba(245, 158, 11, 0.2);
+    --dv-shadow-primary: 0 5px 15px rgba(245, 158, 11, 0.3);
+} 
