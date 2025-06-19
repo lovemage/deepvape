@@ -66,50 +66,48 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 1.5rem;
         }
 
-        /* Header Styles */
-        .header {
+        .content-wrapper {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header */
+        header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.95);
+            background-color: rgba(17, 24, 39, 0.8);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid transparent;
-            border-image: linear-gradient(90deg, #1afe49, #00d4ff, #1afe49) 1;
-            animation: headerBorderMove 3s ease-in-out infinite;
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(26, 254, 73, 0.2);
+            transition: all 0.3s ease;
+            height: 70px;
         }
 
-        @keyframes headerBorderMove {
-            0% {
-                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
-            }
-            25% {
-                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
-            }
-            50% {
-                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
-            }
-            75% {
-                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
-            }
-            100% {
-                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
-            }
+        header.scrolled {
+            background-color: rgba(17, 24, 39, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .nav {
-            max-width: 1200px;
+        .header-container {
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1.5rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            height: 100%;
         }
 
         .logo {
@@ -117,82 +115,122 @@
             align-items: center;
         }
 
+        .logo img {
+            height: 40px;
+            width: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(26, 254, 73, 0.2);
+        }
+
         /* 炫酷Logo按鈕樣式 */
         .logo-button {
-            position: relative;
-            display: inline-block;
-            padding: 12px 24px;
-            text-decoration: none;
-            color: #1afe49;
-            font-weight: 700;
-            font-size: 24px;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 2px solid #1afe49;
+            all: unset;
+            background-color: #040a1a;
+            background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='40' patternTransform='scale(2) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(224, 73%, 6%, 1)'/><path d='M0 30h20L10 50zm-10-20h20L0 30zm20 0h20L20 30zM0-10h20L10 10z'  stroke-width='2' stroke='hsla(224, 59%, 18%, 0.6)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+            border: 3px solid #252e45;
             border-radius: 8px;
-            background: linear-gradient(45deg, rgba(26, 254, 73, 0.1), rgba(0, 212, 255, 0.1));
+            color: #fff;
+            cursor: pointer;
+            font-family: "Arial", sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 0.4rem 0.8rem;
+            text-transform: uppercase;
+            transform: skewX(-10deg);
             transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
-        }
-
-        .logo-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(26, 254, 73, 0.4), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .logo-button:hover::before {
-            left: 100%;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .logo-button:hover {
-            color: #00d4ff;
-            border-color: #00d4ff;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-            transform: translateY(-2px);
+            border-color: #1afe49;
+            box-shadow: 0 0 15px rgba(26, 254, 73, 0.5);
+            transform: skewX(-10deg) scale(1.05);
         }
 
+        .logo-button:focus {
+            outline: 2px solid #1afe49;
+            outline-offset: 2px;
+        }
+
+        .logo-button:active {
+            transform: skewX(-10deg) scale(0.98);
+        }
+
+        /* Logo文字樣式 */
         .logo-text {
-            position: relative;
-            z-index: 1;
+            background: linear-gradient(45deg, #1afe49, #8386f5, #1afe49);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .header-actions {
             display: flex;
-            gap: 15px;
+            gap: 1rem;
+            align-items: center;
         }
 
-        .cart-button, .back-button {
-            padding: 10px 15px;
+        .back-button, .cart-button {
             background: linear-gradient(45deg, #1afe49, #00d4ff);
             color: #000;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
             border: none;
-            cursor: pointer;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1px solid rgba(26, 254, 73, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        .cart-button:hover, .back-button:hover {
+        .back-button::before, .cart-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .back-button:hover::before, .cart-button:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
+        .back-button:hover, .cart-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(26, 254, 73, 0.4);
+            border-color: #1afe49;
         }
 
         .main-content {
-            margin-top: 100px;
-            background: rgba(17, 24, 39, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(26, 254, 73, 0.2);
-            overflow: hidden;
+            margin-top: 70px;
+            padding: 2rem 0;
         }
 
         .product-showcase {
@@ -789,8 +827,8 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
+    <header id="navbar">
+        <div class="header-container">
             <div class="logo">
                 <a href="index.html" class="logo-button" id="navLogo">
                     <span class="logo-text">DeepVape</span>
@@ -804,7 +842,7 @@
                     <i class="fas fa-shopping-cart"></i>
                 </a>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main class="main-content">
@@ -1293,6 +1331,31 @@
 
         // 頁面載入時更新庫存顯示
         document.addEventListener('DOMContentLoaded', function() {
+            // Scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('section-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.section-hidden').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
             // 延遲執行，確保 ProductManager 已初始化
             setTimeout(updateProductStockDisplay, 2000);
             
@@ -1344,9 +1407,9 @@
                     console.log("DeepVape Logo clicked!");
                     
                     // 點擊反饋動畫
-                    button.style.transform = "translateY(-2px) scale(0.95)";
+                    button.style.transform = "skewX(-10deg) scale(0.95)";
                     setTimeout(() => {
-                        button.style.transform = "translateY(-2px)";
+                        button.style.transform = "skewX(-10deg) scale(1)";
                     }, 150);
                 });
             }
