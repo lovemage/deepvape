@@ -9,41 +9,40 @@
 
 /* 手機版 (768px 以下) */
 @media (max-width: 768px) {
-    /* 產品展示區域 */
+    /* 產品展示區域調整 */
     .product-showcase {
+        display: grid !important;
         grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-        padding: 1.5rem !important;
+        gap: 1rem !important;
     }
-    
+
+    /* 產品資訊區域調整 */
     .product-info {
-        padding: 1rem 0 !important;
-        width: 100% !important;
+        padding: 1rem !important;
     }
-    
-    /* 口味選擇容器 */
+
+    /* 口味選項調整 */
     .flavor-options {
-        margin-bottom: 20px !important;
-        width: 100% !important;
+        margin-bottom: 1.5rem !important;
     }
-    
-    /* 主變數容器 */
+
+    /* 變數容器調整 */
     #variantContainer {
         width: 100% !important;
-        display: block !important;
+        margin-bottom: 1.5rem !important;
     }
-    
-    /* 動態生成的變數容器 */
+
+    /* 變數組調整 */
     .variant-group {
-        width: 100% !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 1.5rem !important;
     }
-    
+
     .variant-group-title {
-        display: none !important; /* 隱藏動態生成的標題 */
+        font-size: 1rem !important;
+        margin-bottom: 0.8rem !important;
     }
-    
-    /* 變數選項容器 - 統一為三列佈局 */
+
+    /* 變數選項容器 - 包含 color-grid 的特別支援 */
     .variant-options,
     .variant-options-color,
     .variant-options-flavor,
@@ -53,7 +52,11 @@
     .dv-variant-options--flavor,
     .dv-variant-options--default,
     .color-grid,
-    .flavor-grid {
+    .flavor-grid,
+    .color-grid .variant-options,
+    .color-grid .dv-variant-options,
+    #variantContainer.color-grid .variant-options,
+    #variantContainer.color-grid .dv-variant-options {
         grid-template-columns: repeat(3, 1fr) !important;
         gap: var(--dv-variant-mobile-gap) !important;
         width: 100% !important;
