@@ -86,12 +86,16 @@
     .dv-variant-option {
         padding: var(--dv-variant-mobile-padding) !important;
         min-height: var(--dv-variant-mobile-min-height) !important;
+        height: 60px !important;
         font-size: var(--dv-variant-mobile-font-size) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         text-align: center !important;
         line-height: 1.1 !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
+        overflow: hidden !important;
     }
     
     /* 變數文字 */
@@ -99,11 +103,20 @@
     .dv-variant-name {
         font-size: var(--dv-variant-mobile-font-size) !important;
         margin-bottom: 0.1rem !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.2 !important;
     }
     
     .variant-stock,
     .dv-variant-stock {
         font-size: var(--dv-font-xs) !important;
+        white-space: nowrap !important;
     }
     
     /* 顏色樣本 */
@@ -112,6 +125,7 @@
         width: 16px !important;
         height: 16px !important;
         margin-bottom: var(--dv-spacing-xs) !important;
+        flex-shrink: 0 !important;
     }
     
     /* 舊的口味選擇器兼容 */
@@ -119,12 +133,28 @@
         padding: 0.6rem 0.3rem !important;
         font-size: 0.75rem !important;
         min-height: 45px !important;
+        height: 60px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         text-align: center !important;
-        line-height: 1.1 !important;
+        line-height: 1.2 !important;
         border-radius: 20px !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
+        overflow: hidden !important;
+    }
+    
+    /* flavor-option 內的文字處理 */
+    .flavor-option span,
+    .flavor-option .variant-name {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.2 !important;
+        word-break: break-word !important;
     }
     
     /* 產品標題調整 */
