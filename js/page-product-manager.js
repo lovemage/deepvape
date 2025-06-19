@@ -199,6 +199,20 @@ class PageProductManager {
         }
         if (!variantContainer) return;
 
+        // 檢查是否使用新的變數選擇器系統
+        const hasNewVariantSelector = variantContainer.classList.contains('dv-variant-options') || 
+                                     variantContainer.closest('.dv-variant-selector') ||
+                                     window.VariantSelector;
+
+        if (hasNewVariantSelector) {
+            console.log('🔄 檢測到新的變數選擇器系統，跳過舊的更新邏輯');
+            // 不干擾新的變數選擇器系統，讓它自己處理
+            return;
+        }
+
+        // 只有在舊系統中才執行清空和重建
+        console.log('📦 使用舊的變數選擇器系統');
+
         // 清空現有選項
         variantContainer.innerHTML = '';
 
@@ -229,15 +243,6 @@ class PageProductManager {
 
             variantContainer.appendChild(optionElement);
         });
-
-        // 如果是 VariantSelector 容器，觸發變數選擇器重新初始化
-        if (variantContainer.id === 'variantContainer' && window.variantSelector) {
-            setTimeout(() => {
-                if (window.variantSelector.refresh) {
-                    window.variantSelector.refresh();
-                }
-            }, 100);
-        }
     }
 
     /**
