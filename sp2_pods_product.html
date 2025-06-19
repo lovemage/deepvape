@@ -382,9 +382,17 @@
 
         .flavor-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
             margin-bottom: 2rem;
+        }
+        
+        /* 手機版響應式佈局 */
+        @media (max-width: 768px) {
+            .flavor-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.6rem;
+            }
         }
 
         .flavor-option {
@@ -786,7 +794,7 @@
             
             .flavor-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 0.4rem;
+                gap: 0.6rem;
             }
             
             .flavor-option {
@@ -828,16 +836,16 @@
         /* Tablet Optimization */
         @media (min-width: 769px) and (max-width: 1024px) {
             .flavor-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.8rem;
             }
         }
 
         /* Desktop Optimization */
         @media (min-width: 1025px) {
             .flavor-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1.2rem;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.8rem;
             }
         }
 
