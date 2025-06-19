@@ -1142,7 +1142,8 @@
     <!-- 產品管理系統 -->
     <script src="/js/product-manager.js"></script>
     
-
+    <!-- 變數選擇器 -->
+    <script src="/js/variant-selector.js"></script>
     
     <!-- 變數選擇器修復腳本 (暫時禁用) -->
     <!-- <script src="/fix_variant_initialization.js"></script> -->
@@ -1161,9 +1162,6 @@
 
     <!-- 初始化產品管理器 -->
     <script>
-        // 全域變數
-        let selectedVariant = null;
-
         document.addEventListener('DOMContentLoaded', async function() {
             try {
                 // 創建全域 ProductManager 實例
@@ -1178,95 +1176,28 @@
                 await pageProductManager.init('sp2_pods_product');
                 console.log('✅ SP2 煙彈 產品頁面管理器已初始化');
                 
-                // 初始化變數選擇器
-                initVariantSelector();
+                // 初始化 VariantSelector - 與 SP2 主機相同的方式
+                window.variantSelector = new VariantSelector('sp2_pods_product', 'variantContainer');
+                console.log('✅ SP2 煙彈 VariantSelector 已初始化');
+                
+                // 設置變數變更回調
+                window.variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的口味:', variant.value);
+                    updateAddToCartButton(variant);
+                    updateVariantStockDisplay(variant.value);
+                });
                 
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
             }
         });
 
-        // 初始化變數選擇器
-        async function initVariantSelector() {
-            // 等待 ProductManager 初始化
-            if (!window.ProductManager || !window.ProductManager.initialized) {
-                setTimeout(initVariantSelector, 100);
-                return;
-            }
-
-            const productData = window.ProductManager.getProduct('sp2_pods_product');
-            if (!productData || !productData.variants) {
-                console.error('無法載入產品數據');
-                return;
-            }
-
-            const container = document.getElementById('variantContainer');
-            if (!container) {
-                console.error('找不到變數容器');
-                return;
-            }
-
-            // 添加 CSS 類名以應用正確的佈局
-            container.classList.add('variant-options');
-
-            // 生成口味選項
-            const variantHtml = productData.variants.map(variant => `
-                <div class="flavor-option variant-option" 
-                     data-variant-id="${variant.id}" 
-                     data-stock="${variant.stock}" 
-                     data-type="flavor">
-                    <span class="variant-name">${variant.value}</span>
-                </div>
-            `).join('');
-
-            container.innerHTML = variantHtml;
-
-            // 添加點擊事件監聽器
-            container.addEventListener('click', function(e) {
-                const option = e.target.closest('.variant-option');
-                if (!option) return;
-
-                // 移除其他選中狀態
-                container.querySelectorAll('.variant-option').forEach(opt => {
-                    opt.classList.remove('selected');
-                });
-
-                // 添加選中狀態
-                option.classList.add('selected');
-
-                // 獲取變數信息
-                const variantId = option.dataset.variantId;
-                const variantValue = option.querySelector('.variant-name').textContent.trim();
-                const stock = parseInt(option.dataset.stock);
-
-                // 更新全域變數
-                selectedVariant = {
-                    id: variantId,
-                    value: variantValue,
-                    stock: stock
-                };
-
-                console.log('✅ 變數已選擇:', variantValue);
-
-                // 更新按鈕狀態
-                updateAddToCartButton(selectedVariant);
-                updateVariantStockDisplay(variantValue);
-            });
-
-            console.log('✅ 變數選擇器已初始化');
-        }
-
         // 更新加入購物車按鈕
         function updateAddToCartButton(variant) {
             const button = document.getElementById('addToCartBtn');
             if (!button) return;
 
-            // 檢查是否有選中的變數
-            const selectedOption = document.querySelector('.variant-option.selected');
-            
-            const hasSelection = variant && variant.stock > 0 && selectedOption;
-
-            if (hasSelection) {
+            if (variant && variant.stock > 0) {
                 button.disabled = false;
                 button.innerHTML = `<i class="fas fa-shopping-cart" style="margin-right: 0.5rem;"></i>加入購物車 - ${variant.value}`;
                 button.classList.remove('btn-secondary');
@@ -1279,40 +1210,32 @@
             }
         }
 
-        // 加入購物車
+        // 加入購物車 - 使用 VariantSelector 的標準方式
         function addToCart(productId) {
-            // 檢查是否選擇了變數
-            const selectedFlavorOption = document.querySelector('.variant-option.selected');
-            
-            if (!selectedFlavorOption) {
-                showNotification('請先選擇口味！', 'warning');
+            // 檢查 VariantSelector 是否存在
+            if (!window.variantSelector) {
+                alert('變數選擇器未初始化，請重新整理頁面');
                 return;
             }
-            
-            // 獲取選中的變數信息
-            const variantId = selectedFlavorOption.dataset.variantId;
-            const variantValue = selectedFlavorOption.querySelector('.variant-name')?.textContent.trim();
-            
-            if (!variantId || !variantValue) {
-                showNotification('無法獲取選中的口味，請重新選擇！', 'warning');
+
+            const selectedVariant = window.variantSelector.getSelectedVariant();
+            if (!selectedVariant) {
+                alert('請先選擇口味！');
                 return;
             }
-            
+
             // 檢查庫存
-            if (window.StockChecker && window.StockChecker.initialized) {
-                const stockInfo = window.StockChecker.checkVariantStock(productId || 'sp2_pods_product', variantId, 'flavor');
-                if (stockInfo.stock <= 0) {
-                    showNotification(`很抱歉，${variantValue} 目前缺貨！`, 'warning');
-                    return;
-                }
+            if (selectedVariant.stock <= 0) {
+                alert(`很抱歉，${selectedVariant.value} 目前缺貨！`);
+                return;
             }
 
             // 加入購物車
             const product = {
                 id: productId || 'sp2_pods_product',
                 name: 'SP2 煙彈',
-                variant: variantValue,
-                variantId: variantId,
+                variant: selectedVariant.value,
+                variantId: selectedVariant.id,
                 price: 150,
                 quantity: 1,
                 image: '/sp2_pods/sp2_pods_main.webp'
@@ -1339,61 +1262,15 @@
             if (window.CartAnimation) {
                 window.CartAnimation.showAddToCartAnimation({
                     productName: 'SP2 煙彈',
-                    variant: variantValue,
+                    variant: selectedVariant.value,
                     sourceElement: document.getElementById('addToCartBtn'),
                     productImage: '/sp2_pods/sp2_pods_main.webp'
                 });
             } else {
                 // 備用通知
-                showNotification(`✅ 已將 SP2 煙彈 (${variantValue}) 加入購物車！`, 'success');
+                alert(`✅ 已將 SP2 煙彈 (${selectedVariant.value}) 加入購物車！`);
                 updateCartCount();
             }
-        }
-
-        // 顯示通知
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
-            // 添加樣式
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? 'linear-gradient(135deg, #28a745, #20c997)' : 
-                           type === 'warning' ? 'linear-gradient(135deg, #ffc107, #fd7e14)' : 
-                           'linear-gradient(135deg, #17a2b8, #6f42c1)'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                font-weight: 500;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // 動畫進入
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            // 自動移除
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
         }
 
         // 更新購物車數量
