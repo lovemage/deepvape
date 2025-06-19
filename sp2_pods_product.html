@@ -994,26 +994,7 @@
     <script>
         let quantity = 1;
 
-        // 變數選擇器實例
-        let variantSelector = null;
-
-        // 初始化變數選擇器
-        function initVariantSelector() {
-            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('sp2_pods_product', 'variantContainer');
-                
-                // 設置變數變更回調
-                variantSelector.setOnVariantChange((variant) => {
-                    console.log('選擇的口味:', variant.value);
-                    updateAddToCartButton();
-                    // 更新庫存顯示
-                    updateVariantStockDisplay(variant.value);
-                });
-            } else {
-                // 如果依賴未載入，稍後重試
-                setTimeout(initVariantSelector, 500);
-            }
-        }
+        // 變數選擇器由新的初始化系統處理
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
@@ -1044,13 +1025,6 @@
 
             // Initialize button state
             updateAddToCartButton();
-            
-            // 初始化變數選擇器
-            if (window.ProductManager && window.ProductManager.initialized) {
-                initVariantSelector();
-            } else {
-                window.addEventListener('productsLoaded', initVariantSelector);
-            }
         });
 
         // 口味選擇由 VariantSelector 處理，不需要手動邏輯
@@ -1079,62 +1053,50 @@
             }
         }
 
-        // Add to cart
+        // Add to Cart
         function addToCart() {
-            // 檢查是否選擇了變數
-            const selectedOption = document.querySelector('.variant-option.selected');
-            if (!selectedOption) {
+            // 檢查是否有選擇變數
+            const selectedVariantElement = document.querySelector('.variant-option.selected');
+            if (!selectedVariantElement) {
                 alert('請先選擇口味！');
                 return;
             }
             
-            // 獲取選中的變數信息
-            const variantId = selectedOption.dataset.variantId || 
-                             selectedOption.dataset.flavor || 
-                             selectedOption.dataset.value;
-            const variantValue = selectedOption.textContent.trim() || 
-                               selectedOption.dataset.value;
+            const selectedVariant = selectedVariantElement.textContent.trim();
+            const variantId = selectedVariantElement.dataset.variantId || selectedVariant;
+            const quantity = parseInt(document.getElementById('quantity').value);
             
-            if (!variantId || !variantValue) {
-                alert('無法獲取選中的口味，請重新選擇！');
-                return;
-            }
-            
-            // 檢查庫存（如果有 StockChecker）
-            if (window.StockChecker && window.StockChecker.initialized) {
-                const stockInfo = window.StockChecker.checkVariantStock('sp2_pods_product', variantId, 'variant');
-                if (stockInfo.stock <= 0) {
-                    alert(`很抱歉，${variantValue} 目前缺貨！`);
+            // 檢查庫存
+            if (window.StockChecker) {
+                const stockResult = window.StockChecker.checkVariantStock('sp2_pods_product', variantId);
+                if (!stockResult.available) {
+                    alert(`❌ ${selectedVariant} 目前缺貨，請選擇其他口味或稍後再試。`);
+                    return;
+                }
+                
+                if (stockResult.stock < quantity) {
+                    alert(`❌ ${selectedVariant} 庫存不足，目前僅剩 ${stockResult.stock} 件。`);
                     return;
                 }
             }
             
-            const quantity = parseInt(document.getElementById('quantity')?.value || '1');
-            
-            // 獲取產品基本信息
-            const productNameElement = document.querySelector('h1, .product-title, .product-name');
-            const productName = productNameElement ? productNameElement.textContent.trim() : '產品';
-            
-            const priceElement = document.querySelector('.price, .product-price, [class*="price"]');
-            let price = 0;
-            if (priceElement) {
-                const priceText = priceElement.textContent.replace(/[^0-9]/g, '');
-                price = parseInt(priceText) || 0;
-            }
-            
+            // 獲取產品資訊
             const product = {
                 id: 'sp2_pods_product',
-                name: productName,
-                price: price,
-                variant: variantValue,
+                name: 'SP2 煙彈',
+                price: 320,
+                flavor: selectedVariant,
+                variant: selectedVariant,
                 variantId: variantId,
                 quantity: quantity,
-                image: document.querySelector('.main-image img, .product-image img')?.src || '',
-                category: 'product'
+                image: '/sp2_pods/sp2_pods_main.webp',
+                category: 'pods'
             };
             
-            // 加入購物車
+            // 儲存到 localStorage
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            // 檢查是否已存在相同產品和變數
             const existingIndex = cart.findIndex(item => 
                 item.id === product.id && item.variantId === product.variantId
             );
@@ -1147,22 +1109,22 @@
             
             localStorage.setItem('cart', JSON.stringify(cart));
             
-            // 更新購物車計數
-            if (typeof updateCartCount === 'function') {
-                updateCartCount();
-            }
+            // 顯示成功訊息
+            alert(`✅ 已將 ${quantity} 個 SP2 煙彈 (${selectedVariant}) 加入購物車！`);
             
-            // 使用購物車動畫系統
-            if (window.CartAnimation) {
-                window.CartAnimation.showAddToCartAnimation({
-                    productName: productName,
-                    variant: variantValue,
-                    sourceElement: document.querySelector('.add-to-cart-btn'),
-                    productImage: document.querySelector('.main-image img, .product-image img')?.src || '/sp2_pods/sp2_pods_main.webp'
-                });
-            } else {
-                // 備用通知
-                alert(`✅ 已將 ${quantity} 個 ${productName} (${variantValue}) 加入購物車！`);
+            // 更新購物車圖示
+            updateCartCount();
+        }
+
+        // 更新購物車數量顯示
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // 如果有購物車計數元素，更新它
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                cartCount.textContent = totalItems;
             }
         }
     </script>
@@ -1268,7 +1230,10 @@
                 await pageProductManager.init('sp2_pods_product');
                 console.log('✅ SP2 煙彈 產品頁面管理器已初始化');
                 
-                // 初始化變數選擇器 - 由下面的腳本處理
+                // 初始化 VariantSelector
+                const variantSelector = new VariantSelector('sp2_pods_product');
+                await variantSelector.init();
+                console.log('✅ SP2 煙彈 VariantSelector 已初始化');
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
             }
