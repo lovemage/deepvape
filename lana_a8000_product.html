@@ -731,8 +731,81 @@
 
         .variant-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
+        }
+
+        /* Quantity Control */
+        .quantity-section {
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .quantity-label {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            background: rgba(17, 24, 39, 0.5);
+            border: 2px solid var(--border-glow);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .quantity-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: var(--transition-normal);
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .quantity-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quantity-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            width: 60px;
+            height: 45px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            outline: none;
+            border-left: 1px solid var(--border-glow);
+            border-right: 1px solid var(--border-glow);
+        }
+
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .quantity-input[type=number] {
+            -moz-appearance: textfield;
         }
 
         /* Buttons */
@@ -1073,7 +1146,7 @@
             }
             
             .variant-options {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 0.4rem;
             }
             
@@ -1091,6 +1164,28 @@
             .flavor-selection-section {
                 padding: 1.5rem;
                 margin: 1.5rem 0;
+            }
+
+            .quantity-section {
+                flex-direction: column;
+                gap: 0.5rem;
+                margin: 1rem 0;
+            }
+
+            .quantity-control {
+                width: 200px;
+            }
+
+            .quantity-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .quantity-input {
+                width: 50px;
+                height: 40px;
+                font-size: 1rem;
             }
 
             .footer-design-section {
@@ -1291,6 +1386,16 @@
                             <h4>選擇口味</h4>
                             <div id="variantContainer">
                                 <!-- 口味選項將由變數選擇器動態載入 -->
+                            </div>
+                        </div>
+                        
+                        <!-- Quantity Selection -->
+                        <div class="quantity-section">
+                            <span class="quantity-label">數量：</span>
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="updateQuantity(-1)" type="button">-</button>
+                                <input type="number" id="quantity" class="quantity-input" value="1" min="1" max="10">
+                                <button class="quantity-btn" onclick="updateQuantity(1)" type="button">+</button>
                             </div>
                         </div>
                         
@@ -1633,6 +1738,46 @@
             }
         }
 
+        // 數量控制
+        let quantity = 1;
+
+        function updateQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            if (!quantityInput) return;
+            
+            const currentValue = parseInt(quantityInput.value) || 1;
+            const newValue = Math.max(1, Math.min(10, currentValue + change));
+            
+            quantityInput.value = newValue;
+            quantity = newValue;
+            
+            // 更新按鈕狀態
+            const minusBtn = document.querySelector('.quantity-btn[onclick="updateQuantity(-1)"]');
+            const plusBtn = document.querySelector('.quantity-btn[onclick="updateQuantity(1)"]');
+            
+            if (minusBtn) minusBtn.disabled = newValue <= 1;
+            if (plusBtn) plusBtn.disabled = newValue >= 10;
+        }
+
+        // 監聽數量輸入框變化
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInput = document.getElementById('quantity');
+            if (quantityInput) {
+                quantityInput.addEventListener('input', function() {
+                    const value = Math.max(1, Math.min(10, parseInt(this.value) || 1));
+                    this.value = value;
+                    quantity = value;
+                    
+                    // 更新按鈕狀態
+                    const minusBtn = document.querySelector('.quantity-btn[onclick="updateQuantity(-1)"]');
+                    const plusBtn = document.querySelector('.quantity-btn[onclick="updateQuantity(1)"]');
+                    
+                    if (minusBtn) minusBtn.disabled = value <= 1;
+                    if (plusBtn) plusBtn.disabled = value >= 10;
+                });
+            }
+        });
+
         // 加入購物車
         function addToCart(productId) {
             // 檢查是否選擇了變數（多種選擇器檢查）
@@ -1669,6 +1814,9 @@
                 }
             }
 
+            // 獲取選擇的數量
+            const selectedQuantity = parseInt(document.getElementById('quantity')?.value || '1');
+
             // 加入購物車
             const product = {
                 id: productId || 'lana_a8000_product',
@@ -1676,7 +1824,7 @@
                 variant: variantValue,
                 variantId: variantId,
                 price: 320,
-                quantity: 1,
+                quantity: selectedQuantity,
                 image: '/lana_a8000/lana_a8000.webp'
             };
 
@@ -1689,7 +1837,7 @@
             );
             
             if (existingIndex > -1) {
-                cart[existingIndex].quantity += 1;
+                cart[existingIndex].quantity += selectedQuantity;
             } else {
                 cart.push(product);
             }
@@ -1707,7 +1855,7 @@
                 });
             } else {
                 // 備用通知
-                showNotification(`✅ 已將 LANA A8000 (${variantValue}) 加入購物車！`, 'success');
+                showNotification(`✅ 已將 ${selectedQuantity} 個 LANA A8000 (${variantValue}) 加入購物車！`, 'success');
                 updateCartCount();
             }
         }
