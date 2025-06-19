@@ -899,7 +899,7 @@
     <script src="/js/page-product-manager.js"></script>
     
     <!-- 產品管理系統 -->
-    <script src="/js/product-manager.js"></script>
+    <script src="/js/product-manager.js" data-product-ids="sp2_device,ilia_1,ilia_5_device,ilia_ultra5_pods,ilia_leather,ilia_fabric,hta_vape,ilia_pods,sp2_pods,hta_pods,lana_pods,ilia_disposable,lana_a8000"></script>
     
     <!-- 庫存檢查器 -->
     <script src="/js/stock-checker.js"></script>
@@ -913,22 +913,8 @@
     <!-- 購物車動畫系統 -->
     <script src="/js/cart-animation.js"></script>
 
-    <!-- 初始化產品頁面管理器 -->
+    <!-- 頁面載入時更新庫存顯示 -->
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            try {
-                // 初始化頁面管理器
-                const pageProductManager = new PageProductManager('sp2_pods_product');
-                await pageProductManager.init();
-                console.log('✅ SP2 煙彈 產品頁面管理器已初始化');
-
-            } catch (error) {
-                console.error('❌ SP2 Pods 頁面初始化失敗:', error);
-            }
-        });
-    </script>
-    <script>
-        // 頁面載入時更新庫存顯示
         document.addEventListener('DOMContentLoaded', function() {
             updateProductStockDisplay();
         });

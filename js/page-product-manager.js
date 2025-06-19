@@ -562,6 +562,26 @@ class PageProductManager {
     }
 }
 
+// 自動初始化，並增加防止重複執行的機制
+document.addEventListener('DOMContentLoaded', async () => {
+    // 檢查 window 對象，如果管理器已存在，則不重複初始化
+    if (window.pageProductManager) {
+        console.log('PageProductManager 已初始化，跳過自動執行。');
+        return;
+    }
+
+    const manager = new PageProductManager();
+    const pageId = manager.getPageId();
+    
+    if (pageId) {
+        console.log('自動初始化產品頁面管理器:', pageId);
+        await manager.init(pageId);
+        
+        // 將管理器實例暴露到全局，供其他腳本使用或防止重複初始化
+        window.pageProductManager = manager;
+    }
+});
+
 // 導出類供其他模組使用
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = PageProductManager;
