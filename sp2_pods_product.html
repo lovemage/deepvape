@@ -1231,8 +1231,15 @@
                 console.log('✅ SP2 煙彈 產品頁面管理器已初始化');
                 
                 // 初始化 VariantSelector
-                const variantSelector = new VariantSelector('sp2_pods_product');
+                const variantSelector = new VariantSelector('sp2_pods_product', 'variantContainer');
                 await variantSelector.init();
+                
+                // 設置變數變更回調
+                variantSelector.setOnVariantChange((variant) => {
+                    console.log('選擇的口味:', variant.value);
+                    updateAddToCartButton();
+                });
+                
                 console.log('✅ SP2 煙彈 VariantSelector 已初始化');
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
