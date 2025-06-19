@@ -116,6 +116,19 @@
     background: rgba(255, 0, 0, 0.2) !important;
 }
 
+/* 確保 ILIA 主題的舊版按鈕樣式正確 */
+.theme-ilia .flavor-option {
+    background: var(--dv-variant-bg) !important;
+    color: var(--dv-text-primary) !important;
+    border: 1px solid var(--dv-border-primary) !important;
+}
+
+.theme-ilia .flavor-option.selected {
+    background: var(--dv-primary) !important;
+    color: #000000 !important;
+    border-color: var(--dv-primary) !important;
+}
+
 /* 在開發模式顯示網格 */
 .dv-debug-grid {
     background-image: 
@@ -155,7 +168,7 @@ body::before {
 .flavor-grid,
 .color-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: var(--dv-variant-gap);
     width: 100%;
 }
@@ -164,31 +177,6 @@ body::before {
 .flavor-options .flavor-grid,
 .color-options .color-grid {
     margin-bottom: var(--dv-spacing-base);
-}
-
-/* 響應式設計 - 確保所有設備都使用三列佈局 */
-@media (max-width: 768px) {
-    .flavor-grid,
-    .color-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        justify-items: stretch !important;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    .flavor-grid,
-    .color-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        justify-items: stretch !important;
-    }
-}
-
-@media (min-width: 1025px) {
-    .flavor-grid,
-    .color-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        justify-items: stretch !important;
-    }
 }
 
 /* ================================
