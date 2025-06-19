@@ -1561,8 +1561,7 @@
                             <div class="form-group">
                                 <label class="form-label">門市類型 *</label>
                                 <select id="storeTypeSelect" class="form-input" required onchange="updateShippingFee()">
-                                    <option value="">請選擇門市類型</option>
-                                    <option value="711">7-ELEVEN</option>
+                                    <option value="711" selected>7-ELEVEN</option>
                                     <option value="711-outlying">外島7-11</option>
                                 </select>
                             </div>
@@ -2445,6 +2444,9 @@ ${orderData.items.map(item =>
                     confirmStoreSelection();
                 };
             }
+            
+            // 設定預設門市類型為7-11
+            document.getElementById('storeTypeSelect').value = '711';
             
             loadCart();
             generateCaptcha();
