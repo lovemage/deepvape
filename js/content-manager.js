@@ -123,6 +123,77 @@ class ContentManager {
         });
         
         console.log('✅ 價格同步完成');
+
+        // 如果發現任何不一致，就準備一個下載按鈕
+        if (Object.keys(this.pageProductPrices).length > 0) {
+            this.preparePriceUpdateDownload(this.pageProductPrices);
+        }
+    }
+
+    // 準備提供給用戶下載的更新文件
+    preparePriceUpdateDownload(updatedData) {
+        console.warn('⚠️ 偵測到本地產品檔案價格與全域設定不符。已為您準備好更新檔案。');
+
+        const downloadBtn = document.createElement('button');
+        downloadBtn.id = 'downloadPriceUpdates';
+        downloadBtn.textContent = '📥 下載已同步的價格檔案';
+        downloadBtn.style.position = 'fixed';
+        downloadBtn.style.bottom = '20px';
+        downloadBtn.style.right = '20px';
+        downloadBtn.style.zIndex = '9999';
+        downloadBtn.style.background = '#e94560';
+        downloadBtn.style.color = 'white';
+        downloadBtn.style.border = 'none';
+        downloadBtn.style.padding = '10px 20px';
+        downloadBtn.style.borderRadius = '5px';
+        downloadBtn.style.cursor = 'pointer';
+        downloadBtn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+
+        downloadBtn.onclick = async () => {
+            console.log('🔄 開始打包價格更新檔案...');
+            const JSZip = window.JSZip;
+            if (!JSZip) {
+                alert('JSZip 庫未載入，無法打包檔案。請檢查腳本引用。');
+                return;
+            }
+            const zip = new JSZip();
+
+            for (const productId in updatedData) {
+                const fileName = `${productId.replace('_product', '')}.json`;
+                const fileContent = JSON.stringify(updatedData[productId], null, 2);
+                zip.file(fileName, fileContent);
+            }
+
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            const downloadUrl = URL.createObjectURL(zipBlob);
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = 'updated_page_prices.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(downloadUrl);
+
+            console.log('✅ 價格更新檔案已下載。請解壓縮並將檔案覆蓋到 /data/page_products/ 目錄下。');
+            downloadBtn.textContent = '✅ 下載完成';
+            downloadBtn.disabled = true;
+            setTimeout(() => downloadBtn.remove(), 3000);
+        };
+
+        // 確保按鈕不會重複添加
+        if (!document.getElementById('downloadPriceUpdates')) {
+            document.body.appendChild(downloadBtn);
+            
+            // 同時在控制台顯示明確的操作指南
+            console.log(
+                '%c操作指南：\n' +
+                '1. 點擊右下角的「下載已同步的價格檔案」按鈕。\n' +
+                '2. 解壓縮下載的 `updated_page_prices.zip` 檔案。\n' +
+                '3. 將解壓後的所有 .json 檔案，上傳並覆蓋到您專案的 `/data/page_products/` 目錄下。\n' +
+                '4. 完成後，刷新此頁面，價格不一致的警告將會消失。',
+                'background: #28a745; color: white; font-size: 14px; padding: 10px; border-radius: 5px;'
+            );
+        }
     }
 
     // 更新 UI

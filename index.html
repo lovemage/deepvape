@@ -3767,9 +3767,11 @@
     
     <!-- 首頁商品卡片同步系統 -->
     <script src="/js/homepage-sync.js"></script>
-    
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <!-- JSZip for file packaging -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
     <script>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", user => {
