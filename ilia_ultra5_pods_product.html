@@ -671,7 +671,7 @@
                         <!-- Flavor Options -->
                         <div class="flavor-options">
                             <h3 class="flavor-title">口味選擇</h3>
-                            <div class="flavor-grid" id="variantContainer">
+                            <div class="flavor-grid variant-options" id="variantContainer">
                                 <!-- 口味選項將由變數選擇器動態載入 -->
                             </div>
                         </div>
@@ -802,93 +802,7 @@
             }
         }
 
-        // Add to cart functionality
-        function addToCart() {
-            // 檢查是否選擇了變數
-            const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
-            if (!selectedColorOption) {
-            // 使用新的購物車動畫系統
-            if (window.CartAnimation) {
-                window.CartAnimation.showAddToCartAnimation({
-                    productName: 'ILIA Ultra5 Pods',
-                    variant: variantValue,
-                    sourceElement: document.getElementById('addToCartBtn'),
-                    productImage: '/ilia_pod5/ilia-pod5.jpg'
-                });
-            } else {
-                // 備用通知
-                alert('請先選擇產品選項！');
-            }
-return;
-            }
-            
-            // 獲取選中的變數信息
-            const variantId = selectedColorOption.dataset.variantId || 
-                             selectedColorOption.dataset.color || 
-                             selectedColorOption.dataset.flavor;
-            const variantValue = selectedColorOption.textContent.trim() || 
-                               selectedColorOption.dataset.color || 
-                               selectedColorOption.dataset.flavor;
-            
-            if (!variantId || !variantValue) {
-                alert('無法獲取選中的產品選項，請重新選擇！');
-                return;
-            }
-            
-            // 檢查庫存（如果有 StockChecker）
-            if (window.StockChecker && window.StockChecker.initialized) {
-                const stockInfo = window.StockChecker.checkVariantStock('ilia_ultra5_pods_product', variantId, 'variant');
-                if (stockInfo.stock <= 0) {
-                    alert(`很抱歉，${variantValue} 目前缺貨！`);
-                    return;
-                }
-            }
-            
-            const quantity = parseInt(document.getElementById('quantity')?.value || '1');
-            
-            // 獲取產品基本信息
-            const productNameElement = document.querySelector('h1, .product-title, .product-name');
-            const productName = productNameElement ? productNameElement.textContent.trim() : '產品';
-            
-            const priceElement = document.querySelector('.price, .product-price, [class*="price"]');
-            let price = 0;
-            if (priceElement) {
-                const priceText = priceElement.textContent.replace(/[^0-9]/g, '');
-                price = parseInt(priceText) || 0;
-            }
-            
-            const product = {
-                id: 'ilia_ultra5_pods_product',
-                name: productName,
-                price: price,
-                variant: variantValue,
-                variantId: variantId,
-                quantity: quantity,
-                image: document.querySelector('.main-image img, .product-image img')?.src || '',
-                category: 'product'
-            };
-            
-            // 加入購物車
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const existingIndex = cart.findIndex(item => 
-                item.id === product.id && item.variantId === product.variantId
-            );
-            
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity += product.quantity;
-            } else {
-                cart.push(product);
-            }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // 更新購物車計數
-            if (typeof updateCartCount === 'function') {
-                updateCartCount();
-            }
-            
-            alert(`✅ 已將 ${quantity} 個 ${productName} (${variantValue}) 加入購物車！`);
-        }
+
 
         // Update cart count display
         function updateCartCount() {
@@ -905,13 +819,6 @@ return;
         // Initialize cart count on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
-            
-            // 等待產品管理器初始化後再初始化變數選擇器
-            if (window.ProductManager && window.ProductManager.initialized) {
-                initVariantSelector();
-            } else {
-                window.addEventListener('productsLoaded', initVariantSelector);
-            }
         });
 
         // Smooth scrolling for anchor links
@@ -932,18 +839,32 @@ return;
         let variantSelector = null;
 
         // 初始化變數選擇器
-        function initVariantSelector() {
-            if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
+        async function initVariantSelector() {
+            try {
+                // 等待 ProductManager 初始化
+                if (!window.ProductManager || !window.ProductManager.initialized) {
+                    await new Promise(resolve => {
+                        const checkInterval = setInterval(() => {
+                            if (window.ProductManager && window.ProductManager.initialized) {
+                                clearInterval(checkInterval);
+                                resolve();
+                            }
+                        }, 100);
+                    });
+                }
+
+                // 初始化變數選擇器
                 variantSelector = new VariantSelector('ilia_ultra5_pods_product', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
-                    console.log('選擇的口味:', variant.value);
                     updateAddToCartButton(variant);
                 });
-            } else {
-                // 如果依賴未載入，稍後重試
-                setTimeout(initVariantSelector, 500);
+                
+                console.log('✅ 變數選擇器已初始化');
+            } catch (error) {
+                console.error('❌ 變數選擇器初始化失敗:', error);
+                setTimeout(initVariantSelector, 1000);
             }
         }
 
@@ -1019,6 +940,11 @@ return;
 
             // Update cart count if cart counter exists
             updateCartCount();
+
+            // 觸發購物車動畫
+            if (window.CartAnimation) {
+                window.CartAnimation.showAddToCartAnimation();
+            }
         }
     </script>
 
@@ -1053,6 +979,9 @@ return;
                 const pageProductManager = new PageProductManager();
                 await pageProductManager.init('ilia_ultra5_pods_product');
                 console.log('ILIA Ultra5 煙彈頁面管理器已初始化');
+                
+                // 初始化變數選擇器
+                await initVariantSelector();
             } catch (error) {
                 console.error('初始化產品頁面管理器失敗:', error);
             }
