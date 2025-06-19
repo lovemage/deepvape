@@ -168,6 +168,7 @@ class VariantSelector {
         option.className = `variant-option variant-option-${type}`;
         option.dataset.variantId = variant.id;
         option.dataset.variantType = type;
+        option.dataset.stock = variant.stock; // 添加庫存數據
 
         // 根據類型設置不同的顯示樣式
         if (type === 'color') {

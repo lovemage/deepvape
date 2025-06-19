@@ -276,6 +276,12 @@ class PageProductManager {
                                 document.querySelector('.flavor-grid, .color-grid') ||
                                 document.body;
         
+        // 如果使用 VariantSelector，跳過重複的事件監聽器設置
+        if (window.variantSelector && variantContainer.id === 'variantContainer') {
+            console.log('檢測到 VariantSelector，跳過重複的事件監聽器設置');
+            return;
+        }
+        
         // 移除舊的事件監聽器（如果存在）
         if (this.variantClickHandler) {
             variantContainer.removeEventListener('click', this.variantClickHandler);
