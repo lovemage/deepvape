@@ -243,6 +243,57 @@
     width: 100%;
 }
 
+/* 增強舊類名的完整樣式支援 */
+.variant-option {
+    background: var(--dv-variant-bg);
+    border: var(--dv-variant-border);
+    border-radius: var(--dv-variant-border-radius);
+    padding: var(--dv-variant-padding);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--dv-transition-normal);
+    backdrop-filter: blur(8px);
+    min-height: var(--dv-variant-min-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    color: var(--dv-text-primary);
+}
+
+/* 確保 variant-options 容器在任何父容器中都正確顯示 */
+.dv-variant-selector .variant-options,
+.variant-selector .variant-options {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+    gap: var(--dv-variant-gap) !important;
+    margin-bottom: var(--dv-spacing-xl) !important;
+    width: 100% !important;
+}
+
+/* 確保動態生成的 variant-option 正確顯示 */
+.dv-variant-selector .variant-option,
+.variant-selector .variant-option {
+    background: var(--dv-variant-bg) !important;
+    border: var(--dv-variant-border) !important;
+    border-radius: var(--dv-variant-border-radius) !important;
+    padding: var(--dv-variant-padding) !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    transition: var(--dv-transition-normal) !important;
+    backdrop-filter: blur(8px) !important;
+    min-height: var(--dv-variant-min-height) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+    font-weight: 500 !important;
+    color: var(--dv-text-primary) !important;
+}
+
 /* 特別支援 color-grid 容器中的變數選擇器 */
 .color-grid .variant-options,
 .color-grid .dv-variant-options,
@@ -273,25 +324,6 @@
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
     gap: var(--dv-variant-gap) !important;
     width: 100% !important;
-}
-
-.variant-option {
-    background: var(--dv-variant-bg);
-    border: var(--dv-variant-border);
-    border-radius: var(--dv-variant-border-radius);
-    padding: var(--dv-variant-padding);
-    text-align: center;
-    cursor: pointer;
-    transition: var(--dv-transition-normal);
-    backdrop-filter: blur(8px);
-    min-height: var(--dv-variant-min-height);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    font-weight: 500;
-    color: var(--dv-text-primary);
 }
 
 /* 支援 ILIA 一代產品頁面的 color-option 樣式 */
@@ -337,6 +369,7 @@
     color: var(--dv-text-primary) !important;
 }
 
+/* 舊類名的動畫效果 */
 .variant-option::before {
     content: '';
     position: absolute;
@@ -361,58 +394,38 @@
     transform: translateX(100%) translateY(100%) rotate(45deg);
 }
 
+/* 舊類名的 hover 狀態 */
 .variant-option:hover {
-    border-color: var(--dv-primary);
-    background: var(--dv-border-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--dv-shadow-primary);
-}
-
-/* 支援 ILIA 一代產品頁面的 hover 和 selected 狀態 */
-.color-option:hover,
-.flavor-option:hover,
-.color-grid .variant-option:hover,
-.color-grid .dv-variant-option:hover,
-.color-grid .color-option:hover {
     border-color: var(--dv-primary) !important;
     background: var(--dv-border-primary) !important;
     transform: translateY(-2px) !important;
     box-shadow: var(--dv-shadow-primary) !important;
 }
 
+/* 舊類名的 selected 狀態 */
 .variant-option.selected {
-    border-color: var(--dv-primary);
-    background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary));
-    color: var(--dv-text-primary);
-    box-shadow: var(--dv-shadow-primary);
-}
-
-/* 支援 ILIA 一代產品頁面的 selected 狀態 */
-.color-option.selected,
-.flavor-option.selected,
-.color-grid .variant-option.selected,
-.color-grid .dv-variant-option--selected,
-.color-grid .color-option.selected {
     border-color: var(--dv-primary) !important;
     background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary)) !important;
     color: var(--dv-text-primary) !important;
     box-shadow: var(--dv-shadow-primary) !important;
 }
 
+/* 舊類名的缺貨狀態 */
 .variant-option.out-of-stock {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--dv-glass-bg);
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: var(--dv-glass-bg) !important;
 }
 
 .variant-option.out-of-stock:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: var(--dv-border-primary);
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: var(--dv-border-primary) !important;
 }
 
+/* 舊類名的低庫存狀態 */
 .variant-option.low-stock {
-    border-color: #f59e0b;
+    border-color: #f59e0b !important;
 }
 
 .variant-name {
@@ -525,4 +538,28 @@
     color: var(--dv-text-secondary);
     padding: var(--dv-spacing-xl);
     font-style: italic;
+}
+
+/* 支援 ILIA 一代產品頁面的 hover 和 selected 狀態 */
+.color-option:hover,
+.flavor-option:hover,
+.color-grid .variant-option:hover,
+.color-grid .dv-variant-option:hover,
+.color-grid .color-option:hover {
+    border-color: var(--dv-primary) !important;
+    background: var(--dv-border-primary) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: var(--dv-shadow-primary) !important;
+}
+
+/* 支援 ILIA 一代產品頁面的 selected 狀態 */
+.color-option.selected,
+.flavor-option.selected,
+.color-grid .variant-option.selected,
+.color-grid .dv-variant-option--selected,
+.color-grid .color-option.selected {
+    border-color: var(--dv-primary) !important;
+    background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary)) !important;
+    color: var(--dv-text-primary) !important;
+    box-shadow: var(--dv-shadow-primary) !important;
 } 
