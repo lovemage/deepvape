@@ -733,8 +733,20 @@
         }
 
         @media (max-width: 768px) {
+            .product-showcase {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1.5rem;
+            }
+            
+            .product-info {
+                padding: 1rem 0;
+                width: 100%;
+            }
+            
             .flavor-options {
                 margin-bottom: 20px;
+                width: 100%;
             }
             
             .variant-options,
@@ -742,8 +754,10 @@
             .variant-options-flavor {
                 grid-template-columns: repeat(3, 1fr) !important;
                 gap: 0.6rem !important;
-                width: 100%;
+                width: 100% !important;
                 justify-items: stretch;
+                margin: 0;
+                padding: 0;
             }
             
             .variant-option {
