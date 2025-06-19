@@ -568,8 +568,8 @@
 
         .variant-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
         }
 
         /* Specs Table */
@@ -777,8 +777,7 @@
                 gap: 2rem;
             }
             
-            .flavor-grid,
-            .variant-options {
+            .flavor-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.4rem;
             }
@@ -1024,7 +1023,7 @@
                 }
             });
 
-            // 按鈕狀態由變數選擇器回調處理
+            // 按鈕狀態將由 VariantSelector 回調更新
         });
 
         // 口味選擇由 VariantSelector 處理，不需要手動邏輯
@@ -1045,18 +1044,10 @@
             const addToCartBtn = document.querySelector('.add-to-cart-btn');
             if (!addToCartBtn) return;
 
-            if (variant && variant.value) {
-                // 檢查庫存，如果沒有庫存信息或庫存大於0，則啟用按鈕
-                const hasStock = !variant.stock || variant.stock > 0;
-                if (hasStock) {
-                    addToCartBtn.disabled = false;
-                    addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
-                    addToCartBtn.style.opacity = '1';
-                } else {
-                    addToCartBtn.disabled = true;
-                    addToCartBtn.innerHTML = `<i class="fas fa-times-circle"></i> ${variant.value} - 缺貨`;
-                    addToCartBtn.style.opacity = '0.6';
-                }
+            if (variant && variant.stock > 0) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> 加入購物車 - ${variant.value}`;
+                addToCartBtn.style.opacity = '1';
             } else {
                 addToCartBtn.disabled = true;
                 addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇口味';
@@ -1242,7 +1233,7 @@
                 console.log('✅ SP2 煙彈 產品頁面管理器已初始化');
                 
                 // 初始化 VariantSelector
-                const variantSelector = new VariantSelector('sp2_pods_product', 'variantContainer');
+                const variantSelector = new VariantSelector('sp2_pods_product');
                 await variantSelector.init();
                 
                 // 設置變數變更回調
