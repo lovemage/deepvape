@@ -436,7 +436,9 @@
         }
 
         /* VariantSelector 生成的元素樣式 */
-        .variant-options {
+        .variant-options,
+        .variant-options-color,
+        .variant-options-flavor {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 0.8rem;
@@ -520,6 +522,21 @@
 
         .variant-option.selected .variant-stock {
             color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* 顏色樣本樣式 */
+        .color-swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .variant-option.selected .color-swatch {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(26, 254, 73, 0.5);
         }
 
         /* Smart Features */
@@ -744,7 +761,9 @@
             }
             
             /* VariantSelector 生成的元素樣式 - 移動端 */
-            .variant-options {
+            .variant-options,
+            .variant-options-color,
+            .variant-options-flavor {
                 display: grid !important;
                 grid-template-columns: repeat(3, 1fr) !important;
                 gap: 0.4rem !important;
@@ -943,7 +962,7 @@
             </div>
 
             <!-- Variant Container -->
-            <div id="variantContainer">
+            <div id="variantContainer" class="variant-options">
                 <h3 class="color-title">顏色選擇 <span class="tech-badge">23種顏色</span></h3>
                 <!-- VariantSelector 會在這裡動態生成選項 -->
             </div>
