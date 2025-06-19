@@ -1156,34 +1156,81 @@
                 window.variantSelector = new VariantSelector('sp2_pods_product', 'variantContainer');
                 console.log('✅ SP2 煙彈 VariantSelector 已初始化');
                 
+                // 設置變數選擇回調 - 與 HTA 煙彈相同
+                window.variantSelector.setOnVariantChange((variant) => {
+                    console.log('🔄 變數選擇回調觸發:', variant);
+                    updateAddToCartButton(variant);
+                });
+                
+                // 調試：檢查載入的變數數據
+                setTimeout(() => {
+                    const variants = window.ProductManager.getProductVariants('sp2_pods_product');
+                    console.log('🔍 SP2 煙彈變數數據:', variants);
+                    console.log('🔍 變數數量:', variants.length);
+                    if (variants.length > 0) {
+                        console.log('🔍 第一個變數:', variants[0]);
+                        console.log('🔍 第一個變數庫存:', variants[0].stock);
+                    }
+                }, 3000);
+                
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
             }
         });
 
-        // Add to Cart - 與 SP2 主機完全相同的方式
+        // 更新加入購物車按鈕狀態 - 與 HTA 煙彈相同
+        function updateAddToCartButton(variant) {
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            if (!addToCartBtn) {
+                console.error('找不到 addToCartBtn 元素');
+                return;
+            }
+            
+            console.log('更新按鈕狀態，選中變數:', variant);
+            console.log('變數庫存:', variant ? variant.stock : 'N/A');
+            console.log('變數值:', variant ? variant.value : 'N/A');
+            
+            if (variant && variant.stock > 0) {
+                addToCartBtn.textContent = `加入購物車 - ${variant.value}`;
+                addToCartBtn.disabled = false;
+                addToCartBtn.classList.remove('disabled');
+                console.log('✅ 按鈕已啟用');
+            } else if (variant && variant.stock === 0) {
+                addToCartBtn.textContent = '此變數目前缺貨，請選擇其他選項';
+                addToCartBtn.disabled = true;
+                addToCartBtn.classList.add('disabled');
+                console.log('❌ 按鈕已禁用 - 缺貨');
+            } else {
+                addToCartBtn.textContent = '請選擇口味';
+                addToCartBtn.disabled = true;
+                addToCartBtn.classList.add('disabled');
+                console.log('⚠️ 按鈕已禁用 - 未選擇');
+            }
+        }
+
+        // Add to Cart - 使用 VariantSelector 獲取選中變數
         function addToCart() {
-            // 檢查是否有選擇變數
-            const selectedVariantElement = document.querySelector('.variant-option.selected');
-            if (!selectedVariantElement) {
+            // 使用 VariantSelector 獲取選中變數
+            const selectedVariant = window.variantSelector ? window.variantSelector.getSelectedVariant() : null;
+            
+            if (!selectedVariant) {
                 alert('請先選擇口味！');
                 return;
             }
             
-            const selectedVariant = selectedVariantElement.textContent.trim();
-            const variantId = selectedVariantElement.dataset.variantId || selectedVariant;
+            const variantId = selectedVariant.id;
             const quantity = 1; // SP2 煙彈固定數量為1
             
             // 檢查庫存
             if (window.StockChecker) {
                 const stockResult = window.StockChecker.checkVariantStock('sp2_pods_product', variantId);
                 if (!stockResult.available) {
-                    alert(`❌ ${selectedVariant} 目前缺貨，請選擇其他口味或稍後再試。`);
+                    alert(`❌ ${selectedVariant.value} 目前缺貨，請選擇其他口味或稍後再試。`);
                     return;
                 }
                 
                 if (stockResult.stock < quantity) {
-                    alert(`❌ ${selectedVariant} 庫存不足，目前僅剩 ${stockResult.stock} 件。`);
+                    alert(`❌ ${selectedVariant.value} 庫存不足，目前僅剩 ${stockResult.stock} 件。`);
                     return;
                 }
             }
@@ -1193,8 +1240,8 @@
                 id: 'sp2_pods_product',
                 name: 'SP2 煙彈',
                 price: 150,
-                flavor: selectedVariant,
-                variant: selectedVariant,
+                flavor: selectedVariant.value,
+                variant: selectedVariant.value,
                 variantId: variantId,
                 quantity: quantity,
                 image: '/sp2_pods/sp2_pods_main.webp',
@@ -1218,7 +1265,7 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             
             // 顯示成功訊息
-            alert(`✅ 已將 ${quantity} 個 SP2 煙彈 (${selectedVariant}) 加入購物車！`);
+            alert(`✅ 已將 ${quantity} 個 SP2 煙彈 (${selectedVariant.value}) 加入購物車！`);
             
             // 更新購物車圖示
             updateCartCount();
