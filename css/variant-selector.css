@@ -1,338 +1,68 @@
 /**
- * DeepVape 變數選擇器樣式
- * 統一管理所有產品頁面的變數選擇器樣式
+ * DeepVape 統一變數選擇器系統
+ * 適用於所有電子煙產品頁面
+ * 無需 !important，採用正確的CSS層次結構
  */
 
 /* ================================
-   變數選擇器主容器
+   基礎變數選擇器容器
    ================================ */
 
-.dv-variant-selector {
+.dv-variant-selector,
+.variant-selector,
+.color-grid,
+.flavor-grid,
+#variantContainer {
     width: 100%;
     margin-bottom: var(--dv-spacing-xl);
 }
 
 /* ================================
-   變數組容器
+   變數組標題
    ================================ */
 
-.dv-variant-group {
-    margin-bottom: var(--dv-spacing-xl);
-    width: 100%;
-}
-
-.dv-variant-group-title {
+.dv-variant-group-title,
+.variant-group-title {
+    font-size: var(--dv-font-lg);
+    font-weight: 700;
     color: var(--dv-text-primary);
     margin-bottom: var(--dv-spacing-base);
-    font-size: var(--dv-font-lg);
-    font-weight: 600;
+    text-align: center;
 }
 
 /* ================================
-   變數選項容器
+   統一變數選項容器
+   所有電子煙產品統一使用三列佈局
    ================================ */
 
 .dv-variant-options,
 .dv-variant-options--color,
 .dv-variant-options--flavor,
-.dv-variant-options--default {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--dv-variant-gap);
-    margin-bottom: var(--dv-spacing-xl);
-    width: 100%;
-}
-
-/* ================================
-   變數選項項目
-   ================================ */
-
-.dv-variant-option {
-    background: var(--dv-variant-bg);
-    border: var(--dv-variant-border);
-    border-radius: var(--dv-variant-border-radius);
-    padding: var(--dv-variant-padding);
-    text-align: center;
-    cursor: pointer;
-    transition: var(--dv-transition-normal);
-    backdrop-filter: blur(8px);
-    min-height: var(--dv-variant-min-height);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    font-weight: 500;
-    color: var(--dv-text-primary);
-}
-
-/* 動畫效果 */
-.dv-variant-option::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        45deg,
-        transparent 40%,
-        var(--dv-border-primary) 45%,
-        var(--dv-border-secondary) 50%,
-        var(--dv-border-primary) 55%,
-        transparent 60%
-    );
-    transition: transform var(--dv-transition-slow);
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-    opacity: 0.1;
-}
-
-.dv-variant-option:hover::before {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
-}
-
-/* Hover 狀態 */
-.dv-variant-option:hover {
-    border-color: var(--dv-primary);
-    background: var(--dv-border-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--dv-shadow-primary);
-}
-
-/* 選中狀態 */
-.dv-variant-option--selected {
-    border-color: var(--dv-primary);
-    background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary));
-    color: var(--dv-text-primary);
-    box-shadow: var(--dv-shadow-primary);
-}
-
-/* 缺貨狀態 */
-.dv-variant-option--disabled,
-.dv-variant-option--out-of-stock {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--dv-glass-bg);
-}
-
-.dv-variant-option--disabled:hover,
-.dv-variant-option--out-of-stock:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: var(--dv-border-primary);
-}
-
-/* 低庫存狀態 */
-.dv-variant-option--low-stock {
-    border-color: #f59e0b;
-}
-
-/* ================================
-   變數選項內容
-   ================================ */
-
-.dv-variant-name {
-    font-weight: 600;
-    color: var(--dv-text-primary);
-    margin-bottom: var(--dv-spacing-xs);
-    font-size: var(--dv-font-base);
-    position: relative;
-    z-index: 1;
-    line-height: 1.2;
-}
-
-.dv-variant-stock {
-    font-size: var(--dv-font-sm);
-    color: var(--dv-text-secondary);
-    line-height: 1.2;
-    position: relative;
-    z-index: 1;
-}
-
-.dv-variant-option--selected .dv-variant-name {
-    color: var(--dv-text-primary);
-}
-
-.dv-variant-option--selected .dv-variant-stock {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* ================================
-   顏色樣本
-   ================================ */
-
-.dv-color-swatch {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    margin: 0 auto var(--dv-spacing-sm);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: var(--dv-transition-normal);
-}
-
-.dv-variant-option--selected .dv-color-swatch {
-    border-color: var(--dv-text-primary);
-    box-shadow: 0 0 10px var(--dv-primary);
-}
-
-/* ================================
-   響應式設計
-   ================================ */
-
-@media (max-width: 768px) {
-    /* 容器調整 */
-    .dv-variant-options,
-    .dv-variant-options--color,
-    .dv-variant-options--flavor,
-    .dv-variant-options--default {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: var(--dv-variant-mobile-gap) !important;
-        width: 100% !important;
-        justify-items: stretch;
-        margin: 0 !important;
-        padding: 0 !important;
-        display: grid !important;
-    }
-    
-    /* 選項調整 */
-    .dv-variant-option {
-        padding: var(--dv-variant-mobile-padding) !important;
-        min-height: 60px !important;
-        height: 60px !important;
-        max-height: 60px !important;
-        font-size: var(--dv-variant-mobile-font-size) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        line-height: 1.1 !important;
-        word-break: break-word !important;
-        hyphens: auto !important;
-        overflow: hidden !important;
-        box-sizing: border-box !important;
-    }
-    
-    /* 文字調整 */
-    .dv-variant-name {
-        font-size: var(--dv-variant-mobile-font-size);
-        margin-bottom: 0.1rem;
-    }
-    
-    .dv-variant-stock {
-        font-size: var(--dv-font-xs);
-    }
-    
-    /* 顏色樣本調整 */
-    .dv-color-swatch {
-        width: 16px;
-        height: 16px;
-        margin-bottom: var(--dv-spacing-xs);
-    }
-}
-
-/* ================================
-   兼容性類名 (向後兼容)
-   ================================ */
-
-/* 支援舊的類名結構 - 直接複製樣式 */
+.dv-variant-options--default,
 .variant-options,
 .variant-options-color,
 .variant-options-flavor,
 .variant-options-default,
-.color-grid,
-.flavor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--dv-variant-gap);
-    margin-bottom: var(--dv-spacing-xl);
-    width: 100%;
-}
-
-/* 增強舊類名的完整樣式支援 */
-.variant-option {
-    background: var(--dv-variant-bg);
-    border: var(--dv-variant-border);
-    border-radius: var(--dv-variant-border-radius);
-    padding: var(--dv-variant-padding);
-    text-align: center;
-    cursor: pointer;
-    transition: var(--dv-transition-normal);
-    backdrop-filter: blur(8px);
-    min-height: var(--dv-variant-min-height);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    font-weight: 500;
-    color: var(--dv-text-primary);
-}
-
-/* 確保 variant-options 容器在任何父容器中都正確顯示 */
-.dv-variant-selector .variant-options,
-.variant-selector .variant-options {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
-    gap: var(--dv-variant-gap) !important;
-    margin-bottom: var(--dv-spacing-xl) !important;
-    width: 100% !important;
-}
-
-/* 確保動態生成的 variant-option 正確顯示 */
-.dv-variant-selector .variant-option,
-.variant-selector .variant-option {
-    background: var(--dv-variant-bg) !important;
-    border: var(--dv-variant-border) !important;
-    border-radius: var(--dv-variant-border-radius) !important;
-    padding: var(--dv-variant-padding) !important;
-    text-align: center !important;
-    cursor: pointer !important;
-    transition: var(--dv-transition-normal) !important;
-    backdrop-filter: blur(8px) !important;
-    min-height: var(--dv-variant-min-height) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    position: relative !important;
-    overflow: hidden !important;
-    font-weight: 500 !important;
-    color: var(--dv-text-primary) !important;
-}
-
-/* 特別支援 color-grid 容器中的變數選擇器 */
 .color-grid .variant-options,
 .color-grid .dv-variant-options,
-.color-grid .variant-options-color,
-.color-grid .dv-variant-options--color {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
-    gap: var(--dv-variant-gap) !important;
-    margin-bottom: var(--dv-spacing-xl) !important;
-    width: 100% !important;
+.flavor-grid .variant-options,
+.flavor-grid .dv-variant-options,
+#variantContainer .variant-options,
+#variantContainer .dv-variant-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--dv-variant-gap);
+    width: 100%;
+    margin-bottom: var(--dv-spacing-xl);
 }
 
-/* 確保 color-grid 直接作為變數容器時的樣式 */
-#variantContainer.color-grid {
-    display: block !important;
-    width: 100% !important;
-}
+/* ================================
+   統一變數選項樣式
+   所有電子煙產品統一外觀
+   ================================ */
 
-#variantContainer.color-grid > .variant-group,
-#variantContainer.color-grid > .dv-variant-group {
-    width: 100% !important;
-    margin-bottom: var(--dv-spacing-xl) !important;
-}
-
-#variantContainer.color-grid .variant-options,
-#variantContainer.color-grid .dv-variant-options {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
-    gap: var(--dv-variant-gap) !important;
-    width: 100% !important;
-}
-
-/* 支援 ILIA 一代產品頁面的 color-option 樣式 */
+.dv-variant-option,
+.variant-option,
 .color-option,
 .flavor-option {
     background: var(--dv-variant-bg);
@@ -347,6 +77,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     position: relative;
     overflow: hidden;
     font-weight: 500;
@@ -354,160 +85,266 @@
     box-sizing: border-box;
 }
 
-/* 確保 color-grid 中的變數選項使用正確的樣式 */
-.color-grid .variant-option,
-.color-grid .dv-variant-option,
-.color-grid .color-option {
-    background: var(--dv-variant-bg) !important;
-    border: var(--dv-variant-border) !important;
-    border-radius: var(--dv-variant-border-radius) !important;
-    padding: var(--dv-variant-padding) !important;
-    text-align: center !important;
-    cursor: pointer !important;
-    transition: var(--dv-transition-normal) !important;
-    backdrop-filter: blur(8px) !important;
-    min-height: var(--dv-variant-min-height) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    position: relative !important;
-    overflow: hidden !important;
-    font-weight: 500 !important;
-    color: var(--dv-text-primary) !important;
-}
+/* ================================
+   懸停效果
+   ================================ */
 
-/* 舊類名的動畫效果 */
-.variant-option::before {
+.dv-variant-option::before,
+.variant-option::before,
+.color-option::before,
+.flavor-option::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        45deg,
-        transparent 40%,
-        var(--dv-border-primary) 45%,
-        var(--dv-border-secondary) 50%,
-        var(--dv-border-primary) 55%,
-        transparent 60%
-    );
-    transition: transform var(--dv-transition-slow);
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, var(--dv-primary), var(--dv-secondary));
+    opacity: 0;
+    transition: var(--dv-transition-normal);
+    z-index: -1;
+}
+
+.dv-variant-option:hover::before,
+.variant-option:hover::before,
+.color-option:hover::before,
+.flavor-option:hover::before {
     opacity: 0.1;
 }
 
-.variant-option:hover::before {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
-}
-
-/* 舊類名的 hover 狀態 */
-.variant-option:hover {
-    border-color: var(--dv-primary) !important;
-    background: var(--dv-border-primary) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: var(--dv-shadow-primary) !important;
-}
-
-/* 舊類名的 selected 狀態 */
-.variant-option.selected {
-    border-color: var(--dv-primary) !important;
-    background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary)) !important;
-    color: var(--dv-text-primary) !important;
-    box-shadow: var(--dv-shadow-primary) !important;
-}
-
-/* 舊類名的缺貨狀態 */
-.variant-option.out-of-stock {
-    opacity: 0.5 !important;
-    cursor: not-allowed !important;
-    background: var(--dv-glass-bg) !important;
-}
-
-.variant-option.out-of-stock:hover {
-    transform: none !important;
-    box-shadow: none !important;
-    border-color: var(--dv-border-primary) !important;
-}
-
-/* 舊類名的低庫存狀態 */
-.variant-option.low-stock {
-    border-color: #f59e0b !important;
-}
-
-.variant-name {
-    font-weight: 600;
-    color: var(--dv-text-primary);
-    margin-bottom: var(--dv-spacing-xs);
-    font-size: var(--dv-font-base);
-    position: relative;
-    z-index: 1;
-    line-height: 1.2;
-}
-
-.variant-option.selected .variant-name {
-    color: var(--dv-text-primary);
-}
-
-.variant-stock {
-    font-size: var(--dv-font-sm);
-    color: var(--dv-text-secondary);
-    line-height: 1.2;
-    position: relative;
-    z-index: 1;
-}
-
-.variant-option.selected .variant-stock {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.color-swatch {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    margin: 0 auto var(--dv-spacing-sm);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: var(--dv-transition-normal);
-}
-
-.variant-option.selected .color-swatch {
-    border-color: var(--dv-text-primary);
-    box-shadow: 0 0 10px var(--dv-primary);
+.dv-variant-option:hover,
+.variant-option:hover,
+.color-option:hover,
+.flavor-option:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--dv-shadow-primary);
+    border-color: var(--dv-primary);
 }
 
 /* ================================
-   動態生成元素支援
+   選中狀態
    ================================ */
 
-/* 支援 VariantSelector.js 動態生成的元素 */
-.variant-group {
-    margin-bottom: var(--dv-spacing-xl);
-    width: 100%;
+.dv-variant-option--selected,
+.variant-option.selected,
+.color-option.selected,
+.flavor-option.selected {
+    background: linear-gradient(45deg, var(--dv-primary), var(--dv-secondary));
+    color: var(--dv-bg-primary);
+    border-color: var(--dv-primary);
+    box-shadow: var(--dv-shadow-primary);
 }
 
-.variant-group-title {
-    color: var(--dv-text-primary);
-    margin-bottom: var(--dv-spacing-base);
-    font-size: var(--dv-font-lg);
+/* ================================
+   缺貨狀態
+   ================================ */
+
+.dv-variant-option--disabled,
+.dv-variant-option--out-of-stock,
+.variant-option.out-of-stock,
+.color-option.out-of-stock,
+.flavor-option.out-of-stock {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(107, 114, 128, 0.2);
+}
+
+.dv-variant-option--disabled:hover,
+.dv-variant-option--out-of-stock:hover,
+.variant-option.out-of-stock:hover,
+.color-option.out-of-stock:hover,
+.flavor-option.out-of-stock:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* ================================
+   低庫存狀態
+   ================================ */
+
+.dv-variant-option--low-stock,
+.variant-option.low-stock,
+.color-option.low-stock,
+.flavor-option.low-stock {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+}
+
+/* ================================
+   變數名稱
+   ================================ */
+
+.dv-variant-name,
+.variant-name {
+    font-size: var(--dv-font-base);
     font-weight: 600;
+    margin-bottom: var(--dv-spacing-xs);
+    line-height: 1.2;
+    word-break: break-word;
 }
 
-/* 隱藏重複的動態標題 */
+.dv-variant-option--selected .dv-variant-name,
+.variant-option.selected .variant-name {
+    color: var(--dv-bg-primary);
+}
+
+/* ================================
+   庫存資訊
+   ================================ */
+
+.dv-variant-stock,
+.variant-stock {
+    font-size: var(--dv-font-xs);
+    color: var(--dv-text-secondary);
+    margin-top: auto;
+}
+
+.dv-variant-option--selected .dv-variant-stock,
+.variant-option.selected .variant-stock {
+    color: var(--dv-bg-primary);
+}
+
+/* ================================
+   顏色樣本
+   ================================ */
+
+.dv-color-swatch,
+.color-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-bottom: var(--dv-spacing-xs);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
+}
+
+.dv-variant-option--selected .dv-color-swatch,
+.variant-option.selected .color-swatch {
+    border-color: var(--dv-bg-primary);
+}
+
+/* ================================
+   特殊樣式：口味選項圓角
+   ================================ */
+
+.flavor-option {
+    border-radius: 25px;
+}
+
+/* ================================
+   響應式設計
+   ================================ */
+
+/* 移動端 (≤768px) */
 @media (max-width: 768px) {
-    .variant-group-title {
-        display: none;
+    /* 統一三列佈局 */
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default,
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .color-grid .variant-options,
+    .color-grid .dv-variant-options,
+    .flavor-grid .variant-options,
+    .flavor-grid .dv-variant-options,
+    #variantContainer .variant-options,
+    #variantContainer .dv-variant-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--dv-variant-mobile-gap);
+    }
+    
+    /* 統一選項樣式 */
+    .dv-variant-option,
+    .variant-option,
+    .color-option,
+    .flavor-option {
+        padding: var(--dv-variant-mobile-padding);
+        min-height: 60px;
+        height: 60px;
+        max-height: 60px;
+        font-size: var(--dv-variant-mobile-font-size);
+    }
+    
+    /* 文字調整 */
+    .dv-variant-name,
+    .variant-name {
+        font-size: var(--dv-variant-mobile-font-size);
+        margin-bottom: 0.1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
+    }
+    
+    .dv-variant-stock,
+    .variant-stock {
+        font-size: var(--dv-font-xs);
+        white-space: nowrap;
+    }
+    
+    /* 顏色樣本調整 */
+    .dv-color-swatch,
+    .color-swatch {
+        width: 16px;
+        height: 16px;
+        margin-bottom: var(--dv-spacing-xs);
+    }
+}
+
+/* 平板端 (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default,
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .color-grid .variant-options,
+    .color-grid .dv-variant-options,
+    .flavor-grid .variant-options,
+    .flavor-grid .dv-variant-options,
+    #variantContainer .variant-options,
+    #variantContainer .dv-variant-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.8rem;
+    }
+}
+
+/* 桌面端 (≥1025px) */
+@media (min-width: 1025px) {
+    .dv-variant-options,
+    .dv-variant-options--color,
+    .dv-variant-options--flavor,
+    .dv-variant-options--default,
+    .variant-options,
+    .variant-options-color,
+    .variant-options-flavor,
+    .variant-options-default,
+    .color-grid .variant-options,
+    .color-grid .dv-variant-options,
+    .flavor-grid .variant-options,
+    .flavor-grid .dv-variant-options,
+    #variantContainer .variant-options,
+    #variantContainer .dv-variant-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.8rem;
     }
 }
 
 /* ================================
-   特殊狀態和動畫
+   載入狀態
    ================================ */
 
-/* 載入狀態 */
 .dv-variant-option--loading {
-    pointer-events: none;
     opacity: 0.7;
+    pointer-events: none;
 }
 
 .dv-variant-option--loading::after {
@@ -515,11 +352,11 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 16px;
-    height: 16px;
-    margin: -8px 0 0 -8px;
-    border: 2px solid transparent;
-    border-top: 2px solid var(--dv-primary);
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--dv-primary);
+    border-top: 2px solid transparent;
     border-radius: 50%;
     animation: dv-spin 1s linear infinite;
 }
@@ -529,64 +366,26 @@
     100% { transform: rotate(360deg); }
 }
 
-/* 錯誤狀態 */
+/* ================================
+   錯誤狀態
+   ================================ */
+
 .dv-variant-selector--error {
     border: 2px solid #ef4444;
-    border-radius: var(--dv-variant-border-radius);
-    padding: var(--dv-spacing-base);
     background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    padding: 1rem;
+    border-radius: var(--dv-variant-border-radius);
     text-align: center;
+    color: #ef4444;
 }
 
-/* 空狀態 */
+/* ================================
+   空狀態
+   ================================ */
+
 .dv-variant-selector--empty {
     text-align: center;
     color: var(--dv-text-secondary);
-    padding: var(--dv-spacing-xl);
     font-style: italic;
-}
-
-/* 支援 ILIA 一代產品頁面的 hover 和 selected 狀態 */
-.color-option:hover,
-.flavor-option:hover,
-.color-grid .variant-option:hover,
-.color-grid .dv-variant-option:hover,
-.color-grid .color-option:hover {
-    border-color: var(--dv-primary) !important;
-    background: var(--dv-border-primary) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: var(--dv-shadow-primary) !important;
-}
-
-/* 支援 ILIA 一代產品頁面的 selected 狀態 */
-.color-option.selected,
-.flavor-option.selected,
-.color-grid .variant-option.selected,
-.color-grid .dv-variant-option--selected,
-.color-grid .color-option.selected {
-    border-color: var(--dv-primary) !important;
-    background: linear-gradient(135deg, var(--dv-primary), var(--dv-secondary)) !important;
-    color: var(--dv-text-primary) !important;
-    box-shadow: var(--dv-shadow-primary) !important;
-}
-
-/* 舊系統變數選項統一設置 */
-.variant-option,
-.color-option,
-.flavor-option {
-    padding: var(--dv-variant-mobile-padding) !important;
-    min-height: 60px !important;
-    height: 60px !important;
-    max-height: 60px !important;
-    font-size: var(--dv-variant-mobile-font-size) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    line-height: 1.1 !important;
-    word-break: break-word !important;
-    hyphens: auto !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
+    padding: 2rem;
 } 

@@ -9,12 +9,14 @@
  * <link rel="stylesheet" href="css/variables.css">
  * <link rel="stylesheet" href="css/variant-selector.css">
  * <link rel="stylesheet" href="css/responsive.css">
+ * <link rel="stylesheet" href="css/product-page-unified.css">
  */
 
 /* 引入所有子檔案 */
 @import url('variables.css');
 @import url('variant-selector.css');
 @import url('responsive.css');
+@import url('product-page-unified.css');
 
 /* ================================
    全域重置和基礎樣式
@@ -106,6 +108,22 @@
     outline: 2px dotted green;
 }
 
+.dv-debug-border {
+    border: 2px solid #ff0000 !important;
+}
+
+.dv-debug-bg {
+    background: rgba(255, 0, 0, 0.2) !important;
+}
+
+/* 在開發模式顯示網格 */
+.dv-debug-grid {
+    background-image: 
+        linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
 /* ================================
    版本資訊
    ================================ */
@@ -114,4 +132,85 @@
 body::before {
     content: "DeepVape Unified CSS v1.0.0";
     display: none; /* 隱藏，僅供開發者工具查看 */
+}
+
+/* ================================
+   舊版相容性支援
+   ================================ */
+
+/* 為了與舊系統相容，保留部分舊類名的支援 */
+.flavor-options {
+    margin-bottom: var(--dv-spacing-xl);
+}
+
+.flavor-title,
+.color-title,
+.glow-title {
+    font-size: var(--dv-font-lg);
+    font-weight: 600;
+    margin-bottom: var(--dv-spacing-base);
+    color: var(--dv-primary);
+}
+
+.flavor-grid,
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--dv-variant-gap);
+    width: 100%;
+}
+
+/* 確保舊系統的變數容器也能正確顯示 */
+.flavor-options .flavor-grid,
+.color-options .color-grid {
+    margin-bottom: var(--dv-spacing-base);
+}
+
+/* ================================
+   無障礙改進
+   ================================ */
+
+/* 高對比模式支援 */
+@media (prefers-contrast: high) {
+    .dv-variant-option,
+    .variant-option,
+    .color-option,
+    .flavor-option {
+        border-width: 3px !important;
+        font-weight: 700 !important;
+    }
+    
+    .dv-variant-option--selected,
+    .variant-option.selected,
+    .color-option.selected,
+    .flavor-option.selected {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border-color: #000000 !important;
+    }
+}
+
+/* 減少動作偏好 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .section-hidden {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* 焦點指示器 */
+.dv-variant-option:focus-visible,
+.variant-option:focus-visible,
+.color-option:focus-visible,
+.flavor-option:focus-visible,
+.add-to-cart-btn:focus-visible,
+.quantity-btn:focus-visible {
+    outline: 3px solid var(--dv-primary);
+    outline-offset: 2px;
 } 

@@ -33,7 +33,18 @@
     --dv-shadow-accent: 0 5px 15px rgba(139, 92, 246, 0.3);
     --dv-shadow-card: 0 20px 40px rgba(0, 0, 0, 0.3);
     
-    /* 變數選擇器專用變數 */
+    /* ================================
+       統一變數選擇器系統
+       所有電子煙產品統一使用三列佈局
+       ================================ */
+    
+    /* 變數選擇器佈局 */
+    --dv-variant-columns: 3; /* 統一三列佈局 */
+    --dv-variant-columns-mobile: 3; /* 移動端也是三列 */
+    --dv-variant-columns-tablet: 3; /* 平板端也是三列 */
+    --dv-variant-columns-desktop: 3; /* 桌面端也是三列 */
+    
+    /* 變數選擇器樣式 */
     --dv-variant-bg: rgba(17, 24, 39, 0.5);
     --dv-variant-border: 2px solid var(--dv-border-primary);
     --dv-variant-border-radius: 15px;
@@ -44,7 +55,7 @@
     /* 變數選擇器響應式 */
     --dv-variant-mobile-gap: 0.6rem;
     --dv-variant-mobile-padding: 0.6rem 0.3rem;
-    --dv-variant-mobile-min-height: 50px;
+    --dv-variant-mobile-min-height: 60px; /* 統一60px高度 */
     --dv-variant-mobile-font-size: 0.75rem;
     
     /* 動畫和過渡 */
@@ -72,6 +83,11 @@
     --dv-spacing-xl: 2rem;
     --dv-spacing-2xl: 3rem;
 }
+
+/* ================================
+   電子煙產品主題系統
+   所有主題都使用統一的變數選擇器佈局
+   ================================ */
 
 /* 主題變體 - SP2 系列 */
 .theme-sp2 {
@@ -107,4 +123,54 @@
     --dv-accent: #10b981;
     --dv-border-primary: rgba(245, 158, 11, 0.2);
     --dv-shadow-primary: 0 5px 15px rgba(245, 158, 11, 0.3);
+}
+
+/* ================================
+   產品類型統一設定
+   所有電子煙和電子煙蛋產品使用相同的變數選擇器配置
+   ================================ */
+
+/* 電子煙設備類 */
+.product-type-device {
+    /* 繼承統一的變數選擇器設定 */
+}
+
+/* 電子煙蛋類 */
+.product-type-pods {
+    /* 繼承統一的變數選擇器設定 */
+}
+
+/* 拋棄式電子煙類 */
+.product-type-disposable {
+    /* 繼承統一的變數選擇器設定 */
+}
+
+/* ================================
+   全域CSS變數應用函數
+   ================================ */
+
+/* 確保所有變數選擇器使用統一的三列佈局 */
+.dv-unified-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--dv-variant-columns), 1fr);
+    gap: var(--dv-variant-gap);
+}
+
+@media (max-width: 768px) {
+    .dv-unified-grid {
+        grid-template-columns: repeat(var(--dv-variant-columns-mobile), 1fr);
+        gap: var(--dv-variant-mobile-gap);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .dv-unified-grid {
+        grid-template-columns: repeat(var(--dv-variant-columns-tablet), 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .dv-unified-grid {
+        grid-template-columns: repeat(var(--dv-variant-columns-desktop), 1fr);
+    }
 } 

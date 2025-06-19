@@ -52,6 +52,7 @@
     
     <!-- DeepVape 統一 CSS 架構 -->
     <link rel="stylesheet" href="css/deepvape-unified.css">
+    <link rel="stylesheet" href="css/variant-selector-v2.css">
 
     <style>
         * {
@@ -1120,8 +1121,8 @@
     <!-- 產品管理系統 -->
     <script src="/js/product-manager.js"></script>
     
-    <!-- 變數選擇器 -->
-    <script src="/js/variant-selector.js"></script>
+    <!-- 變數選擇器 V2.0 -->
+    <script src="/js/variant-selector-v2.js"></script>
     
     <!-- 變數選擇器修復腳本 (暫時禁用) -->
     <!-- <script src="/fix_variant_initialization.js"></script> -->
@@ -1143,8 +1144,17 @@
                 await pageProductManager.init('ilia_ultra5_pods_product');
                 console.log('ILIA Ultra5 煙彈頁面管理器已初始化');
                 
-                // 初始化變數選擇器
-                await initVariantSelector();
+                // 初始化新版變數選擇器 V2.0
+                if (window.VariantSelectorV2) {
+                    const variantSelector = new VariantSelectorV2('ilia_ultra5_pods_product', 'dv-variant-selector');
+                    variantSelector.setOnVariantChange((variant) => {
+                        console.log('🎯 變數選擇:', variant.value);
+                        updateVariantStockDisplay(variant.value);
+                    });
+                    console.log('✅ 新版變數選擇器 V2.0 已初始化');
+                } else {
+                    console.warn('⚠️ VariantSelectorV2 未載入');
+                }
             } catch (error) {
                 console.error('初始化產品頁面管理器失敗:', error);
             }
