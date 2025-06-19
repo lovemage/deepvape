@@ -850,7 +850,7 @@
                         </div>
 
                         <!-- Add to Cart Button -->
-                        <button class="add-to-cart" onclick="addToCart()">
+                        <button class="add-to-cart">
                             <i class="fas fa-shopping-cart"></i>
                             加入購物車
                         </button>
@@ -964,32 +964,6 @@
                 quantityInput.value = currentValue - 1;
             }
         }
-
-        // Add to cart function (will be managed by page-product-manager.js)
-        function addToCart() {
-            // This function is now handled by the PageProductManager
-            // to ensure consistency.
-            // You can add a visual feedback here if needed,
-            // but the core logic is in the manager.
-            console.log("Add to cart button clicked, logic handled by manager.");
-        }
-
-        // Update cart count display
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            
-            const cartCountElements = document.querySelectorAll('.cart-count');
-            cartCountElements.forEach(element => {
-                element.textContent = totalItems;
-                element.style.display = totalItems > 0 ? 'block' : 'none';
-            });
-        }
-
-        // Initialize cart count on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCartCount();
-        });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

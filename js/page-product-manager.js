@@ -441,22 +441,21 @@ class PageProductManager {
      * 設置加入購物車功能
      */
     setupAddToCart() {
-        const addToCartBtn = document.querySelector('button[onclick*="addToCart"], .pulse-button');
-        if (!addToCartBtn) return;
-
-        // 檢查是否已有原始的 addToCart 函數
-        if (typeof window.addToCart === 'function') {
-            console.log('檢測到原始 addToCart 函數，保持原有邏輯');
-            return; // 不覆蓋原有邏輯
+        const addToCartBtn = document.querySelector('.add-to-cart');
+        if (!addToCartBtn) {
+            console.warn('找不到加入購物車按鈕');
+            return;
         }
 
-        // 移除原有的 onclick 事件
+        // 強制移除舊的 onclick 屬性，避免衝突
         addToCartBtn.removeAttribute('onclick');
         
         // 綁定新的事件處理器
         addToCartBtn.addEventListener('click', () => {
             this.addToCart();
         });
+
+        console.log('✅ 已強制綁定新的 addToCart 事件');
     }
 
     /**
@@ -467,7 +466,7 @@ class PageProductManager {
         const quantityInput = document.getElementById('quantity');
         
         if (!selectedVariant) {
-            alert('請選擇產品變數');
+            alert('請先選擇口味！');
             return;
         }
 
