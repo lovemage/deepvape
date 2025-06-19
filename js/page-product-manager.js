@@ -193,7 +193,7 @@ class PageProductManager {
         if (!this.pageData.variants || this.pageData.variants.length === 0) return;
 
         // 找到變數容器 - 優先使用 VariantSelector 容器
-        let variantContainer = document.getElementById('variantContainer');
+        let variantContainer = document.getElementById('variantContainer') || document.querySelector('.flavor-grid');
         if (!variantContainer) {
             variantContainer = document.querySelector('.flavor-grid, .color-grid');
         }
@@ -230,17 +230,8 @@ class PageProductManager {
             variantContainer.appendChild(optionElement);
         });
 
-        // 重新綁定變數選擇事件
+        // 重新綁定變數選擇事件，這是確保動態生成的元素能被操作的關鍵
         this.setupVariantSelection();
-
-        // 如果是 VariantSelector 容器，觸發變數選擇器重新初始化
-        if (variantContainer.id === 'variantContainer' && window.variantSelector) {
-            setTimeout(() => {
-                if (window.variantSelector.refresh) {
-                    window.variantSelector.refresh();
-                }
-            }, 100);
-        }
     }
 
     /**
@@ -274,13 +265,13 @@ class PageProductManager {
      * 設置變數選擇功能
      */
     setupVariantSelection() {
-        const variantContainer = document.getElementById('variantContainer');
+        const variantContainer = document.getElementById('variantContainer') || document.querySelector('.flavor-grid');
         if (!variantContainer) {
             console.warn('變數容器未找到，無法設置選擇功能。');
             return;
         }
 
-        const variantOptions = variantContainer.querySelectorAll('.variant-option');
+        const variantOptions = variantContainer.querySelectorAll('.variant-option, .flavor-option, .color-option');
         
         variantOptions.forEach(option => {
             // 為每個按鈕單獨添加事件監聽器
