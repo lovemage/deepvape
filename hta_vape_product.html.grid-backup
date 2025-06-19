@@ -288,6 +288,12 @@
             color: var(--hta-gold);
         }
 
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
 
         .color-option {
             padding: 1rem;
@@ -462,6 +468,9 @@
                 position: static;
             }
 
+            .color-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
 
             .action-buttons {
                 flex-direction: column;

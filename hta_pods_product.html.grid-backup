@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTA 黑桃主機 - 頂級電子菸主機 | Deepvape 頂級電子菸專賣店</title>
+    <title>HTA 黑桃煙彈 - 14種口味選擇 | Deepvape 頂級電子菸專賣店</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/deepvape-unified.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -17,7 +17,6 @@
             --warning-color: #ffab00;
             --hta-pink: #e5779f;
             --hta-dark: #2c1810;
-            --hta-gold: #d4af37;
             --text-color: #ffffff;
             --text-secondary: #a0a0a0;
             --card-bg: rgba(22, 33, 62, 0.8);
@@ -30,11 +29,15 @@
             box-sizing: border-box;
         }
 
+        html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'PingFang TC', 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
             background: linear-gradient(135deg, var(--hta-dark) 0%, var(--primary-color) 50%, var(--hta-pink) 100%);
             color: var(--text-color);
-            min-height: 100vh;
             line-height: 1.6;
         }
 
@@ -191,7 +194,7 @@
             border-radius: 30px;
             margin-bottom: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 3px solid var(--hta-gold);
+            border: 3px solid var(--hta-pink);
         }
 
         /* Product Info */
@@ -228,7 +231,7 @@
         .product-price {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--hta-gold);
+            color: var(--hta-pink);
             margin-bottom: 2rem;
         }
 
@@ -250,7 +253,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--hta-gold);
+            color: var(--hta-pink);
         }
 
         .spec-list {
@@ -276,53 +279,48 @@
             color: var(--text-color);
         }
 
-        /* Color Options */
-        .color-options {
+        /* Flavor Options */
+        .flavor-options {
             margin-bottom: 2rem;
         }
 
-        .color-title {
+        .flavor-title {
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--hta-gold);
+            color: var(--hta-pink);
         }
 
+        .flavor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
 
-        .color-option {
-            padding: 1rem;
+        .flavor-option {
+            padding: 0.8rem;
             border: 2px solid var(--border-color);
             border-radius: 30px;
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(229, 119, 159, 0.1);
             color: var(--text-color);
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
             font-weight: 500;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .color-preview {
-            width: 30px;
-            height: 30px;
-            border-radius: 30px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .color-option:hover {
-            border-color: var(--hta-gold);
-            background: rgba(212, 175, 55, 0.2);
+        .flavor-option:hover {
+            border-color: var(--hta-pink);
+            background: rgba(229, 119, 159, 0.2);
             transform: translateY(-2px);
         }
 
-        .color-option.selected {
-            border-color: var(--hta-gold);
-            background: var(--hta-gold);
-            color: var(--hta-dark);
+        .flavor-option.selected {
+            border-color: var(--hta-pink);
+            background: var(--hta-pink);
+            color: white;
         }
 
         /* Quantity Selector */
@@ -334,7 +332,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--hta-gold);
+            color: var(--hta-pink);
         }
 
         .quantity-controls {
@@ -348,19 +346,18 @@
             height: 40px;
             border: none;
             border-radius: 30px;
-            background: var(--hta-gold);
-            color: var(--hta-dark);
+            background: var(--hta-pink);
+            color: white;
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
         }
 
         .quantity-btn:hover {
-            background: #ffd700;
+            background: #ff6b9d;
             transform: scale(1.1);
         }
 
@@ -398,7 +395,7 @@
 
         .pulse-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 5px 20px rgba(229, 119, 159, 0.4);
         }
 
         
@@ -414,7 +411,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--hta-gold);
+            color: var(--hta-pink);
         }
 
         .features-list {
@@ -431,7 +428,7 @@
         }
 
         .features-list li i {
-            color: var(--hta-gold);
+            color: var(--hta-pink);
             width: 20px;
         }
 
@@ -451,6 +448,71 @@
             margin-right: 0.5rem;
         }
 
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--hta-pink);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--hta-pink);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-warning {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid var(--highlight-color);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .product-detail {
@@ -462,9 +524,29 @@
                 position: static;
             }
 
+            .flavor-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.4rem;
+            }
+            
+            .flavor-option {
+                padding: 0.6rem 0.3rem;
+                font-size: 0.75rem;
+                min-height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.1;
+            }
 
             .action-buttons {
                 flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
         }
     
@@ -503,8 +585,9 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logo.png" alt="Deepvape Logo">
-                <h1>Deepvape</h1>
+                <a href="index.html" class="logo-button" id="navLogo">
+                    <span class="logo-text">DEEPVAPE</span>
+                </a>
             </div>
             <div class="header-actions">
                 <a href="cart.html" class="cart-button">
@@ -521,27 +604,27 @@
     <div class="product-detail">
         <!-- Product Images -->
         <div class="product-images">
-                                <img src="hta_vape/hta_spade_device.webp" alt="HTA 黑桃主機" class="main-image" id="mainImage">
+                                <img src="hta_pods/hta_spade_pods.webp" alt="HTA 黑桃煙彈" class="main-image" id="mainImage">
         </div>
 
         <!-- Product Info -->
-        <div class="product-info" data-product-id="hta_vape_product">
+        <div class="product-info" data-product-id="hta_pods_product">
             <span class="product-badge">
-                <i class="fas fa-crown"></i> HTA 黑桃頂級系列
+                <i class="fas fa-crown"></i> HTA 黑桃系列
             </span>
             
-            <h1 class="product-title">HTA 黑桃主機</h1>
+            <h1 class="product-title">HTA 黑桃煙彈</h1>
             
-                            <div class="product-price">NT$ 450</div>
+                            <div class="product-price">NT$ 260</div>
                     <div class="stock-status in-stock" id="stock-status">
                         <i class="fas fa-check-circle"></i>
                         <span>載入庫存中...</span>
                     </div>
             
             <div class="product-description">
-                HTA 黑桃主機是頂級電子菸主機的代表作品，採用一代與二代通用設計，
-                實現真正的跨世代相容性。精工製造，品質卓越，為您帶來尊貴的電子菸體驗。
-                CP值極高的主力產品，是電子菸愛好者的首選。
+                HTA 黑桃煙彈採用頂級煙油配方，提供 15 種精選口味選擇。
+                每顆煙彈都經過嚴格品質控制，確保最佳的口感體驗和穩定的霧化效果。
+                適用於 HTA 一代和二代主機，為您帶來尊貴的電子菸體驗。
             </div>
 
             <!-- Specifications -->
@@ -553,41 +636,33 @@
                         <span class="spec-value">HTA 黑桃</span>
                     </li>
                     <li>
-                        <span class="spec-label">型號</span>
-                        <span class="spec-value">一代、二代通用</span>
+                        <span class="spec-label">容量</span>
+                        <span class="spec-value">2.0ML</span>
                     </li>
                     <li>
-                        <span class="spec-label">電池容量</span>
-                        <span class="spec-value">350mAH</span>
+                        <span class="spec-label">尼古丁含量</span>
+                        <span class="spec-value">3%</span>
                     </li>
                     <li>
-                        <span class="spec-label">功率範圍</span>
-                        <span class="spec-value">6W~8W</span>
+                        <span class="spec-label">包裝規格</span>
+                        <span class="spec-value">一盒三入</span>
                     </li>
                     <li>
-                        <span class="spec-label">充電規格</span>
-                        <span class="spec-value">TYPE-C 5V/1A</span>
+                        <span class="spec-label">口味數量</span>
+                        <span class="spec-value">13種精選口味</span>
                     </li>
                     <li>
-                        <span class="spec-label">材質</span>
-                        <span class="spec-value">高品質鋁合金</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">顏色選擇</span>
-                        <span class="spec-value">7種經典顏色</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">保固</span>
-                        <span class="spec-value">購買起三天內非人為損壞</span>
+                        <span class="spec-label">適用設備</span>
+                        <span class="spec-value">HTA 一代、二代主機</span>
                     </li>
                 </ul>
             </div>
 
-            <!-- Color Options -->
-            <div class="color-options">
-                <h3 class="color-title">顏色選擇 <span style="font-size: 0.8rem; color: var(--text-secondary);">(6種顏色)</span></h3>
-                <div class="color-grid" id="variantContainer">
-                    <!-- 顏色選項將由變數選擇器動態載入 -->
+            <!-- Flavor Options -->
+            <div class="flavor-options">
+                <h3 class="flavor-title">口味選擇 <span style="font-size: 0.8rem; color: var(--text-secondary);">(14種口味)</span></h3>
+                <div class="flavor-grid" id="variantContainer">
+                    <!-- 口味選項將由變數選擇器動態載入 -->
                 </div>
             </div>
 
@@ -619,35 +694,27 @@
                 <ul class="features-list">
                     <li>
                         <i class="fas fa-crown"></i>
-                        HTA 黑桃頂級品牌，尊貴象徵
-                    </li>
-                    <li>
-                        <i class="fas fa-sync-alt"></i>
-                        一代二代通用設計，跨世代相容
-                    </li>
-                    <li>
-                        <i class="fas fa-star"></i>
-                        CP值極高的主力產品
-                    </li>
-                    <li>
-                        <i class="fas fa-battery-three-quarters"></i>
-                        350mAH 大容量電池，持久續航
-                    </li>
-                    <li>
-                        <i class="fas fa-plug"></i>
-                        TYPE-C 快速充電技術
+                        HTA 黑桃頂級品牌，品質保證
                     </li>
                     <li>
                         <i class="fas fa-palette"></i>
-                        6 種經典顏色選擇
+                        15 種精選口味，滿足不同喜好
                     </li>
                     <li>
-                        <i class="fas fa-cog"></i>
-                        6W~8W 功率範圍，穩定輸出
+                        <i class="fas fa-flask"></i>
+                        頂級煙油配方，純正口感
                     </li>
                     <li>
                         <i class="fas fa-shield-alt"></i>
-                        高品質鋁合金材質，堅固耐用
+                        嚴格品質控制，安全可靠
+                    </li>
+                    <li>
+                        <i class="fas fa-cog"></i>
+                        適用 HTA 一代、二代主機
+                    </li>
+                    <li>
+                        <i class="fas fa-box"></i>
+                        一盒三入，經濟實惠
                     </li>
                 </ul>
             </div>
@@ -656,23 +723,105 @@
             <div class="warning-notice">
                 <i class="fas fa-exclamation-triangle"></i>
                 <strong>重要提醒：</strong>本產品僅供 18 歲以上成年人使用，請遵守當地相關法規。
-                <br><strong>品質保證：</strong>購買起三天內非人為損壞享有保固服務。
+                <br><strong>使用提醒：</strong>請搭配 HTA 主機使用，確保最佳體驗效果。
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>關於 Deepvape</h3>
+                    <ul>
+                        <li><a href="brand_story.html">品牌故事</a></li>
+                        <li><a href="news.html">最新消息</a></li>
+                        <li><a href="about.html">關於我們</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>客戶服務</h3>
+                    <ul>
+                        <li><a href="shopping_guide.html">購物說明</a></li>
+                        <li><a href="shipping.html">運送方式</a></li>
+                        <li><a href="return_policy.html">退換貨政策</a></li>
+                        <li><a href="faq.html">常見問題</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>聯絡我們</h3>
+                    <ul id="contactInfo">
+                        <li>LINE ID: <span id="lineId">@deepvape</span></li>
+                        <li>Email: <span id="email">service@deepvape.com</span></li>
+                        <li>服務時間: <span id="serviceHours">週一至週五 10:00-18:00</span></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>關注我們</h3>
+                    <ul>
+                        <li><a href="#" id="facebookLink" target="_blank">Facebook</a></li>
+                        <li><a href="#" id="instagramLink" target="_blank">Instagram</a></li>
+                        <li><a href="#" id="telegramLink" target="_blank">Telegram</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>健康警告：</strong>本產品含有尼古丁，尼古丁具有成癮性。未滿18歲者禁止購買與使用。
+                孕婦、哺乳期婦女及心血管疾病患者請勿使用。
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Deepvape. All rights reserved. | 
+                   <a href="privacy.html" style="color: var(--text-secondary);">隱私政策</a> | 
+                   <a href="terms.html" style="color: var(--text-secondary);">服務條款</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
     <script>
+        // Flavor Selection
+        document.querySelectorAll('.flavor-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.flavor-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Quantity Controls
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            const currentValue = parseInt(quantityInput.value);
+            if (currentValue < 10) {
+                quantityInput.value = currentValue + 1;
+            }
+        }
+
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            const currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        }
+
         // 變數選擇器實例
         let variantSelector = null;
 
         // 初始化變數選擇器
         function initVariantSelector() {
             if (window.VariantSelector && window.ProductManager && window.ProductManager.initialized) {
-                variantSelector = new VariantSelector('hta_vape_product', 'variantContainer');
+                variantSelector = new VariantSelector('hta_pods_product', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
-                    console.log('選擇的顏色:', variant.value);
+                    console.log('選擇的口味:', variant.value);
                     updateAddToCartButton(variant);
                 });
             } else {
@@ -692,60 +841,23 @@
                 addToCartBtn.style.opacity = '1';
             } else {
                 addToCartBtn.disabled = true;
-                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇顏色';
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> 請選擇口味';
                 addToCartBtn.style.opacity = '0.6';
             }
         }
 
-        // Quantity Controls
-        function increaseQuantity() {
-            const quantityInput = document.getElementById('quantity');
-            const currentValue = parseInt(quantityInput.value);
-            if (currentValue < 10) {
-                quantityInput.value = currentValue + 1;
-            }
-        }
-
-        function decreaseQuantity() {
-            const quantityInput = document.getElementById('quantity');
-            const currentValue = parseInt(quantityInput.value);
-            if (currentValue > 1) {
-                quantityInput.value = currentValue - 1;
-            }
-        }
-
-        // 更新產品信息
-        function updateProductInfo(variant) {
-            // 更新庫存顯示
-            const stockElement = document.querySelector('.stock-info');
-            if (stockElement) {
-                stockElement.textContent = `庫存：${variant.stock}`;
-                stockElement.className = `stock-info ${variant.stock > 0 ? 'in-stock' : 'out-of-stock'}`;
-            }
-
-            // 更新價格（如果變數有價格調整）
-            if (variant.priceModifier && variant.priceModifier !== 0) {
-                const priceElement = document.querySelector('.product-price');
-                if (priceElement && window.ProductManager) {
-                    const basePrice = window.ProductManager.getProductPrice('hta_vape_product').price;
-                    const adjustedPrice = basePrice + variant.priceModifier;
-                    priceElement.textContent = `NT$ ${adjustedPrice}`;
-                }
-            }
-        }
-
-        // 加入購物車功能
-        async function addToCart() {
+        // Add to Cart
+        function addToCart() {
             // 檢查是否選擇了變數
             const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
             if (!selectedColorOption) {
             // 使用新的購物車動畫系統
             if (window.CartAnimation) {
                 window.CartAnimation.showAddToCartAnimation({
-                    productName: 'HTA Vape',
+                    productName: 'HTA Pods',
                     variant: variantValue,
                     sourceElement: document.getElementById('addToCartBtn'),
-                    productImage: '/hta_vape/hta_spade_device.webp'
+                    productImage: '/hta_pods/hta_spade_pods.webp'
                 });
             } else {
                 // 備用通知
@@ -769,7 +881,7 @@ return;
             
             // 檢查庫存（如果有 StockChecker）
             if (window.StockChecker && window.StockChecker.initialized) {
-                const stockInfo = window.StockChecker.checkVariantStock('hta_vape_product', variantId, 'variant');
+                const stockInfo = window.StockChecker.checkVariantStock('hta_pods_product', variantId, 'variant');
                 if (stockInfo.stock <= 0) {
                     alert(`很抱歉，${variantValue} 目前缺貨！`);
                     return;
@@ -790,7 +902,7 @@ return;
             }
             
             const product = {
-                id: 'hta_vape_product',
+                id: 'hta_pods_product',
                 name: productName,
                 price: price,
                 variant: variantValue,
@@ -861,6 +973,8 @@ return;
             }
         }
 
+
+
         // 初始化Logo按鈕效果
         document.addEventListener("DOMContentLoaded", () => {
             const logoButton = document.getElementById("navLogo");
@@ -901,24 +1015,35 @@ return;
     <!-- 庫存檢查器 -->
     <script src="/js/stock-checker.js"></script>
     
+    <!-- 聯繫信息載入器 -->
+    <script src="/js/contact-loader.js"></script>
+    
     <!-- 內容管理系統 -->
     <script src="/js/content-manager.js"></script>
 
     <!-- 購物車動畫系統 -->
     <script src="/js/cart-animation.js"></script>
 
-    <!-- 初始化產品頁面管理器 -->
+    <!-- 初始化產品管理器 -->
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             try {
+                // 創建全域 ProductManager 實例
+                if (!window.ProductManager) {
+                    window.ProductManager = new ProductManager();
+                    await window.ProductManager.init();
+                    console.log('✅ ProductManager 已初始化');
+                }
+                
+                // 初始化產品頁面管理器
                 const pageProductManager = new PageProductManager();
-                await pageProductManager.init('hta_vape_product');
-                console.log('HTA 黑桃主機 產品頁面管理器已初始化');
+                await pageProductManager.init('hta_pods_product');
+                console.log('✅ HTA 黑桃煙彈 產品頁面管理器已初始化');
                 
                 // 初始化變數選擇器
                 initVariantSelector();
             } catch (error) {
-                console.error('初始化產品頁面管理器失敗:', error);
+                console.error('❌ 初始化失敗:', error);
             }
         });
     </script>

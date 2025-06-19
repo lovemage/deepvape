@@ -415,6 +415,11 @@
             color: #ffffff;
         }
 
+        .color-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
         .color-option {
             padding: 12px 20px;
@@ -587,6 +592,9 @@
                 grid-template-columns: 1fr;
             }
 
+            .color-grid {
+                justify-content: center;
+            }
         }
     
         .stock-status {

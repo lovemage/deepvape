@@ -632,32 +632,6 @@
         }
 
         /* LANA 特有樣式 */
-        
-        /* 變數選擇器樣式 - 桌面版 */
-        .variant-options,
-        .dv-variant-options {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
-            gap: 0.8rem !important;
-            width: 100% !important;
-        }
-        
-        .variant-option,
-        .dv-variant-option {
-            background: rgba(17, 24, 39, 0.5) !important;
-            border: 2px solid var(--border-glow) !important;
-            border-radius: 8px !important;
-            padding: 0.8rem !important;
-            text-align: center !important;
-            cursor: pointer !important;
-            transition: var(--transition-smooth) !important;
-            backdrop-filter: blur(8px) !important;
-            font-weight: 500 !important;
-            font-size: 0.9rem !important;
-            color: var(--text-primary) !important;
-            position: relative !important;
-            overflow: hidden !important;
-        }
 
         /* Quantity Control */
         .quantity-section {
@@ -1069,23 +1043,20 @@
                 font-size: 0.75rem;
             }
             
-            .variant-options,
-            .dv-variant-options {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.4rem !important;
-                width: 100% !important;
+            .variant-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.4rem;
             }
             
-            .variant-option,
-            .dv-variant-option {
-                padding: 0.6rem 0.3rem !important;
-                font-size: 0.75rem !important;
-                min-height: 45px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                text-align: center !important;
-                line-height: 1.1 !important;
+            .variant-option {
+                padding: 0.6rem 0.3rem;
+                font-size: 0.75rem;
+                min-height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.1;
             }
 
             .variant-name {
