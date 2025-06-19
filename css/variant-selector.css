@@ -37,7 +37,7 @@
 .dv-variant-options--flavor,
 .dv-variant-options--default {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: var(--dv-variant-gap);
     margin-bottom: var(--dv-spacing-xl);
     width: 100%;

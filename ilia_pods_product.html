@@ -1010,13 +1010,12 @@ return;
             // 初始化變數選擇器
             updateCartCount();
             
-            // 禁用自動 VariantSelector 初始化，因為此頁面使用手動 HTML 結構
-            // 如需啟用，請移除此註解：
-            // if (window.ProductManager && window.ProductManager.initialized) {
-            //     initVariantSelector();
-            // } else {
-            //     window.addEventListener('productsLoaded', initVariantSelector);
-            // }
+            // 等待產品管理器初始化後再初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
         });
     </script>
 

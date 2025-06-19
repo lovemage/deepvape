@@ -51,9 +51,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <!-- DeepVape 統一 CSS 架構 -->
+    <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/deepvape-unified.css">
+    <link rel="stylesheet" href="css/product-page-unified.css">
+    <link rel="stylesheet" href="css/variant-selector.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <style>
+        /* 特定於 ILIA Ultra5 Pods 的主題顏色 */
+        :root {
+            --theme-primary: #D6AD60; /* ILIA 金色 */
+            --theme-secondary: #122620; /* ILIA 深綠色 */
+            --theme-accent: #F4EBD0; /* ILIA 米色 */
+            --theme-glow: 0 0 15px rgba(214, 173, 96, 0.6);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -759,356 +771,110 @@
         </div>
     </header>
 
-    <main class="main-content">
-        <div class="container">
-            <div class="content-wrapper section-hidden">
-                <div class="product-showcase">
-                    <div class="product-image">
-                        <img src="ilia_pod5/ilia-pod5.jpg" alt="ILIA Ultra5 煙彈 - 23種口味選擇">
+    <main class="product-page-main ilia-ultra5-pods-theme">
+        <div class="product-container">
+            <!-- 產品麵包屑導航 -->
+            <div class="breadcrumbs">
+                <a href="index.html">首頁</a> / <a href="#">ILIA 系列</a> / <span>ILIA 五代煙彈 Ultra5 Pods</span>
+            </div>
+
+            <!-- 產品主要內容 -->
+            <div class="product-content-grid">
+                
+                <!-- 產品圖片展示區 -->
+                <div class="product-gallery">
+                    <div class="main-image-wrapper">
+                        <img id="mainProductImage" src="ilia_pod5/ilia-pod5.jpg" alt="ILIA 五代煙彈主圖" class="main-product-image">
+                        <div class="image-zoom-loupe"></div>
                     </div>
+                </div>
+
+                <!-- 產品資訊和購買區 -->
+                <div class="product-purchase-section">
+                    <h1 class="product-title">ILIA 五代煙彈 Ultra5 Pods</h1>
+                    <p class="product-subtitle">極致工藝，淬煉純粹風味</p>
                     
-                    <div class="product-info" data-product-id="ilia_ultra5_pods_product">
-                        <span class="product-badge">
-                            <i class="fas fa-star"></i> Ultra5 系列
-                        </span>
-                        
-                        <h1 class="product-title">ILIA Ultra5 煙彈</h1>
-                        <p class="product-subtitle">23種口味選擇 • 2.0ML大容量 • 3%尼古丁含量 • 五代通用</p>
-                        
-                                                 <div class="product-price">NT$ 320</div>
-                        
-                        <div class="stock-status in-stock" id="stock-status">
-                            <i class="fas fa-check-circle"></i>
-                            現貨供應
-                        </div>
-                        
-                        <div class="product-description">
-                            ILIA Ultra5 煙彈採用膠囊型包裝設計，黑色油杯外觀時尚，
-                            提供23種豐富口味選擇。單盒三顆入，五代通用設計，
-                            為您帶來極致口感與無縫體驗。
-                        </div>
+                    <div class="product-meta">
+                        <span class="meta-tag"><i class="fas fa-microchip"></i> 兼容五代主機</span>
+                        <span class="meta-tag"><i class="fas fa-flask"></i> 2.5ML大容量</span>
+                    </div>
 
-                        <!-- Specifications -->
-                        <div class="specifications">
-                            <h3 class="spec-title">
-                                <i class="fas fa-cogs"></i>
-                                產品規格
-                            </h3>
-                            <ul class="spec-list">
-                                <li>
-                                    <span class="spec-label">通用性</span>
-                                    <span class="spec-value">五代通用</span>
-                                </li>
-                                <li>
-                                    <span class="spec-label">口味數量</span>
-                                    <span class="spec-value">23種</span>
-                                </li>
-                                <li>
-                                    <span class="spec-label">容量</span>
-                                    <span class="spec-value">2.0ML</span>
-                                </li>
-                                <li>
-                                    <span class="spec-label">尼古丁含量</span>
-                                    <span class="spec-value">3%</span>
-                                </li>
-                                <li>
-                                    <span class="spec-label">包裝</span>
-                                    <span class="spec-value">單盒三顆入</span>
-                                </li>
-                                <li>
-                                    <span class="spec-label">設計</span>
-                                    <span class="spec-value">膠囊型包裝</span>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="product-price-container">
+                        <span class="product-price">NT$ 450</span>
+                        <span class="original-price">NT$ 550</span>
+                    </div>
 
-                        <!-- Warning Notice -->
-                        <div class="warning-notice">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <strong>重要提醒：</strong>
-                            <br>• 此款煙彈不通用一代主機！
-                            <br>• 此款煙彈不通用凱斯5代主機！
-                            <br>• 本產品僅供 18 歲以上成年人使用
-                        </div>
+                    <!-- 變數選擇器 -->
+                    <div id="ilia-ultra5-pods-variant-selector" class="variant-selector-container ilia-theme">
+                        <!-- JS 會將變數插入這裡 -->
+                    </div>
 
-                        <!-- Flavor Options -->
-                        <div class="dv-variant-selector">
-                            <h3 class="dv-variant-title">口味選擇</h3>
-                            <div class="dv-variant-options variant-options" id="variantContainer">
-                                <!-- 口味選項將由變數選擇器動態載入 -->
-                            </div>
+                    <!-- 數量控制和加入購物車 -->
+                    <div class="purchase-controls">
+                        <div class="quantity-control">
+                            <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                            <input type="number" id="quantity" value="1" min="1" max="10">
+                            <button class="quantity-btn" onclick="increaseQuantity()">+</button>
                         </div>
-
-                        <!-- Quantity Selector -->
-                        <div class="quantity-selector">
-                            <span class="quantity-label">數量：</span>
-                            <div class="quantity-controls">
-                                <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
-                                <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="99">
-                                <button class="quantity-btn" onclick="increaseQuantity()">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Add to Cart Button -->
-                        <button class="add-to-cart" onclick="addToCart()">
-                            <i class="fas fa-shopping-cart"></i>
-                            加入購物車
+                        <button id="addToCartBtn" class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> 加入購物車
                         </button>
                     </div>
+                     <div class="stock-status"></div>
                 </div>
             </div>
-        </div>
 
-        <!-- Product Details Section -->
-        <div class="product-details section-hidden">
-            <div class="container">
-                <h2 class="details-title">商品簡介</h2>
-                <div class="details-content">
-                    <h3>哩亞ILIA5代煙彈：極致口感，無縫體驗</h3>
-                    
-                    <h3>顛覆口感體驗</h3>
-                    <p>哩亞5代煙彈以其非凡的口感體驗引領市場潮流。每一款口味都經過精心調配，從果香四溢的水果味、醇厚濃烈的茶香味，到清新怡人的薄荷感。每一種口味都為您呈現出獨特的味覺享受，是眾多用戶推薦口味評價最好的。這種層次分明且細膩的口感，讓每一次吸煙都仿佛是一次奢華的味覺之旅，令人難以忘懷。</p>
-
-                    <h3>五代通用煙彈</h3>
-                    <p>哩啞5代煙彈不僅完美適用哩亞5代主機，且通用他牌五代電子煙主機。這一點使得更換主機變得更加輕鬆便捷，無需擔心兼容性問題。讓您專注於享受每一次的吸煙時光。</p>
-
-                    <h3>穩定的性能表現</h3>
-                    <p>每一顆哩亞五代煙彈都經過精密製造，保證每次吸煙時煙霧的穩定性和口感的一致性。無論您是長時間使用還是偶爾享受，哩亞煙彈的表現都始終如一。確保您每次吸煙時都能獲得最穩定的體驗。</p>
-
-                    <h3>ILIA品質保證</h3>
-                    <p>作為行業中的領先品牌，哩亞ILIA煙彈致力於提供最優質的產品。每一款ILIA五代煙彈都經過嚴格的品質控制，確保每個煙彈都符合品牌的高標準。不僅關注產品的性能，更注重每個細節的完美，涼度的搭配、成分的嚴格選擇，以確保每位用戶都能獲得最佳的吸煙體驗。</p>
-
-                    <p><strong>立即體驗最新的哩亞ILIA五代煙彈，感受每一口的極致純淨，享受全新升級的吸煙體驗！</strong></p>
+            <!-- 產品詳細資訊 -->
+            <div class="product-details-section">
+                <div class="product-header">
+                    <h2 class="section-title">產品詳細資訊</h2>
                 </div>
-            </div>
-        </div>
-
-        <!-- Features Section -->
-        <div class="features section-hidden">
-            <div class="container">
-                <h3 class="features-title">
-                    <i class="fas fa-star"></i>
-                    產品特色
-                </h3>
-                <ul class="features-list">
-                    <li>
-                        <i class="fas fa-palette"></i>
-                        23種豐富口味選擇，滿足不同喜好
-                    </li>
-                    <li>
-                        <i class="fas fa-flask"></i>
-                        2.0ML大容量設計，持久使用體驗
-                    </li>
-                    <li>
-                        <i class="fas fa-shield-alt"></i>
-                        3%尼古丁含量，適中濃度
-                    </li>
-                    <li>
-                        <i class="fas fa-cube"></i>
-                        膠囊型包裝，時尚美觀
-                    </li>
-                    <li>
-                        <i class="fas fa-circle"></i>
-                        黑色油杯設計，質感出眾
-                    </li>
-                    <li>
-                        <i class="fas fa-boxes"></i>
-                        單盒三顆入，經濟實惠
-                    </li>
-                    <li>
-                        <i class="fas fa-plug"></i>
-                        五代通用設計，相容性佳
-                    </li>
-                    <li>
-                        <i class="fas fa-award"></i>
-                        ILIA品質保證，安心選擇
-                    </li>
-                </ul>
+                <div class="product-description">
+                    <p>ILIA 五代煙彈 Ultra5 Pods 是專為追求極致體驗的您所設計。採用最新陶瓷霧化芯技術，確保每一口都純淨、順滑。2.5ML的大容量設計，讓您享受更長久的美好時光。</p>
+                </div>
             </div>
         </div>
     </main>
 
+    <footer class="unified-footer">
+        <!-- 頁腳內容會由 JS 統一載入 -->
+    </footer>
+
+    <script src="js/content-manager.js"></script>
+    <script src="js/variant-selector.js"></script>
     <script>
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+    document.addEventListener('DOMContentLoaded', () => {
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('section-visible');
-                }
-            });
-        }, observerOptions);
+        // 統一內容載入
+        loadHeader('product');
+        loadFooter();
 
-        // Observe all sections
-        document.querySelectorAll('.section-hidden').forEach(section => {
-            observer.observe(section);
+        // 初始化 ILIA Ultra5 Pods 變數選擇器
+        const iliaUltra5PodsVariantSelector = new VariantSelector({
+            containerId: 'ilia-ultra5-pods-variant-selector',
+            dataUrl: 'data/page_products/ilia_ultra5_pods.json',
+            theme: 'ilia',
+            displayMode: 'default'
         });
 
-        // Quantity controls
-        function increaseQuantity() {
-            const quantityInput = document.getElementById('quantity');
-            const currentValue = parseInt(quantityInput.value);
-            if (currentValue < 99) {
-                quantityInput.value = currentValue + 1;
-            }
+    });
+
+    // 舊的數量控制函數，保留以防萬一
+    function increaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue < 10) {
+            quantityInput.value = currentValue + 1;
         }
+    }
 
-        function decreaseQuantity() {
-            const quantityInput = document.getElementById('quantity');
-            const currentValue = parseInt(quantityInput.value);
-            if (currentValue > 1) {
-                quantityInput.value = currentValue - 1;
-            }
+    function decreaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
         }
-
-
-
-        // Update cart count display
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            
-            const cartCountElements = document.querySelectorAll('.cart-count');
-            cartCountElements.forEach(element => {
-                element.textContent = totalItems;
-                element.style.display = totalItems > 0 ? 'block' : 'none';
-            });
-        }
-
-        // Initialize cart count on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCartCount();
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // 變數選擇器實例
-        let variantSelector = null;
-
-        // 初始化變數選擇器
-        async function initVariantSelector() {
-            try {
-                // 等待 ProductManager 初始化
-                if (!window.ProductManager || !window.ProductManager.initialized) {
-                    await new Promise(resolve => {
-                        const checkInterval = setInterval(() => {
-                            if (window.ProductManager && window.ProductManager.initialized) {
-                                clearInterval(checkInterval);
-                                resolve();
-                            }
-                        }, 100);
-                    });
-                }
-
-                // 初始化變數選擇器
-                variantSelector = new VariantSelector('ilia_ultra5_pods_product', 'variantContainer');
-                
-                // 設置變數變更回調
-                variantSelector.setOnVariantChange((variant) => {
-                    updateAddToCartButton(variant);
-                });
-                
-                console.log('✅ 變數選擇器已初始化');
-            } catch (error) {
-                console.error('❌ 變數選擇器初始化失敗:', error);
-                setTimeout(initVariantSelector, 1000);
-            }
-        }
-
-        // 更新加入購物車按鈕狀態
-        function updateAddToCartButton(variant) {
-            const addToCartBtn = document.querySelector('.add-to-cart');
-            if (!addToCartBtn) return;
-
-            if (variant && variant.stock > 0) {
-                addToCartBtn.disabled = false;
-                addToCartBtn.textContent = `加入購物車 - ${variant.value}`;
-                addToCartBtn.style.opacity = '1';
-            } else {
-                addToCartBtn.disabled = true;
-                addToCartBtn.textContent = '請選擇口味';
-                addToCartBtn.style.opacity = '0.6';
-            }
-        }
-
-        // 更新加入購物車功能
-        function addToCart() {
-            if (!variantSelector) {
-                alert('變數選擇器未初始化，請稍後再試');
-                return;
-            }
-
-            const selectedVariant = variantSelector.getSelectedVariant();
-            if (!selectedVariant) {
-                alert('請先選擇口味！');
-                return;
-            }
-
-            if (selectedVariant.stock <= 0) {
-                alert('所選口味目前缺貨，請選擇其他口味！');
-                return;
-            }
-
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const productId = 'ilia_ultra5_pods';
-            const productName = 'ILIA Ultra5 煙彈';
-            const price = 320;
-
-            // Create cart item object with flavor
-            const cartItem = {
-                id: `${productId}_${selectedVariant.id}`,
-                name: `${productName} - ${selectedVariant.value}`,
-                price: price,
-                quantity: quantity,
-                flavor: selectedVariant.value,
-                flavorId: selectedVariant.id,
-                image: '/ilia_ultra5_pods/ilia_ultra5_pods_main.webp'
-            };
-
-            // Get existing cart or create new one
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            // Check if item already exists in cart
-            const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
-
-            if (existingItemIndex > -1) {
-                // Update quantity if item exists
-                cart[existingItemIndex].quantity += quantity;
-            } else {
-                // Add new item to cart
-                cart.push(cartItem);
-            }
-
-            // Save cart to localStorage
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Show success message
-            alert(`✅ 已將 ${quantity} 個 ${productName} (${selectedVariant.value}) 加入購物車！`);
-
-            // Update cart count if cart counter exists
-            updateCartCount();
-
-            // 觸發購物車動畫
-            if (window.CartAnimation) {
-                window.CartAnimation.showAddToCartAnimation();
-            }
-        }
+    }
     </script>
 
     <!-- Netlify 兼容性腳本 (暫時禁用) -->

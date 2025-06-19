@@ -952,8 +952,8 @@ return;
                 productInfo.style.transform = 'translateY(0)';
             }, 300);
             
-            // 禁用自動 VariantSelector 初始化，因為此頁面使用手動 HTML 結構
-            // initVariantSelector();
+            // 初始化變數選擇器
+            initVariantSelector();
         });
     </script>
 
@@ -1047,8 +1047,8 @@ return;
                 await pageProductManager.init('ilia_disposable_product');
                 console.log('ILIA 拋棄式 產品頁面管理器已初始化');
                 
-                // 禁用自動 VariantSelector 初始化，因為此頁面使用手動 HTML 結構
-                // initVariantSelector();
+                // 初始化變數選擇器
+                initVariantSelector();
             } catch (error) {
                 console.error('初始化產品頁面管理器失敗:', error);
             }

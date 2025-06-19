@@ -21,17 +21,6 @@
         padding: 1rem !important;
     }
 
-    /* --- 終極修正：移除有害的舊版選擇器 --- */
-    /*
-     * 以下 .variant-selector 規則已過時，
-     * 且會導致新版選擇器佈局錯亂，因此移除。
-     * .variant-selector {
-     *   width: auto !important;
-     *   margin: 0 !important;
-     *   padding: 0 !important;
-     * }
-    */
-
     /* 口味選項調整 */
     .flavor-options {
         margin-bottom: 1.5rem !important;

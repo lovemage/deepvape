@@ -1324,13 +1324,12 @@ return;
         document.addEventListener('DOMContentLoaded', function() {
             updateTotalPrice();
             
-            // 禁用自動 VariantSelector 初始化，因為此頁面使用手動 HTML 結構
-            // 如需啟用，請移除此註解：
-            // if (window.ProductManager && window.ProductManager.initialized) {
-            //     initVariantSelector();
-            // } else {
-            //     window.addEventListener('productsLoaded', initVariantSelector);
-            // }
+            // 初始化變數選擇器
+            if (window.ProductManager && window.ProductManager.initialized) {
+                initVariantSelector();
+            } else {
+                window.addEventListener('productsLoaded', initVariantSelector);
+            }
             
             // Observe elements for animation
             const animatedElements = document.querySelectorAll('.animate-fadeIn');
