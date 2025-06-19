@@ -30,73 +30,59 @@ class VariantSelectorV2 {
                 console.log('⏳ 等待 ProductManager 初始化...');
                 
                 let retryCount = 0;
-                const maxRetries = 20;
+                const maxRetries = 50; // 最多等待5秒
                 
                 const checkAndLoad = () => {
                     if (window.ProductManager && window.ProductManager.initialized) {
-                        console.log('✅ ProductManager 已初始化，載入變數');
                         this.loadVariants();
                     } else if (retryCount < maxRetries) {
                         retryCount++;
-                        console.log(`🔄 重試 ${retryCount}/${maxRetries}...`);
-                        setTimeout(checkAndLoad, 500);
+                        setTimeout(checkAndLoad, 100);
                     } else {
                         console.error('❌ ProductManager 初始化超時');
-                        this.showError('載入失敗，請重新整理頁面');
+                        this.showError('產品管理器載入失敗，請重新整理頁面');
                     }
                 };
                 
-                // 監聽事件和定時檢查雙重保險
-                window.addEventListener('productsLoaded', () => {
-                    console.log('📡 收到 productsLoaded 事件');
-                    this.loadVariants();
-                });
-                
                 checkAndLoad();
             } else {
-                console.log('✅ ProductManager 已就緒，直接載入變數');
                 this.loadVariants();
             }
+            
         } catch (error) {
             console.error('❌ 變數選擇器初始化失敗:', error);
-            this.showError('初始化失敗');
+            this.showError('變數選擇器初始化失敗');
         }
     }
 
     /**
-     * 載入產品變數
+     * 載入變數數據
      */
     loadVariants() {
-        if (!window.ProductManager || !window.ProductManager.initialized) {
-            console.error('❌ 產品管理器未初始化');
-            this.showError('產品管理器未初始化');
-            return;
-        }
-
         try {
             this.variants = window.ProductManager.getProductVariants(this.productId);
             
             if (!this.variants || this.variants.length === 0) {
-                console.warn(`⚠️ 產品 ${this.productId} 沒有變數數據`);
-                this.showEmpty('此產品暫無可選變數');
+                console.warn('⚠️ 未找到產品變數:', this.productId);
+                this.showEmpty('暫無可選變數');
                 return;
             }
-
-            console.log(`✅ 成功載入 ${this.productId} 的 ${this.variants.length} 個變數`);
+            
+            console.log(`📦 載入變數 ${this.variants.length} 個:`, this.variants);
             this.renderVariants();
             
         } catch (error) {
-            console.error(`❌ 載入變數失敗: ${error.message}`);
-            this.showError('載入變數失敗，請重新整理頁面');
+            console.error('❌ 載入變數失敗:', error);
+            this.showError('載入變數失敗');
         }
     }
 
     /**
-     * 渲染變數選項 - 生成與舊版完全一致的HTML結構
+     * 渲染變數選項
      */
     renderVariants() {
         if (!this.container) {
-            console.error('❌ 找不到變數容器');
+            console.error('❌ 容器不存在');
             return;
         }
 
@@ -122,9 +108,9 @@ class VariantSelectorV2 {
             const variants = variantsByType[type] || this.variants;
             this.renderVariantOptions(variants, type);
         } else {
-            // 通用容器，渲染所有類型
+            // 通用容器，直接渲染所有變數選項，不添加標題
             Object.entries(variantsByType).forEach(([type, variants]) => {
-                this.renderVariantGroup(type, variants);
+                this.renderVariantOptions(variants, type);
             });
         }
 
@@ -147,34 +133,6 @@ class VariantSelectorV2 {
             groups[type].push(variant);
         });
         return groups;
-    }
-
-    /**
-     * 渲染變數組（包含標題）
-     */
-    renderVariantGroup(type, variants) {
-        // 創建組容器
-        const groupContainer = document.createElement('div');
-        groupContainer.className = `variant-group variant-group-${type}`;
-        
-        // 添加組標題
-        const title = document.createElement('h4');
-        title.className = 'variant-group-title';
-        title.textContent = this.getTypeLabel(type);
-        groupContainer.appendChild(title);
-
-        // 創建選項容器
-        const optionsContainer = document.createElement('div');
-        optionsContainer.className = `${type}-grid`;
-        
-        // 渲染選項
-        variants.forEach(variant => {
-            const option = this.createVariantOption(variant, type);
-            optionsContainer.appendChild(option);
-        });
-
-        groupContainer.appendChild(optionsContainer);
-        this.container.appendChild(groupContainer);
     }
 
     /**
@@ -274,19 +232,6 @@ class VariantSelectorV2 {
     }
 
     /**
-     * 獲取類型標籤
-     */
-    getTypeLabel(type) {
-        const labels = {
-            'color': '顏色選擇',
-            'flavor': '口味選擇',
-            'size': '尺寸選擇',
-            'default': '選項'
-        };
-        return labels[type] || '選項';
-    }
-
-    /**
      * 顯示錯誤狀態
      */
     showError(message) {
@@ -314,11 +259,10 @@ class VariantSelectorV2 {
      * 顯示庫存警告
      */
     showStockAlert(variantValue) {
-        // 創建現代化的提示
-        if (window.createToast) {
-            window.createToast(`很抱歉，${variantValue} 目前缺貨，請選擇其他選項`, 'warning');
+        if (window.alert) {
+            alert(`很抱歉，${variantValue} 目前缺貨！`);
         } else {
-            alert(`很抱歉，${variantValue} 目前缺貨，請選擇其他選項`);
+            console.warn(`庫存不足: ${variantValue}`);
         }
     }
 
@@ -342,13 +286,13 @@ class VariantSelectorV2 {
     }
 
     /**
-     * 重新載入變數數據
+     * 重新載入變數
      */
     async reload() {
-        if (window.ProductManager) {
+        if (window.ProductManager && window.ProductManager.reloadProduct) {
             await window.ProductManager.reloadProduct(this.productId);
-            this.loadVariants();
         }
+        this.loadVariants();
     }
 
     /**
@@ -364,15 +308,13 @@ class VariantSelectorV2 {
     getVariantStats() {
         const total = this.variants.length;
         const inStock = this.variants.filter(v => v.stock > 0).length;
-        const outOfStock = this.variants.filter(v => v.stock === 0).length;
-        const lowStock = this.variants.filter(v => v.stock > 0 && v.stock <= 5).length;
-
+        const outOfStock = total - inStock;
+        
         return {
             total,
             inStock,
             outOfStock,
-            lowStock,
-            totalStock: this.variants.reduce((sum, v) => sum + v.stock, 0)
+            stockPercentage: total > 0 ? Math.round((inStock / total) * 100) : 0
         };
     }
 
@@ -380,31 +322,26 @@ class VariantSelectorV2 {
      * 過濾變數
      */
     filterVariants(filterFn) {
-        const options = this.container.querySelectorAll('.color-option, .flavor-option, .variant-option');
-        options.forEach(option => {
-            const variantId = option.dataset.variantId;
-            const variant = this.variants.find(v => v.id === variantId);
-            
-            if (variant && filterFn(variant)) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-            }
-        });
+        const originalVariants = this.variants;
+        this.variants = this.variants.filter(filterFn);
+        this.renderVariants();
+        
+        // 返回恢復函數
+        return () => {
+            this.variants = originalVariants;
+            this.renderVariants();
+        };
     }
 
     /**
-     * 重置過濾器
+     * 重置過濾
      */
     resetFilter() {
-        const options = this.container.querySelectorAll('.color-option, .flavor-option, .variant-option');
-        options.forEach(option => {
-            option.style.display = '';
-        });
+        this.loadVariants();
     }
 
     /**
-     * 銷毀選擇器
+     * 銷毀實例
      */
     destroy() {
         if (this.container) {
@@ -416,21 +353,21 @@ class VariantSelectorV2 {
     }
 
     /**
-     * 調試工具
+     * 調試信息
      */
     debug() {
-        console.log('🔧 變數選擇器調試信息:', {
+        return {
             productId: this.productId,
-            container: this.container,
-            variants: this.variants,
+            containerId: this.container?.id,
+            variantsCount: this.variants.length,
             selectedVariant: this.selectedVariant,
             stats: this.getVariantStats()
-        });
+        };
     }
 }
 
-// 向後兼容 - 保持舊的類名
-window.VariantSelector = VariantSelectorV2;
+// 確保全域可用
+window.VariantSelectorV2 = VariantSelectorV2;
 
 // 全域實例管理
 window.variantSelectors = new Map();
