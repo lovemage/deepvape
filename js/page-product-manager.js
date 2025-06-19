@@ -335,7 +335,7 @@ class PageProductManager {
      * 更新加入購物車按鈕狀態
      */
     updateAddToCartButton() {
-        const addToCartBtn = document.getElementById('addToCartBtn');
+        const addToCartBtn = document.querySelector('.add-to-cart');
         if (!addToCartBtn) return;
 
         const selectedVariant = this.getSelectedVariant();
@@ -447,10 +447,10 @@ class PageProductManager {
             return;
         }
 
-        // 強制移除舊的 onclick 屬性，避免衝突
+        // 強制移除旧的 onclick 属性，避免冲突
         addToCartBtn.removeAttribute('onclick');
         
-        // 綁定新的事件處理器
+        // 绑定新的事件处理器
         addToCartBtn.addEventListener('click', () => {
             this.addToCart();
         });
@@ -561,18 +561,6 @@ class PageProductManager {
         return pageId;
     }
 }
-
-// 自動初始化
-document.addEventListener('DOMContentLoaded', async () => {
-    const manager = new PageProductManager();
-    const pageId = manager.getPageId();
-    
-    console.log('正在初始化產品頁面管理器:', pageId);
-    await manager.init(pageId);
-    
-    // 將管理器實例暴露到全局，供其他腳本使用
-    window.pageProductManager = manager;
-});
 
 // 導出類供其他模組使用
 if (typeof module !== 'undefined' && module.exports) {
