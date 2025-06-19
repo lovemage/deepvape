@@ -438,25 +438,26 @@
         /* VariantSelector 生成的元素樣式 */
         .variant-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
         }
 
         .variant-option {
             background: rgba(17, 24, 39, 0.5);
             border: 2px solid var(--border-color);
-            border-radius: 15px;
-            padding: 1rem;
+            border-radius: 8px;
+            padding: 0.8rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(8px);
-            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .variant-option::before {
@@ -752,15 +753,12 @@
             .variant-option {
                 padding: 0.6rem 0.3rem !important;
                 font-size: 0.75rem !important;
-                min-height: 50px !important;
+                min-height: 45px !important;
                 display: flex !important;
-                flex-direction: column !important;
                 align-items: center !important;
                 justify-content: center !important;
                 text-align: center !important;
                 line-height: 1.1 !important;
-                border-radius: 15px !important;
-                gap: 0.1rem !important;
             }
             
             .variant-name {
