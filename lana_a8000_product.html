@@ -1792,48 +1792,43 @@
             console.log('  - selectedFlavorOption:', selectedFlavorOption);
             
             if (!selectedFlavorOption) {
-                showNotification('請先選擇口味！', 'warning');
+                alert('請先選擇口味！');
                 return;
             }
             
-            // 獲取選中的變數信息
-            const variantId = selectedFlavorOption.dataset.variantId;
-            const variantValue = selectedFlavorOption.querySelector('.variant-name')?.textContent.trim() || 
-                               selectedFlavorOption.textContent.trim();
+            const selectedVariant = selectedFlavorOption.textContent.trim();
+            const variantId = selectedFlavorOption.dataset.variantId || selectedVariant;
+            const quantity = parseInt(document.getElementById('quantity').value);
             
-            console.log('  - variantId:', variantId);
-            console.log('  - variantValue:', variantValue);
-            
-            if (!variantId || !variantValue) {
-                showNotification('無法獲取選中的口味，請重新選擇！', 'warning');
-                return;
-            }
-            
-            // 檢查庫存（如果有 StockChecker）
-            if (window.StockChecker && window.StockChecker.initialized) {
-                const stockInfo = window.StockChecker.checkVariantStock(productId || 'lana_a8000_product', variantId, 'flavor');
-                if (stockInfo.stock <= 0) {
-                    showNotification(`很抱歉，${variantValue} 目前缺貨！`, 'warning');
+            // 檢查庫存
+            if (window.StockChecker) {
+                const stockResult = window.StockChecker.checkVariantStock('lana_a8000_product', variantId);
+                if (!stockResult.available) {
+                    alert(`❌ ${selectedVariant} 目前缺貨，請選擇其他口味或稍後再試。`);
+                    return;
+                }
+                
+                if (stockResult.stock < quantity) {
+                    alert(`❌ ${selectedVariant} 庫存不足，目前僅剩 ${stockResult.stock} 件。`);
                     return;
                 }
             }
-
-            // 獲取選擇的數量
-            const selectedQuantity = parseInt(document.getElementById('quantity')?.value || '1');
-
-            // 加入購物車
+            
+            // 獲取產品資訊
             const product = {
-                id: productId || 'lana_a8000_product',
+                id: 'lana_a8000_product',
                 name: 'LANA A8000',
-                variant: variantValue,
-                variantId: variantId,
                 price: 320,
-                quantity: selectedQuantity,
-                image: '/lana_a8000/lana_a8000.webp'
+                flavor: selectedVariant,
+                variant: selectedVariant,
+                variantId: variantId,
+                quantity: quantity,
+                image: '/lana_a8000/lana_a8000.webp',
+                category: 'disposable'
             };
-
-            // 獲取現有購物車
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // 儲存到 localStorage
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
             
             // 檢查是否已存在相同產品和變數
             const existingIndex = cart.findIndex(item => 
@@ -1841,193 +1836,30 @@
             );
             
             if (existingIndex > -1) {
-                cart[existingIndex].quantity += selectedQuantity;
+                cart[existingIndex].quantity += product.quantity;
             } else {
                 cart.push(product);
             }
             
-            // 保存到 localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
             
-            // 使用新的購物車動畫系統
-            if (window.CartAnimation) {
-                window.CartAnimation.showAddToCartAnimation({
-                    productName: 'LANA A8000',
-                    variant: variantValue,
-                    sourceElement: document.getElementById('addToCartBtn'),
-                    productImage: '/lana_a8000/lana_a8000.webp'
-                });
-            } else {
-                // 備用通知
-                showNotification(`✅ 已將 ${selectedQuantity} 個 LANA A8000 (${variantValue}) 加入購物車！`, 'success');
-                updateCartCount();
-            }
+            // 顯示成功訊息
+            alert(`✅ 已將 ${quantity} 個 LANA A8000 (${selectedVariant}) 加入購物車！`);
+            
+            // 更新購物車圖示
+            updateCartCount();
         }
 
-        // 載入公告
-        async function loadAnnouncements() {
-            try {
-                const response = await fetch('/data/announcements.json');
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const announcements = data.announcements.filter(announcement => {
-                        if (!announcement.active) return false;
-                        
-                        const now = new Date();
-                        const startDate = announcement.startDate ? new Date(announcement.startDate) : null;
-                        const endDate = announcement.endDate ? new Date(announcement.endDate) : null;
-                        
-                        if (startDate && now < startDate) return false;
-                        if (endDate && now > endDate) return false;
-                        
-                        return true;
-                    });
-                    
-                    const container = document.getElementById('announcements-list');
-                    
-                    if (announcements.length > 0) {
-                        container.innerHTML = announcements.map(announcement => `
-                            <div class="announcement-item">
-                                <h6 class="mb-2">${announcement.title}</h6>
-                                <p class="mb-0">${announcement.text}</p>
-                            </div>
-                        `).join('');
-                    } else {
-                        // 如果沒有公告，隱藏公告區域
-                        document.getElementById('announcements').style.display = 'none';
-                    }
-                } else {
-                    // 如果無法載入，隱藏公告區域
-                    document.getElementById('announcements').style.display = 'none';
-                }
-            } catch (error) {
-                console.log('無法載入公告:', error);
-                // 隱藏公告區域
-                document.getElementById('announcements').style.display = 'none';
-            }
-        }
-
-        // 載入產品庫存狀態
-        async function loadProductStock() {
-            try {
-                // 使用本地庫存數據，設置默認庫存狀態
-                const stockElement = document.getElementById('stock-status');
-                if (stockElement) {
-                    // 設置默認庫存狀態為有庫存
-                    stockElement.className = 'stock-status in-stock';
-                    stockElement.innerHTML = `
-                        <i class="fas fa-check-circle me-2"></i>
-                        現貨供應
-                    `;
-                }
-            } catch (error) {
-                console.log('無法載入庫存狀態:', error);
-            }
-        }
-
-        // Toggle mobile navigation
-        function toggleNav() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // 更新購物車數量
+        // 更新購物車數量顯示
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart') || '[]');
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').textContent = totalItems;
-        }
-
-        // 顯示通知
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i>
-                <span>${message}</span>
-            `;
             
-            // 添加樣式
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? 'linear-gradient(135deg, #28a745, #20c997)' : 
-                           type === 'warning' ? 'linear-gradient(135deg, #ffc107, #fd7e14)' : 
-                           'linear-gradient(135deg, #17a2b8, #6f42c1)'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                font-weight: 500;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // 動畫進入
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            // 自動移除
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
-        }
-
-        // 平滑滾動
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Page initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAnnouncements();
-            loadProductStock();
-            updateCartCount();
-            
-            // 初始化變數選擇器
-            if (window.ProductManager && window.ProductManager.initialized) {
-                initVariantSelector();
-            } else {
-                window.addEventListener('productsLoaded', initVariantSelector);
+            // 如果有購物車計數元素，更新它
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                cartCount.textContent = totalItems;
             }
-            
-            // Initialize scroll animations
-            document.querySelectorAll('.section-hidden').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // Initialize navbar scroll effect
-            handleNavbarScroll();
-        });
-
-
-
-        // 顯示聯絡方式
-        function showContact() {
-            window.open('https://line.me/ti/p/euNh8K-s3e', '_blank');
         }
     </script>
 
@@ -2144,122 +1976,6 @@
     
     <!-- 聯繫信息載入器 -->
     <script src="/js/contact-loader.js"></script>
-    <script>
-        
-        // 更新產品庫存顯示
-        function updateProductStockDisplay() {
-            if (!window.ProductManager || !window.ProductManager.initialized) {
-                console.log('ProductManager 未初始化，稍後重試...');
-                setTimeout(updateProductStockDisplay, 1000);
-                return;
-            }
 
-            const productId = document.querySelector('[data-product-id]')?.dataset.productId;
-            if (!productId) {
-                console.warn('無法獲取產品ID');
-                return;
-            }
-
-            const variants = window.ProductManager.getProductVariants(productId);
-            if (!variants || variants.length === 0) {
-                console.warn('無法獲取產品變數');
-                return;
-            }
-
-            // 計算總庫存
-            const totalStock = variants.reduce((sum, variant) => sum + (variant.stock || 0), 0);
-            const availableVariants = variants.filter(v => (v.stock || 0) > 0).length;
-            
-            const stockElement = document.getElementById('stock-status');
-            if (stockElement) {
-                let statusClass, statusText, statusIcon;
-                
-                if (totalStock === 0) {
-                    statusClass = 'out-of-stock';
-                    statusText = '暫時缺貨';
-                    statusIcon = 'fas fa-times-circle';
-                } else if (totalStock <= 10) {
-                    statusClass = 'low-stock';
-                    statusText = `庫存偏低 (剩餘 ${totalStock} 件)`;
-                    statusIcon = 'fas fa-exclamation-triangle';
-                } else {
-                    statusClass = 'in-stock';
-                    statusText = `現貨供應 (${availableVariants} 種選項可選)`;
-                    statusIcon = 'fas fa-check-circle';
-                }
-                
-                stockElement.className = `stock-status ${statusClass}`;
-                stockElement.innerHTML = `
-                    <i class="${statusIcon}"></i>
-                    <span>${statusText}</span>
-                `;
-                
-                console.log(`✅ 庫存顯示已更新: ${statusText}`);
-            }
-        }
-
-        // 當選擇變數時更新具體庫存
-        function updateVariantStockDisplay(variantValue) {
-            if (!window.ProductManager || !window.ProductManager.initialized) return;
-
-            const productId = document.querySelector('[data-product-id]')?.dataset.productId;
-            if (!productId) return;
-
-            const variants = window.ProductManager.getProductVariants(productId);
-            const variant = variants.find(v => v.value === variantValue || v.id === variantValue);
-            
-            if (variant) {
-                const stockElement = document.getElementById('stock-status');
-                if (stockElement) {
-                    let statusClass, statusText, statusIcon;
-                    const stock = variant.stock || 0;
-                    
-                    if (stock === 0) {
-                        statusClass = 'out-of-stock';
-                        statusText = `${variantValue} - 暫時缺貨`;
-                        statusIcon = 'fas fa-times-circle';
-                    } else if (stock <= 5) {
-                        statusClass = 'low-stock';
-                        statusText = `${variantValue} - 剩餘 ${stock} 件`;
-                        statusIcon = 'fas fa-exclamation-triangle';
-                    } else {
-                        statusClass = 'in-stock';
-                        statusText = `${variantValue} - 現貨充足`;
-                        statusIcon = 'fas fa-check-circle';
-                    }
-                    
-                    stockElement.className = `stock-status ${statusClass}`;
-                    stockElement.innerHTML = `
-                        <i class="${statusIcon}"></i>
-                        <span>${statusText}</span>
-                    `;
-                }
-            }
-        }
-
-        // 頁面載入時更新庫存顯示
-        document.addEventListener('DOMContentLoaded', function() {
-            // 延遲執行，確保 ProductManager 已初始化
-            setTimeout(updateProductStockDisplay, 2000);
-            
-            // 監聽 ProductManager 載入完成事件
-            window.addEventListener('productsLoaded', updateProductStockDisplay);
-            
-            // 監聽變數選擇事件
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.color-option, .flavor-option, .variant-option')) {
-                    const option = e.target.closest('.color-option, .flavor-option, .variant-option');
-                    const variantValue = option.textContent.trim() || 
-                                       option.dataset.color || 
-                                       option.dataset.flavor || 
-                                       option.dataset.variantId;
-                    
-                    if (variantValue) {
-                        setTimeout(() => updateVariantStockDisplay(variantValue), 100);
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 </html> 
