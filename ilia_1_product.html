@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/deepvape-unified.css">
-    <link rel="stylesheet" href="css/variant-selector-v2.css">
     <style>
         :root {
             --primary-color: #083e12;
@@ -609,6 +608,7 @@
 
             <!-- Color Options -->
             <div class="color-options">
+                <h3 class="color-title">顏色選擇</h3>
                 <div class="color-grid" id="variantContainer">
                     <!-- 顏色選項將由變數選擇器動態載入 -->
                 </div>
@@ -928,8 +928,8 @@ return;
     <!-- 產品管理系統 -->
     <script src="/js/product-manager.js"></script>
     
-    <!-- 變數選擇器 V2.0 -->
-    <script src="/js/variant-selector-v2.js"></script>
+    <!-- 變數選擇器 -->
+    <script src="/js/variant-selector.js"></script>
     
     <!-- 變數選擇器修復腳本 (暫時禁用) -->
     <!-- <script src="/fix_variant_initialization.js"></script> -->
@@ -958,18 +958,6 @@ return;
                 const pageProductManager = new PageProductManager();
                 await pageProductManager.init('ilia_1_product');
                 console.log('✅ ILIA 1代 產品頁面管理器已初始化');
-                
-                // 初始化新版變數選擇器 V2.0
-                if (window.VariantSelectorV2) {
-                    window.variantSelector = new VariantSelectorV2('ilia_1_product', 'variantContainer');
-                    window.variantSelector.setOnVariantChange((variant) => {
-                        console.log('🎯 變數選擇:', variant.value);
-                        updateVariantStockDisplay(variant.value);
-                    });
-                    console.log('✅ 新版變數選擇器 V2.0 已初始化');
-                } else {
-                    console.warn('⚠️ VariantSelectorV2 未載入');
-                }
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
             }
