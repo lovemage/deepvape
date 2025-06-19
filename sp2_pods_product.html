@@ -1233,8 +1233,7 @@
                 console.log('✅ SP2 煙彈 產品頁面管理器已初始化');
                 
                 // 初始化 VariantSelector
-                const variantSelector = new VariantSelector('sp2_pods_product');
-                await variantSelector.init();
+                const variantSelector = new VariantSelector('sp2_pods_product', 'variantContainer');
                 
                 // 設置變數變更回調
                 variantSelector.setOnVariantChange((variant) => {
