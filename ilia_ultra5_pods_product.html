@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -59,10 +59,10 @@
 
         body {
             font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
@@ -71,57 +71,127 @@
             padding: 2rem;
         }
 
+        /* Header Styles */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, #1afe49, #00d4ff, #1afe49) 1;
+            animation: headerBorderMove 3s ease-in-out infinite;
+        }
+
+        @keyframes headerBorderMove {
+            0% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
+            25% {
+                border-image: linear-gradient(90deg, transparent, #1afe49, transparent, transparent) 1;
+            }
+            50% {
+                border-image: linear-gradient(90deg, transparent, transparent, #1afe49, transparent) 1;
+            }
+            75% {
+                border-image: linear-gradient(90deg, transparent, transparent, transparent, #1afe49) 1;
+            }
+            100% {
+                border-image: linear-gradient(90deg, #1afe49, transparent, transparent, transparent) 1;
+            }
         }
 
         .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        .nav-links {
             display: flex;
-            list-style: none;
-            gap: 2rem;
+            align-items: center;
         }
 
-        .nav-links a {
+        /* 炫酷Logo按鈕樣式 */
+        .logo-button {
+            position: relative;
+            display: inline-block;
+            padding: 12px 24px;
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            color: #1afe49;
+            font-weight: 700;
+            font-size: 24px;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #1afe49;
+            border-radius: 8px;
+            background: linear-gradient(45deg, rgba(26, 254, 73, 0.1), rgba(0, 212, 255, 0.1));
+            transition: all 0.3s ease;
+            overflow: hidden;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
+        .logo-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 254, 73, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .logo-button:hover::before {
+            left: 100%;
+        }
+
+        .logo-button:hover {
+            color: #00d4ff;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .logo-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .cart-button, .back-button {
+            padding: 10px 15px;
+            background: linear-gradient(45deg, #1afe49, #00d4ff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cart-button:hover, .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.4);
         }
 
         .main-content {
             margin-top: 100px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(17, 24, 39, 0.8);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(26, 254, 73, 0.2);
             overflow: hidden;
         }
 
@@ -169,22 +239,26 @@
         .product-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #333;
+            background: linear-gradient(45deg, #1afe49, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1rem;
             line-height: 1.2;
         }
 
         .product-subtitle {
             font-size: 1.2rem;
-            color: #666;
+            color: #e5e7eb;
             margin-bottom: 1.5rem;
         }
 
         .product-price {
             font-size: 2rem;
             font-weight: 700;
-            color: #667eea;
+            color: #1afe49;
             margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(26, 254, 73, 0.3);
         }
 
         .stock-status {
@@ -205,21 +279,22 @@
         .product-description {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #555;
+            color: #d1d5db;
             margin-bottom: 2rem;
         }
 
         .specifications {
-            background: rgba(103, 126, 234, 0.05);
+            background: rgba(26, 254, 73, 0.05);
             padding: 2rem;
             border-radius: 15px;
             margin-bottom: 2rem;
+            border: 1px solid rgba(26, 254, 73, 0.1);
         }
 
         .spec-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #333;
+            color: #1afe49;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -238,19 +313,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.75rem;
-            background: white;
+            background: rgba(17, 24, 39, 0.6);
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(26, 254, 73, 0.1);
         }
 
         .spec-label {
             font-weight: 500;
-            color: #555;
+            color: #d1d5db;
         }
 
         .spec-value {
             font-weight: 600;
-            color: #667eea;
+            color: #1afe49;
         }
 
         .warning-notice {
@@ -269,16 +345,17 @@
         }
 
         .features {
-            background: rgba(103, 126, 234, 0.05);
+            background: rgba(26, 254, 73, 0.05);
             padding: 2rem;
             border-radius: 15px;
             margin: 2rem 0;
+            border: 1px solid rgba(26, 254, 73, 0.1);
         }
 
         .features-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #333;
+            color: #1afe49;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -297,18 +374,22 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background: white;
+            background: rgba(17, 24, 39, 0.6);
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(26, 254, 73, 0.1);
             transition: transform 0.3s ease;
+            color: #d1d5db;
         }
 
         .features-list li:hover {
             transform: translateY(-2px);
+            border-color: #1afe49;
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.2);
         }
 
         .features-list i {
-            color: #667eea;
+            color: #1afe49;
             font-size: 1.2rem;
             width: 24px;
             text-align: center;
@@ -323,29 +404,31 @@
 
         .quantity-label {
             font-weight: 500;
-            color: #555;
+            color: #d1d5db;
         }
 
         .quantity-controls {
             display: flex;
             align-items: center;
-            border: 2px solid #e5e7eb;
+            border: 2px solid rgba(26, 254, 73, 0.3);
             border-radius: 10px;
             overflow: hidden;
+            background: rgba(17, 24, 39, 0.6);
         }
 
         .quantity-btn {
-            background: #f9fafb;
+            background: transparent;
             border: none;
             padding: 0.75rem 1rem;
             cursor: pointer;
             font-size: 1.2rem;
-            color: #667eea;
-            transition: background-color 0.3s ease;
+            color: #1afe49;
+            transition: all 0.3s ease;
         }
 
         .quantity-btn:hover {
-            background: #e5e7eb;
+            background: rgba(26, 254, 73, 0.1);
+            color: #00d4ff;
         }
 
         .quantity-input {
@@ -355,11 +438,13 @@
             text-align: center;
             font-size: 1rem;
             font-weight: 500;
+            background: transparent;
+            color: #ffffff;
         }
 
         .add-to-cart {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            background: linear-gradient(135deg, #1afe49, #00d4ff);
+            color: #000;
             border: none;
             padding: 1rem 2rem;
             border-radius: 15px;
@@ -376,18 +461,24 @@
 
         .add-to-cart:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(103, 126, 234, 0.3);
+            box-shadow: 0 10px 25px rgba(26, 254, 73, 0.3);
         }
 
         .product-details {
             padding: 3rem;
-            background: rgba(248, 250, 252, 0.5);
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(26, 254, 73, 0.1);
+            border-radius: 20px;
+            margin: 2rem 0;
         }
 
         .details-title {
             font-size: 2rem;
             font-weight: 700;
-            color: #333;
+            background: linear-gradient(45deg, #1afe49, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -396,13 +487,13 @@
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.8;
-            color: #555;
+            color: #d1d5db;
         }
 
         .details-content h3 {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #333;
+            color: #1afe49;
             margin: 2rem 0 1rem 0;
         }
 
@@ -580,19 +671,135 @@
         .stock-indicator.out-of-stock {
             color: #ef4444;
         }
+
+        /* Section Animations */
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Variant Options */
+        .variant-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .variant-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.6rem;
+            }
+        }
+
+        .variant-option {
+            background: rgba(17, 24, 39, 0.6);
+            border: 2px solid rgba(26, 254, 73, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .variant-option::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(26, 254, 73, 0.1) 45%,
+                rgba(26, 254, 73, 0.2) 50%,
+                rgba(26, 254, 73, 0.1) 55%,
+                transparent 60%
+            );
+            transition: transform 0.5s ease;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .variant-option:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
+        .variant-option:hover {
+            border-color: #1afe49;
+            background: rgba(26, 254, 73, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.3);
+        }
+
+        .variant-option.selected {
+            border-color: #1afe49;
+            background: linear-gradient(135deg, rgba(26, 254, 73, 0.2), rgba(0, 212, 255, 0.2));
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(26, 254, 73, 0.4);
+        }
+
+        .variant-name {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .variant-stock {
+            font-size: 0.8rem;
+            color: #d1d5db;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .variant-option.selected .variant-stock {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .variant-option.out-of-stock {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .variant-option.low-stock {
+            border-color: #f59e0b;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">DeepVape</a>
-            <ul class="nav-links">
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="index.html#hosts">主機</a></li>
-                <li><a href="index.html#pods">煙彈</a></li>
-                <li><a href="index.html#disposable">拋棄式</a></li>
-                <li><a href="contact.html">聯絡我們</a></li>
-            </ul>
+            <div class="logo">
+                <a href="index.html" class="logo-button" id="navLogo">
+                    <span class="logo-text">DeepVape</span>
+                </a>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="cart.html" class="cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
         </nav>
     </header>
 
@@ -1102,6 +1309,64 @@
                     }
                 }
             });
+        });
+    </script>
+
+    <!-- VFX.js 故障效果腳本 -->
+    <script type="module">
+        import { VFX } from "https://esm.sh/@vfx-js/core";
+        
+        class LogoButtonEffect {
+            constructor(button) {
+                this.vfx = new VFX();
+                
+                button.addEventListener("mouseenter", (e) => {
+                    this.vfx.add(button, { 
+                        shader: "glitch", 
+                        overflow: 50,
+                        uniforms: {
+                            uTime: 0,
+                            uIntensity: 0.3
+                        }
+                    });
+                });
+
+                button.addEventListener("mouseleave", (e) => {
+                    this.vfx.remove(button);
+                });
+
+                // 點擊效果
+                button.addEventListener("click", (e) => {
+                    console.log("DeepVape Logo clicked!");
+                    
+                    // 點擊反饋動畫
+                    button.style.transform = "translateY(-2px) scale(0.95)";
+                    setTimeout(() => {
+                        button.style.transform = "translateY(-2px)";
+                    }, 150);
+                });
+            }
+        }
+
+        // 初始化Logo按鈕效果
+        document.addEventListener("DOMContentLoaded", () => {
+            const logoButton = document.getElementById("navLogo");
+            if (logoButton) {
+                new LogoButtonEffect(logoButton);
+                
+                // 添加無障礙支援
+                logoButton.setAttribute("tabindex", "0");
+                logoButton.setAttribute("role", "button");
+                logoButton.setAttribute("aria-label", "DeepVape 主頁連結");
+                
+                // 鍵盤支援
+                logoButton.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        logoButton.click();
+                    }
+                });
+            }
         });
     </script>
 </body>
