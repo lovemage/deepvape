@@ -81,7 +81,7 @@
         display: grid !important;
     }
 
-    /* 變數選項項目 */
+    /* 變數選項項目 - 移動端橫向排列 */
     .variant-option,
     .dv-variant-option,
     .color-option,
@@ -92,6 +92,7 @@
         max-height: 60px !important;
         font-size: var(--dv-variant-mobile-font-size) !important;
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
         text-align: center !important;
@@ -100,6 +101,7 @@
         hyphens: auto !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
+        gap: 0.25rem !important;
     }
     
     /* 變數文字 */
@@ -123,13 +125,15 @@
         white-space: nowrap !important;
     }
     
-    /* 顏色樣本 */
+    /* 顏色樣本 - 移動端橫向排列時調整 */
     .color-swatch,
     .dv-color-swatch {
         width: 16px !important;
         height: 16px !important;
-        margin-bottom: var(--dv-spacing-xs) !important;
+        margin-bottom: 0 !important;
+        margin-right: 0.25rem !important;
         flex-shrink: 0 !important;
+        border-radius: 50% !important;
     }
     
     /* 舊的口味選擇器兼容 - 只保留特殊樣式 */
@@ -198,6 +202,15 @@
         grid-template-columns: repeat(3, 1fr) !important;
         gap: 0.8rem !important;
         justify-items: stretch !important;
+    }
+    
+    /* 平板版按鈕內容橫向排列 */
+    .variant-option,
+    .dv-variant-option,
+    .color-option,
+    .flavor-option {
+        flex-direction: row !important;
+        gap: 0.25rem !important;
     }
 }
 
