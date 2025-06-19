@@ -568,8 +568,15 @@
 
         .variant-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .variant-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.6rem;
+            }
         }
 
         /* Specs Table */
@@ -1256,6 +1263,7 @@
                 window.variantSelector.setOnVariantChange((variant) => {
                     console.log('選擇的口味:', variant.value);
                     updateAddToCartButton(variant);
+                    updateVariantStockDisplay(variant.value);
                 });
                 
                 console.log('✅ SP2 煙彈 VariantSelector 已初始化');
@@ -1364,21 +1372,6 @@
             
             // 監聽 ProductManager 載入完成事件
             window.addEventListener('productsLoaded', updateProductStockDisplay);
-            
-            // 監聽變數選擇事件
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.color-option, .flavor-option, .variant-option')) {
-                    const option = e.target.closest('.color-option, .flavor-option, .variant-option');
-                    const variantValue = option.textContent.trim() || 
-                                       option.dataset.color || 
-                                       option.dataset.flavor || 
-                                       option.dataset.variantId;
-                    
-                    if (variantValue) {
-                        setTimeout(() => updateVariantStockDisplay(variantValue), 100);
-                    }
-                }
-            });
         });
     </script>
 </body>
