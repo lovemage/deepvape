@@ -82,6 +82,10 @@
     }
 
     /* 變數選項項目 - 移動端橫向排列 */
+    .dv-variant-selector .dv-variant-option,
+    .dv-variant-options .dv-variant-option,
+    .variant-options .dv-variant-option,
+    .dv-variant-selector .variant-option,
     .variant-option,
     .dv-variant-option,
     .color-option,
@@ -205,6 +209,10 @@
     }
     
     /* 平板版按鈕內容橫向排列 */
+    .dv-variant-selector .dv-variant-option,
+    .dv-variant-options .dv-variant-option,
+    .variant-options .dv-variant-option,
+    .dv-variant-selector .variant-option,
     .variant-option,
     .dv-variant-option,
     .color-option,
