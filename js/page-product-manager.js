@@ -340,23 +340,27 @@ class PageProductManager {
 
         const selectedVariant = this.getSelectedVariant();
         
+        // 移除所有狀態類
+        addToCartBtn.classList.remove('enabled');
+        
         if (selectedVariant && selectedVariant.stock > 0) {
             addToCartBtn.disabled = false;
+            addToCartBtn.classList.add('enabled');
             addToCartBtn.innerHTML = `
-                <i class="fas fa-shopping-cart" style="margin-right: 0.5rem;"></i>
-                加入購物車 - NT$ ${this.pageData.price + (selectedVariant.priceModifier || 0)}
+                <i class="fas fa-shopping-cart"></i>
+                <span>加入購物車 - NT$ ${this.pageData.price + (selectedVariant.priceModifier || 0)}</span>
             `;
         } else if (selectedVariant && selectedVariant.stock === 0) {
             addToCartBtn.disabled = true;
             addToCartBtn.innerHTML = `
-                <i class="fas fa-times-circle" style="margin-right: 0.5rem;"></i>
-                缺貨中
+                <i class="fas fa-times-circle"></i>
+                <span>缺貨中</span>
             `;
         } else {
             addToCartBtn.disabled = true;
             addToCartBtn.innerHTML = `
-                <i class="fas fa-hand-pointer" style="margin-right: 0.5rem;"></i>
-                請先選擇${this.pageData.variants[0]?.type === 'flavor' ? '口味' : '顏色'}
+                <i class="fas fa-hand-pointer"></i>
+                <span>請先選擇${this.pageData.variants[0]?.type === 'flavor' ? '口味' : '顏色'}</span>
             `;
         }
     }

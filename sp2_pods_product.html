@@ -511,7 +511,15 @@
             box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
         }
 
-        .add-to-cart-btn {
+        .add-to-cart-btn:disabled {
+            background: rgba(107, 114, 128, 0.5);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 統一的加入購物車按鈕樣式 */
+        .add-to-cart {
             background: linear-gradient(45deg, var(--secondary), #10b981);
             color: var(--text-primary);
             border: none;
@@ -523,9 +531,17 @@
             font-weight: bold;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-width: 200px;
+            min-height: 50px;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            margin: 0 auto;
         }
 
-        .add-to-cart-btn::before {
+        .add-to-cart::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -544,22 +560,71 @@
             transform: translateX(-100%) translateY(-100%) rotate(45deg);
         }
 
-        .add-to-cart-btn:hover::before {
+        .add-to-cart:hover::before {
             transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
-        .add-to-cart-btn:hover {
+        .add-to-cart:hover {
             transform: translateY(-3px);
-            box-shadow: var(--glow-cyan);
+            box-shadow: 
+                0 6px 25px rgba(6, 182, 212, 0.4),
+                0 0 30px rgba(16, 185, 129, 0.3);
         }
 
-        .add-to-cart-btn:disabled {
-            background: rgba(107, 114, 128, 0.5);
+        .add-to-cart:active {
+            transform: translateY(-1px);
+            transition: transform 0.1s ease;
+        }
+
+        .add-to-cart:disabled {
+            background: linear-gradient(45deg, rgba(107, 114, 128, 0.5), rgba(75, 85, 99, 0.5));
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
-            color: var(--text-secondary);
             opacity: 0.6;
+        }
+
+        .add-to-cart:disabled::before {
+            display: none;
+        }
+
+        .add-to-cart i {
+            font-size: 1.1rem;
+            z-index: 1;
+            position: relative;
+        }
+
+        .add-to-cart span {
+            z-index: 1;
+            position: relative;
+            font-weight: 600;
+        }
+
+        /* 按鈕可用狀態的特殊樣式 */
+        .add-to-cart.enabled {
+            background: linear-gradient(45deg, #10b981, #059669);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .add-to-cart {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
+                min-width: 180px;
+            }
         }
 
         /* Animations */
@@ -589,8 +654,6 @@
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
-            
-
             
             .product-title {
                 font-size: 2rem;
