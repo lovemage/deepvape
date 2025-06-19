@@ -155,7 +155,7 @@ body::before {
 .flavor-grid,
 .color-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--dv-variant-gap);
     width: 100%;
 }
@@ -164,6 +164,31 @@ body::before {
 .flavor-options .flavor-grid,
 .color-options .color-grid {
     margin-bottom: var(--dv-spacing-base);
+}
+
+/* 響應式設計 - 確保所有設備都使用三列佈局 */
+@media (max-width: 768px) {
+    .flavor-grid,
+    .color-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        justify-items: stretch !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .flavor-grid,
+    .color-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        justify-items: stretch !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    .flavor-grid,
+    .color-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        justify-items: stretch !important;
+    }
 }
 
 /* ================================
