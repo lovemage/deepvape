@@ -1049,19 +1049,8 @@
             // 檢查是否選擇了變數
             const selectedColorOption = document.querySelector('.color-option.selected, .flavor-option.selected, .variant-option.selected');
             if (!selectedColorOption) {
-            // 使用新的購物車動畫系統
-            if (window.CartAnimation) {
-                window.CartAnimation.showAddToCartAnimation({
-                    productName: 'LANA Pods',
-                    variant: variantValue,
-                    sourceElement: document.getElementById('addToCartBtn'),
-                    productImage: '/lana_pods/lana_ceramic_pods_main.webp'
-                });
-            } else {
-                // 備用通知
-                alert('請先選擇產品選項！');
-            }
-return;
+                alert('請先選擇口味！');
+                return;
             }
             
             // 獲取選中的變數信息

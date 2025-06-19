@@ -1006,6 +1006,8 @@
                 variantSelector.setOnVariantChange((variant) => {
                     console.log('選擇的口味:', variant.value);
                     updateAddToCartButton();
+                    // 更新庫存顯示
+                    updateVariantStockDisplay(variant.value);
                 });
             } else {
                 // 如果依賴未載入，稍後重試
@@ -1266,8 +1268,7 @@
                 await pageProductManager.init('sp2_pods_product');
                 console.log('✅ SP2 煙彈 產品頁面管理器已初始化');
                 
-                // 初始化變數選擇器
-                initVariantSelector();
+                // 初始化變數選擇器 - 由下面的腳本處理
             } catch (error) {
                 console.error('❌ 初始化失敗:', error);
             }
