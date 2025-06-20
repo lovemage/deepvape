@@ -241,22 +241,4 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- 工具頁面 -->
-  
-  <!-- 門市搜尋 -->
-  <url>
-    <loc>https://deepvape.org/store_search_demo.html</loc>
-    <lastmod>2024-12-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- CVS 回調 -->
-  <url>
-    <loc>https://deepvape.org/cvs_callback.html</loc>
-    <lastmod>2024-12-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-</urlset> 
+</urlset>
